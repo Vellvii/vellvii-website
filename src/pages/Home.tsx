@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Heart, Star, Shield, Phone, Mail, MapPin, Store } from "lucide-react";
+import ConciergeChat from "@/components/ConciergeChat";
 
 const Home = () => {
   const [concierge, setConcierge] = useState<string | null>(null);
@@ -82,7 +83,7 @@ const Home = () => {
           </div>
 
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
-            <Link to="/product-one">
+            <Link to="/pulse">
               <Card className="glass-luxury hover:scale-105 transition-all duration-500 hover-glow p-6 text-center group">
                 <div className="w-16 h-16 mx-auto bg-gradient-primary rounded-full flex items-center justify-center mb-4">
                   <Heart className="w-8 h-8 text-white" />
@@ -92,7 +93,7 @@ const Home = () => {
               </Card>
             </Link>
 
-            <Link to="/product-two">
+            <Link to="/vibe">
               <Card className="glass-luxury hover:scale-105 transition-all duration-500 hover-glow p-6 text-center group">
                 <div className="w-16 h-16 mx-auto bg-gradient-secondary rounded-full flex items-center justify-center mb-4">
                   <Star className="w-8 h-8 text-foreground" />
@@ -102,7 +103,7 @@ const Home = () => {
               </Card>
             </Link>
 
-            <Link to="/product-three">
+            <Link to="/g-vibe">
               <Card className="glass-luxury hover:scale-105 transition-all duration-500 hover-glow p-6 text-center group">
                 <div className="w-16 h-16 mx-auto bg-gradient-primary rounded-full flex items-center justify-center mb-4">
                   <Shield className="w-8 h-8 text-white" />
@@ -112,7 +113,7 @@ const Home = () => {
               </Card>
             </Link>
 
-            <Link to="/storage">
+            <Link to="/dox">
               <Card className="glass-luxury hover:scale-105 transition-all duration-500 hover-glow p-6 text-center group">
                 <div className="w-16 h-16 mx-auto bg-gradient-secondary rounded-full flex items-center justify-center mb-4">
                   <Shield className="w-8 h-8 text-foreground" />
@@ -283,6 +284,8 @@ const Home = () => {
           </div>
         </div>
       </section>
+      
+      <ConciergeChat />
     </div>
   );
 };

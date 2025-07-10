@@ -3,10 +3,11 @@ import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { ArrowLeft, Shield, Target, Lightbulb, Zap } from "lucide-react";
+import { ArrowLeft, Heart, Zap, Droplets, Volume2 } from "lucide-react";
 import SimilarProducts from "@/components/SimilarProducts";
+import ConciergeChat from "@/components/ConciergeChat";
 
-const ProductThree = () => {
+const Pulse = () => {
   const [concierge, setConcierge] = useState<string | null>(null);
 
   useEffect(() => {
@@ -16,21 +17,21 @@ const ProductThree = () => {
 
   const getConciergeRecommendation = () => {
     if (concierge === "luke") {
-      return "The G-Vibe demonstrates precision engineering at its finest. The precisely angled tip is designed for optimal G-spot contact, while the flexible silicone neck allows for comfortable positioning. The LED intensity glow provides elegant feedback for your experience.";
+      return "The Pulse represents the pinnacle of pressure wave technology. Its sophisticated engineering delivers precise, rhythmic stimulation that's both powerful and whisper-quiet. I recommend starting with intensity level 3 for optimal exploration.";
     } else if (concierge === "vivian") {
-      return "The G-Vibe is such a thoughtful design! The gentle curve feels so natural, and I love how the soft LED glow lets you know exactly what intensity you're enjoying. It's lightweight and flexible, making exploration comfortable and stress-free.";
+      return "The Pulse is such a gentle yet powerful companion! Its soft silicone feels wonderful, and the different rhythmic patterns let you discover exactly what brings you joy. Perfect for both beginners and those seeking new experiences.";
     }
-    return "The G-Vibe offers precise G-spot stimulation with elegant design and LED feedback.";
+    return "The Pulse offers advanced pressure wave technology for an exceptional intimate experience.";
   };
 
   return (
     <div className="min-h-screen bg-gradient-dark">
-      {/* Navigation */}
-      <nav className="p-6">
+      {/* Sticky Navigation */}
+      <nav className="fixed top-6 left-6 z-40">
         <Link to="/home">
-          <Button variant="ghost" className="text-white">
+          <Button variant="ghost" className="text-white bg-black/20 backdrop-blur-sm hover:bg-black/40">
             <ArrowLeft className="w-4 h-4 mr-2" />
-            Back to Collection
+            Back to Home
           </Button>
         </Link>
       </nav>
@@ -41,30 +42,29 @@ const ProductThree = () => {
           <div className="grid lg:grid-cols-2 gap-12 items-center">
             {/* Product Image Placeholder */}
             <div className="glass-luxury rounded-lg p-12 text-center">
-              <div className="w-48 h-48 mx-auto bg-gradient-primary rounded-full flex items-center justify-center mb-6 relative">
-                <Shield className="w-24 h-24 text-white" />
-                <div className="absolute inset-0 rounded-full bg-gradient-primary opacity-30 animate-pulse"></div>
+              <div className="w-48 h-48 mx-auto bg-gradient-primary rounded-full flex items-center justify-center mb-6">
+                <Heart className="w-24 h-24 text-white" />
               </div>
               <Badge variant="secondary" className="mb-4">Premium Collection</Badge>
               <h1 className="text-4xl font-playfair font-bold text-white mb-4">
-                Vellvii G-Vibe
+                Vellvii Pulse
               </h1>
               <p className="text-white/80 text-lg">
-                G-Spot Vibrator
+                Rhythmic Clitoral Stimulator
               </p>
             </div>
 
             {/* Product Details */}
             <div className="space-y-8">
               <div>
-                <Badge variant="outline" className="mb-4">Precision Design</Badge>
+                <Badge variant="outline" className="mb-4">Rhythmic Excellence</Badge>
                 <h2 className="text-3xl font-playfair font-bold text-foreground mb-4">
-                  Targeted G-Spot Excellence
+                  Sophisticated Pleasure Technology
                 </h2>
                 <p className="text-lg text-muted-foreground leading-relaxed mb-6">
-                  A sleek, precisely angled tool designed to reach and stimulate the G-spot with 
-                  subtle elegance. Lightweight and flexible with a smooth surface and LED feedback glow, 
-                  the G-Vibe offers targeted stimulation for intimate exploration.
+                  Pulse delivers powerful rhythmic air pulses using advanced pressure wave technology. 
+                  Its refined contours and whisper-quiet motor offer a deeply personal, luxurious experience 
+                  that enhances pleasure through rhythmic pulse stimulation.
                 </p>
               </div>
 
@@ -72,26 +72,26 @@ const ProductThree = () => {
               <div className="grid sm:grid-cols-2 gap-4">
                 <Card className="glass-dark p-4">
                   <Zap className="w-8 h-8 text-primary mb-2" />
-                  <h3 className="font-semibold text-white mb-1">6 Patterns</h3>
-                  <p className="text-white/70 text-sm">Vibration modes</p>
+                  <h3 className="font-semibold text-white mb-1">10 Intensities</h3>
+                  <p className="text-white/70 text-sm">Rhythmic patterns</p>
                 </Card>
                 
                 <Card className="glass-dark p-4">
-                  <Target className="w-8 h-8 text-secondary mb-2" />
-                  <h3 className="font-semibold text-white mb-1">Angled Tip</h3>
-                  <p className="text-white/70 text-sm">G-spot precision</p>
+                  <Droplets className="w-8 h-8 text-secondary mb-2" />
+                  <h3 className="font-semibold text-white mb-1">IPX7 Waterproof</h3>
+                  <p className="text-white/70 text-sm">Fully submersible</p>
                 </Card>
                 
                 <Card className="glass-dark p-4">
-                  <Lightbulb className="w-8 h-8 text-accent mb-2" />
-                  <h3 className="font-semibold text-white mb-1">LED Glow</h3>
-                  <p className="text-white/70 text-sm">Intensity feedback</p>
+                  <Volume2 className="w-8 h-8 text-accent mb-2" />
+                  <h3 className="font-semibold text-white mb-1">Whisper Quiet</h3>
+                  <p className="text-white/70 text-sm">Ultra-silent motor</p>
                 </Card>
                 
                 <Card className="glass-dark p-4">
-                  <Shield className="w-8 h-8 text-primary mb-2" />
-                  <h3 className="font-semibold text-white mb-1">Flexible Neck</h3>
-                  <p className="text-white/70 text-sm">Comfortable positioning</p>
+                  <Heart className="w-8 h-8 text-primary mb-2" />
+                  <h3 className="font-semibold text-white mb-1">Body Safe</h3>
+                  <p className="text-white/70 text-sm">Premium silicone</p>
                 </Card>
               </div>
 
@@ -144,19 +144,19 @@ const ProductThree = () => {
             <Card className="glass-luxury p-6">
               <h3 className="text-xl font-semibold text-white mb-4">Features</h3>
               <ul className="space-y-3 text-white/80">
-                <li>• 6 vibration patterns</li>
-                <li>• G-spot angled tip</li>
-                <li>• Flexible silicone neck</li>
-                <li>• LED intensity glow</li>
-                <li>• Quiet and rechargeable</li>
-                <li>• Fits snugly in the DOX</li>
+                <li>• 10 rhythmic intensities</li>
+                <li>• Body-safe silicone construction</li>
+                <li>• Waterproof (IPX7 rating)</li>
+                <li>• Whisper-quiet operation</li>
+                <li>• USB-C charging</li>
+                <li>• Designed to fit perfectly in DOX</li>
               </ul>
             </Card>
             
             <Card className="glass-luxury p-6">
               <h3 className="text-xl font-semibold text-white mb-4">What's Included</h3>
               <ul className="space-y-3 text-white/80">
-                <li>• Vellvii G-Vibe device</li>
+                <li>• Vellvii Pulse device</li>
                 <li>• USB-C charging cable</li>
                 <li>• Premium storage pouch</li>
                 <li>• User manual and care guide</li>
@@ -168,9 +168,11 @@ const ProductThree = () => {
       </section>
 
       {/* Similar Products */}
-      <SimilarProducts currentProduct="g-vibe" />
+      <SimilarProducts currentProduct="pulse" />
+      
+      <ConciergeChat />
     </div>
   );
 };
 
-export default ProductThree;
+export default Pulse;

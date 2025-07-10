@@ -8,10 +8,10 @@ import Home from "./pages/Home";
 import About from "./pages/About";
 import Products from "./pages/Products";
 import Contact from "./pages/Contact";
-import ProductOne from "./pages/ProductOne";
-import ProductTwo from "./pages/ProductTwo";
-import ProductThree from "./pages/ProductThree";
-import Storage from "./pages/Storage";
+import Pulse from "./pages/Pulse";
+import Vibe from "./pages/Vibe";
+import GVibe from "./pages/GVibe";
+import DOX from "./pages/DOX";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -28,10 +28,10 @@ const App = () => (
           <Route path="/about" element={<About />} />
           <Route path="/products" element={<Products />} />
           <Route path="/contact" element={<Contact />} />
-          <Route path="/product-one" element={<ProductOne />} />
-          <Route path="/product-two" element={<ProductTwo />} />
-          <Route path="/product-three" element={<ProductThree />} />
-          <Route path="/storage" element={<Storage />} />
+          <Route path="/pulse" element={<Pulse />} />
+          <Route path="/vibe" element={<Vibe />} />
+          <Route path="/g-vibe" element={<GVibe />} />
+          <Route path="/dox" element={<DOX />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>

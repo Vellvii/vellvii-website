@@ -5,8 +5,9 @@ import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { ArrowLeft, Package, Lock, Zap, Shield } from "lucide-react";
 import SimilarProducts from "@/components/SimilarProducts";
+import ConciergeChat from "@/components/ConciergeChat";
 
-const Storage = () => {
+const DOX = () => {
   const [concierge, setConcierge] = useState<string | null>(null);
 
   useEffect(() => {
@@ -25,12 +26,12 @@ const Storage = () => {
 
   return (
     <div className="min-h-screen bg-gradient-dark">
-      {/* Navigation */}
-      <nav className="p-6">
+      {/* Sticky Navigation */}
+      <nav className="fixed top-6 left-6 z-40">
         <Link to="/home">
-          <Button variant="ghost" className="text-white">
+          <Button variant="ghost" className="text-white bg-black/20 backdrop-blur-sm hover:bg-black/40">
             <ArrowLeft className="w-4 h-4 mr-2" />
-            Back to Collection
+            Back to Home
           </Button>
         </Link>
       </nav>
@@ -170,8 +171,10 @@ const Storage = () => {
 
       {/* Similar Products */}
       <SimilarProducts currentProduct="dox" />
+      
+      <ConciergeChat />
     </div>
   );
 };
 
-export default Storage;
+export default DOX;

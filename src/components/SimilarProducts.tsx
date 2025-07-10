@@ -13,7 +13,7 @@ const SimilarProducts = ({ currentProduct }: SimilarProductsProps) => {
       name: "Pulse",
       description: "Rhythmic Excellence",
       icon: Heart,
-      path: "/product-one",
+      path: "/pulse",
       gradient: "bg-gradient-primary"
     },
     {
@@ -21,7 +21,7 @@ const SimilarProducts = ({ currentProduct }: SimilarProductsProps) => {
       name: "Vibe",
       description: "Versatile Luxury",
       icon: Star,
-      path: "/product-two",
+      path: "/vibe",
       gradient: "bg-gradient-secondary"
     },
     {
@@ -29,7 +29,7 @@ const SimilarProducts = ({ currentProduct }: SimilarProductsProps) => {
       name: "G-Vibe", 
       description: "Precision Design",
       icon: Shield,
-      path: "/product-three",
+      path: "/g-vibe",
       gradient: "bg-gradient-primary"
     },
     {
@@ -37,7 +37,7 @@ const SimilarProducts = ({ currentProduct }: SimilarProductsProps) => {
       name: "DOX",
       description: "Luxury Storage",
       icon: Package,
-      path: "/storage",
+      path: "/dox",
       gradient: "bg-gradient-secondary"
     }
   ];

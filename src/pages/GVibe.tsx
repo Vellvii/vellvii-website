@@ -3,10 +3,11 @@ import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { ArrowLeft, Star, Zap, Droplets, RotateCcw } from "lucide-react";
+import { ArrowLeft, Shield, Target, Lightbulb, Zap } from "lucide-react";
 import SimilarProducts from "@/components/SimilarProducts";
+import ConciergeChat from "@/components/ConciergeChat";
 
-const ProductTwo = () => {
+const GVibe = () => {
   const [concierge, setConcierge] = useState<string | null>(null);
 
   useEffect(() => {
@@ -16,21 +17,21 @@ const ProductTwo = () => {
 
   const getConciergeRecommendation = () => {
     if (concierge === "luke") {
-      return "The Vibe exemplifies versatile luxury with its dual-stimulation zones and ergonomic design. Its sophisticated vibration patterns can be customized for both external massage and internal pleasure. The smart memory function ensures your preferred settings are always accessible.";
+      return "The G-Vibe demonstrates precision engineering at its finest. The precisely angled tip is designed for optimal G-spot contact, while the flexible silicone neck allows for comfortable positioning. The LED intensity glow provides elegant feedback for your experience.";
     } else if (concierge === "vivian") {
-      return "I absolutely love the Vibe's versatility! Whether you want a relaxing massage or intimate pleasure, it adapts beautifully to your needs. The curved design feels so natural, and the different vibration modes let you explore at your own pace.";
+      return "The G-Vibe is such a thoughtful design! The gentle curve feels so natural, and I love how the soft LED glow lets you know exactly what intensity you're enjoying. It's lightweight and flexible, making exploration comfortable and stress-free.";
     }
-    return "The Vibe offers versatile dual-stimulation with premium design and smart features.";
+    return "The G-Vibe offers precise G-spot stimulation with elegant design and LED feedback.";
   };
 
   return (
     <div className="min-h-screen bg-gradient-dark">
-      {/* Navigation */}
-      <nav className="p-6">
+      {/* Sticky Navigation */}
+      <nav className="fixed top-6 left-6 z-40">
         <Link to="/home">
-          <Button variant="ghost" className="text-white">
+          <Button variant="ghost" className="text-white bg-black/20 backdrop-blur-sm hover:bg-black/40">
             <ArrowLeft className="w-4 h-4 mr-2" />
-            Back to Collection
+            Back to Home
           </Button>
         </Link>
       </nav>
@@ -41,29 +42,30 @@ const ProductTwo = () => {
           <div className="grid lg:grid-cols-2 gap-12 items-center">
             {/* Product Image Placeholder */}
             <div className="glass-luxury rounded-lg p-12 text-center">
-              <div className="w-48 h-48 mx-auto bg-gradient-secondary rounded-full flex items-center justify-center mb-6">
-                <Star className="w-24 h-24 text-foreground" />
+              <div className="w-48 h-48 mx-auto bg-gradient-primary rounded-full flex items-center justify-center mb-6 relative">
+                <Shield className="w-24 h-24 text-white" />
+                <div className="absolute inset-0 rounded-full bg-gradient-primary opacity-30 animate-pulse"></div>
               </div>
               <Badge variant="secondary" className="mb-4">Premium Collection</Badge>
               <h1 className="text-4xl font-playfair font-bold text-white mb-4">
-                Vellvii Vibe
+                Vellvii G-Vibe
               </h1>
               <p className="text-white/80 text-lg">
-                Internal & External Vibrator
+                G-Spot Vibrator
               </p>
             </div>
 
             {/* Product Details */}
             <div className="space-y-8">
               <div>
-                <Badge variant="outline" className="mb-4">Versatile Luxury</Badge>
+                <Badge variant="outline" className="mb-4">Precision Design</Badge>
                 <h2 className="text-3xl font-playfair font-bold text-foreground mb-4">
-                  Dual-Zone Pleasure Design
+                  Targeted G-Spot Excellence
                 </h2>
                 <p className="text-lg text-muted-foreground leading-relaxed mb-6">
-                  Crafted for elegance and power, the Vibe features dual-stimulation zones with 
-                  customizable vibration patterns. Perfect for external massage or internal intimacy, 
-                  this versatile piece adapts to your desires with sophisticated precision.
+                  A sleek, precisely angled tool designed to reach and stimulate the G-spot with 
+                  subtle elegance. Lightweight and flexible with a smooth surface and LED feedback glow, 
+                  the G-Vibe offers targeted stimulation for intimate exploration.
                 </p>
               </div>
 
@@ -71,26 +73,26 @@ const ProductTwo = () => {
               <div className="grid sm:grid-cols-2 gap-4">
                 <Card className="glass-dark p-4">
                   <Zap className="w-8 h-8 text-primary mb-2" />
-                  <h3 className="font-semibold text-white mb-1">8 Vibration Modes</h3>
-                  <p className="text-white/70 text-sm">Customizable patterns</p>
+                  <h3 className="font-semibold text-white mb-1">6 Patterns</h3>
+                  <p className="text-white/70 text-sm">Vibration modes</p>
                 </Card>
                 
                 <Card className="glass-dark p-4">
-                  <Star className="w-8 h-8 text-secondary mb-2" />
-                  <h3 className="font-semibold text-white mb-1">Ergonomic Design</h3>
-                  <p className="text-white/70 text-sm">Curved for comfort</p>
+                  <Target className="w-8 h-8 text-secondary mb-2" />
+                  <h3 className="font-semibold text-white mb-1">Angled Tip</h3>
+                  <p className="text-white/70 text-sm">G-spot precision</p>
                 </Card>
                 
                 <Card className="glass-dark p-4">
-                  <Droplets className="w-8 h-8 text-accent mb-2" />
-                  <h3 className="font-semibold text-white mb-1">Submersible</h3>
-                  <p className="text-white/70 text-sm">Fully waterproof</p>
+                  <Lightbulb className="w-8 h-8 text-accent mb-2" />
+                  <h3 className="font-semibold text-white mb-1">LED Glow</h3>
+                  <p className="text-white/70 text-sm">Intensity feedback</p>
                 </Card>
                 
                 <Card className="glass-dark p-4">
-                  <RotateCcw className="w-8 h-8 text-primary mb-2" />
-                  <h3 className="font-semibold text-white mb-1">Smart Memory</h3>
-                  <p className="text-white/70 text-sm">Remembers preferences</p>
+                  <Shield className="w-8 h-8 text-primary mb-2" />
+                  <h3 className="font-semibold text-white mb-1">Flexible Neck</h3>
+                  <p className="text-white/70 text-sm">Comfortable positioning</p>
                 </Card>
               </div>
 
@@ -113,8 +115,8 @@ const ProductTwo = () => {
           <div className="max-w-4xl mx-auto">
             <Card className="glass-luxury p-8">
               <div className="flex items-start gap-4">
-                <div className="w-12 h-12 bg-gradient-secondary rounded-full flex items-center justify-center flex-shrink-0">
-                  <span className="text-foreground font-semibold">
+                <div className="w-12 h-12 bg-gradient-primary rounded-full flex items-center justify-center flex-shrink-0">
+                  <span className="text-white font-semibold">
                     {concierge === "luke" ? "L" : "V"}
                   </span>
                 </div>
@@ -143,19 +145,19 @@ const ProductTwo = () => {
             <Card className="glass-luxury p-6">
               <h3 className="text-xl font-semibold text-white mb-4">Features</h3>
               <ul className="space-y-3 text-white/80">
-                <li>• 8 vibration modes</li>
-                <li>• Ergonomic curved design</li>
-                <li>• Waterproof and submersible</li>
-                <li>• USB-C charging</li>
-                <li>• Body-safe materials</li>
-                <li>• Smart memory function</li>
+                <li>• 6 vibration patterns</li>
+                <li>• G-spot angled tip</li>
+                <li>• Flexible silicone neck</li>
+                <li>• LED intensity glow</li>
+                <li>• Quiet and rechargeable</li>
+                <li>• Fits snugly in the DOX</li>
               </ul>
             </Card>
             
             <Card className="glass-luxury p-6">
               <h3 className="text-xl font-semibold text-white mb-4">What's Included</h3>
               <ul className="space-y-3 text-white/80">
-                <li>• Vellvii Vibe device</li>
+                <li>• Vellvii G-Vibe device</li>
                 <li>• USB-C charging cable</li>
                 <li>• Premium storage pouch</li>
                 <li>• User manual and care guide</li>
@@ -167,9 +169,11 @@ const ProductTwo = () => {
       </section>
 
       {/* Similar Products */}
-      <SimilarProducts currentProduct="vibe" />
+      <SimilarProducts currentProduct="g-vibe" />
+      
+      <ConciergeChat />
     </div>
   );
 };
 
-export default ProductTwo;
+export default GVibe;
