@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { ArrowLeft, Star, Zap, Droplets, RotateCcw } from "lucide-react";
+import SimilarProducts from "@/components/SimilarProducts";
 
 const ProductTwo = () => {
   const [concierge, setConcierge] = useState<string | null>(null);
@@ -164,6 +165,9 @@ const ProductTwo = () => {
           </div>
         </div>
       </section>
+
+      {/* Similar Products */}
+      <SimilarProducts currentProduct="vibe" />
     </div>
   );
 };

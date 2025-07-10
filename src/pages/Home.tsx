@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { Heart, Star, Shield, Phone, Mail, MapPin } from "lucide-react";
+import { Heart, Star, Shield, Phone, Mail, MapPin, Store } from "lucide-react";
 
 const Home = () => {
   const [concierge, setConcierge] = useState<string | null>(null);
@@ -54,12 +54,16 @@ const Home = () => {
           )}
 
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Button size="lg" variant="luxury">
-              Explore Collection
-            </Button>
-            <Button size="lg" variant="outline">
-              Learn More
-            </Button>
+            <Link to="/products">
+              <Button size="lg" variant="luxury">
+                Explore Collection
+              </Button>
+            </Link>
+            <Link to="/about">
+              <Button size="lg" variant="outline">
+                Learn More
+              </Button>
+            </Link>
           </div>
         </div>
       </section>
@@ -140,8 +144,12 @@ const Home = () => {
                 bringing elegance and innovation to the art of intimate connection.
               </p>
               <div className="flex gap-4">
-                <Button variant="luxury">Discover Our Story</Button>
-                <Button variant="outline">View Collection</Button>
+                <Link to="/about">
+                  <Button variant="luxury">Discover Our Story</Button>
+                </Link>
+                <Link to="/products">
+                  <Button variant="outline">View Collection</Button>
+                </Link>
               </div>
             </div>
             
@@ -172,6 +180,56 @@ const Home = () => {
         </div>
       </section>
 
+      {/* Partner Marketing Section */}
+      <section className="py-16 px-6 border-t border-white/10">
+        <div className="max-w-6xl mx-auto">
+          <div className="text-center mb-12">
+            <Badge variant="outline" className="mb-4">Business Partnership</Badge>
+            <h2 className="text-4xl font-playfair font-bold text-foreground mb-4">
+              Retail Partners Wanted
+            </h2>
+            <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+              Own a sex shop or intimate wellness store? Join our exclusive retail network and offer 
+              your customers the finest in luxury intimacy products.
+            </p>
+          </div>
+
+          <div className="grid md:grid-cols-3 gap-8">
+            <Card className="glass-luxury p-6 text-center">
+              <div className="w-12 h-12 mx-auto bg-gradient-primary rounded-full flex items-center justify-center mb-4">
+                <Store className="w-6 h-6 text-white" />
+              </div>
+              <h3 className="text-xl font-semibold text-white mb-2">Exclusive Products</h3>
+              <p className="text-white/80 text-sm">Be among the first to stock Vellvii's luxury collection</p>
+            </Card>
+
+            <Card className="glass-luxury p-6 text-center">
+              <div className="w-12 h-12 mx-auto bg-gradient-secondary rounded-full flex items-center justify-center mb-4">
+                <Star className="w-6 h-6 text-foreground" />
+              </div>
+              <h3 className="text-xl font-semibold text-white mb-2">Premium Support</h3>
+              <p className="text-white/80 text-sm">Marketing materials, training, and dedicated support</p>
+            </Card>
+
+            <Card className="glass-luxury p-6 text-center">
+              <div className="w-12 h-12 mx-auto bg-gradient-primary rounded-full flex items-center justify-center mb-4">
+                <Heart className="w-6 h-6 text-white" />
+              </div>
+              <h3 className="text-xl font-semibold text-white mb-2">Attractive Margins</h3>
+              <p className="text-white/80 text-sm">Competitive wholesale pricing for luxury products</p>
+            </Card>
+          </div>
+
+          <div className="text-center mt-8">
+            <Link to="/contact#partners">
+              <Button size="lg" variant="secondary">
+                Become a Partner
+              </Button>
+            </Link>
+          </div>
+        </div>
+      </section>
+
       {/* Contact Section */}
       <section className="py-16 px-6 border-t border-white/10">
         <div className="max-w-6xl mx-auto">
@@ -192,9 +250,11 @@ const Home = () => {
                 Phone
               </h3>
               <p className="text-white/80 mb-4">Speak with our luxury specialists</p>
-              <Button variant="outline" size="sm">
-                +1 (555) 123-4567
-              </Button>
+              <a href="tel:+15551234567">
+                <Button variant="outline" size="sm">
+                  +1 (555) 123-4567
+                </Button>
+              </a>
             </Card>
 
             <Card className="glass-luxury p-8 text-center hover-glow">
@@ -203,9 +263,11 @@ const Home = () => {
                 Email
               </h3>
               <p className="text-white/80 mb-4">Get personalized recommendations</p>
-              <Button variant="outline" size="sm">
-                hello@vellvii.com
-              </Button>
+              <a href="mailto:info@vellvii.com">
+                <Button variant="outline" size="sm">
+                  info@vellvii.com
+                </Button>
+              </a>
             </Card>
 
             <Card className="glass-luxury p-8 text-center hover-glow">

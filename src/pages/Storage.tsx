@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { ArrowLeft, Package, Lock, Zap, Shield } from "lucide-react";
+import SimilarProducts from "@/components/SimilarProducts";
 
 const Storage = () => {
   const [concierge, setConcierge] = useState<string | null>(null);
@@ -166,6 +167,9 @@ const Storage = () => {
           </div>
         </div>
       </section>
+
+      {/* Similar Products */}
+      <SimilarProducts currentProduct="dox" />
     </div>
   );
 };
