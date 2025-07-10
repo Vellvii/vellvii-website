@@ -240,53 +240,82 @@ const Home = () => {
       <section className="py-8 sm:py-12 md:py-16 px-4 sm:px-6 border-t border-white/10">
         <div className="max-w-6xl mx-auto">
           <div className="grid lg:grid-cols-2 gap-6 sm:gap-8 md:gap-12 items-center">
-            <div>
-              <Badge variant="outline" className="mb-4">About Vellvii</Badge>
-              <h2 className="text-4xl font-playfair font-bold text-foreground mb-6">
-                Redefining Intimate Luxury
-              </h2>
-              <p className="text-lg text-muted-foreground mb-6 leading-relaxed">
-                At Vellvii, we believe that intimacy deserves the finest craftsmanship. 
-                Our collection represents the perfect fusion of sophisticated design, 
-                cutting-edge technology, and uncompromising quality.
-              </p>
-              <p className="text-lg text-muted-foreground mb-8 leading-relaxed">
-                Every product is thoughtfully designed to enhance your most personal moments, 
-                bringing elegance and innovation to the art of intimate connection.
-              </p>
-              <div className="flex flex-col sm:flex-row gap-3 sm:gap-4">
-                <Link to="/about" className="w-full sm:w-auto">
-                  <Button variant="luxury" className="w-full sm:w-auto">Discover Our Story</Button>
-                </Link>
-                <Link to="/products" className="w-full sm:w-auto">
-                  <Button variant="outline" className="w-full sm:w-auto">View Collection</Button>
-                </Link>
+            <ScrollReveal delay={0.2} direction="left">
+              <div>
+                <Badge variant="outline" className="mb-4">About Vellvii</Badge>
+                <AnimatedText 
+                  text="Redefining Intimate Luxury"
+                  className="text-4xl font-playfair font-bold text-foreground mb-6"
+                />
+                <p className="text-lg text-muted-foreground mb-6 leading-relaxed">
+                  At Vellvii, we believe that intimacy deserves the finest craftsmanship. 
+                  Our collection represents the perfect fusion of sophisticated design, 
+                  cutting-edge technology, and uncompromising quality.
+                </p>
+                <p className="text-lg text-muted-foreground mb-8 leading-relaxed">
+                  Every product is thoughtfully designed to enhance your most personal moments, 
+                  bringing elegance and innovation to the art of intimate connection.
+                </p>
+                <div className="flex flex-col sm:flex-row gap-3 sm:gap-4">
+                  <Link to="/about" className="w-full sm:w-auto">
+                    <MagneticButton className="bg-secondary text-secondary-foreground hover:bg-secondary/90 px-6 py-3 rounded-md font-semibold w-full sm:w-auto">
+                      Discover Our Story
+                    </MagneticButton>
+                  </Link>
+                  <Link to="/products" className="w-full sm:w-auto">
+                    <MagneticButton className="border border-white/20 text-white hover:bg-white/10 px-6 py-3 rounded-md font-semibold w-full sm:w-auto">
+                      View Collection
+                    </MagneticButton>
+                  </Link>
+                </div>
               </div>
-            </div>
+            </ScrollReveal>
             
-            <div className="glass-luxury p-4 sm:p-6 md:p-8 rounded-lg">
-              <h3 className="text-2xl font-playfair font-semibold text-white mb-6">
-                Our Commitment
-              </h3>
-              <div className="space-y-4">
-                <div className="flex items-center gap-3">
-                  <div className="w-2 h-2 bg-primary rounded-full"></div>
-                  <p className="text-white/90">Premium, body-safe materials</p>
+            <ScrollReveal delay={0.4} direction="right">
+              <motion.div 
+                className="glass-luxury apple-hover p-4 sm:p-6 md:p-8 rounded-lg"
+                whileHover={{ scale: 1.02 }}
+                transition={{ type: "spring", stiffness: 300, damping: 20 }}
+              >
+                <h3 className="text-2xl font-playfair font-semibold text-white mb-6">
+                  Our Commitment
+                </h3>
+                <div className="space-y-4">
+                  <motion.div 
+                    className="flex items-center gap-3"
+                    whileHover={{ x: 10 }}
+                    transition={{ type: "spring", stiffness: 400, damping: 17 }}
+                  >
+                    <div className="w-2 h-2 bg-primary rounded-full"></div>
+                    <p className="text-white/90">Premium, body-safe materials</p>
+                  </motion.div>
+                  <motion.div 
+                    className="flex items-center gap-3"
+                    whileHover={{ x: 10 }}
+                    transition={{ type: "spring", stiffness: 400, damping: 17 }}
+                  >
+                    <div className="w-2 h-2 bg-secondary rounded-full"></div>
+                    <p className="text-white/90">Innovative technology integration</p>
+                  </motion.div>
+                  <motion.div 
+                    className="flex items-center gap-3"
+                    whileHover={{ x: 10 }}
+                    transition={{ type: "spring", stiffness: 400, damping: 17 }}
+                  >
+                    <div className="w-2 h-2 bg-accent rounded-full"></div>
+                    <p className="text-white/90">Discreet, elegant packaging</p>
+                  </motion.div>
+                  <motion.div 
+                    className="flex items-center gap-3"
+                    whileHover={{ x: 10 }}
+                    transition={{ type: "spring", stiffness: 400, damping: 17 }}
+                  >
+                    <div className="w-2 h-2 bg-primary rounded-full"></div>
+                    <p className="text-white/90">Exceptional customer care</p>
+                  </motion.div>
                 </div>
-                <div className="flex items-center gap-3">
-                  <div className="w-2 h-2 bg-secondary rounded-full"></div>
-                  <p className="text-white/90">Innovative technology integration</p>
-                </div>
-                <div className="flex items-center gap-3">
-                  <div className="w-2 h-2 bg-accent rounded-full"></div>
-                  <p className="text-white/90">Discreet, elegant packaging</p>
-                </div>
-                <div className="flex items-center gap-3">
-                  <div className="w-2 h-2 bg-primary rounded-full"></div>
-                  <p className="text-white/90">Exceptional customer care</p>
-                </div>
-              </div>
-            </div>
+              </motion.div>
+            </ScrollReveal>
           </div>
         </div>
       </section>
@@ -294,103 +323,180 @@ const Home = () => {
       {/* Partner Marketing Section */}
       <section className="py-16 px-6 border-t border-white/10">
         <div className="max-w-6xl mx-auto">
-          <div className="text-center mb-12">
-            <Badge variant="outline" className="mb-4">Business Partnership</Badge>
-            <h2 className="text-4xl font-playfair font-bold text-foreground mb-4">
-              Retail Partners Wanted
-            </h2>
-            <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-              Own a sex shop or intimate wellness store? Join our exclusive retail network and offer 
-              your customers the finest in luxury intimacy products.
-            </p>
-          </div>
+          <ScrollReveal delay={0.2}>
+            <div className="text-center mb-12">
+              <Badge variant="outline" className="mb-4">Business Partnership</Badge>
+              <AnimatedText 
+                text="Retail Partners Wanted"
+                className="text-4xl font-playfair font-bold text-foreground mb-4"
+              />
+              <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+                Own a sex shop or intimate wellness store? Join our exclusive retail network and offer 
+                your customers the finest in luxury intimacy products.
+              </p>
+            </div>
+          </ScrollReveal>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 sm:gap-6 md:gap-8">
-            <Card className="glass-luxury p-4 sm:p-6 text-center">
-              <div className="w-12 h-12 mx-auto bg-gradient-primary rounded-full flex items-center justify-center mb-4">
-                <Store className="w-6 h-6 text-white" />
-              </div>
-              <h3 className="text-xl font-semibold text-white mb-2">Exclusive Products</h3>
-              <p className="text-white/80 text-sm">Be among the first to stock Vellvii's luxury collection</p>
-            </Card>
+            <ScrollReveal delay={0.3} direction="up">
+              <motion.div
+                whileHover={{ scale: 1.05, y: -10 }}
+                transition={{ type: "spring", stiffness: 300, damping: 20 }}
+              >
+                <Card className="glass-luxury apple-hover p-4 sm:p-6 text-center">
+                  <motion.div 
+                    className="w-12 h-12 mx-auto bg-gradient-primary rounded-full flex items-center justify-center mb-4"
+                    whileHover={{ rotate: 360 }}
+                    transition={{ duration: 0.6 }}
+                  >
+                    <Store className="w-6 h-6 text-white" />
+                  </motion.div>
+                  <h3 className="text-xl font-semibold text-white mb-2">Exclusive Products</h3>
+                  <p className="text-white/80 text-sm">Be among the first to stock Vellvii's luxury collection</p>
+                </Card>
+              </motion.div>
+            </ScrollReveal>
 
-            <Card className="glass-luxury p-6 text-center">
-              <div className="w-12 h-12 mx-auto bg-gradient-secondary rounded-full flex items-center justify-center mb-4">
-                <Star className="w-6 h-6 text-foreground" />
-              </div>
-              <h3 className="text-xl font-semibold text-white mb-2">Premium Support</h3>
-              <p className="text-white/80 text-sm">Marketing materials, training, and dedicated support</p>
-            </Card>
+            <ScrollReveal delay={0.5} direction="up">
+              <motion.div
+                whileHover={{ scale: 1.05, y: -10 }}
+                transition={{ type: "spring", stiffness: 300, damping: 20 }}
+              >
+                <Card className="glass-luxury apple-hover p-6 text-center">
+                  <motion.div 
+                    className="w-12 h-12 mx-auto bg-gradient-secondary rounded-full flex items-center justify-center mb-4"
+                    whileHover={{ rotate: 360 }}
+                    transition={{ duration: 0.6 }}
+                  >
+                    <Star className="w-6 h-6 text-foreground" />
+                  </motion.div>
+                  <h3 className="text-xl font-semibold text-white mb-2">Premium Support</h3>
+                  <p className="text-white/80 text-sm">Marketing materials, training, and dedicated support</p>
+                </Card>
+              </motion.div>
+            </ScrollReveal>
 
-            <Card className="glass-luxury p-6 text-center">
-              <div className="w-12 h-12 mx-auto bg-gradient-primary rounded-full flex items-center justify-center mb-4">
-                <Heart className="w-6 h-6 text-white" />
-              </div>
-              <h3 className="text-xl font-semibold text-white mb-2">Attractive Margins</h3>
-              <p className="text-white/80 text-sm">Competitive wholesale pricing for luxury products</p>
-            </Card>
+            <ScrollReveal delay={0.7} direction="up">
+              <motion.div
+                whileHover={{ scale: 1.05, y: -10 }}
+                transition={{ type: "spring", stiffness: 300, damping: 20 }}
+              >
+                <Card className="glass-luxury apple-hover p-6 text-center">
+                  <motion.div 
+                    className="w-12 h-12 mx-auto bg-gradient-primary rounded-full flex items-center justify-center mb-4"
+                    whileHover={{ rotate: 360 }}
+                    transition={{ duration: 0.6 }}
+                  >
+                    <Heart className="w-6 h-6 text-white" />
+                  </motion.div>
+                  <h3 className="text-xl font-semibold text-white mb-2">Attractive Margins</h3>
+                  <p className="text-white/80 text-sm">Competitive wholesale pricing for luxury products</p>
+                </Card>
+              </motion.div>
+            </ScrollReveal>
           </div>
 
-          <div className="text-center mt-8">
-            <Link to="/contact#partners">
-              <Button size="lg" variant="secondary">
-                Become a Partner
-              </Button>
-            </Link>
-          </div>
+          <ScrollReveal delay={0.9}>
+            <div className="text-center mt-8">
+              <Link to="/contact#partners">
+                <MagneticButton className="bg-secondary text-secondary-foreground hover:bg-secondary/90 px-8 py-3 rounded-md text-lg font-semibold">
+                  Become a Partner
+                </MagneticButton>
+              </Link>
+            </div>
+          </ScrollReveal>
         </div>
       </section>
 
       {/* Contact Section */}
       <section className="py-16 px-6 border-t border-white/10">
         <div className="max-w-6xl mx-auto">
-          <div className="text-center mb-12">
-            <h2 className="text-4xl font-playfair font-bold text-foreground mb-4">
-              Connect With Us
-            </h2>
-            <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-              Have questions about our collection? Our team is here to provide 
-              personalized assistance and expert guidance.
-            </p>
-          </div>
+          <ScrollReveal delay={0.2}>
+            <div className="text-center mb-12">
+              <AnimatedText 
+                text="Connect With Us"
+                className="text-4xl font-playfair font-bold text-foreground mb-4"
+              />
+              <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+                Have questions about our collection? Our team is here to provide 
+                personalized assistance and expert guidance.
+              </p>
+            </div>
+          </ScrollReveal>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 sm:gap-6 md:gap-8">
-            <Card className="glass-luxury p-4 sm:p-6 md:p-8 text-center hover-glow">
-              <Phone className="w-12 h-12 text-primary mx-auto mb-4" />
-              <h3 className="text-xl font-playfair font-semibold text-white mb-2">
-                Phone
-              </h3>
-              <p className="text-white/80 mb-4">Speak with our luxury specialists</p>
-              <a href="tel:+15551234567">
-                <Button variant="outline" size="sm">
-                  +1 (555) 123-4567
-                </Button>
-              </a>
-            </Card>
+            <ScrollReveal delay={0.3} direction="up">
+              <motion.div
+                whileHover={{ scale: 1.05, y: -10 }}
+                transition={{ type: "spring", stiffness: 300, damping: 20 }}
+              >
+                <Card className="glass-luxury apple-hover p-4 sm:p-6 md:p-8 text-center">
+                  <motion.div
+                    whileHover={{ scale: 1.1, rotate: 5 }}
+                    transition={{ type: "spring", stiffness: 400, damping: 17 }}
+                  >
+                    <Phone className="w-12 h-12 text-primary mx-auto mb-4" />
+                  </motion.div>
+                  <h3 className="text-xl font-playfair font-semibold text-white mb-2">
+                    Phone
+                  </h3>
+                  <p className="text-white/80 mb-4">Speak with our luxury specialists</p>
+                  <a href="tel:+15551234567">
+                    <MagneticButton className="border border-white/20 text-white hover:bg-white/10 px-4 py-2 rounded-md text-sm font-medium">
+                      +1 (555) 123-4567
+                    </MagneticButton>
+                  </a>
+                </Card>
+              </motion.div>
+            </ScrollReveal>
 
-            <Card className="glass-luxury p-8 text-center hover-glow">
-              <Mail className="w-12 h-12 text-secondary mx-auto mb-4" />
-              <h3 className="text-xl font-playfair font-semibold text-white mb-2">
-                Email
-              </h3>
-              <p className="text-white/80 mb-4">Get personalized recommendations</p>
-              <a href="mailto:info@vellvii.com">
-                <Button variant="outline" size="sm">
-                  info@vellvii.com
-                </Button>
-              </a>
-            </Card>
+            <ScrollReveal delay={0.5} direction="up">
+              <motion.div
+                whileHover={{ scale: 1.05, y: -10 }}
+                transition={{ type: "spring", stiffness: 300, damping: 20 }}
+              >
+                <Card className="glass-luxury apple-hover p-8 text-center">
+                  <motion.div
+                    whileHover={{ scale: 1.1, rotate: -5 }}
+                    transition={{ type: "spring", stiffness: 400, damping: 17 }}
+                  >
+                    <Mail className="w-12 h-12 text-secondary mx-auto mb-4" />
+                  </motion.div>
+                  <h3 className="text-xl font-playfair font-semibold text-white mb-2">
+                    Email
+                  </h3>
+                  <p className="text-white/80 mb-4">Get personalized recommendations</p>
+                  <a href="mailto:info@vellvii.com">
+                    <MagneticButton className="border border-white/20 text-white hover:bg-white/10 px-4 py-2 rounded-md text-sm font-medium">
+                      info@vellvii.com
+                    </MagneticButton>
+                  </a>
+                </Card>
+              </motion.div>
+            </ScrollReveal>
 
-            <Card className="glass-luxury p-8 text-center hover-glow">
-              <MapPin className="w-12 h-12 text-accent mx-auto mb-4" />
-              <h3 className="text-xl font-playfair font-semibold text-white mb-2">
-                Location
-              </h3>
-              <p className="text-white/80 mb-4">Delaware, USA</p>
-              <Button variant="outline" size="sm">
-                View Details
-              </Button>
-            </Card>
+            <ScrollReveal delay={0.7} direction="up">
+              <motion.div
+                whileHover={{ scale: 1.05, y: -10 }}
+                transition={{ type: "spring", stiffness: 300, damping: 20 }}
+              >
+                <Card className="glass-luxury apple-hover p-8 text-center">
+                  <motion.div
+                    whileHover={{ scale: 1.1, rotate: 5 }}
+                    transition={{ type: "spring", stiffness: 400, damping: 17 }}
+                  >
+                    <MapPin className="w-12 h-12 text-accent mx-auto mb-4" />
+                  </motion.div>
+                  <h3 className="text-xl font-playfair font-semibold text-white mb-2">
+                    Location
+                  </h3>
+                  <p className="text-white/80 mb-4">Delaware, USA</p>
+                  <MagneticButton className="border border-white/20 text-white hover:bg-white/10 px-4 py-2 rounded-md text-sm font-medium">
+                    View Details
+                  </MagneticButton>
+                </Card>
+              </motion.div>
+            </ScrollReveal>
           </div>
         </div>
       </section>
