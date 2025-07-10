@@ -5,6 +5,7 @@ import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Heart, Star, Shield, Phone, Mail, MapPin, Store } from "lucide-react";
 import ConciergeChat from "@/components/ConciergeChat";
+import Cart from "@/components/Cart";
 
 const Home = () => {
   const [concierge, setConcierge] = useState<string | null>(null);
@@ -38,13 +39,9 @@ const Home = () => {
             Luxury Intimacy Collection
           </Badge>
           
-          <div className="mb-6">
-            <img src="/lovable-uploads/fd8fd5ce-f65c-4c0c-b093-af821cbd5a34.png" alt="Vellvii" className="h-20 md:h-24 mx-auto" />
+          <div className="mb-8">
+            <img src="/lovable-uploads/fd8fd5ce-f65c-4c0c-b093-af821cbd5a34.png" alt="Vellvii" className="h-28 md:h-36 mx-auto" />
           </div>
-          
-          <p className="text-xl md:text-2xl text-secondary italic mb-8 max-w-3xl mx-auto">
-            The art of "O"
-          </p>
 
           {concierge && (
             <div className="glass-luxury p-6 rounded-lg mb-8 max-w-2xl mx-auto">
@@ -54,7 +51,7 @@ const Home = () => {
             </div>
           )}
 
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
+          <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
             <Link to="/products">
               <Button size="lg" variant="luxury">
                 Explore Collection
@@ -65,6 +62,7 @@ const Home = () => {
                 Learn More
               </Button>
             </Link>
+            <Cart />
           </div>
         </div>
       </section>

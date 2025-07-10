@@ -6,14 +6,31 @@ import { Badge } from "@/components/ui/badge";
 import { ArrowLeft, Package, Lock, Zap, Shield } from "lucide-react";
 import SimilarProducts from "@/components/SimilarProducts";
 import ConciergeChat from "@/components/ConciergeChat";
+import { useCart } from "@/hooks/useCart";
+import { useToast } from "@/hooks/use-toast";
 
 const DOX = () => {
   const [concierge, setConcierge] = useState<string | null>(null);
+  const { addToCart } = useCart();
+  const { toast } = useToast();
 
   useEffect(() => {
     const selectedConcierge = localStorage.getItem("selectedConcierge");
     setConcierge(selectedConcierge);
   }, []);
+
+  const handleAddToCart = () => {
+    addToCart({
+      id: 'dox',
+      name: 'Vellvii DOX',
+      price: 99.99,
+    });
+    
+    toast({
+      title: "Added to Collection",
+      description: "Vellvii DOX has been added to your collection.",
+    });
+  };
 
   const getConciergeRecommendation = () => {
     if (concierge === "luke") {
@@ -96,8 +113,8 @@ const DOX = () => {
               </div>
 
               <div className="flex gap-4">
-                <Button size="lg" variant="luxury" className="flex-1">
-                  Add to Collection
+                <Button size="lg" variant="luxury" className="flex-1" onClick={handleAddToCart}>
+                  Add to Collection - $99.99
                 </Button>
                 <Button size="lg" variant="outline">
                   Learn More
