@@ -9,7 +9,7 @@ const Products = () => {
   return (
     <div className="min-h-screen bg-gradient-dark">
       {/* Navigation */}
-      <nav className="flex justify-between items-center p-6">
+      <nav className="flex justify-between items-center p-4 sm:p-6">
         <Link to="/home">
           <Button variant="ghost" className="text-white">
             <ArrowLeft className="w-4 h-4 mr-2" />
@@ -20,7 +20,7 @@ const Products = () => {
       </nav>
 
       {/* Hero Section */}
-      <section className="px-6 py-16">
+      <section className="px-4 sm:px-6 py-8 sm:py-12 md:py-16">
         <div className="max-w-4xl mx-auto text-center">
           <Badge variant="secondary" className="mb-4">Luxury Collection</Badge>
           <h1 className="text-5xl font-playfair font-bold gradient-text mb-6">
@@ -33,19 +33,19 @@ const Products = () => {
       </section>
 
       {/* Products Grid */}
-      <section className="px-6 py-16">
+      <section className="px-4 sm:px-6 py-8 sm:py-12 md:py-16">
         <div className="max-w-6xl mx-auto">
-          <div className="grid md:grid-cols-2 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6 md:gap-8">
             {/* Pulse */}
             <Link to="/pulse">
-              <Card className="glass-luxury hover:scale-105 transition-all duration-500 hover-glow p-8 group">
-                <div className="flex items-center gap-6 mb-6">
-                  <div className="w-20 h-20 bg-gradient-primary rounded-full flex items-center justify-center">
-                    <Heart className="w-10 h-10 text-white" />
+              <Card className="glass-luxury hover:scale-105 transition-all duration-500 hover-glow p-4 sm:p-6 md:p-8 group">
+                <div className="flex items-center gap-3 sm:gap-4 md:gap-6 mb-4 sm:mb-6">
+                  <div className="w-12 h-12 sm:w-16 sm:h-16 md:w-20 md:h-20 bg-gradient-primary rounded-full flex items-center justify-center flex-shrink-0">
+                    <Heart className="w-6 h-6 sm:w-8 sm:h-8 md:w-10 md:h-10 text-white" />
                   </div>
                   <div>
-                    <h3 className="text-2xl font-playfair font-semibold text-white mb-2">Vellvii Pulse</h3>
-                    <p className="text-white/80">Rhythmic Clitoral Stimulator</p>
+                    <h3 className="text-lg sm:text-xl md:text-2xl font-playfair font-semibold text-white mb-1 sm:mb-2">Vellvii Pulse</h3>
+                    <p className="text-sm sm:text-base text-white/80">Rhythmic Clitoral Stimulator</p>
                   </div>
                 </div>
                 <p className="text-white/70 mb-6 leading-relaxed">
@@ -136,7 +136,7 @@ const Products = () => {
       </section>
 
       {/* CTA Section */}
-      <section className="px-6 py-16 border-t border-white/10">
+      <section className="px-4 sm:px-6 py-8 sm:py-12 md:py-16 border-t border-white/10">
         <div className="max-w-4xl mx-auto text-center">
           <h2 className="text-3xl font-playfair font-bold text-foreground mb-6">
             Need Guidance?
@@ -144,14 +144,14 @@ const Products = () => {
           <p className="text-lg text-muted-foreground mb-8">
             Our AI concierges are here to help you find your perfect match
           </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Link to="/">
-              <Button size="lg" variant="luxury">
+          <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center">
+            <Link to="/" className="w-full sm:w-auto">
+              <Button size="lg" variant="luxury" className="w-full sm:w-auto">
                 Choose Concierge
               </Button>
             </Link>
-            <Link to="/contact">
-              <Button size="lg" variant="outline">
+            <Link to="/contact" className="w-full sm:w-auto">
+              <Button size="lg" variant="outline" className="w-full sm:w-auto">
                 Contact Support
               </Button>
             </Link>

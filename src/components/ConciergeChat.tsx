@@ -101,17 +101,17 @@ const ConciergeChat = () => {
       {!isOpen && (
         <Button
           onClick={() => setIsOpen(true)}
-          className="fixed bottom-6 right-6 z-50 rounded-full w-14 h-14 shadow-luxury hover-glow"
+          className="fixed bottom-4 right-4 sm:bottom-6 sm:right-6 z-50 rounded-full w-12 h-12 sm:w-14 sm:h-14 shadow-luxury hover-glow"
           variant="luxury"
         >
-          <MessageCircle className="w-6 h-6" />
+          <MessageCircle className="w-5 h-5 sm:w-6 sm:h-6" />
         </Button>
       )}
 
       {/* Chat Window */}
       {isOpen && (
-        <Card className={`fixed bottom-6 right-6 z-50 glass-luxury shadow-2xl transition-all duration-300 ${
-          isMinimized ? 'w-80 h-16' : 'w-80 h-96'
+        <Card className={`fixed bottom-4 right-4 sm:bottom-6 sm:right-6 z-50 glass-luxury shadow-2xl transition-all duration-300 ${
+          isMinimized ? 'w-72 sm:w-80 h-14 sm:h-16' : 'w-72 sm:w-80 h-80 sm:h-96'
         }`}>
           {/* Header */}
           <div className="flex items-center justify-between p-4 border-b border-white/10">

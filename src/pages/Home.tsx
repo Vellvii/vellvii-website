@@ -35,26 +35,27 @@ const Home = () => {
   return (
     <div className="min-h-screen bg-gradient-dark">
       {/* Navigation */}
-      <nav className="flex justify-between items-center p-6">
+      <nav className="flex justify-between items-center p-4 sm:p-6">
         <div className="flex items-center gap-2">
           <img src="/lovable-uploads/fd8fd5ce-f65c-4c0c-b093-af821cbd5a34.png" alt="Vellvii" className="h-8" />
         </div>
-        <div className="flex items-center gap-4">
+        <div className="flex items-center gap-2 sm:gap-4">
           <Button
             variant="ghost"
             size="sm"
             onClick={() => setIsCartOpen(true)}
-            className="text-white hover:bg-white/10"
+            className="text-white hover:bg-white/10 px-2 sm:px-3"
           >
-            <ShoppingCart className="w-4 h-4 mr-2" />
-            Cart ({cartItems.length})
+            <ShoppingCart className="w-4 h-4 sm:mr-2" />
+            <span className="hidden sm:inline">Cart ({cartItems.length})</span>
+            <span className="sm:hidden">({cartItems.length})</span>
           </Button>
           <UserMenu />
         </div>
       </nav>
 
       {/* Hero Section */}
-      <section className="relative py-24 px-6">
+      <section className="relative py-12 sm:py-16 md:py-24 px-4 sm:px-6">
         <div className="absolute inset-0 bg-gradient-luxury opacity-10"></div>
         
         <div className="relative z-10 max-w-6xl mx-auto text-center">
@@ -67,21 +68,21 @@ const Home = () => {
           </div>
 
           {concierge && (
-            <div className="glass-luxury p-6 rounded-lg mb-8 max-w-2xl mx-auto">
-              <p className={`text-lg font-inter ${getConciergeStyle()}`}>
+            <div className="glass-luxury p-4 sm:p-6 rounded-lg mb-6 sm:mb-8 max-w-2xl mx-auto">
+              <p className={`text-base sm:text-lg font-inter ${getConciergeStyle()}`}>
                 {getGreeting()}
               </p>
             </div>
           )}
 
-          <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
-            <Link to="/products">
-              <Button size="lg" variant="luxury">
+          <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center items-center">
+            <Link to="/products" className="w-full sm:w-auto">
+              <Button size="lg" variant="luxury" className="w-full sm:w-auto">
                 Explore Collection
               </Button>
             </Link>
-            <Link to="/about">
-              <Button size="lg" variant="outline">
+            <Link to="/about" className="w-full sm:w-auto">
+              <Button size="lg" variant="outline" className="w-full sm:w-auto">
                 Learn More
               </Button>
             </Link>
@@ -90,7 +91,7 @@ const Home = () => {
       </section>
 
       {/* Products Preview */}
-      <section className="py-16 px-6">
+      <section className="py-8 sm:py-12 md:py-16 px-4 sm:px-6">
         <div className="max-w-6xl mx-auto">
           <div className="text-center mb-12">
             <h2 className="text-4xl font-playfair font-bold text-foreground mb-4">
@@ -102,14 +103,14 @@ const Home = () => {
             </p>
           </div>
 
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 md:gap-8">
             <Link to="/pulse">
-              <Card className="glass-luxury hover:scale-105 transition-all duration-500 hover-glow p-6 text-center group">
+              <Card className="glass-luxury hover:scale-105 transition-all duration-500 hover-glow p-4 sm:p-6 text-center group">
                 <div className="w-16 h-16 mx-auto bg-gradient-primary rounded-full flex items-center justify-center mb-4">
                   <Heart className="w-8 h-8 text-white" />
                 </div>
-                <h3 className="text-xl font-playfair font-semibold text-white mb-2">Pulse</h3>
-                <p className="text-white/80 text-sm">Rhythmic Excellence</p>
+                <h3 className="text-lg sm:text-xl font-playfair font-semibold text-white mb-2">Pulse</h3>
+                <p className="text-white/80 text-xs sm:text-sm">Rhythmic Excellence</p>
               </Card>
             </Link>
 
@@ -147,9 +148,9 @@ const Home = () => {
       </section>
 
       {/* About Section */}
-      <section className="py-16 px-6 border-t border-white/10">
+      <section className="py-8 sm:py-12 md:py-16 px-4 sm:px-6 border-t border-white/10">
         <div className="max-w-6xl mx-auto">
-          <div className="grid lg:grid-cols-2 gap-12 items-center">
+          <div className="grid lg:grid-cols-2 gap-6 sm:gap-8 md:gap-12 items-center">
             <div>
               <Badge variant="outline" className="mb-4">About Vellvii</Badge>
               <h2 className="text-4xl font-playfair font-bold text-foreground mb-6">
@@ -164,17 +165,17 @@ const Home = () => {
                 Every product is thoughtfully designed to enhance your most personal moments, 
                 bringing elegance and innovation to the art of intimate connection.
               </p>
-              <div className="flex gap-4">
-                <Link to="/about">
-                  <Button variant="luxury">Discover Our Story</Button>
+              <div className="flex flex-col sm:flex-row gap-3 sm:gap-4">
+                <Link to="/about" className="w-full sm:w-auto">
+                  <Button variant="luxury" className="w-full sm:w-auto">Discover Our Story</Button>
                 </Link>
-                <Link to="/products">
-                  <Button variant="outline">View Collection</Button>
+                <Link to="/products" className="w-full sm:w-auto">
+                  <Button variant="outline" className="w-full sm:w-auto">View Collection</Button>
                 </Link>
               </div>
             </div>
             
-            <div className="glass-luxury p-8 rounded-lg">
+            <div className="glass-luxury p-4 sm:p-6 md:p-8 rounded-lg">
               <h3 className="text-2xl font-playfair font-semibold text-white mb-6">
                 Our Commitment
               </h3>
@@ -215,8 +216,8 @@ const Home = () => {
             </p>
           </div>
 
-          <div className="grid md:grid-cols-3 gap-8">
-            <Card className="glass-luxury p-6 text-center">
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 sm:gap-6 md:gap-8">
+            <Card className="glass-luxury p-4 sm:p-6 text-center">
               <div className="w-12 h-12 mx-auto bg-gradient-primary rounded-full flex items-center justify-center mb-4">
                 <Store className="w-6 h-6 text-white" />
               </div>
@@ -264,8 +265,8 @@ const Home = () => {
             </p>
           </div>
 
-          <div className="grid md:grid-cols-3 gap-8">
-            <Card className="glass-luxury p-8 text-center hover-glow">
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 sm:gap-6 md:gap-8">
+            <Card className="glass-luxury p-4 sm:p-6 md:p-8 text-center hover-glow">
               <Phone className="w-12 h-12 text-primary mx-auto mb-4" />
               <h3 className="text-xl font-playfair font-semibold text-white mb-2">
                 Phone

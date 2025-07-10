@@ -46,33 +46,34 @@ const Pulse = () => {
   return (
     <div className="min-h-screen bg-gradient-dark">
       {/* Navigation */}
-      <nav className="flex justify-between items-center p-6">
+      <nav className="flex justify-between items-center p-4 sm:p-6">
         <Link to="/home">
           <Button variant="ghost" className="text-white">
             <ArrowLeft className="w-4 h-4 mr-2" />
             Back to Home
           </Button>
         </Link>
-        <div className="flex items-center gap-4">
+        <div className="flex items-center gap-2 sm:gap-4">
           <Button
             variant="ghost"
             size="sm"
             onClick={() => setIsCartOpen(true)}
-            className="text-white hover:bg-white/10"
+            className="text-white hover:bg-white/10 px-2 sm:px-3"
           >
-            <ShoppingCart className="w-4 h-4 mr-2" />
-            Cart ({cartItems.length})
+            <ShoppingCart className="w-4 h-4 sm:mr-2" />
+            <span className="hidden sm:inline">Cart ({cartItems.length})</span>
+            <span className="sm:hidden">({cartItems.length})</span>
           </Button>
           <UserMenu />
         </div>
       </nav>
 
       {/* Product Hero */}
-      <section className="px-6 pb-16">
+      <section className="px-4 sm:px-6 pb-8 sm:pb-12 md:pb-16">
         <div className="max-w-6xl mx-auto">
-          <div className="grid lg:grid-cols-2 gap-12 items-center">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 sm:gap-8 md:gap-12 items-center">
             {/* Product Image Placeholder */}
-            <div className="glass-luxury rounded-lg p-12 text-center">
+            <div className="glass-luxury rounded-lg p-6 sm:p-8 md:p-12 text-center">
               <div className="w-48 h-48 mx-auto bg-gradient-primary rounded-full flex items-center justify-center mb-6">
                 <Heart className="w-24 h-24 text-white" />
               </div>
@@ -100,7 +101,7 @@ const Pulse = () => {
               </div>
 
               {/* Features */}
-              <div className="grid sm:grid-cols-2 gap-4">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
                 <Card className="glass-dark p-4">
                   <Zap className="w-8 h-8 text-primary mb-2" />
                   <h3 className="font-semibold text-white mb-1">10 Intensities</h3>
@@ -126,11 +127,12 @@ const Pulse = () => {
                 </Card>
               </div>
 
-              <div className="flex gap-4">
+              <div className="flex flex-col sm:flex-row gap-3 sm:gap-4">
                 <Button size="lg" variant="luxury" className="flex-1" onClick={handleAddToCart}>
-                  Add to Collection - $299.99
+                  <span className="hidden sm:inline">Add to Collection - $299.99</span>
+                  <span className="sm:hidden">Add - $299.99</span>
                 </Button>
-                <Button size="lg" variant="outline">
+                <Button size="lg" variant="outline" className="w-full sm:w-auto">
                   Learn More
                 </Button>
               </div>

@@ -56,7 +56,7 @@ const Landing = () => {
   return (
     <div className="min-h-screen bg-gradient-dark flex items-center justify-center relative overflow-hidden">
       {/* Auth/Profile buttons in top right */}
-      <div className="absolute top-6 right-6 z-20 flex gap-3">
+      <div className="absolute top-4 right-4 sm:top-6 sm:right-6 z-20 flex gap-2 sm:gap-3">
         {user ? (
           <Button
             variant="ghost"
@@ -96,7 +96,7 @@ const Landing = () => {
       <div className="absolute top-20 left-20 w-32 h-32 bg-gradient-luxury rounded-full blur-3xl opacity-30 float-animation"></div>
       <div className="absolute bottom-20 right-20 w-24 h-24 bg-gradient-secondary rounded-full blur-2xl opacity-40 float-animation" style={{ animationDelay: '2s' }}></div>
       
-      <div className="relative z-10 text-center space-y-12 px-6 max-w-4xl mx-auto">
+      <div className="relative z-10 text-center space-y-8 sm:space-y-12 px-4 sm:px-6 max-w-4xl mx-auto">
         {/* Logo */}
         <div className="fade-in-up">
           <div className="mb-4">
@@ -114,10 +114,10 @@ const Landing = () => {
             Choose Your Personal Concierge
           </h2>
           
-          <div className="grid md:grid-cols-2 gap-8 max-w-3xl mx-auto">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6 md:gap-8 max-w-3xl mx-auto">
             {/* Luke */}
             <Card 
-              className="glass-luxury p-8 hover:scale-105 transition-all duration-500 cursor-pointer group hover-glow"
+              className="glass-luxury p-4 sm:p-6 md:p-8 hover:scale-105 transition-all duration-500 cursor-pointer group hover-glow"
               onClick={() => handleConciergeSelection("luke")}
             >
               <div className="text-center space-y-4">

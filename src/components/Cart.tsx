@@ -46,13 +46,13 @@ const Cart = () => {
           
           {/* Sidebar */}
           <div className={cn(
-            "fixed right-0 top-0 h-full w-[400px] sm:w-[480px]",
+            "fixed right-0 top-0 h-full w-full sm:w-[400px] md:w-[480px] max-w-[90vw]",
             "bg-gradient-dark border-l border-white/20 shadow-2xl",
             "transform transition-transform duration-300 ease-in-out",
             "translate-x-0 z-50 flex flex-col"
           )}>
             {/* Header */}
-            <div className="border-b border-white/10 p-6">
+            <div className="border-b border-white/10 p-4 sm:p-6">
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-2">
                   <Heart className="w-6 h-6 text-primary" />
@@ -77,7 +77,7 @@ const Cart = () => {
             </div>
             
             {/* Content */}
-            <div className="flex-1 overflow-hidden flex flex-col p-6">
+            <div className="flex-1 overflow-hidden flex flex-col p-4 sm:p-6">
               {items.length === 0 ? (
                 <div className="flex-1 flex items-center justify-center">
                   <div className="text-center space-y-4">
