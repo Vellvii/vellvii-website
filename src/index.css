@@ -5,60 +5,62 @@
 
 @layer base {
   :root {
-    /* Dark luxury theme */
-    --background: 222.2 84% 4.9%;
-    --foreground: 210 40% 98%;
+    /* Black and gold luxury theme */
+    --background: 0 0% 8%;
+    --foreground: 0 0% 95%;
     
-    /* Primary brand colors - Deep purple */
-    --primary: 263 70% 50%;
-    --primary-foreground: 210 40% 98%;
+    /* Primary - Rich black */
+    --primary: 0 0% 12%;
+    --primary-foreground: 0 0% 95%;
     
-    /* Secondary - Rose gold */
-    --secondary: 24 100% 85%;
-    --secondary-foreground: 222.2 84% 4.9%;
+    /* Secondary - Luxury gold accent */
+    --secondary: 42 88% 65%;
+    --secondary-foreground: 0 0% 12%;
     
-    /* Accent - Warm gold */
-    --accent: 45 93% 85%;
-    --accent-foreground: 222.2 84% 4.9%;
+    /* Accent - Sophisticated teal green */
+    --accent: 174 25% 45%;
+    --accent-foreground: 0 0% 95%;
     
     /* Muted tones */
-    --muted: 217.2 32.6% 17.5%;
-    --muted-foreground: 215 20.2% 65.1%;
+    --muted: 0 0% 18%;
+    --muted-foreground: 0 0% 60%;
     
     /* Border and input */
-    --border: 217.2 32.6% 17.5%;
-    --input: 217.2 32.6% 17.5%;
-    --ring: 263 70% 50%;
+    --border: 0 0% 20%;
+    --input: 0 0% 18%;
+    --ring: 42 88% 65%;
     
     /* Card backgrounds */
-    --card: 222.2 84% 4.9%;
-    --card-foreground: 210 40% 98%;
+    --card: 0 0% 10%;
+    --card-foreground: 0 0% 95%;
     
     /* Popover */
-    --popover: 222.2 84% 4.9%;
-    --popover-foreground: 210 40% 98%;
+    --popover: 0 0% 10%;
+    --popover-foreground: 0 0% 95%;
     
     /* Destructive */
     --destructive: 0 62.8% 30.6%;
-    --destructive-foreground: 210 40% 98%;
+    --destructive-foreground: 0 0% 95%;
     
     /* Chart colors */
-    --chart-1: 263 70% 50%;
-    --chart-2: 24 100% 85%;
-    --chart-3: 45 93% 85%;
-    --chart-4: 217.2 32.6% 17.5%;
-    --chart-5: 215 20.2% 65.1%;
+    --chart-1: 0 0% 12%;
+    --chart-2: 42 88% 65%;
+    --chart-3: 174 25% 45%;
+    --chart-4: 0 0% 18%;
+    --chart-5: 0 0% 60%;
     
     /* Custom luxury gradients */
-    --gradient-primary: linear-gradient(135deg, hsl(263, 70%, 50%), hsl(283, 80%, 60%));
-    --gradient-secondary: linear-gradient(135deg, hsl(24, 100%, 85%), hsl(45, 93%, 85%));
-    --gradient-luxury: linear-gradient(135deg, hsl(263, 70%, 50%) 0%, hsl(24, 100%, 85%) 50%, hsl(45, 93%, 85%) 100%);
-    --gradient-dark: linear-gradient(135deg, hsl(222.2, 84%, 4.9%) 0%, hsl(217.2, 32.6%, 17.5%) 100%);
+    --gradient-primary: linear-gradient(135deg, hsl(0, 0%, 12%), hsl(0, 0%, 20%));
+    --gradient-secondary: linear-gradient(135deg, hsl(42, 88%, 65%), hsl(45, 85%, 70%));
+    --gradient-luxury: linear-gradient(135deg, hsl(0, 0%, 8%) 0%, hsl(174, 25%, 45%) 50%, hsl(42, 88%, 65%) 100%);
+    --gradient-dark: linear-gradient(135deg, hsl(0, 0%, 8%) 0%, hsl(0, 0%, 12%) 100%);
+    --gradient-accent: linear-gradient(135deg, hsl(174, 25%, 45%), hsl(174, 30%, 50%));
     
     /* Shadows with brand colors */
-    --shadow-luxury: 0 20px 60px -10px hsl(263 70% 50% / 0.3);
-    --shadow-glow: 0 0 40px hsl(263 70% 50% / 0.2);
-    --shadow-elegant: 0 10px 30px -10px hsl(222.2 84% 4.9% / 0.5);
+    --shadow-luxury: 0 20px 60px -10px hsl(42 88% 65% / 0.2);
+    --shadow-glow: 0 0 40px hsl(42 88% 65% / 0.15);
+    --shadow-elegant: 0 10px 30px -10px hsl(0 0% 0% / 0.5);
+    --shadow-teal: 0 0 30px hsl(174 25% 45% / 0.3);
     
     /* Animation and transitions */
     --transition-luxury: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
@@ -68,8 +70,8 @@
   }
 
   .dark {
-    --background: 222.2 84% 4.9%;
-    --foreground: 210 40% 98%;
+    --background: 0 0% 8%;
+    --foreground: 0 0% 95%;
   }
   
   * {
@@ -89,11 +91,15 @@
 @layer components {
   /* Glass morphism effects */
   .glass-luxury {
-    @apply backdrop-blur-xl bg-white/10 border border-white/20;
+    @apply backdrop-blur-xl bg-white/5 border border-secondary/20;
   }
   
   .glass-dark {
-    @apply backdrop-blur-xl bg-black/20 border border-white/10;
+    @apply backdrop-blur-xl bg-black/40 border border-white/10;
+  }
+  
+  .glass-accent {
+    @apply backdrop-blur-xl bg-accent/10 border border-accent/30;
   }
   
   /* Luxury hover effects */
@@ -152,7 +158,7 @@
   
   /* Gradient text */
   .gradient-text {
-    background: var(--gradient-luxury);
+    background: linear-gradient(135deg, hsl(42, 88%, 65%), hsl(45, 85%, 70%));
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;

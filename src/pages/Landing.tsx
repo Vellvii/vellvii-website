@@ -28,9 +28,9 @@ const Landing = () => {
       <div className="relative z-10 text-center space-y-12 px-6 max-w-4xl mx-auto">
         {/* Logo */}
         <div className="fade-in-up">
-          <h1 className="text-6xl md:text-8xl font-['Dancing_Script',cursive] font-bold gradient-text mb-4">
-            Vellvii
-          </h1>
+          <div className="mb-4">
+            <img src="/lovable-uploads/fd8fd5ce-f65c-4c0c-b093-af821cbd5a34.png" alt="Vellvii" className="h-24 md:h-32 mx-auto" />
+          </div>
           <p className="text-xl md:text-2xl text-secondary font-light tracking-wide italic">
             The art of "O"
           </p>

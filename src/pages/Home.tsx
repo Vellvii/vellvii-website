@@ -38,9 +38,9 @@ const Home = () => {
             Luxury Intimacy Collection
           </Badge>
           
-          <h1 className="text-5xl md:text-7xl font-['Dancing_Script',cursive] font-bold gradient-text mb-6">
-            Vellvii
-          </h1>
+          <div className="mb-6">
+            <img src="/lovable-uploads/fd8fd5ce-f65c-4c0c-b093-af821cbd5a34.png" alt="Vellvii" className="h-20 md:h-24 mx-auto" />
+          </div>
           
           <p className="text-xl md:text-2xl text-secondary italic mb-8 max-w-3xl mx-auto">
             The art of "O"

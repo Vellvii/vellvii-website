@@ -21,9 +21,9 @@ const About = () => {
       <section className="px-6 py-16">
         <div className="max-w-4xl mx-auto text-center">
           <Badge variant="secondary" className="mb-4">Our Story</Badge>
-          <h1 className="text-5xl font-['Dancing_Script',cursive] font-bold gradient-text mb-6">
-            About Vellvii
-          </h1>
+          <div className="mb-6">
+            <img src="/lovable-uploads/fd8fd5ce-f65c-4c0c-b093-af821cbd5a34.png" alt="Vellvii" className="h-16 md:h-20 mx-auto" />
+          </div>
           <p className="text-xl text-secondary italic mb-8 max-w-3xl mx-auto">
             The art of "O"
           </p>
