@@ -3,18 +3,22 @@ import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Card } from "@/components/ui/card";
+import { Label } from "@/components/ui/label";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { useToast } from "@/hooks/use-toast";
 import { User, Session } from "@supabase/supabase-js";
 
 interface AuthProps {
   onAuth?: (user: User) => void;
+  preselectedConcierge?: string;
 }
 
-const Auth = ({ onAuth }: AuthProps) => {
+const Auth = ({ onAuth, preselectedConcierge }: AuthProps) => {
   const [isLogin, setIsLogin] = useState(true);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [name, setName] = useState("");
+  const [concierge, setConcierge] = useState(preselectedConcierge || "");
   const [loading, setLoading] = useState(false);
   const { toast } = useToast();
 
@@ -43,6 +47,7 @@ const Auth = ({ onAuth }: AuthProps) => {
             emailRedirectTo: `${window.location.origin}/`,
             data: {
               name: name,
+              concierge: concierge,
             },
           },
         });
@@ -105,6 +110,21 @@ const Auth = ({ onAuth }: AuthProps) => {
           required
           className="bg-white/10 border-white/20 text-white placeholder:text-white/50"
         />
+
+        {!isLogin && (
+          <div>
+            <Label htmlFor="concierge" className="text-white mb-2 block">Choose Your Concierge</Label>
+            <Select value={concierge} onValueChange={setConcierge} required>
+              <SelectTrigger className="bg-white/10 border-white/20 text-white">
+                <SelectValue placeholder="Select your preferred concierge" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="luke">Luke</SelectItem>
+                <SelectItem value="vivian">Vivian</SelectItem>
+              </SelectContent>
+            </Select>
+          </div>
+        )}
 
         <Button 
           type="submit" 

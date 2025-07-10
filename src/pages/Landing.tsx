@@ -5,7 +5,7 @@ import { Card } from "@/components/ui/card";
 import { User, LogIn, UserPlus } from "lucide-react";
 import { useAuth } from "@/hooks/useAuth";
 import Auth from "@/components/Auth";
-import UserProfile from "@/components/UserProfile";
+import UserProfileView from "@/components/UserProfileView";
 
 const Landing = () => {
   const navigate = useNavigate();
@@ -32,11 +32,17 @@ const Landing = () => {
         navigate("/home");
       }, 500);
     } else {
-      // If not logged in, show auth modal
+      // If not logged in, show auth popup with guest option
       setTimeout(() => {
         setShowAuth(true);
       }, 500);
     }
+  };
+
+  const handleGuestMode = () => {
+    setShowAuth(false);
+    // Navigate to home as guest
+    navigate("/home");
   };
 
   if (loading) {
@@ -115,11 +121,11 @@ const Landing = () => {
               onClick={() => handleConciergeSelection("luke")}
             >
               <div className="text-center space-y-4">
-                <div className="w-24 h-24 mx-auto bg-gradient-primary rounded-full flex items-center justify-center mb-6">
-                  <span className="text-3xl font-playfair font-bold text-white">L</span>
+                <div className="w-24 h-24 mx-auto bg-gradient-secondary rounded-full flex items-center justify-center mb-6">
+                  <span className="text-3xl font-playfair font-bold text-black">L</span>
                 </div>
                 <h3 className="text-2xl font-playfair font-semibold text-white">Luke</h3>
-                <p className="text-white/80 font-inter leading-relaxed">
+                <p className="text-white/90 font-inter leading-relaxed">
                   Your sophisticated guide with extensive expertise in luxury intimacy. 
                   Luke provides detailed insights and refined recommendations.
                 </p>
@@ -177,14 +183,31 @@ const Landing = () => {
             >
               ✕
             </Button>
-            <Auth onAuth={() => setShowAuth(false)} />
+            <div className="space-y-4">
+              <Auth 
+                onAuth={() => setShowAuth(false)} 
+                preselectedConcierge={selectedConcierge || localStorage.getItem("selectedConcierge") || ""} 
+              />
+              <div className="text-center">
+                <Button
+                  variant="ghost"
+                  onClick={handleGuestMode}
+                  className="text-white/70 hover:text-white text-sm"
+                >
+                  Continue as Guest
+                </Button>
+                <p className="text-xs text-white/50 mt-2 max-w-xs mx-auto">
+                  As a guest, you'll have limited access and no personalization features
+                </p>
+              </div>
+            </div>
           </div>
         </div>
       )}
 
       {/* Profile Modal */}
       {showProfile && user && (
-        <UserProfile user={user} onClose={() => setShowProfile(false)} />
+        <UserProfileView user={user} onClose={() => setShowProfile(false)} />
       )}
 
       {/* Creative Credit Footer */}

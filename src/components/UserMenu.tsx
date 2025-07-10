@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { User, LogOut } from "lucide-react";
 import { useAuth } from "@/hooks/useAuth";
-import UserProfile from "./UserProfile";
+import UserProfileView from "./UserProfileView";
 
 const UserMenu = () => {
   const [showProfile, setShowProfile] = useState(false);
@@ -34,7 +34,7 @@ const UserMenu = () => {
       </div>
 
       {showProfile && (
-        <UserProfile user={user} onClose={() => setShowProfile(false)} />
+        <UserProfileView user={user} onClose={() => setShowProfile(false)} />
       )}
     </>
   );
