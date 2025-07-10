@@ -8,6 +8,11 @@ import ConciergeChat from "@/components/ConciergeChat";
 import Cart from "@/components/Cart";
 import UserMenu from "@/components/UserMenu";
 import { useCart } from "@/hooks/useCart";
+import { ScrollReveal } from "@/components/animations/ScrollReveal";
+import { ParallaxContainer } from "@/components/animations/ParallaxContainer";
+import { MagneticButton } from "@/components/animations/MagneticButton";
+import { AnimatedText } from "@/components/animations/AnimatedText";
+import { motion, useScroll, useTransform } from "framer-motion";
 
 const Home = () => {
   const [concierge, setConcierge] = useState<string | null>(null);
@@ -32,117 +37,201 @@ const Home = () => {
       : "text-secondary font-semibold";
   };
 
+  const { scrollY } = useScroll();
+  const backgroundY = useTransform(scrollY, [0, 500], [0, 150]);
+
   return (
-    <div className="min-h-screen bg-gradient-dark">
+    <div className="min-h-screen relative overflow-hidden">
+      {/* Animated background mesh */}
+      <motion.div 
+        className="fixed inset-0 mesh-bg opacity-30"
+        style={{ y: backgroundY }}
+      />
+      <div className="absolute inset-0 bg-gradient-apple" />
+      
       {/* Navigation */}
-      <nav className="flex justify-between items-center p-4 sm:p-6">
-        <div className="flex items-center gap-2">
+      <motion.nav 
+        className="relative z-50 flex justify-between items-center p-4 sm:p-6 backdrop-blur-md bg-black/20"
+        initial={{ y: -100, opacity: 0 }}
+        animate={{ y: 0, opacity: 1 }}
+        transition={{ duration: 0.8, ease: [0.25, 0.46, 0.45, 0.94] }}
+      >
+        <motion.div 
+          className="flex items-center gap-2"
+          whileHover={{ scale: 1.05 }}
+          transition={{ type: "spring", stiffness: 400, damping: 17 }}
+        >
           <img src="/lovable-uploads/fd8fd5ce-f65c-4c0c-b093-af821cbd5a34.png" alt="Vellvii" className="h-8" />
-        </div>
+        </motion.div>
         <div className="flex items-center gap-2 sm:gap-4">
-          <Button
-            variant="ghost"
-            size="sm"
+          <MagneticButton
             onClick={() => setIsCartOpen(true)}
-            className="text-white hover:bg-white/10 px-2 sm:px-3"
+            className="text-white hover:bg-white/10 px-2 sm:px-3 py-2 rounded-md transition-all duration-300"
           >
             <ShoppingCart className="w-4 h-4 sm:mr-2" />
             <span className="hidden sm:inline">Cart ({cartItems.length})</span>
             <span className="sm:hidden">({cartItems.length})</span>
-          </Button>
+          </MagneticButton>
           <UserMenu />
         </div>
-      </nav>
+      </motion.nav>
 
       {/* Hero Section */}
       <section className="relative py-12 sm:py-16 md:py-24 px-4 sm:px-6">
-        <div className="absolute inset-0 bg-gradient-luxury opacity-10"></div>
+        <ParallaxContainer offset={30} className="absolute inset-0">
+          <div className="absolute inset-0 bg-gradient-hero opacity-20"></div>
+        </ParallaxContainer>
         
         <div className="relative z-10 max-w-6xl mx-auto text-center">
-          <Badge variant="secondary" className="mb-4 px-6 py-2 text-sm">
-            Luxury Intimacy Collection
-          </Badge>
+          <ScrollReveal delay={0.2}>
+            <Badge variant="secondary" className="mb-4 px-6 py-2 text-sm apple-hover">
+              Luxury Intimacy Collection
+            </Badge>
+          </ScrollReveal>
           
-          <div className="mb-8">
-            <img src="/lovable-uploads/fd8fd5ce-f65c-4c0c-b093-af821cbd5a34.png" alt="Vellvii" className="h-28 md:h-36 mx-auto" />
-          </div>
+          <ScrollReveal delay={0.4}>
+            <motion.div 
+              className="mb-8"
+              whileHover={{ scale: 1.05, rotate: 1 }}
+              transition={{ type: "spring", stiffness: 300, damping: 20 }}
+            >
+              <img src="/lovable-uploads/fd8fd5ce-f65c-4c0c-b093-af821cbd5a34.png" alt="Vellvii" className="h-28 md:h-36 mx-auto" />
+            </motion.div>
+          </ScrollReveal>
 
           {concierge && (
-            <div className="glass-luxury p-4 sm:p-6 rounded-lg mb-6 sm:mb-8 max-w-2xl mx-auto">
-              <p className={`text-base sm:text-lg font-inter ${getConciergeStyle()}`}>
-                {getGreeting()}
-              </p>
-            </div>
+            <ScrollReveal delay={0.6}>
+              <motion.div 
+                className="glass-luxury p-4 sm:p-6 rounded-lg mb-6 sm:mb-8 max-w-2xl mx-auto apple-hover"
+                whileHover={{ scale: 1.02 }}
+                transition={{ type: "spring", stiffness: 300, damping: 20 }}
+              >
+                <AnimatedText 
+                  text={getGreeting()}
+                  className={`text-base sm:text-lg font-inter ${getConciergeStyle()}`}
+                  delay={0.8}
+                />
+              </motion.div>
+            </ScrollReveal>
           )}
 
-          <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center items-center">
-            <Link to="/products" className="w-full sm:w-auto">
-              <Button size="lg" variant="luxury" className="w-full sm:w-auto">
-                Explore Collection
-              </Button>
-            </Link>
-            <Link to="/about" className="w-full sm:w-auto">
-              <Button size="lg" variant="outline" className="w-full sm:w-auto">
-                Learn More
-              </Button>
-            </Link>
-          </div>
+          <ScrollReveal delay={1.0}>
+            <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center items-center">
+              <Link to="/products" className="w-full sm:w-auto">
+                <MagneticButton className="bg-secondary text-secondary-foreground hover:bg-secondary/90 px-8 py-3 rounded-md text-lg font-semibold w-full sm:w-auto magnetic">
+                  Explore Collection
+                </MagneticButton>
+              </Link>
+              <Link to="/about" className="w-full sm:w-auto">
+                <MagneticButton className="border border-white/20 text-white hover:bg-white/10 px-8 py-3 rounded-md text-lg font-semibold w-full sm:w-auto magnetic">
+                  Learn More
+                </MagneticButton>
+              </Link>
+            </div>
+          </ScrollReveal>
         </div>
       </section>
 
       {/* Products Preview */}
-      <section className="py-8 sm:py-12 md:py-16 px-4 sm:px-6">
+      <section className="py-8 sm:py-12 md:py-16 px-4 sm:px-6 relative">
         <div className="max-w-6xl mx-auto">
-          <div className="text-center mb-12">
-            <h2 className="text-4xl font-playfair font-bold text-foreground mb-4">
-              Our Luxury Collection
-            </h2>
-            <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-              Each piece in our collection is meticulously crafted to deliver 
-              unparalleled quality and sophisticated pleasure.
-            </p>
-          </div>
+          <ScrollReveal delay={0.2}>
+            <div className="text-center mb-12">
+              <AnimatedText 
+                text="Our Luxury Collection"
+                className="text-4xl font-playfair font-bold text-foreground mb-4"
+              />
+              <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+                Each piece in our collection is meticulously crafted to deliver 
+                unparalleled quality and sophisticated pleasure.
+              </p>
+            </div>
+          </ScrollReveal>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 md:gap-8">
-            <Link to="/pulse">
-              <Card className="glass-luxury hover:scale-105 transition-all duration-500 hover-glow p-4 sm:p-6 text-center group">
-                <div className="w-16 h-16 mx-auto bg-gradient-primary rounded-full flex items-center justify-center mb-4">
-                  <Heart className="w-8 h-8 text-white" />
-                </div>
-                <h3 className="text-lg sm:text-xl font-playfair font-semibold text-white mb-2">Pulse</h3>
-                <p className="text-white/80 text-xs sm:text-sm">Rhythmic Excellence</p>
-              </Card>
-            </Link>
+            <ScrollReveal delay={0.2} direction="up">
+              <Link to="/pulse">
+                <motion.div
+                  whileHover={{ scale: 1.05, y: -10 }}
+                  transition={{ type: "spring", stiffness: 300, damping: 20 }}
+                >
+                  <Card className="glass-luxury apple-hover p-4 sm:p-6 text-center group">
+                    <motion.div 
+                      className="w-16 h-16 mx-auto bg-gradient-primary rounded-full flex items-center justify-center mb-4"
+                      whileHover={{ rotate: 360 }}
+                      transition={{ duration: 0.6 }}
+                    >
+                      <Heart className="w-8 h-8 text-white" />
+                    </motion.div>
+                    <h3 className="text-lg sm:text-xl font-playfair font-semibold text-white mb-2">Pulse</h3>
+                    <p className="text-white/80 text-xs sm:text-sm">Rhythmic Excellence</p>
+                  </Card>
+                </motion.div>
+              </Link>
+            </ScrollReveal>
 
-            <Link to="/vibe">
-              <Card className="glass-luxury hover:scale-105 transition-all duration-500 hover-glow p-6 text-center group">
-                <div className="w-16 h-16 mx-auto bg-gradient-secondary rounded-full flex items-center justify-center mb-4">
-                  <Star className="w-8 h-8 text-foreground" />
-                </div>
-                <h3 className="text-xl font-playfair font-semibold text-white mb-2">Vibe</h3>
-                <p className="text-white/80 text-sm">Versatile Luxury</p>
-              </Card>
-            </Link>
+            <ScrollReveal delay={0.4} direction="up">
+              <Link to="/vibe">
+                <motion.div
+                  whileHover={{ scale: 1.05, y: -10 }}
+                  transition={{ type: "spring", stiffness: 300, damping: 20 }}
+                >
+                  <Card className="glass-luxury apple-hover p-6 text-center group">
+                    <motion.div 
+                      className="w-16 h-16 mx-auto bg-gradient-secondary rounded-full flex items-center justify-center mb-4"
+                      whileHover={{ rotate: 360 }}
+                      transition={{ duration: 0.6 }}
+                    >
+                      <Star className="w-8 h-8 text-foreground" />
+                    </motion.div>
+                    <h3 className="text-xl font-playfair font-semibold text-white mb-2">Vibe</h3>
+                    <p className="text-white/80 text-sm">Versatile Luxury</p>
+                  </Card>
+                </motion.div>
+              </Link>
+            </ScrollReveal>
 
-            <Link to="/gvibe">
-              <Card className="glass-luxury hover:scale-105 transition-all duration-500 hover-glow p-6 text-center group">
-                <div className="w-16 h-16 mx-auto bg-gradient-primary rounded-full flex items-center justify-center mb-4">
-                  <Shield className="w-8 h-8 text-white" />
-                </div>
-                <h3 className="text-xl font-playfair font-semibold text-white mb-2">G-Vibe</h3>
-                <p className="text-white/80 text-sm">Precision Design</p>
-              </Card>
-            </Link>
+            <ScrollReveal delay={0.6} direction="up">
+              <Link to="/g-vibe">
+                <motion.div
+                  whileHover={{ scale: 1.05, y: -10 }}
+                  transition={{ type: "spring", stiffness: 300, damping: 20 }}
+                >
+                  <Card className="glass-luxury apple-hover p-6 text-center group">
+                    <motion.div 
+                      className="w-16 h-16 mx-auto bg-gradient-primary rounded-full flex items-center justify-center mb-4"
+                      whileHover={{ rotate: 360 }}
+                      transition={{ duration: 0.6 }}
+                    >
+                      <Shield className="w-8 h-8 text-white" />
+                    </motion.div>
+                    <h3 className="text-xl font-playfair font-semibold text-white mb-2">G-Vibe</h3>
+                    <p className="text-white/80 text-sm">Precision Design</p>
+                  </Card>
+                </motion.div>
+              </Link>
+            </ScrollReveal>
 
-            <Link to="/dox">
-              <Card className="glass-luxury hover:scale-105 transition-all duration-500 hover-glow p-6 text-center group">
-                <div className="w-16 h-16 mx-auto bg-gradient-secondary rounded-full flex items-center justify-center mb-4">
-                  <Shield className="w-8 h-8 text-foreground" />
-                </div>
-                <h3 className="text-xl font-playfair font-semibold text-white mb-2">DOX</h3>
-                <p className="text-white/80 text-sm">Luxury Storage</p>
-              </Card>
-            </Link>
+            <ScrollReveal delay={0.8} direction="up">
+              <Link to="/dox">
+                <motion.div
+                  whileHover={{ scale: 1.05, y: -10 }}
+                  transition={{ type: "spring", stiffness: 300, damping: 20 }}
+                >
+                  <Card className="glass-luxury apple-hover p-6 text-center group">
+                    <motion.div 
+                      className="w-16 h-16 mx-auto bg-gradient-secondary rounded-full flex items-center justify-center mb-4"
+                      whileHover={{ rotate: 360 }}
+                      transition={{ duration: 0.6 }}
+                    >
+                      <Shield className="w-8 h-8 text-foreground" />
+                    </motion.div>
+                    <h3 className="text-xl font-playfair font-semibold text-white mb-2">DOX</h3>
+                    <p className="text-white/80 text-sm">Luxury Storage</p>
+                  </Card>
+                </motion.div>
+              </Link>
+            </ScrollReveal>
           </div>
         </div>
       </section>

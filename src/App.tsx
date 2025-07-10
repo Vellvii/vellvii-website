@@ -3,6 +3,8 @@ import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { SmoothScroll } from "./components/animations/SmoothScroll";
+import { PageTransition } from "./components/animations/PageTransition";
 import Landing from "./pages/Landing";
 import Home from "./pages/Home";
 import About from "./pages/About";
@@ -22,19 +24,23 @@ const App = () => (
       <Toaster />
       <Sonner />
       <BrowserRouter>
-        <Routes>
-          <Route path="/" element={<Landing />} />
-          <Route path="/home" element={<Home />} />
-          <Route path="/about" element={<About />} />
-          <Route path="/products" element={<Products />} />
-          <Route path="/contact" element={<Contact />} />
-          <Route path="/pulse" element={<Pulse />} />
-          <Route path="/vibe" element={<Vibe />} />
-          <Route path="/g-vibe" element={<GVibe />} />
-          <Route path="/dox" element={<DOX />} />
-          {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
-          <Route path="*" element={<NotFound />} />
-        </Routes>
+        <SmoothScroll>
+          <PageTransition>
+            <Routes>
+              <Route path="/" element={<Landing />} />
+              <Route path="/home" element={<Home />} />
+              <Route path="/about" element={<About />} />
+              <Route path="/products" element={<Products />} />
+              <Route path="/contact" element={<Contact />} />
+              <Route path="/pulse" element={<Pulse />} />
+              <Route path="/vibe" element={<Vibe />} />
+              <Route path="/g-vibe" element={<GVibe />} />
+              <Route path="/dox" element={<DOX />} />
+              {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
+              <Route path="*" element={<NotFound />} />
+            </Routes>
+          </PageTransition>
+        </SmoothScroll>
       </BrowserRouter>
     </TooltipProvider>
   </QueryClientProvider>
