@@ -123,23 +123,22 @@ const Landing = () => {
           
           {showButtons && (
             <div className="mt-6 space-y-3 fade-in">
-              <Button
+              <button
                 ref={yesButtonRef}
                 onClick={handleYes}
                 onMouseMove={(e) => handleButtonMouseMove(e, yesButtonRef)}
                 className="magnetic-button w-full bg-gradient-to-r from-yellow-600 to-yellow-500 hover:from-yellow-500 hover:to-yellow-400 text-black font-medium py-2 text-sm rounded-lg transition-all duration-300 hover:scale-105"
               >
                 Yes, I am older than 18
-              </Button>
-              <Button
+              </button>
+              <button
                 ref={noButtonRef}
                 onClick={handleNo}
                 onMouseMove={(e) => handleButtonMouseMove(e, noButtonRef)}
-                variant="outline"
-                className="magnetic-button w-full border-white/30 text-white hover:bg-white/10 py-2 text-sm rounded-lg transition-all duration-300"
+                className="magnetic-button w-full border border-white/30 text-white hover:bg-white/10 py-2 text-sm rounded-lg transition-all duration-300 bg-transparent"
               >
                 No, I am not
-              </Button>
+              </button>
             </div>
           )}
         </div>
@@ -166,19 +165,18 @@ const Landing = () => {
             
             {showButtons && (
               <div className="mt-4 space-y-2 fade-in">
-                <Button
+                <button
                   onClick={handleYes}
                   className="magnetic-button w-full bg-gradient-to-r from-yellow-600 to-yellow-500 hover:from-yellow-500 hover:to-yellow-400 text-black font-medium py-2 text-sm rounded-lg transition-all duration-300"
                 >
                   Yes, I am older than 18
-                </Button>
-                <Button
+                </button>
+                <button
                   onClick={handleNo}
-                  variant="outline"
-                  className="magnetic-button w-full border-white/30 text-white hover:bg-white/10 py-2 text-sm rounded-lg transition-all duration-300"
+                  className="magnetic-button w-full border border-white/30 text-white hover:bg-white/10 py-2 text-sm rounded-lg transition-all duration-300 bg-transparent"
                 >
                   No, I am not
-                </Button>
+                </button>
               </div>
             )}
           </div>

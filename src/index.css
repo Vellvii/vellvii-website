@@ -303,15 +303,17 @@
     height: 100%;
     background: radial-gradient(
       circle at var(--shimmer-x, 50%) var(--shimmer-y, 50%),
-      rgba(255, 215, 0, 0.8) 0%,
-      rgba(255, 215, 0, 0.4) 25%,
-      rgba(255, 215, 0, 0.1) 50%,
-      transparent 70%
+      rgba(255, 215, 0, 0.9) 0%,
+      rgba(255, 215, 0, 0.6) 20%,
+      rgba(255, 215, 0, 0.3) 40%,
+      rgba(255, 215, 0, 0.1) 60%,
+      transparent 80%
     );
     opacity: 0;
-    transition: opacity 0.2s ease;
+    transition: opacity 0.3s ease;
     pointer-events: none;
     z-index: 1;
+    border-radius: inherit;
   }
 
   .shimmer-container-interactive:hover .shimmer-logo-interactive::before {
