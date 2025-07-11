@@ -212,6 +212,60 @@
   .font-inter {
     font-family: 'Inter', sans-serif;
   }
+
+  /* Shimmer Animation for Logos */
+  .shimmer-container {
+    position: relative;
+    overflow: hidden;
+  }
+
+  .shimmer-logo {
+    position: relative;
+  }
+
+  .shimmer-logo::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(
+      90deg,
+      transparent,
+      rgba(255, 215, 0, 0.4),
+      transparent
+    );
+    animation: shimmer 6s infinite;
+  }
+
+  @keyframes shimmer {
+    0% {
+      left: -100%;
+    }
+    50% {
+      left: 100%;
+    }
+    100% {
+      left: 100%;
+    }
+  }
+
+  /* Fade in animation */
+  .fade-in {
+    animation: fadeIn 0.5s ease-in;
+  }
+
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(10px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
 }
 
 @layer base {

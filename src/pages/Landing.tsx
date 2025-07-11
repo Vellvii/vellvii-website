@@ -1,231 +1,157 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import { Card } from "@/components/ui/card";
-import { User, LogIn, UserPlus } from "lucide-react";
-import { useAuth } from "@/hooks/useAuth";
-import Auth from "@/components/Auth";
-import UserProfileView from "@/components/UserProfileView";
+import vLogo from "@/assets/v-logo.png";
+import vellviiLogo from "@/assets/vellvii-logo.png";
+import vivienImage from "@/assets/vivien-assistant.jpg";
 
 const Landing = () => {
   const navigate = useNavigate();
-  const [selectedConcierge, setSelectedConcierge] = useState<string | null>(null);
-  const [showAuth, setShowAuth] = useState(false);
-  const [showProfile, setShowProfile] = useState(false);
-  const { user, loading } = useAuth();
+  const [isTyping, setIsTyping] = useState(false);
+  const [displayedText, setDisplayedText] = useState("");
+  const [showButtons, setShowButtons] = useState(false);
+  const [ageVerified, setAgeVerified] = useState(false);
 
-  // Redirect authenticated users to home
+  const message = "Hi, I'm Vivien. I can guide you through our website and you may ask me any questions at any time. To start, please confirm that you are older than 18.";
+
   useEffect(() => {
-    if (!loading && user) {
+    // Start typing animation after a brief delay
+    const startTyping = setTimeout(() => {
+      setIsTyping(true);
+      let index = 0;
+      const typeInterval = setInterval(() => {
+        if (index < message.length) {
+          setDisplayedText(message.slice(0, index + 1));
+          index++;
+        } else {
+          clearInterval(typeInterval);
+          setIsTyping(false);
+          setShowButtons(true);
+        }
+      }, 50); // Typing speed
+
+      return () => clearInterval(typeInterval);
+    }, 2000);
+
+    return () => clearTimeout(startTyping);
+  }, []);
+
+  const handleYes = () => {
+    setAgeVerified(true);
+    // Navigate to home or next page
+    setTimeout(() => {
       navigate("/home");
-    }
-  }, [user, loading, navigate]);
-
-  const handleConciergeSelection = (concierge: string) => {
-    setSelectedConcierge(concierge);
-    // Store concierge choice in localStorage
-    localStorage.setItem("selectedConcierge", concierge);
-    
-    // If user is logged in, navigate to home immediately
-    if (user) {
-      setTimeout(() => {
-        navigate("/home");
-      }, 500);
-    } else {
-      // If not logged in, show auth popup with guest option
-      setTimeout(() => {
-        setShowAuth(true);
-      }, 500);
-    }
+    }, 500);
   };
 
-  const handleGuestMode = () => {
-    setShowAuth(false);
-    // Navigate to home as guest
-    navigate("/home");
+  const handleNo = () => {
+    alert("You must be 18 or older to access this website.");
+    // Could redirect to age restriction page or close tab
   };
-
-  if (loading) {
-    return (
-      <div className="min-h-screen bg-gradient-dark flex items-center justify-center">
-        <div className="text-white">Loading...</div>
-      </div>
-    );
-  }
 
   return (
-    <div className="min-h-screen bg-gradient-dark flex items-center justify-center relative overflow-hidden">
-      {/* Auth/Profile buttons in top right */}
-      <div className="absolute top-4 right-4 sm:top-6 sm:right-6 z-20 flex gap-2 sm:gap-3">
-        {user ? (
-          <Button
-            variant="ghost"
-            size="sm"
-            onClick={() => setShowProfile(true)}
-            className="text-white hover:bg-white/10"
-          >
-            <User className="w-4 h-4 mr-2" />
-            Profile
-          </Button>
-        ) : (
-          <>
-            <Button
-              variant="ghost"
-              size="sm"
-              onClick={() => setShowAuth(true)}
-              className="text-white hover:bg-white/10"
-            >
-              <LogIn className="w-4 h-4 mr-2" />
-              Sign In
-            </Button>
-            <Button
-              variant="outline"
-              size="sm"
-              onClick={() => setShowAuth(true)}
-              className="text-white border-white/20 hover:bg-white/10"
-            >
-              <UserPlus className="w-4 h-4 mr-2" />
-              Sign Up
-            </Button>
-          </>
-        )}
-      </div>
-
-      {/* Background effects */}
-      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_var(--primary)_0%,_transparent_50%)] opacity-20"></div>
-      <div className="absolute top-20 left-20 w-32 h-32 bg-gradient-luxury rounded-full blur-3xl opacity-30 float-animation"></div>
-      <div className="absolute bottom-20 right-20 w-24 h-24 bg-gradient-secondary rounded-full blur-2xl opacity-40 float-animation" style={{ animationDelay: '2s' }}></div>
-      
-      <div className="relative z-10 text-center space-y-8 sm:space-y-12 px-4 sm:px-6 max-w-4xl mx-auto">
-        {/* Logo */}
-        <div className="fade-in-up">
-          <div className="mb-4">
-            <img src="/lovable-uploads/fd8fd5ce-f65c-4c0c-b093-af821cbd5a34.png" alt="Vellvii" className="h-32 md:h-40 mx-auto" />
-          </div>
-          <p className="text-lg text-foreground/80 font-inter max-w-2xl mx-auto leading-relaxed mt-6">
-            Experience personalized luxury with our AI concierge service, 
-            designed to guide your intimate journey with sophistication and care.
-          </p>
+    <div className="min-h-screen bg-[#1a1a1a] relative overflow-hidden">
+      {/* Logo Section */}
+      <div className="flex flex-col items-center pt-12 md:pt-20">
+        {/* V Logo with shimmer */}
+        <div className="mb-8 shimmer-container">
+          <img 
+            src="/lovable-uploads/c5420417-5d7d-43fb-83f7-096b095f26c6.png" 
+            alt="V Logo" 
+            className="h-24 md:h-32 w-auto shimmer-logo"
+          />
         </div>
 
-        {/* Concierge Selection */}
-        <div className="fade-in-up space-y-8" style={{ animationDelay: '0.3s' }}>
-          <h2 className="text-3xl font-playfair text-foreground mb-8">
-            Choose Your Personal Concierge
-          </h2>
-          
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6 md:gap-8 max-w-3xl mx-auto">
-            {/* Luke */}
-            <Card 
-              className="glass-luxury p-4 sm:p-6 md:p-8 hover:scale-105 transition-all duration-500 cursor-pointer group hover-glow"
-              onClick={() => handleConciergeSelection("luke")}
-            >
-              <div className="text-center space-y-4">
-                <div className="w-24 h-24 mx-auto bg-gradient-secondary rounded-full flex items-center justify-center mb-6">
-                  <span className="text-3xl font-playfair font-bold text-black">L</span>
-                </div>
-                <h3 className="text-2xl font-playfair font-semibold text-white">Luke</h3>
-                <p className="text-white font-inter leading-relaxed">
-                  Your sophisticated guide with extensive expertise in luxury intimacy. 
-                  Luke provides detailed insights and refined recommendations.
-                </p>
-                <div className="pt-4">
-                  <Button variant="concierge" size="lg" className="w-full">
-                    Choose Luke
-                  </Button>
-                </div>
-              </div>
-            </Card>
-
-            {/* Vivian */}
-            <Card 
-              className="glass-luxury p-8 hover:scale-105 transition-all duration-500 cursor-pointer group hover-glow"
-              onClick={() => handleConciergeSelection("vivian")}
-            >
-              <div className="text-center space-y-4">
-                <div className="w-24 h-24 mx-auto rounded-full overflow-hidden mb-6">
-                  <img src="/lovable-uploads/0f6e82dd-0d32-4119-a2a1-e5a0386ffec4.png" alt="Vivian" className="w-full h-full object-cover" />
-                </div>
-                <h3 className="text-2xl font-playfair font-semibold text-white">Vivian</h3>
-                <p className="text-white/80 font-inter leading-relaxed">
-                  Your warm and intuitive companion who creates a comfortable environment. 
-                  Vivian offers personalized care with gentle guidance.
-                </p>
-                <div className="pt-4">
-                  <Button variant="concierge" size="lg" className="w-full">
-                    Choose Vivian
-                  </Button>
-                </div>
-              </div>
-            </Card>
-          </div>
-
-          {selectedConcierge && (
-            <div className="mt-8 p-4 glass-dark rounded-lg fade-in-up">
-              <p className="text-white/90 font-inter">
-                Excellent choice! {selectedConcierge === 'luke' ? 'Luke' : 'Vivian'} will be your personal concierge.
-                {user ? "Preparing your luxury experience..." : "Please sign in to continue..."}
-              </p>
-            </div>
-          )}
+        {/* Vellvii Logo with shimmer */}
+        <div className="shimmer-container">
+          <img 
+            src="/lovable-uploads/12536082-5a87-4e12-82c9-d705ecb8d3e5.png" 
+            alt="Vellvii - The art of O" 
+            className="h-16 md:h-20 w-auto shimmer-logo"
+          />
         </div>
       </div>
 
-      {/* Auth Modal */}
-      {showAuth && (
-        <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
-          <div className="relative">
-            <Button
-              variant="ghost"
-              size="sm"
-              onClick={() => setShowAuth(false)}
-              className="absolute -top-2 -right-2 text-white hover:bg-white/10 z-10"
-            >
-              ✕
-            </Button>
-            <div className="space-y-4">
-              <Auth 
-                onAuth={() => setShowAuth(false)} 
-                preselectedConcierge={selectedConcierge || localStorage.getItem("selectedConcierge") || ""} 
-              />
-              <div className="text-center">
+      {/* Vivien Section */}
+      <div className="absolute right-8 md:right-16 top-1/3 md:top-1/4 flex flex-col md:flex-row items-center md:items-start max-w-2xl">
+        {/* Vivien's Image */}
+        <div className="mb-6 md:mb-0 md:mr-8 flex-shrink-0">
+          <img 
+            src={vivienImage} 
+            alt="Vivien" 
+            className="w-32 h-40 md:w-48 md:h-60 object-cover rounded-lg shadow-2xl"
+          />
+        </div>
+
+        {/* Vivien's Message */}
+        <div className="text-white max-w-md">
+          <div className="bg-black/20 backdrop-blur-sm rounded-lg p-6 border border-white/10">
+            <p className="font-playfair text-lg md:text-xl leading-relaxed">
+              {displayedText}
+              {isTyping && <span className="animate-pulse">|</span>}
+            </p>
+            
+            {showButtons && (
+              <div className="mt-6 space-y-3 fade-in">
                 <Button
-                  variant="ghost"
-                  onClick={handleGuestMode}
-                  className="text-white/70 hover:text-white text-sm"
+                  onClick={handleYes}
+                  className="w-full bg-gradient-to-r from-yellow-600 to-yellow-500 hover:from-yellow-500 hover:to-yellow-400 text-black font-medium py-3 rounded-lg transition-all duration-300 hover:scale-105"
                 >
-                  Continue as Guest
+                  Yes, I am older than 18
                 </Button>
-                <p className="text-xs text-white/50 mt-2 max-w-xs mx-auto">
-                  As a guest, you'll have limited access and no personalization features
+                <Button
+                  onClick={handleNo}
+                  variant="outline"
+                  className="w-full border-white/30 text-white hover:bg-white/10 py-3 rounded-lg transition-all duration-300"
+                >
+                  No, I am not
+                </Button>
+              </div>
+            )}
+          </div>
+        </div>
+      </div>
+
+      {/* Mobile Layout - Hidden on desktop */}
+      <div className="md:hidden fixed bottom-8 left-4 right-4 z-10">
+        <div className="text-white">
+          <div className="bg-black/20 backdrop-blur-sm rounded-lg p-4 border border-white/10">
+            <div className="flex items-start space-x-4 mb-4">
+              <div className="w-16 h-20 flex-shrink-0">
+                <img 
+                  src={vivienImage} 
+                  alt="Vivien" 
+                  className="w-full h-full object-cover rounded-lg shadow-2xl"
+                />
+              </div>
+              <div className="flex-1">
+                <p className="font-playfair text-sm leading-relaxed">
+                  {displayedText}
+                  {isTyping && <span className="animate-pulse">|</span>}
                 </p>
               </div>
             </div>
+            
+            {showButtons && (
+              <div className="space-y-2 fade-in">
+                <Button
+                  onClick={handleYes}
+                  className="w-full bg-gradient-to-r from-yellow-600 to-yellow-500 hover:from-yellow-500 hover:to-yellow-400 text-black font-medium py-2 text-sm rounded-lg transition-all duration-300"
+                >
+                  Yes, I am older than 18
+                </Button>
+                <Button
+                  onClick={handleNo}
+                  variant="outline"
+                  className="w-full border-white/30 text-white hover:bg-white/10 py-2 text-sm rounded-lg transition-all duration-300"
+                >
+                  No, I am not
+                </Button>
+              </div>
+            )}
           </div>
         </div>
-      )}
-
-      {/* Profile Modal */}
-      {showProfile && user && (
-        <UserProfileView user={user} onClose={() => setShowProfile(false)} />
-      )}
-
-      {/* Creative Credit Footer */}
-      <footer className="absolute bottom-4 left-1/2 transform -translate-x-1/2 z-10">
-        <div className="text-center">
-          <p className="text-xs text-white/60 font-inter">
-            Crafted with ❤️ and precision by{" "}
-            <a 
-              href="https://www.lumarostudios.com" 
-              target="_blank" 
-              rel="noopener noreferrer"
-              className="text-primary hover:text-secondary transition-colors duration-300 font-medium"
-            >
-              Lumaro Studios
-            </a>
-          </p>
-        </div>
-      </footer>
+      </div>
     </div>
   );
 };
