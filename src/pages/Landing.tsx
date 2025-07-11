@@ -12,6 +12,8 @@ const Landing = () => {
   const [showButtons, setShowButtons] = useState(false);
   const [ageVerified, setAgeVerified] = useState(false);
   const vLogoRef = useRef<HTMLDivElement>(null);
+  const yesButtonRef = useRef<HTMLButtonElement>(null);
+  const noButtonRef = useRef<HTMLButtonElement>(null);
 
   const message = "Hi, I'm Vivien. I can guide you through our website and you may ask me any questions at any time. To start, please confirm that you are older than 18.";
 
@@ -43,15 +45,20 @@ const Landing = () => {
       const x = e.clientX - rect.left;
       const y = e.clientY - rect.top;
       
-      // Calculate angle based on mouse position
-      const centerX = rect.width / 2;
-      const centerY = rect.height / 2;
-      const angle = Math.atan2(y - centerY, x - centerX) * (180 / Math.PI);
-      
-      // Update CSS custom property for shimmer direction
-      vLogoRef.current.style.setProperty('--shimmer-angle', `${angle}deg`);
+      // Update CSS custom property for shimmer position
       vLogoRef.current.style.setProperty('--shimmer-x', `${(x / rect.width) * 100}%`);
       vLogoRef.current.style.setProperty('--shimmer-y', `${(y / rect.height) * 100}%`);
+    }
+  };
+
+  const handleButtonMouseMove = (e: React.MouseEvent<HTMLButtonElement>, buttonRef: React.RefObject<HTMLButtonElement>) => {
+    if (buttonRef.current) {
+      const rect = buttonRef.current.getBoundingClientRect();
+      const x = e.clientX - rect.left;
+      const y = e.clientY - rect.top;
+      
+      buttonRef.current.style.setProperty('--mouse-x', `${(x / rect.width) * 100}%`);
+      buttonRef.current.style.setProperty('--mouse-y', `${(y / rect.height) * 100}%`);
     }
   };
 
@@ -117,15 +124,19 @@ const Landing = () => {
           {showButtons && (
             <div className="mt-6 space-y-3 fade-in">
               <Button
+                ref={yesButtonRef}
                 onClick={handleYes}
-                className="w-full bg-gradient-to-r from-yellow-600 to-yellow-500 hover:from-yellow-500 hover:to-yellow-400 text-black font-medium py-2 text-sm rounded-lg transition-all duration-300 hover:scale-105"
+                onMouseMove={(e) => handleButtonMouseMove(e, yesButtonRef)}
+                className="magnetic-button w-full bg-gradient-to-r from-yellow-600 to-yellow-500 hover:from-yellow-500 hover:to-yellow-400 text-black font-medium py-2 text-sm rounded-lg transition-all duration-300 hover:scale-105"
               >
                 Yes, I am older than 18
               </Button>
               <Button
+                ref={noButtonRef}
                 onClick={handleNo}
+                onMouseMove={(e) => handleButtonMouseMove(e, noButtonRef)}
                 variant="outline"
-                className="w-full border-white/30 text-white hover:bg-white/10 py-2 text-sm rounded-lg transition-all duration-300"
+                className="magnetic-button w-full border-white/30 text-white hover:bg-white/10 py-2 text-sm rounded-lg transition-all duration-300"
               >
                 No, I am not
               </Button>
@@ -157,14 +168,14 @@ const Landing = () => {
               <div className="mt-4 space-y-2 fade-in">
                 <Button
                   onClick={handleYes}
-                  className="w-full bg-gradient-to-r from-yellow-600 to-yellow-500 hover:from-yellow-500 hover:to-yellow-400 text-black font-medium py-2 text-sm rounded-lg transition-all duration-300"
+                  className="magnetic-button w-full bg-gradient-to-r from-yellow-600 to-yellow-500 hover:from-yellow-500 hover:to-yellow-400 text-black font-medium py-2 text-sm rounded-lg transition-all duration-300"
                 >
                   Yes, I am older than 18
                 </Button>
                 <Button
                   onClick={handleNo}
                   variant="outline"
-                  className="w-full border-white/30 text-white hover:bg-white/10 py-2 text-sm rounded-lg transition-all duration-300"
+                  className="magnetic-button w-full border-white/30 text-white hover:bg-white/10 py-2 text-sm rounded-lg transition-all duration-300"
                 >
                   No, I am not
                 </Button>
