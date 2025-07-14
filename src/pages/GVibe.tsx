@@ -212,9 +212,9 @@ const GVibe = () => {
         <div className="max-w-4xl mx-auto text-center">
           <p className="text-sm text-white/60 font-inter">
             Masterfully built with dedication by{" "}
-            <a 
-              href="https://www.lumarostudios.com" 
-              target="_blank" 
+            <a
+              href="https://lumarostudios.com"
+              target="_blank"
               rel="noopener noreferrer"
               className="text-primary hover:text-secondary transition-colors duration-300 font-medium hover:underline"
             >
