@@ -569,7 +569,7 @@ const Home = () => {
         <div className="max-w-6xl mx-auto text-center">
           <p className="text-sm text-white/60 font-inter">
             Designed with passion and brought to life with ✨ by{" "}
-            <a href="https://www.lumarostudios.com" target="_blank" rel="noopener noreferrer" className="text-primary hover:text-secondary transition-colors duration-300 font-medium hover:underline">
+            <a href="https://lumarostudios.com" target="_blank" rel="noopener noreferrer" className="text-primary hover:text-secondary transition-colors duration-300 font-medium hover:underline">
               Lumaro Studios
             </a>
             {" "}— where luxury meets technology
