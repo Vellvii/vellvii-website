@@ -13,61 +13,56 @@ import { ParallaxContainer } from "@/components/animations/ParallaxContainer";
 import { MagneticButton } from "@/components/animations/MagneticButton";
 import { AnimatedText } from "@/components/animations/AnimatedText";
 import { motion, useScroll, useTransform } from "framer-motion";
-
 const Home = () => {
   const [concierge, setConcierge] = useState<string | null>(null);
   const [isCartOpen, setIsCartOpen] = useState(false);
-  const { items: cartItems } = useCart();
-
+  const {
+    items: cartItems
+  } = useCart();
   useEffect(() => {
     const selectedConcierge = localStorage.getItem("selectedConcierge");
     setConcierge(selectedConcierge);
   }, []);
-
   const getGreeting = () => {
     if (!concierge) return "Welcome to Vellvii";
-    return concierge === "luke" 
-      ? "Good day. Luke here, ready to assist you with our luxury collection."
-      : "Hello! Vivian here, excited to help you discover your perfect match.";
+    return concierge === "luke" ? "Good day. Luke here, ready to assist you with our luxury collection." : "Hello! Vivian here, excited to help you discover your perfect match.";
   };
-
   const getConciergeStyle = () => {
-    return concierge === "luke" 
-      ? "text-primary font-semibold" 
-      : "text-secondary font-semibold";
+    return concierge === "luke" ? "text-primary font-semibold" : "text-secondary font-semibold";
   };
-
-  const { scrollY } = useScroll();
+  const {
+    scrollY
+  } = useScroll();
   const backgroundY = useTransform(scrollY, [0, 500], [0, 150]);
-
-  return (
-    <div className="min-h-screen relative overflow-hidden">
+  return <div className="min-h-screen relative overflow-hidden">
       {/* Animated background mesh */}
-      <motion.div 
-        className="fixed inset-0 mesh-bg opacity-30"
-        style={{ y: backgroundY }}
-      />
+      <motion.div className="fixed inset-0 mesh-bg opacity-30" style={{
+      y: backgroundY
+    }} />
       <div className="absolute inset-0 bg-gradient-apple" />
       
       {/* Navigation */}
-      <motion.nav 
-        className="relative z-50 flex justify-between items-center p-4 sm:p-6 backdrop-blur-md bg-black/20"
-        initial={{ y: -100, opacity: 0 }}
-        animate={{ y: 0, opacity: 1 }}
-        transition={{ duration: 0.8, ease: [0.25, 0.46, 0.45, 0.94] }}
-      >
-        <motion.div 
-          className="flex items-center gap-2"
-          whileHover={{ scale: 1.05 }}
-          transition={{ type: "spring", stiffness: 400, damping: 17 }}
-        >
+      <motion.nav className="relative z-50 flex justify-between items-center p-4 sm:p-6 backdrop-blur-md bg-black/20" initial={{
+      y: -100,
+      opacity: 0
+    }} animate={{
+      y: 0,
+      opacity: 1
+    }} transition={{
+      duration: 0.8,
+      ease: [0.25, 0.46, 0.45, 0.94]
+    }}>
+        <motion.div className="flex items-center gap-2" whileHover={{
+        scale: 1.05
+      }} transition={{
+        type: "spring",
+        stiffness: 400,
+        damping: 17
+      }}>
           <img src="/lovable-uploads/fd8fd5ce-f65c-4c0c-b093-af821cbd5a34.png" alt="Vellvii" className="h-8" />
         </motion.div>
         <div className="flex items-center gap-2 sm:gap-4">
-          <MagneticButton
-            onClick={() => setIsCartOpen(true)}
-            className="text-white hover:bg-white/10 px-2 sm:px-3 py-2 rounded-md transition-all duration-300"
-          >
+          <MagneticButton onClick={() => setIsCartOpen(true)} className="text-white hover:bg-white/10 px-2 sm:px-3 py-2 rounded-md transition-all duration-300">
             <ShoppingCart className="w-4 h-4 sm:mr-2" />
             <span className="hidden sm:inline">Cart ({cartItems.length})</span>
             <span className="sm:hidden">({cartItems.length})</span>
@@ -90,30 +85,29 @@ const Home = () => {
           </ScrollReveal>
           
           <ScrollReveal delay={0.4}>
-            <motion.div 
-              className="mb-8"
-              whileHover={{ scale: 1.05, rotate: 1 }}
-              transition={{ type: "spring", stiffness: 300, damping: 20 }}
-            >
-              <img src="/lovable-uploads/fd8fd5ce-f65c-4c0c-b093-af821cbd5a34.png" alt="Vellvii" className="h-28 md:h-36 mx-auto" />
+            <motion.div className="mb-8" whileHover={{
+            scale: 1.05,
+            rotate: 1
+          }} transition={{
+            type: "spring",
+            stiffness: 300,
+            damping: 20
+          }}>
+              <img alt="Vellvii" className="h-28 md:h-36 mx-auto" src="/lovable-uploads/e59f6ada-c5b2-400f-96a1-affd0aa70f18.png" />
             </motion.div>
           </ScrollReveal>
 
-          {concierge && (
-            <ScrollReveal delay={0.6}>
-              <motion.div 
-                className="glass-luxury p-4 sm:p-6 rounded-lg mb-6 sm:mb-8 max-w-2xl mx-auto apple-hover"
-                whileHover={{ scale: 1.02 }}
-                transition={{ type: "spring", stiffness: 300, damping: 20 }}
-              >
-                <AnimatedText 
-                  text={getGreeting()}
-                  className={`text-base sm:text-lg font-inter ${getConciergeStyle()}`}
-                  delay={0.8}
-                />
+          {concierge && <ScrollReveal delay={0.6}>
+              <motion.div className="glass-luxury p-4 sm:p-6 rounded-lg mb-6 sm:mb-8 max-w-2xl mx-auto apple-hover" whileHover={{
+            scale: 1.02
+          }} transition={{
+            type: "spring",
+            stiffness: 300,
+            damping: 20
+          }}>
+                <AnimatedText text={getGreeting()} className={`text-base sm:text-lg font-inter ${getConciergeStyle()}`} delay={0.8} />
               </motion.div>
-            </ScrollReveal>
-          )}
+            </ScrollReveal>}
 
           <ScrollReveal delay={1.0}>
             <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center items-center">
@@ -137,10 +131,7 @@ const Home = () => {
         <div className="max-w-6xl mx-auto">
           <ScrollReveal delay={0.2}>
             <div className="text-center mb-12">
-              <AnimatedText 
-                text="Our Luxury Collection"
-                className="text-4xl font-playfair font-bold text-foreground mb-4"
-              />
+              <AnimatedText text="Our Luxury Collection" className="text-4xl font-playfair font-bold text-foreground mb-4" />
               <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
                 Each piece in our collection is meticulously crafted to deliver 
                 unparalleled quality and sophisticated pleasure.
@@ -151,16 +142,20 @@ const Home = () => {
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 md:gap-8">
             <ScrollReveal delay={0.2} direction="up">
               <Link to="/pulse">
-                <motion.div
-                  whileHover={{ scale: 1.05, y: -10 }}
-                  transition={{ type: "spring", stiffness: 300, damping: 20 }}
-                >
+                <motion.div whileHover={{
+                scale: 1.05,
+                y: -10
+              }} transition={{
+                type: "spring",
+                stiffness: 300,
+                damping: 20
+              }}>
                   <Card className="glass-luxury apple-hover p-4 sm:p-6 text-center group">
-                    <motion.div 
-                      className="w-16 h-16 mx-auto bg-gradient-primary rounded-full flex items-center justify-center mb-4"
-                      whileHover={{ rotate: 360 }}
-                      transition={{ duration: 0.6 }}
-                    >
+                    <motion.div className="w-16 h-16 mx-auto bg-gradient-primary rounded-full flex items-center justify-center mb-4" whileHover={{
+                    rotate: 360
+                  }} transition={{
+                    duration: 0.6
+                  }}>
                       <Heart className="w-8 h-8 text-white" />
                     </motion.div>
                     <h3 className="text-lg sm:text-xl font-playfair font-semibold text-white mb-2">Pulse</h3>
@@ -172,16 +167,20 @@ const Home = () => {
 
             <ScrollReveal delay={0.4} direction="up">
               <Link to="/vibe">
-                <motion.div
-                  whileHover={{ scale: 1.05, y: -10 }}
-                  transition={{ type: "spring", stiffness: 300, damping: 20 }}
-                >
+                <motion.div whileHover={{
+                scale: 1.05,
+                y: -10
+              }} transition={{
+                type: "spring",
+                stiffness: 300,
+                damping: 20
+              }}>
                   <Card className="glass-luxury apple-hover p-6 text-center group">
-                    <motion.div 
-                      className="w-16 h-16 mx-auto bg-gradient-secondary rounded-full flex items-center justify-center mb-4"
-                      whileHover={{ rotate: 360 }}
-                      transition={{ duration: 0.6 }}
-                    >
+                    <motion.div className="w-16 h-16 mx-auto bg-gradient-secondary rounded-full flex items-center justify-center mb-4" whileHover={{
+                    rotate: 360
+                  }} transition={{
+                    duration: 0.6
+                  }}>
                       <Star className="w-8 h-8 text-foreground" />
                     </motion.div>
                     <h3 className="text-xl font-playfair font-semibold text-white mb-2">Vibe</h3>
@@ -193,16 +192,20 @@ const Home = () => {
 
             <ScrollReveal delay={0.6} direction="up">
               <Link to="/g-vibe">
-                <motion.div
-                  whileHover={{ scale: 1.05, y: -10 }}
-                  transition={{ type: "spring", stiffness: 300, damping: 20 }}
-                >
+                <motion.div whileHover={{
+                scale: 1.05,
+                y: -10
+              }} transition={{
+                type: "spring",
+                stiffness: 300,
+                damping: 20
+              }}>
                   <Card className="glass-luxury apple-hover p-6 text-center group">
-                    <motion.div 
-                      className="w-16 h-16 mx-auto bg-gradient-primary rounded-full flex items-center justify-center mb-4"
-                      whileHover={{ rotate: 360 }}
-                      transition={{ duration: 0.6 }}
-                    >
+                    <motion.div className="w-16 h-16 mx-auto bg-gradient-primary rounded-full flex items-center justify-center mb-4" whileHover={{
+                    rotate: 360
+                  }} transition={{
+                    duration: 0.6
+                  }}>
                       <Shield className="w-8 h-8 text-white" />
                     </motion.div>
                     <h3 className="text-xl font-playfair font-semibold text-white mb-2">G-Vibe</h3>
@@ -214,16 +217,20 @@ const Home = () => {
 
             <ScrollReveal delay={0.8} direction="up">
               <Link to="/dox">
-                <motion.div
-                  whileHover={{ scale: 1.05, y: -10 }}
-                  transition={{ type: "spring", stiffness: 300, damping: 20 }}
-                >
+                <motion.div whileHover={{
+                scale: 1.05,
+                y: -10
+              }} transition={{
+                type: "spring",
+                stiffness: 300,
+                damping: 20
+              }}>
                   <Card className="glass-luxury apple-hover p-6 text-center group">
-                    <motion.div 
-                      className="w-16 h-16 mx-auto bg-gradient-secondary rounded-full flex items-center justify-center mb-4"
-                      whileHover={{ rotate: 360 }}
-                      transition={{ duration: 0.6 }}
-                    >
+                    <motion.div className="w-16 h-16 mx-auto bg-gradient-secondary rounded-full flex items-center justify-center mb-4" whileHover={{
+                    rotate: 360
+                  }} transition={{
+                    duration: 0.6
+                  }}>
                       <Shield className="w-8 h-8 text-foreground" />
                     </motion.div>
                     <h3 className="text-xl font-playfair font-semibold text-white mb-2">DOX</h3>
@@ -243,10 +250,7 @@ const Home = () => {
             <ScrollReveal delay={0.2} direction="left">
               <div>
                 <Badge variant="outline" className="mb-4">About Vellvii</Badge>
-                <AnimatedText 
-                  text="Redefining Intimate Luxury"
-                  className="text-4xl font-playfair font-bold text-foreground mb-6"
-                />
+                <AnimatedText text="Redefining Intimate Luxury" className="text-4xl font-playfair font-bold text-foreground mb-6" />
                 <p className="text-lg text-muted-foreground mb-6 leading-relaxed">
                   At Vellvii, we believe that intimacy deserves the finest craftsmanship. 
                   Our collection represents the perfect fusion of sophisticated design, 
@@ -272,44 +276,54 @@ const Home = () => {
             </ScrollReveal>
             
             <ScrollReveal delay={0.4} direction="right">
-              <motion.div 
-                className="glass-luxury apple-hover p-4 sm:p-6 md:p-8 rounded-lg"
-                whileHover={{ scale: 1.02 }}
-                transition={{ type: "spring", stiffness: 300, damping: 20 }}
-              >
+              <motion.div className="glass-luxury apple-hover p-4 sm:p-6 md:p-8 rounded-lg" whileHover={{
+              scale: 1.02
+            }} transition={{
+              type: "spring",
+              stiffness: 300,
+              damping: 20
+            }}>
                 <h3 className="text-2xl font-playfair font-semibold text-white mb-6">
                   Our Commitment
                 </h3>
                 <div className="space-y-4">
-                  <motion.div 
-                    className="flex items-center gap-3"
-                    whileHover={{ x: 10 }}
-                    transition={{ type: "spring", stiffness: 400, damping: 17 }}
-                  >
+                  <motion.div className="flex items-center gap-3" whileHover={{
+                  x: 10
+                }} transition={{
+                  type: "spring",
+                  stiffness: 400,
+                  damping: 17
+                }}>
                     <div className="w-2 h-2 bg-primary rounded-full"></div>
                     <p className="text-white/90">Premium, body-safe materials</p>
                   </motion.div>
-                  <motion.div 
-                    className="flex items-center gap-3"
-                    whileHover={{ x: 10 }}
-                    transition={{ type: "spring", stiffness: 400, damping: 17 }}
-                  >
+                  <motion.div className="flex items-center gap-3" whileHover={{
+                  x: 10
+                }} transition={{
+                  type: "spring",
+                  stiffness: 400,
+                  damping: 17
+                }}>
                     <div className="w-2 h-2 bg-secondary rounded-full"></div>
                     <p className="text-white/90">Innovative technology integration</p>
                   </motion.div>
-                  <motion.div 
-                    className="flex items-center gap-3"
-                    whileHover={{ x: 10 }}
-                    transition={{ type: "spring", stiffness: 400, damping: 17 }}
-                  >
+                  <motion.div className="flex items-center gap-3" whileHover={{
+                  x: 10
+                }} transition={{
+                  type: "spring",
+                  stiffness: 400,
+                  damping: 17
+                }}>
                     <div className="w-2 h-2 bg-accent rounded-full"></div>
                     <p className="text-white/90">Discreet, elegant packaging</p>
                   </motion.div>
-                  <motion.div 
-                    className="flex items-center gap-3"
-                    whileHover={{ x: 10 }}
-                    transition={{ type: "spring", stiffness: 400, damping: 17 }}
-                  >
+                  <motion.div className="flex items-center gap-3" whileHover={{
+                  x: 10
+                }} transition={{
+                  type: "spring",
+                  stiffness: 400,
+                  damping: 17
+                }}>
                     <div className="w-2 h-2 bg-primary rounded-full"></div>
                     <p className="text-white/90">Exceptional customer care</p>
                   </motion.div>
@@ -326,10 +340,7 @@ const Home = () => {
           <ScrollReveal delay={0.2}>
             <div className="text-center mb-12">
               <Badge variant="outline" className="mb-4">Business Partnership</Badge>
-              <AnimatedText 
-                text="Retail Partners Wanted"
-                className="text-4xl font-playfair font-bold text-foreground mb-4"
-              />
+              <AnimatedText text="Retail Partners Wanted" className="text-4xl font-playfair font-bold text-foreground mb-4" />
               <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
                 Own a sex shop or intimate wellness store? Join our exclusive retail network and offer 
                 your customers the finest in luxury intimacy products.
@@ -339,16 +350,20 @@ const Home = () => {
 
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 sm:gap-6 md:gap-8">
             <ScrollReveal delay={0.3} direction="up">
-              <motion.div
-                whileHover={{ scale: 1.05, y: -10 }}
-                transition={{ type: "spring", stiffness: 300, damping: 20 }}
-              >
+              <motion.div whileHover={{
+              scale: 1.05,
+              y: -10
+            }} transition={{
+              type: "spring",
+              stiffness: 300,
+              damping: 20
+            }}>
                 <Card className="glass-luxury apple-hover p-4 sm:p-6 text-center">
-                  <motion.div 
-                    className="w-12 h-12 mx-auto bg-gradient-primary rounded-full flex items-center justify-center mb-4"
-                    whileHover={{ rotate: 360 }}
-                    transition={{ duration: 0.6 }}
-                  >
+                  <motion.div className="w-12 h-12 mx-auto bg-gradient-primary rounded-full flex items-center justify-center mb-4" whileHover={{
+                  rotate: 360
+                }} transition={{
+                  duration: 0.6
+                }}>
                     <Store className="w-6 h-6 text-white" />
                   </motion.div>
                   <h3 className="text-xl font-semibold text-white mb-2">Exclusive Products</h3>
@@ -358,16 +373,20 @@ const Home = () => {
             </ScrollReveal>
 
             <ScrollReveal delay={0.5} direction="up">
-              <motion.div
-                whileHover={{ scale: 1.05, y: -10 }}
-                transition={{ type: "spring", stiffness: 300, damping: 20 }}
-              >
+              <motion.div whileHover={{
+              scale: 1.05,
+              y: -10
+            }} transition={{
+              type: "spring",
+              stiffness: 300,
+              damping: 20
+            }}>
                 <Card className="glass-luxury apple-hover p-6 text-center">
-                  <motion.div 
-                    className="w-12 h-12 mx-auto bg-gradient-secondary rounded-full flex items-center justify-center mb-4"
-                    whileHover={{ rotate: 360 }}
-                    transition={{ duration: 0.6 }}
-                  >
+                  <motion.div className="w-12 h-12 mx-auto bg-gradient-secondary rounded-full flex items-center justify-center mb-4" whileHover={{
+                  rotate: 360
+                }} transition={{
+                  duration: 0.6
+                }}>
                     <Star className="w-6 h-6 text-foreground" />
                   </motion.div>
                   <h3 className="text-xl font-semibold text-white mb-2">Premium Support</h3>
@@ -377,16 +396,20 @@ const Home = () => {
             </ScrollReveal>
 
             <ScrollReveal delay={0.7} direction="up">
-              <motion.div
-                whileHover={{ scale: 1.05, y: -10 }}
-                transition={{ type: "spring", stiffness: 300, damping: 20 }}
-              >
+              <motion.div whileHover={{
+              scale: 1.05,
+              y: -10
+            }} transition={{
+              type: "spring",
+              stiffness: 300,
+              damping: 20
+            }}>
                 <Card className="glass-luxury apple-hover p-6 text-center">
-                  <motion.div 
-                    className="w-12 h-12 mx-auto bg-gradient-primary rounded-full flex items-center justify-center mb-4"
-                    whileHover={{ rotate: 360 }}
-                    transition={{ duration: 0.6 }}
-                  >
+                  <motion.div className="w-12 h-12 mx-auto bg-gradient-primary rounded-full flex items-center justify-center mb-4" whileHover={{
+                  rotate: 360
+                }} transition={{
+                  duration: 0.6
+                }}>
                     <Heart className="w-6 h-6 text-white" />
                   </motion.div>
                   <h3 className="text-xl font-semibold text-white mb-2">Attractive Margins</h3>
@@ -399,10 +422,7 @@ const Home = () => {
           <ScrollReveal delay={0.9}>
             <div className="text-center mt-8">
               <Link to="/contact#partners">
-                <MagneticButton 
-                  as="div"
-                  className="bg-secondary text-secondary-foreground hover:bg-secondary/90 px-8 py-3 rounded-md text-lg font-semibold cursor-pointer transition-colors duration-300"
-                >
+                <MagneticButton as="div" className="bg-secondary text-secondary-foreground hover:bg-secondary/90 px-8 py-3 rounded-md text-lg font-semibold cursor-pointer transition-colors duration-300">
                   Become a Partner
                 </MagneticButton>
               </Link>
@@ -416,10 +436,7 @@ const Home = () => {
         <div className="max-w-6xl mx-auto">
           <ScrollReveal delay={0.2}>
             <div className="text-center mb-12">
-              <AnimatedText 
-                text="Connect With Us"
-                className="text-4xl font-playfair font-bold text-foreground mb-4"
-              />
+              <AnimatedText text="Connect With Us" className="text-4xl font-playfair font-bold text-foreground mb-4" />
               <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
                 Have questions about our collection? Our team is here to provide 
                 personalized assistance and expert guidance.
@@ -429,15 +446,23 @@ const Home = () => {
 
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 sm:gap-6 md:gap-8">
             <ScrollReveal delay={0.3} direction="up">
-              <motion.div
-                whileHover={{ scale: 1.05, y: -10 }}
-                transition={{ type: "spring", stiffness: 300, damping: 20 }}
-              >
+              <motion.div whileHover={{
+              scale: 1.05,
+              y: -10
+            }} transition={{
+              type: "spring",
+              stiffness: 300,
+              damping: 20
+            }}>
                 <Card className="glass-luxury apple-hover p-4 sm:p-6 md:p-8 text-center">
-                  <motion.div
-                    whileHover={{ scale: 1.1, rotate: 5 }}
-                    transition={{ type: "spring", stiffness: 400, damping: 17 }}
-                  >
+                  <motion.div whileHover={{
+                  scale: 1.1,
+                  rotate: 5
+                }} transition={{
+                  type: "spring",
+                  stiffness: 400,
+                  damping: 17
+                }}>
                     <Phone className="w-12 h-12 text-primary mx-auto mb-4" />
                   </motion.div>
                   <h3 className="text-xl font-playfair font-semibold text-white mb-2">
@@ -445,10 +470,7 @@ const Home = () => {
                   </h3>
                   <p className="text-white/80 mb-4">Speak with our luxury specialists</p>
                   <a href="tel:+15551234567">
-                    <MagneticButton 
-                      as="div"
-                      className="border border-white/20 text-white hover:bg-white/10 px-4 py-2 rounded-md text-sm font-medium cursor-pointer transition-colors duration-300"
-                    >
+                    <MagneticButton as="div" className="border border-white/20 text-white hover:bg-white/10 px-4 py-2 rounded-md text-sm font-medium cursor-pointer transition-colors duration-300">
                       +1 (555) 123-4567
                     </MagneticButton>
                   </a>
@@ -457,15 +479,23 @@ const Home = () => {
             </ScrollReveal>
 
             <ScrollReveal delay={0.5} direction="up">
-              <motion.div
-                whileHover={{ scale: 1.05, y: -10 }}
-                transition={{ type: "spring", stiffness: 300, damping: 20 }}
-              >
+              <motion.div whileHover={{
+              scale: 1.05,
+              y: -10
+            }} transition={{
+              type: "spring",
+              stiffness: 300,
+              damping: 20
+            }}>
                 <Card className="glass-luxury apple-hover p-8 text-center">
-                  <motion.div
-                    whileHover={{ scale: 1.1, rotate: -5 }}
-                    transition={{ type: "spring", stiffness: 400, damping: 17 }}
-                  >
+                  <motion.div whileHover={{
+                  scale: 1.1,
+                  rotate: -5
+                }} transition={{
+                  type: "spring",
+                  stiffness: 400,
+                  damping: 17
+                }}>
                     <Mail className="w-12 h-12 text-secondary mx-auto mb-4" />
                   </motion.div>
                   <h3 className="text-xl font-playfair font-semibold text-white mb-2">
@@ -473,10 +503,7 @@ const Home = () => {
                   </h3>
                   <p className="text-white/80 mb-4">Get personalized recommendations</p>
                   <a href="mailto:info@vellvii.com">
-                    <MagneticButton 
-                      as="div"
-                      className="border border-white/20 text-white hover:bg-white/10 px-4 py-2 rounded-md text-sm font-medium cursor-pointer transition-colors duration-300"
-                    >
+                    <MagneticButton as="div" className="border border-white/20 text-white hover:bg-white/10 px-4 py-2 rounded-md text-sm font-medium cursor-pointer transition-colors duration-300">
                       info@vellvii.com
                     </MagneticButton>
                   </a>
@@ -485,25 +512,30 @@ const Home = () => {
             </ScrollReveal>
 
             <ScrollReveal delay={0.7} direction="up">
-              <motion.div
-                whileHover={{ scale: 1.05, y: -10 }}
-                transition={{ type: "spring", stiffness: 300, damping: 20 }}
-              >
+              <motion.div whileHover={{
+              scale: 1.05,
+              y: -10
+            }} transition={{
+              type: "spring",
+              stiffness: 300,
+              damping: 20
+            }}>
                 <Card className="glass-luxury apple-hover p-8 text-center">
-                  <motion.div
-                    whileHover={{ scale: 1.1, rotate: 5 }}
-                    transition={{ type: "spring", stiffness: 400, damping: 17 }}
-                  >
+                  <motion.div whileHover={{
+                  scale: 1.1,
+                  rotate: 5
+                }} transition={{
+                  type: "spring",
+                  stiffness: 400,
+                  damping: 17
+                }}>
                     <MapPin className="w-12 h-12 text-accent mx-auto mb-4" />
                   </motion.div>
                   <h3 className="text-xl font-playfair font-semibold text-white mb-2">
                     Location
                   </h3>
                   <p className="text-white/80 mb-4">Delaware, USA</p>
-                  <MagneticButton 
-                    as="div"
-                    className="border border-white/20 text-white hover:bg-white/10 px-4 py-2 rounded-md text-sm font-medium cursor-pointer transition-colors duration-300"
-                  >
+                  <MagneticButton as="div" className="border border-white/20 text-white hover:bg-white/10 px-4 py-2 rounded-md text-sm font-medium cursor-pointer transition-colors duration-300">
                     View Details
                   </MagneticButton>
                 </Card>
@@ -518,12 +550,7 @@ const Home = () => {
         <div className="max-w-6xl mx-auto text-center">
           <p className="text-sm text-white/60 font-inter">
             Designed with passion and brought to life with ✨ by{" "}
-            <a 
-              href="https://www.lumarostudios.com" 
-              target="_blank" 
-              rel="noopener noreferrer"
-              className="text-primary hover:text-secondary transition-colors duration-300 font-medium hover:underline"
-            >
+            <a href="https://www.lumarostudios.com" target="_blank" rel="noopener noreferrer" className="text-primary hover:text-secondary transition-colors duration-300 font-medium hover:underline">
               Lumaro Studios
             </a>
             {" "}— where luxury meets technology
@@ -532,26 +559,17 @@ const Home = () => {
       </footer>
       
       {/* Cart Modal */}
-      {isCartOpen && (
-        <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
+      {isCartOpen && <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
           <div className="relative max-w-md w-full max-h-[80vh] bg-black/80 rounded-lg">
-            <Button
-              variant="ghost"
-              size="sm"
-              onClick={() => setIsCartOpen(false)}
-              className="absolute top-4 right-4 text-white hover:bg-white/10 z-10"
-            >
+            <Button variant="ghost" size="sm" onClick={() => setIsCartOpen(false)} className="absolute top-4 right-4 text-white hover:bg-white/10 z-10">
               ✕
             </Button>
             <Cart />
           </div>
-        </div>
-      )}
+        </div>}
 
       {/* Concierge Chat */}
       <ConciergeChat />
-    </div>
-  );
+    </div>;
 };
-
 export default Home;
