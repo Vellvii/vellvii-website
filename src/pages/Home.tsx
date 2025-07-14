@@ -51,10 +51,10 @@ const Home = () => {
   const backgroundY = useTransform(scrollY, [0, 500], [0, 150]);
   return <div className="min-h-screen relative overflow-hidden">
       {/* Animated background mesh */}
-      <motion.div className="fixed inset-0 mesh-bg opacity-30" style={{
+      <motion.div className="fixed inset-0 mesh-bg opacity-30 pointer-events-none" style={{
       y: backgroundY
     }} />
-      <div className="absolute inset-0 bg-gradient-apple" />
+      <div className="absolute inset-0 bg-gradient-apple pointer-events-none" />
       
       {/* Navigation */}
       <motion.nav className="relative z-50 flex justify-between items-center p-4 sm:p-6 backdrop-blur-md bg-black/20" initial={{
@@ -88,8 +88,8 @@ const Home = () => {
 
       {/* Hero Section */}
       <section className="relative py-12 sm:py-16 md:py-24 px-4 sm:px-6">
-        <ParallaxContainer offset={30} className="absolute inset-0">
-          <div className="absolute inset-0 bg-gradient-hero opacity-20"></div>
+        <ParallaxContainer offset={30} className="absolute inset-0 pointer-events-none">
+          <div className="absolute inset-0 bg-gradient-hero opacity-20 pointer-events-none"></div>
         </ParallaxContainer>
         
         <div className="relative z-10 max-w-6xl mx-auto text-center">
