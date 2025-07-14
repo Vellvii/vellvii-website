@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { ArrowLeft, Shield, Target, Lightbulb, Zap, ShoppingCart } from "lucide-react";
+import { motion } from "framer-motion";
 import SimilarProducts from "@/components/SimilarProducts";
 import ConciergeChat from "@/components/ConciergeChat";
 import UserMenu from "@/components/UserMenu";
@@ -75,10 +76,12 @@ const GVibe = () => {
           <div className="grid lg:grid-cols-2 gap-8 lg:gap-12 items-center">
             {/* Product Image Placeholder */}
             <div className="glass-luxury rounded-lg p-8 sm:p-12 text-center">
-              <div className="w-32 h-32 sm:w-40 sm:h-40 lg:w-48 lg:h-48 mx-auto bg-gradient-primary rounded-full flex items-center justify-center mb-6 relative">
-                <Shield className="w-16 h-16 sm:w-20 sm:h-20 lg:w-24 lg:h-24 text-white" />
-                <div className="absolute inset-0 rounded-full bg-gradient-primary opacity-30 animate-pulse"></div>
-              </div>
+              <motion.img
+                src="/lovable-uploads/G-Vibe%20transparent.png"
+                alt="G-Vibe logo"
+                className="w-32 h-32 sm:w-40 sm:h-40 lg:w-48 lg:h-48 mx-auto mb-6"
+                whileHover={{ scale: 1.05 }}
+              />
               <Badge variant="secondary" className="mb-4">Premium Collection</Badge>
               <h1 className="text-2xl sm:text-3xl lg:text-4xl font-playfair font-bold text-white mb-4">
                 Vellvii G-Vibe

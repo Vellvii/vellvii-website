@@ -170,13 +170,13 @@ const Home = () => {
                 damping: 20
               }}>
                   <Card className="glass-luxury apple-hover p-4 sm:p-6 text-center group">
-                    <motion.div className="w-16 h-16 mx-auto bg-gradient-primary rounded-full flex items-center justify-center mb-4" whileHover={{
-                    rotate: 360
-                  }} transition={{
-                    duration: 0.6
-                  }}>
-                      <Heart className="w-8 h-8 text-white" />
-                    </motion.div>
+                    <motion.img
+                      src="/lovable-uploads/Pulse_-trans.png"
+                      alt="Pulse logo"
+                      className="w-16 h-16 mx-auto mb-4"
+                      whileHover={{ scale: 1.1 }}
+                      transition={{ type: "spring", stiffness: 300, damping: 20 }}
+                    />
                     <h3 className="text-lg sm:text-xl font-playfair font-semibold text-white mb-2">Pulse</h3>
                     <p className="text-white/80 text-xs sm:text-sm">Rhythmic Excellence</p>
                   </Card>
@@ -220,13 +220,13 @@ const Home = () => {
                 damping: 20
               }}>
                   <Card className="glass-luxury apple-hover p-6 text-center group">
-                    <motion.div className="w-16 h-16 mx-auto bg-gradient-primary rounded-full flex items-center justify-center mb-4" whileHover={{
-                    rotate: 360
-                  }} transition={{
-                    duration: 0.6
-                  }}>
-                      <Shield className="w-8 h-8 text-white" />
-                    </motion.div>
+                    <motion.img
+                      src="/lovable-uploads/G-Vibe%20transparent.png"
+                      alt="G-Vibe logo"
+                      className="w-16 h-16 mx-auto mb-4"
+                      whileHover={{ scale: 1.1 }}
+                      transition={{ type: "spring", stiffness: 300, damping: 20 }}
+                    />
                     <h3 className="text-xl font-playfair font-semibold text-white mb-2">G-Vibe</h3>
                     <p className="text-white/80 text-sm">Precision Design</p>
                   </Card>
