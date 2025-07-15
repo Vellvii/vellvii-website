@@ -199,6 +199,27 @@
     box-shadow: var(--shadow-magnetic);
   }
 
+  /* Section title alignment override */
+  .section-title {
+    text-align: center !important;
+    margin: 0 auto;
+    width: 100%;
+  }
+
+  /* Featured DOX card sizing */
+  .dox-card {
+    max-width: 800px;
+    width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  @media (max-width: 768px) {
+    .dox-card {
+      max-width: 90vw;
+    }
+  }
+
   /* Background mesh animation */
   @keyframes meshRotate {
     0% { transform: rotate(0deg); }
