@@ -117,9 +117,11 @@ const Landing = () => {
 
         {/* Vivien's Message - No Box */}
         <div className="text-white max-w-sm mt-4">
-          <p className="font-playfair text-base lg:text-lg leading-relaxed">{displayedText}
-            {isTyping && <span className="blinking-cursor">|</span>}
-          </p>
+          <div className="min-h-[96px] lg:min-h-[112px]">
+            <p className="font-playfair text-base lg:text-lg leading-relaxed">{displayedText}
+              {isTyping && <span className="blinking-cursor">|</span>}
+            </p>
+          </div>
           
           {showButtons && (
             <div className="mt-6 space-y-3">
@@ -158,10 +160,12 @@ const Landing = () => {
           
           {/* Message without box */}
           <div className="flex-1 text-white">
-            <p className="font-playfair text-sm leading-relaxed">
-              {displayedText}
-              {isTyping && <span className="blinking-cursor">|</span>}
-            </p>
+            <div className="min-h-[96px]">
+              <p className="font-playfair text-sm leading-relaxed">
+                {displayedText}
+                {isTyping && <span className="blinking-cursor">|</span>}
+              </p>
+            </div>
             
             {showButtons && (
               <div className="mt-4 space-y-2">
