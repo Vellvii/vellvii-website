@@ -5,6 +5,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { SmoothScroll } from "./components/animations/SmoothScroll";
 import { PageTransition } from "./components/animations/PageTransition";
+import Cart from "./components/Cart";
 import Landing from "./pages/Landing";
 import Home from "./pages/Home";
 import About from "./pages/About";
@@ -41,6 +42,8 @@ const App = () => (
             </Routes>
           </PageTransition>
         </SmoothScroll>
+        {/* Global sticky cart */}
+        <Cart />
       </BrowserRouter>
     </TooltipProvider>
   </QueryClientProvider>

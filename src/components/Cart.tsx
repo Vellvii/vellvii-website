@@ -21,10 +21,10 @@ const Cart = () => {
 
   return (
     <>
-      {/* Cart Trigger Button */}
+      {/* Sticky Cart Trigger Button */}
       <Button 
         variant="ghost" 
-        className="relative text-white hover:bg-white/10 px-2 sm:px-3 py-2 rounded-md transition-all duration-300"
+        className="fixed top-4 right-4 z-40 text-white hover:bg-white/10 px-3 py-2 rounded-md transition-all duration-300 bg-black/20 backdrop-blur-md border border-white/10"
         onClick={() => setIsOpen(true)}
       >
         <ShoppingCart className="w-4 h-4 sm:mr-2" />
@@ -46,15 +46,14 @@ const Cart = () => {
             onClick={() => setIsOpen(false)}
           />
           
-          {/* Sidebar - Desktop: slide from right, Mobile/Tablet: slide from bottom */}
+          {/* Sidebar */}
           <div className={cn(
             "fixed transform transition-transform duration-300 ease-in-out z-50 flex flex-col",
             "bg-gradient-dark border border-white/20 shadow-2xl",
             // Desktop: right sidebar
-            "lg:right-0 lg:top-0 lg:h-full lg:w-[400px] lg:max-w-[90vw] lg:border-l lg:border-t-0 lg:border-b-0 lg:border-r-0",
+            "lg:right-0 lg:top-0 lg:h-full lg:w-[400px]",
             // Mobile/Tablet: bottom sheet (85% height)
-            "max-lg:bottom-0 max-lg:left-0 max-lg:right-0 max-lg:h-[85vh] max-lg:w-full max-lg:border-t max-lg:border-l-0 max-lg:border-r-0 max-lg:border-b-0 max-lg:rounded-t-xl",
-            "translate-x-0 translate-y-0"
+            "max-lg:bottom-0 max-lg:left-0 max-lg:right-0 max-lg:h-[85vh] max-lg:w-full max-lg:rounded-t-xl"
           )}>
             {/* Header */}
             <div className="border-b border-white/10 p-4 sm:p-6">

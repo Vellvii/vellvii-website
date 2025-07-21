@@ -6,7 +6,6 @@ import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Heart, Star, Shield, Phone, Mail, MapPin, Store } from "lucide-react";
 import ConciergeChat from "@/components/ConciergeChat";
-import Cart from "@/components/Cart";
 import UserMenu from "@/components/UserMenu";
 import { ScrollReveal } from "@/components/animations/ScrollReveal";
 import { ParallaxContainer } from "@/components/animations/ParallaxContainer";
@@ -63,7 +62,7 @@ const Home = () => {
     }} transition={{
       duration: 0.8,
       ease: [0.25, 0.46, 0.45, 0.94]
-    }}>
+     }}>
         <motion.div className="flex items-center gap-2" whileHover={{
         scale: 1.05
       }} transition={{
@@ -71,14 +70,9 @@ const Home = () => {
         stiffness: 400,
         damping: 17
       }}>
-          <img
-            src="/uploads/12536082-5a87-4e12-82c9-d705ecb8d3e5.png"
-            alt="Vellvii"
-            className="h-12 md:h-16 w-auto"
-          />
+          {/* Logo removed as requested */}
         </motion.div>
         <div className="flex items-center gap-2 sm:gap-4">
-          <Cart />
           <UserMenu />
         </div>
       </motion.nav>
