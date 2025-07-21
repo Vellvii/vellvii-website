@@ -24,12 +24,14 @@ const Cart = () => {
       {/* Cart Trigger Button */}
       <Button 
         variant="ghost" 
-        className="relative"
+        className="relative text-white hover:bg-white/10 px-2 sm:px-3 py-2 rounded-md transition-all duration-300"
         onClick={() => setIsOpen(true)}
       >
-        <ShoppingCart className="w-5 h-5" />
+        <ShoppingCart className="w-4 h-4 sm:mr-2" />
+        <span className="hidden sm:inline">Cart ({getTotalItems()})</span>
+        <span className="sm:hidden">({getTotalItems()})</span>
         {getTotalItems() > 0 && (
-          <Badge className="absolute -top-2 -right-2 min-w-[1.2rem] h-5 flex items-center justify-center text-xs bg-primary">
+          <Badge className="absolute -top-1 -right-1 min-w-[1.2rem] h-5 flex items-center justify-center text-xs bg-primary">
             {getTotalItems()}
           </Badge>
         )}
@@ -44,12 +46,15 @@ const Cart = () => {
             onClick={() => setIsOpen(false)}
           />
           
-          {/* Sidebar */}
+          {/* Sidebar - Desktop: slide from right, Mobile/Tablet: slide from bottom */}
           <div className={cn(
-            "fixed right-0 top-0 h-full w-full sm:w-[400px] md:w-[480px] max-w-[90vw]",
-            "bg-gradient-dark border-l border-white/20 shadow-2xl",
-            "transform transition-transform duration-300 ease-in-out",
-            "translate-x-0 z-50 flex flex-col"
+            "fixed transform transition-transform duration-300 ease-in-out z-50 flex flex-col",
+            "bg-gradient-dark border border-white/20 shadow-2xl",
+            // Desktop: right sidebar
+            "lg:right-0 lg:top-0 lg:h-full lg:w-[400px] lg:max-w-[90vw] lg:border-l lg:border-t-0 lg:border-b-0 lg:border-r-0",
+            // Mobile/Tablet: bottom sheet (85% height)
+            "max-lg:bottom-0 max-lg:left-0 max-lg:right-0 max-lg:h-[85vh] max-lg:w-full max-lg:border-t max-lg:border-l-0 max-lg:border-r-0 max-lg:border-b-0 max-lg:rounded-t-xl",
+            "translate-x-0 translate-y-0"
           )}>
             {/* Header */}
             <div className="border-b border-white/10 p-4 sm:p-6">

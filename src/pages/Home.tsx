@@ -4,11 +4,10 @@ import { Button, buttonVariants } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { Heart, Star, Shield, Phone, Mail, MapPin, Store, ShoppingCart, MessageSquare } from "lucide-react";
+import { Heart, Star, Shield, Phone, Mail, MapPin, Store } from "lucide-react";
 import ConciergeChat from "@/components/ConciergeChat";
 import Cart from "@/components/Cart";
 import UserMenu from "@/components/UserMenu";
-import { useCart } from "@/hooks/useCart";
 import { ScrollReveal } from "@/components/animations/ScrollReveal";
 import { ParallaxContainer } from "@/components/animations/ParallaxContainer";
 import { MagneticButton } from "@/components/animations/MagneticButton";
@@ -17,12 +16,8 @@ import { motion, useScroll, useTransform } from "framer-motion";
 import { N8nService } from "@/services/n8nService";
 const Home = () => {
   const [concierge, setConcierge] = useState<string | null>(null);
-  const [isCartOpen, setIsCartOpen] = useState(false);
   const [greeting, setGreeting] = useState("Welcome to Vellvii");
   const [doxColor, setDoxColor] = useState<"black" | "beige" | "red">("black");
-  const {
-    items: cartItems
-  } = useCart();
   
   useEffect(() => {
     let selectedConcierge = localStorage.getItem("selectedConcierge");
@@ -83,11 +78,7 @@ const Home = () => {
           />
         </motion.div>
         <div className="flex items-center gap-2 sm:gap-4">
-          <MagneticButton onClick={() => setIsCartOpen(true)} className="text-white hover:bg-white/10 px-2 sm:px-3 py-2 rounded-md transition-all duration-300">
-            <ShoppingCart className="w-4 h-4 sm:mr-2" />
-            <span className="hidden sm:inline">Cart ({cartItems.length})</span>
-            <span className="sm:hidden">({cartItems.length})</span>
-          </MagneticButton>
+          <Cart />
           <UserMenu />
         </div>
       </motion.nav>
@@ -637,16 +628,6 @@ const Home = () => {
         </div>
       </footer>
       
-      {/* Cart Modal */}
-      {isCartOpen && <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
-          <div className="relative max-w-md w-full max-h-[80vh] bg-black/80 rounded-lg">
-            <Button variant="ghost" size="sm" onClick={() => setIsCartOpen(false)} className="absolute top-4 right-4 text-white hover:bg-white/10 z-10">
-              ✕
-            </Button>
-            <Cart />
-          </div>
-        </div>}
-
       {/* Concierge Chat */}
       <ConciergeChat />
     </div>;
