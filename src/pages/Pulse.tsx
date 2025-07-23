@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { ArrowLeft, Heart, Zap, Droplets, Volume2, ShoppingCart } from "lucide-react";
-import { motion } from "framer-motion";
+import { ImageSlider } from "@/components/ImageSlider";
 import SimilarProducts from "@/components/SimilarProducts";
 import ConciergeChat from "@/components/ConciergeChat";
 import UserMenu from "@/components/UserMenu";
@@ -75,13 +75,12 @@ const Pulse = () => {
       <section className="px-4 sm:px-6 pb-8 sm:pb-12 md:pb-16">
         <div className="max-w-6xl mx-auto">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 sm:gap-8 md:gap-12 items-center">
-            {/* Product Image Placeholder */}
+            {/* Product Images */}
             <div className="glass-luxury rounded-lg p-6 sm:p-8 md:p-12 text-center">
-              <motion.img
-                src="/uploads/Pulse_-trans.png"
-                alt="Pulse logo"
+              <ImageSlider
+                images={["/uploads/Pulse1.jpg", "/uploads/Pulse2.jpg"]}
+                name="Pulse"
                 className="w-48 h-48 mx-auto mb-6"
-                whileHover={{ scale: 1.05 }}
               />
               <Badge variant="secondary" className="mb-4">Premium Collection</Badge>
               <h1 className="text-4xl font-playfair font-bold text-white mb-4">

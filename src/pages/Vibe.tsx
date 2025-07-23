@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { ArrowLeft, Star, Zap, Droplets, RotateCcw, ShoppingCart } from "lucide-react";
+import { ImageSlider } from "@/components/ImageSlider";
 import SimilarProducts from "@/components/SimilarProducts";
 import ConciergeChat from "@/components/ConciergeChat";
 import UserMenu from "@/components/UserMenu";
@@ -71,11 +72,13 @@ const Vibe = () => {
       <section className="px-4 sm:px-6 pb-12 sm:pb-16">
         <div className="max-w-6xl mx-auto">
           <div className="grid lg:grid-cols-2 gap-8 lg:gap-12 items-center">
-            {/* Product Image Placeholder */}
+            {/* Product Images */}
             <div className="glass-luxury rounded-lg p-8 sm:p-12 text-center">
-              <div className="w-32 h-32 sm:w-40 sm:h-40 lg:w-48 lg:h-48 mx-auto bg-gradient-secondary rounded-full flex items-center justify-center mb-6">
-                <Star className="w-16 h-16 sm:w-20 sm:h-20 lg:w-24 lg:h-24 text-foreground" />
-              </div>
+              <ImageSlider
+                images={["/uploads/Vibe1.jpg", "/uploads/Vibe2.jpg"]}
+                name="Vibe"
+                className="w-32 h-32 sm:w-40 sm:h-40 lg:w-48 lg:h-48 mx-auto mb-6"
+              />
               <Badge variant="secondary" className="mb-4">Premium Collection</Badge>
               <h1 className="text-2xl sm:text-3xl lg:text-4xl font-playfair font-bold text-white mb-4">
                 Vellvii Vibe

@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import { Card } from "@/components/ui/card";
-import { Heart, Star, Shield, Package } from "lucide-react";
+import { ImageSlider } from "./ImageSlider";
 
 interface SimilarProductsProps {
   currentProduct: string;
@@ -12,34 +12,30 @@ const SimilarProducts = ({ currentProduct }: SimilarProductsProps) => {
       id: "pulse",
       name: "Pulse",
       description: "Rhythmic Excellence",
-      icon: Heart,
+      images: ["/uploads/Pulse1.jpg", "/uploads/Pulse2.jpg"],
       path: "/pulse",
-      gradient: "bg-gradient-primary"
     },
     {
-      id: "vibe", 
+      id: "vibe",
       name: "Vibe",
       description: "Versatile Luxury",
-      icon: Star,
+      images: ["/uploads/Vibe1.jpg", "/uploads/Vibe2.jpg"],
       path: "/vibe",
-      gradient: "bg-gradient-secondary"
     },
     {
       id: "g-vibe",
-      name: "G-Vibe", 
+      name: "G-Vibe",
       description: "Precision Design",
-      icon: Shield,
+      images: ["/uploads/G-Vibe1.jpg", "/uploads/G-Vibe2.jpg", "/uploads/G-Vibe3.jpg"],
       path: "/g-vibe",
-      gradient: "bg-gradient-primary"
     },
     {
       id: "dox",
       name: "DOX",
       description: "Luxury Storage",
-      icon: Package,
+      images: ["/uploads/Dox1.jpg", "/uploads/Dox2.jpg", "/uploads/Dox3.jpg", "/uploads/Dox4.jpg", "/uploads/Dox5.jpg"],
       path: "/dox",
-      gradient: "bg-gradient-secondary"
-    }
+    },
   ];
 
   const filteredProducts = products.filter(product => product.id !== currentProduct);
@@ -57,24 +53,21 @@ const SimilarProducts = ({ currentProduct }: SimilarProductsProps) => {
         </div>
 
         <div className="grid md:grid-cols-3 gap-8">
-          {filteredProducts.map((product) => {
-            const IconComponent = product.icon;
-            return (
-              <Link key={product.id} to={product.path}>
-                <Card className="glass-luxury hover:scale-105 transition-all duration-500 hover-glow p-6 text-center group">
-                  <div className={`w-16 h-16 mx-auto ${product.gradient} rounded-full flex items-center justify-center mb-4`}>
-                    <IconComponent className="w-8 h-8 text-white" />
-                  </div>
-                  <h3 className="text-xl font-playfair font-semibold text-white mb-2">
-                    Vellvii {product.name}
-                  </h3>
-                  <p className="text-white/80 text-sm">
-                    {product.description}
-                  </p>
-                </Card>
-              </Link>
-            );
-          })}
+          {filteredProducts.map((product) => (
+            <Link key={product.id} to={product.path}>
+              <Card className="glass-luxury hover:scale-105 transition-all duration-500 hover-glow p-6 text-center group">
+                <div className="w-20 h-20 mx-auto mb-4 relative">
+                  <ImageSlider images={product.images} name={product.name} className="w-full h-full" />
+                </div>
+                <h3 className="text-xl font-playfair font-semibold text-white mb-2">
+                  Vellvii {product.name}
+                </h3>
+                <p className="text-white/80 text-sm">
+                  {product.description}
+                </p>
+              </Card>
+            </Link>
+          ))}
         </div>
       </div>
     </section>
