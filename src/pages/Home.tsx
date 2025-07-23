@@ -187,13 +187,17 @@ const Home = () => {
                       About the Dox
                     </MagneticButton>
                   </DialogTrigger>
-                  <DialogContent className="text-left max-h-[80vh] overflow-y-auto scrollbar-luxury">
+                  <DialogContent className="text-left max-h-[90vh]">
                     <DialogHeader className="text-center">
                       <DialogTitle className="text-xl sm:text-2xl font-playfair font-bold">
-                        One Form. Three Functions. Infinite Satisfaction.
+                        <span>One Form.</span>
+                        <br />
+                        <span>Three Functions.</span>
+                        <br />
+                        <span>Infinite Satisfaction.</span>
                       </DialogTitle>
                     </DialogHeader>
-                    <div className="space-y-4 mt-4 text-sm sm:text-base leading-relaxed">
+                    <div className="space-y-4 mt-4 text-sm sm:text-base leading-relaxed overflow-y-auto max-h-[80vh] scrollbar-luxury pr-2">
                       <p>
                         The Vellvii Dox isn’t just an innovation—it’s a revolution in intimacy and elegance.
                       </p>
