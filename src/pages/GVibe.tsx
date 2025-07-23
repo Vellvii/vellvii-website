@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { ArrowLeft, Shield, Target, Lightbulb, Zap, ShoppingCart } from "lucide-react";
-import { motion } from "framer-motion";
+import { ImageSlider } from "@/components/ImageSlider";
 import SimilarProducts from "@/components/SimilarProducts";
 import ConciergeChat from "@/components/ConciergeChat";
 import UserMenu from "@/components/UserMenu";
@@ -74,13 +74,12 @@ const GVibe = () => {
       <section className="px-4 sm:px-6 pb-12 sm:pb-16">
         <div className="max-w-6xl mx-auto">
           <div className="grid lg:grid-cols-2 gap-8 lg:gap-12 items-center">
-            {/* Product Image Placeholder */}
+            {/* Product Images */}
             <div className="glass-luxury rounded-lg p-8 sm:p-12 text-center">
-              <motion.img
-                src="/uploads/G-Vibe-transparent.png"
-                alt="G-Vibe logo"
+              <ImageSlider
+                images={["/uploads/G-Vibe1.jpg", "/uploads/G-Vibe2.jpg", "/uploads/G-Vibe3.jpg"]}
+                name="G-Vibe"
                 className="w-32 h-32 sm:w-40 sm:h-40 lg:w-48 lg:h-48 mx-auto mb-6"
-                whileHover={{ scale: 1.05 }}
               />
               <Badge variant="secondary" className="mb-4">Premium Collection</Badge>
               <h1 className="text-2xl sm:text-3xl lg:text-4xl font-playfair font-bold text-white mb-4">

@@ -7,7 +7,6 @@ import { Badge } from "@/components/ui/badge";
 import {
   Heart,
   Star,
-  Shield,
   Phone,
   Mail,
   MapPin,
@@ -22,12 +21,12 @@ import { ScrollReveal } from "@/components/animations/ScrollReveal";
 import { ParallaxContainer } from "@/components/animations/ParallaxContainer";
 import { MagneticButton } from "@/components/animations/MagneticButton";
 import { AnimatedText } from "@/components/animations/AnimatedText";
+import { ImageSlider } from "@/components/ImageSlider";
 import {
   Dialog,
   DialogContent,
   DialogHeader,
   DialogTitle,
-  DialogDescription,
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { ProductCard } from "@/components/ProductCard";
@@ -36,7 +35,6 @@ import { N8nService } from "@/services/n8nService";
 const Home = () => {
   const [concierge, setConcierge] = useState<string | null>(null);
   const [greeting, setGreeting] = useState("Welcome to Vellvii");
-  const [doxColor, setDoxColor] = useState<"black" | "beige" | "red">("black");
   
   useEffect(() => {
     let selectedConcierge = localStorage.getItem("selectedConcierge");
@@ -125,60 +123,11 @@ const Home = () => {
                 transition={{ type: "spring", stiffness: 300, damping: 20 }}
                 className="glass-luxury apple-hover p-6 sm:p-8 md:p-10 rounded-lg text-center dox-card w-[80vw] max-w-none"
               >
-                <div className="w-full h-48 sm:h-56 bg-muted/20 rounded-lg flex items-center justify-center mb-6">
-                  <Shield className={cn("w-12 h-12", {
-                    "text-black": doxColor === "black",
-                    "text-stone-300": doxColor === "beige",
-                    "text-red-600": doxColor === "red",
-                  })} />
-                </div>
-                <div className="flex justify-center gap-6 mb-6">
-                  <button
-                    tabIndex={0}
-                    onClick={() => setDoxColor("black")}
-                    className="flex flex-col items-center focus:outline-none group"
-                  >
-                    <span
-                      className={cn(
-                        "w-6 h-6 rounded-full bg-black border border-white/30 transition-all",
-                        doxColor === "black"
-                          ? "ring-2 ring-secondary"
-                          : "group-hover:ring-2 group-hover:ring-secondary focus:ring-2 focus:ring-secondary"
-                      )}
-                    />
-                    <span className="text-xs text-muted-foreground mt-1">Black</span>
-                  </button>
-                  <button
-                    tabIndex={0}
-                    onClick={() => setDoxColor("beige")}
-                    className="flex flex-col items-center focus:outline-none group"
-                  >
-                    <span
-                      className={cn(
-                        "w-6 h-6 rounded-full bg-stone-300 border border-white/30 transition-all",
-                        doxColor === "beige"
-                          ? "ring-2 ring-secondary"
-                          : "group-hover:ring-2 group-hover:ring-secondary focus:ring-2 focus:ring-secondary"
-                      )}
-                    />
-                    <span className="text-xs text-muted-foreground mt-1">Beige</span>
-                  </button>
-                  <button
-                    tabIndex={0}
-                    onClick={() => setDoxColor("red")}
-                    className="flex flex-col items-center focus:outline-none group"
-                  >
-                    <span
-                      className={cn(
-                        "w-6 h-6 rounded-full bg-red-600 border border-white/30 transition-all",
-                        doxColor === "red"
-                          ? "ring-2 ring-secondary"
-                          : "group-hover:ring-2 group-hover:ring-secondary focus:ring-2 focus:ring-secondary"
-                      )}
-                    />
-                    <span className="text-xs text-muted-foreground mt-1">Red</span>
-                  </button>
-                </div>
+                <ImageSlider
+                  images={["/uploads/Dox1.jpg", "/uploads/Dox2.jpg", "/uploads/Dox3.jpg", "/uploads/Dox4.jpg", "/uploads/Dox5.jpg"]}
+                  name="DOX"
+                  className="w-full h-48 sm:h-56 rounded-lg mb-6"
+                />
                 <Dialog>
                   <DialogTrigger asChild>
                     <MagneticButton
@@ -188,9 +137,9 @@ const Home = () => {
                       About the Dox
                     </MagneticButton>
                   </DialogTrigger>
-                  <DialogContent className="text-left max-h-[90vh] overflow-hidden">
+                  <DialogContent className="text-left max-h-[90vh] h-[90vh] flex flex-col justify-center">
                     <DialogHeader className="text-center">
-                      <DialogTitle className="text-xl sm:text-2xl font-playfair font-bold">
+                      <DialogTitle className="text-lg sm:text-xl md:text-2xl font-playfair font-bold leading-snug">
                         <span>One Form.</span>
                         <br />
                         <span>Three Functions.</span>
@@ -198,7 +147,7 @@ const Home = () => {
                         <span>Infinite Satisfaction.</span>
                       </DialogTitle>
                     </DialogHeader>
-                    <div className="space-y-4 mt-4 text-sm sm:text-base leading-relaxed overflow-y-auto max-h-[calc(90vh-8rem)] scrollbar-luxury pr-2 pb-2">
+                    <div className="space-y-4 mt-4 text-xs sm:text-sm md:text-base leading-snug sm:leading-relaxed px-2">
                       <p>
                         The Vellvii Dox isn’t just an innovation—it’s a revolution in intimacy and elegance.
                       </p>

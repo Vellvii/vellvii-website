@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { ArrowLeft, Package, Lock, Zap, Shield, ShoppingCart } from "lucide-react";
+import { ImageSlider } from "@/components/ImageSlider";
 import SimilarProducts from "@/components/SimilarProducts";
 import ConciergeChat from "@/components/ConciergeChat";
 import UserMenu from "@/components/UserMenu";
@@ -71,11 +72,13 @@ const DOX = () => {
       <section className="px-4 sm:px-6 pb-12 sm:pb-16">
         <div className="max-w-6xl mx-auto">
           <div className="grid lg:grid-cols-2 gap-8 lg:gap-12 items-center">
-            {/* Product Image Placeholder */}
+            {/* Product Images */}
             <div className="glass-luxury rounded-lg p-8 sm:p-12 text-center">
-              <div className="w-32 h-32 sm:w-40 sm:h-40 lg:w-48 lg:h-48 mx-auto bg-gradient-secondary rounded-lg flex items-center justify-center mb-6">
-                <Package className="w-16 h-16 sm:w-20 sm:h-20 lg:w-24 lg:h-24 text-foreground" />
-              </div>
+              <ImageSlider
+                images={["/uploads/Dox1.jpg", "/uploads/Dox2.jpg", "/uploads/Dox3.jpg", "/uploads/Dox4.jpg", "/uploads/Dox5.jpg"]}
+                name="DOX"
+                className="w-32 h-32 sm:w-40 sm:h-40 lg:w-48 lg:h-48 mx-auto mb-6"
+              />
               <Badge variant="secondary" className="mb-4">Luxury Storage</Badge>
               <h1 className="text-2xl sm:text-3xl lg:text-4xl font-playfair font-bold text-white mb-4">
                 Vellvii DOX
