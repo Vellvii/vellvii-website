@@ -4,6 +4,8 @@ import { Badge } from "@/components/ui/badge";
 import { Link } from "react-router-dom";
 import { ArrowLeft, Heart, Star, Shield, Package } from "lucide-react";
 import UserMenu from "@/components/UserMenu";
+import { ProductCard } from "@/components/ProductCard";
+import { ImageSlider } from "@/components/ImageSlider";
 
 const Products = () => {
   return (
@@ -40,8 +42,12 @@ const Products = () => {
             <Link to="/pulse">
               <Card className="glass-luxury hover:scale-105 transition-all duration-500 hover-glow p-4 sm:p-6 md:p-8 group">
                 <div className="flex items-center gap-3 sm:gap-4 md:gap-6 mb-4 sm:mb-6">
-                  <div className="w-12 h-12 sm:w-16 sm:h-16 md:w-20 md:h-20 bg-gradient-primary rounded-full flex items-center justify-center flex-shrink-0">
-                    <Heart className="w-6 h-6 sm:w-8 sm:h-8 md:w-10 md:h-10 text-white" />
+                  <div className="w-12 h-12 sm:w-16 sm:h-16 md:w-20 md:h-20 relative flex-shrink-0">
+                    <ImageSlider
+                      images={["/uploads/Pulse1.jpg", "/uploads/Pulse2.jpg"]}
+                      name="Pulse"
+                      className="w-full h-full"
+                    />
                   </div>
                   <div>
                     <h3 className="text-lg sm:text-xl md:text-2xl font-playfair font-semibold text-white mb-1 sm:mb-2">Vellvii Pulse</h3>
@@ -64,8 +70,12 @@ const Products = () => {
             <Link to="/vibe">
               <Card className="glass-luxury hover:scale-105 transition-all duration-500 hover-glow p-8 group">
                 <div className="flex items-center gap-6 mb-6">
-                  <div className="w-20 h-20 bg-gradient-secondary rounded-full flex items-center justify-center">
-                    <Star className="w-10 h-10 text-foreground" />
+                  <div className="w-20 h-20 relative">
+                    <ImageSlider
+                      images={["/uploads/Vibe1.jpg", "/uploads/Vibe2.jpg"]}
+                      name="Vibe"
+                      className="w-full h-full"
+                    />
                   </div>
                   <div>
                     <h3 className="text-2xl font-playfair font-semibold text-white mb-2">Vellvii Vibe</h3>
@@ -88,8 +98,12 @@ const Products = () => {
             <Link to="/gvibe">
               <Card className="glass-luxury hover:scale-105 transition-all duration-500 hover-glow p-8 group">
                 <div className="flex items-center gap-6 mb-6">
-                  <div className="w-20 h-20 bg-gradient-primary rounded-full flex items-center justify-center">
-                    <Shield className="w-10 h-10 text-white" />
+                  <div className="w-20 h-20 relative">
+                    <ImageSlider
+                      images={["/uploads/G-Vibe1.jpg", "/uploads/G-Vibe2.jpg", "/uploads/G-Vibe3.jpg"]}
+                      name="G-Vibe"
+                      className="w-full h-full"
+                    />
                   </div>
                   <div>
                     <h3 className="text-2xl font-playfair font-semibold text-white mb-2">Vellvii G-Vibe</h3>
@@ -112,8 +126,12 @@ const Products = () => {
             <Link to="/dox">
               <Card className="glass-luxury hover:scale-105 transition-all duration-500 hover-glow p-8 group">
                 <div className="flex items-center gap-6 mb-6">
-                  <div className="w-20 h-20 bg-gradient-secondary rounded-full flex items-center justify-center">
-                    <Package className="w-10 h-10 text-foreground" />
+                  <div className="w-20 h-20 relative">
+                    <ImageSlider
+                      images={["/uploads/Dox1.jpg", "/uploads/Dox2.jpg", "/uploads/Dox3.jpg", "/uploads/Dox4.jpg", "/uploads/Dox5.jpg"]}
+                      name="DOX"
+                      className="w-full h-full"
+                    />
                   </div>
                   <div>
                     <h3 className="text-2xl font-playfair font-semibold text-white mb-2">Vellvii DOX</h3>
