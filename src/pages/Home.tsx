@@ -30,6 +30,7 @@ import {
   DialogDescription,
   DialogTrigger,
 } from "@/components/ui/dialog";
+import { ProductCard } from "@/components/ProductCard";
 import { motion, useScroll, useTransform } from "framer-motion";
 import { N8nService } from "@/services/n8nService";
 const Home = () => {
@@ -187,7 +188,7 @@ const Home = () => {
                       About the Dox
                     </MagneticButton>
                   </DialogTrigger>
-                  <DialogContent className="text-left max-h-[90vh]">
+                  <DialogContent className="text-left max-h-[90vh] overflow-hidden">
                     <DialogHeader className="text-center">
                       <DialogTitle className="text-xl sm:text-2xl font-playfair font-bold">
                         <span>One Form.</span>
@@ -197,7 +198,7 @@ const Home = () => {
                         <span>Infinite Satisfaction.</span>
                       </DialogTitle>
                     </DialogHeader>
-                    <div className="space-y-4 mt-4 text-sm sm:text-base leading-relaxed overflow-y-auto max-h-[80vh] scrollbar-luxury pr-2">
+                    <div className="space-y-4 mt-4 text-sm sm:text-base leading-relaxed overflow-y-auto max-h-[calc(90vh-8rem)] scrollbar-luxury pr-2 pb-2">
                       <p>
                         The Vellvii Dox isn’t just an innovation—it’s a revolution in intimacy and elegance.
                       </p>
@@ -281,70 +282,31 @@ const Home = () => {
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 sm:gap-6 md:gap-8 w-full">
               <ScrollReveal delay={0.7} direction="up">
                 <motion.div whileHover={{ scale: 1.05, y: -10 }} transition={{ type: "spring", stiffness: 300, damping: 20 }}>
-                  <Card className="glass-luxury apple-hover p-4 sm:p-6 text-center group">
-                    <motion.img
-                      src="/uploads/Pulse_-trans.png"
-                      alt="Pulse logo"
-                      className="w-16 h-16 mx-auto mb-4"
-                      whileHover={{ scale: 1.1 }}
-                      transition={{ type: "spring", stiffness: 300, damping: 20 }}
-                    />
-                    <h3 className="text-lg font-playfair font-semibold text-white mb-2">Pulse</h3>
-                    <Link to="/pulse">
-                      <MagneticButton
-                        as="div"
-                        className={cn(buttonVariants({ variant: "secondary", size: "sm" }), "cursor-pointer")}
-                      >
-                        Explore
-                      </MagneticButton>
-                    </Link>
-                  </Card>
+                  <ProductCard
+                    name="Pulse"
+                    link="/pulse"
+                    images={["/uploads/Pulse1.jpg", "/uploads/Pulse2.jpg"]}
+                  />
                 </motion.div>
               </ScrollReveal>
 
               <ScrollReveal delay={0.8} direction="up">
                 <motion.div whileHover={{ scale: 1.05, y: -10 }} transition={{ type: "spring", stiffness: 300, damping: 20 }}>
-                  <Card className="glass-luxury apple-hover p-4 sm:p-6 text-center group">
-                    <motion.div
-                      className="w-16 h-16 mx-auto bg-gradient-secondary rounded-full flex items-center justify-center mb-4"
-                      whileHover={{ rotate: 360 }}
-                      transition={{ duration: 0.6 }}
-                    >
-                      <Star className="w-8 h-8 text-foreground" />
-                    </motion.div>
-                    <h3 className="text-lg font-playfair font-semibold text-white mb-2">Vibe</h3>
-                    <Link to="/vibe">
-                      <MagneticButton
-                        as="div"
-                        className={cn(buttonVariants({ variant: "secondary", size: "sm" }), "cursor-pointer")}
-                      >
-                        Explore
-                      </MagneticButton>
-                    </Link>
-                  </Card>
+                  <ProductCard
+                    name="Vibe"
+                    link="/vibe"
+                    images={["/uploads/Vibe1.jpg", "/uploads/Vibe2.jpg"]}
+                  />
                 </motion.div>
               </ScrollReveal>
 
               <ScrollReveal delay={0.9} direction="up">
                 <motion.div whileHover={{ scale: 1.05, y: -10 }} transition={{ type: "spring", stiffness: 300, damping: 20 }}>
-                  <Card className="glass-luxury apple-hover p-4 sm:p-6 text-center group">
-                    <motion.img
-                      src="/uploads/G-Vibe-transparent.png"
-                      alt="G-Vibe logo"
-                      className="w-16 h-16 mx-auto mb-4"
-                      whileHover={{ scale: 1.1 }}
-                      transition={{ type: "spring", stiffness: 300, damping: 20 }}
-                    />
-                    <h3 className="text-lg font-playfair font-semibold text-white mb-2">G-Vibe</h3>
-                    <Link to="/g-vibe">
-                      <MagneticButton
-                        as="div"
-                        className={cn(buttonVariants({ variant: "secondary", size: "sm" }), "cursor-pointer")}
-                      >
-                        Explore
-                      </MagneticButton>
-                    </Link>
-                  </Card>
+                  <ProductCard
+                    name="G-Vibe"
+                    link="/g-vibe"
+                    images={["/uploads/G-Vibe1.jpg", "/uploads/G-Vibe2.jpg", "/uploads/G-Vibe3.jpg"]}
+                  />
                 </motion.div>
               </ScrollReveal>
             </div>
