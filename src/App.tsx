@@ -2,7 +2,7 @@ import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
 import ScrollToTop from "./components/ScrollToTop";
 import { SmoothScroll } from "./components/animations/SmoothScroll";
 import { PageTransition } from "./components/animations/PageTransition";
@@ -23,35 +23,44 @@ import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
 
+const InnerApp = () => {
+  const location = useLocation();
+  return (
+    <>
+      <ScrollToTop />
+      <SmoothScroll>
+        <PageTransition>
+          <Routes>
+            <Route path="/" element={<Landing />} />
+            <Route path="/home" element={<Home />} />
+            <Route path="/about" element={<About />} />
+            <Route path="/products" element={<Products />} />
+            <Route path="/contact" element={<Contact />} />
+            <Route path="/pulse" element={<Pulse />} />
+            <Route path="/vibe" element={<Vibe />} />
+            <Route path="/g-vibe" element={<GVibe />} />
+            <Route path="/dox" element={<DOX />} />
+            <Route path="/luxury-storage" element={<LuxuryStorage />} />
+            <Route path="/docking-station" element={<DockingStation />} />
+            <Route path="/sex-saddle" element={<SexSaddle />} />
+            {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
+            <Route path="*" element={<NotFound />} />
+          </Routes>
+        </PageTransition>
+      </SmoothScroll>
+      {/* Global sticky cart */}
+      {location.pathname !== '/' && <Cart />}
+    </>
+  );
+};
+
 const App = () => (
   <QueryClientProvider client={queryClient}>
     <TooltipProvider>
       <Toaster />
       <Sonner />
       <BrowserRouter>
-        <ScrollToTop />
-        <SmoothScroll>
-          <PageTransition>
-            <Routes>
-              <Route path="/" element={<Landing />} />
-              <Route path="/home" element={<Home />} />
-              <Route path="/about" element={<About />} />
-              <Route path="/products" element={<Products />} />
-              <Route path="/contact" element={<Contact />} />
-              <Route path="/pulse" element={<Pulse />} />
-              <Route path="/vibe" element={<Vibe />} />
-              <Route path="/g-vibe" element={<GVibe />} />
-              <Route path="/dox" element={<DOX />} />
-              <Route path="/luxury-storage" element={<LuxuryStorage />} />
-              <Route path="/docking-station" element={<DockingStation />} />
-              <Route path="/sex-saddle" element={<SexSaddle />} />
-              {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
-              <Route path="*" element={<NotFound />} />
-            </Routes>
-          </PageTransition>
-        </SmoothScroll>
-        {/* Global sticky cart */}
-        <Cart />
+        <InnerApp />
       </BrowserRouter>
     </TooltipProvider>
   </QueryClientProvider>
