@@ -81,30 +81,6 @@ const Home = () => {
       y: backgroundY
     }} />
       
-      {/* Navigation */}
-      <motion.nav className="relative z-50 flex justify-between items-center p-4 sm:p-6 backdrop-blur-md bg-black/20" initial={{
-      y: -100,
-      opacity: 0
-    }} animate={{
-      y: 0,
-      opacity: 1
-    }} transition={{
-      duration: 0.8,
-      ease: [0.25, 0.46, 0.45, 0.94]
-     }}>
-        <motion.div className="flex items-center gap-2" whileHover={{
-        scale: 1.05
-      }} transition={{
-        type: "spring",
-        stiffness: 400,
-        damping: 17
-      }}>
-          {/* Logo removed as requested */}
-        </motion.div>
-        <div className="flex items-center gap-2 sm:gap-4">
-          <UserMenu />
-        </div>
-      </motion.nav>
 
 
       {/* Products Preview */}
