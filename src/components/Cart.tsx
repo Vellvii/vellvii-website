@@ -35,10 +35,7 @@ const Cart = () => {
       {/* Sticky Buy Now/Cart Trigger Button */}
       <Button
         variant="luxury"
-        className={cn(
-          'fixed top-4 right-4 z-40 pulse-glow',
-          buttonVariants({ variant: 'luxury' })
-        )}
+        className="fixed top-4 right-4 z-50 pulse-glow bg-gradient-luxury text-white shadow-luxury"
         onClick={() => setIsOpen(true)}
       >
         <ShoppingCart className="w-4 h-4 mr-2" />
