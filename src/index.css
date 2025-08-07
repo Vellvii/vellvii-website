@@ -277,17 +277,18 @@
   .vivien-container {
     position: fixed;
     bottom: 20px;
-    left: 20px;
+    left: 50%;
+    transform: translateX(-50%);
     z-index: 10;
     display: flex;
     align-items: flex-end;
     gap: 1rem;
+    justify-content: center;
   }
 
   @media (max-width: 640px) {
     .vivien-container {
       bottom: 10px;
-      left: 10px;
     }
   }
 

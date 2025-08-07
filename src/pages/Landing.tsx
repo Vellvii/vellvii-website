@@ -32,19 +32,24 @@ const Landing = () => {
 
       setTimeout(() => {
         if (!video) return;
-        const speed = ((video.duration || 5) * 1000) / message.length;
-        setIsTyping(true);
-        let index = 0;
-        interval = setInterval(() => {
-          if (index < message.length) {
-            setDisplayedText(message.slice(0, index + 1));
-            index++;
-          } else {
-            clearInterval(interval);
-            setIsTyping(false);
-            setShowButtons(true);
-          }
-        }, speed);
+        const videoDuration = video.duration || 5;
+        const halfwayPoint = (videoDuration * 1000) / 2;
+        
+        setTimeout(() => {
+          const speed = (halfwayPoint) / message.length;
+          setIsTyping(true);
+          let index = 0;
+          interval = setInterval(() => {
+            if (index < message.length) {
+              setDisplayedText(message.slice(0, index + 1));
+              index++;
+            } else {
+              clearInterval(interval);
+              setIsTyping(false);
+              setShowButtons(true);
+            }
+          }, speed);
+        }, halfwayPoint);
       }, 500);
     };
 
