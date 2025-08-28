@@ -14,6 +14,8 @@ const Landing = () => {
   const [chatMessages, setChatMessages] = useState<Array<{id: string, content: string, role: 'user' | 'assistant'}>>([]);
   const [inputValue, setInputValue] = useState("");
   const [isSending, setIsSending] = useState(false);
+  const inputRef = useRef<HTMLInputElement>(null);
+  const chatContainerRef = useRef<HTMLDivElement>(null);
   const videoRef = useRef<HTMLVideoElement>(null);
 
   useEffect(() => {
@@ -87,6 +89,12 @@ const Landing = () => {
     setChatMessages([welcomeMessage]);
   };
 
+  const scrollToBottom = () => {
+    if (chatContainerRef.current) {
+      chatContainerRef.current.scrollTop = chatContainerRef.current.scrollHeight;
+    }
+  };
+
   const handleSendMessage = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!inputValue.trim() || isSending) return;
@@ -94,6 +102,11 @@ const Landing = () => {
     const userMessage = inputValue.trim();
     setInputValue("");
     setIsSending(true);
+
+    // Keep focus on input
+    setTimeout(() => {
+      inputRef.current?.focus();
+    }, 100);
 
     // Add user message to chat
     const newUserMessage = {
@@ -103,23 +116,11 @@ const Landing = () => {
     };
     setChatMessages(prev => [...prev, newUserMessage]);
 
-        // Auto-scroll to bottom after adding user message
-        setTimeout(() => {
-          const chatContainer = document.querySelector('.overflow-y-auto');
-          if (chatContainer) {
-            chatContainer.scrollTop = chatContainer.scrollHeight;
-          }
-        }, 100);
+    // Auto-scroll to bottom
+    setTimeout(scrollToBottom, 100);
 
     try {
       // TODO: Replace with actual API call when ready
-      // const response = await fetch('/api/chat', {
-      //   method: 'POST',
-      //   headers: { 'Content-Type': 'application/json' },
-      //   body: JSON.stringify({ message: userMessage })
-      // });
-      // const data = await response.json();
-      
       // Temporary placeholder response
       setTimeout(() => {
         const assistantMessage = {
@@ -130,17 +131,16 @@ const Landing = () => {
         setChatMessages(prev => [...prev, assistantMessage]);
         setIsSending(false);
         
-          // Auto-scroll to bottom after adding assistant message
-          setTimeout(() => {
-            const chatContainer = document.querySelector('.overflow-y-auto');
-            if (chatContainer) {
-              chatContainer.scrollTop = chatContainer.scrollHeight;
-            }
-          }, 100);
+        // Auto-scroll to bottom and keep focus
+        setTimeout(() => {
+          scrollToBottom();
+          inputRef.current?.focus();
+        }, 100);
       }, 1000);
     } catch (error) {
       console.error('Error sending message:', error);
       setIsSending(false);
+      inputRef.current?.focus();
     }
   };
 
@@ -168,10 +168,14 @@ const Landing = () => {
 
       {isAgeConfirmed ? (
         /* Chat Mode */
-        <div className="flex-1 flex flex-col items-center w-full max-w-2xl px-4">
-          {/* Chat Messages Container with proper scrolling */}
-          <div className="flex-1 w-full overflow-hidden">
-            <div className="h-full overflow-y-auto scrollbar-hide px-2">
+        <div className="flex-1 flex flex-col w-full max-w-2xl px-4 min-h-0">
+          {/* Chat Messages Container */}
+          <div className="flex-1 overflow-hidden mb-4">
+            <div 
+              ref={chatContainerRef}
+              className="h-full overflow-y-auto scrollbar-hide px-2"
+              style={{ scrollBehavior: 'smooth' }}
+            >
               <div className="space-y-4 pt-8 pb-4">
                 {chatMessages.map((msg, index) => (
                   <div key={msg.id} className={`flex gap-3 animate-fade-in ${
@@ -219,23 +223,27 @@ const Landing = () => {
             </div>
           </div>
           
-          {/* Chat Input */}
-          <form onSubmit={handleSendMessage} className="w-full flex gap-2 mt-4">
-            <Input
-              value={inputValue}
-              onChange={(e) => setInputValue(e.target.value)}
-              placeholder="Ask me anything about our collection..."
-              className="flex-1 bg-white/20 border-white/30 text-white placeholder:text-white/60 text-sm"
-              disabled={isSending}
-            />
-            <Button
-              type="submit"
-              disabled={!inputValue.trim() || isSending}
-              className="bg-gradient-to-r from-yellow-600 to-yellow-500 hover:from-yellow-500 hover:to-yellow-400 text-black font-medium px-4 text-sm"
-            >
-              {isSending ? '...' : 'Send'}
-            </Button>
-          </form>
+          {/* Chat Input - Always visible at bottom */}
+          <div className="flex-shrink-0 pb-4">
+            <form onSubmit={handleSendMessage} className="flex gap-2">
+              <Input
+                ref={inputRef}
+                value={inputValue}
+                onChange={(e) => setInputValue(e.target.value)}
+                placeholder="Ask me anything about our collection..."
+                className="flex-1 bg-white/20 border-white/30 text-white placeholder:text-white/60 text-sm"
+                disabled={isSending}
+                autoFocus
+              />
+              <Button
+                type="submit"
+                disabled={!inputValue.trim() || isSending}
+                className="bg-gradient-to-r from-yellow-600 to-yellow-500 hover:from-yellow-500 hover:to-yellow-400 text-black font-medium px-4 text-sm"
+              >
+                {isSending ? '...' : 'Send'}
+              </Button>
+            </form>
+          </div>
         </div>
       ) : (
         /* Age Verification Mode */
