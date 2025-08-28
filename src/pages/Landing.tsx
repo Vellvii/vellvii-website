@@ -1,6 +1,8 @@
 import { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import { MagneticButton } from "@/components/animations/MagneticButton";
+import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
 import vivienImage from "/uploads/976c0d6d-a066-409a-8ad6-6353840958ac.png";
 
 const Landing = () => {
@@ -8,6 +10,10 @@ const Landing = () => {
   const [isTyping, setIsTyping] = useState(false);
   const [displayedText, setDisplayedText] = useState("");
   const [showButtons, setShowButtons] = useState(false);
+  const [isAgeConfirmed, setIsAgeConfirmed] = useState(false);
+  const [chatMessages, setChatMessages] = useState<Array<{id: string, content: string, role: 'user' | 'assistant'}>>([]);
+  const [inputValue, setInputValue] = useState("");
+  const [isSending, setIsSending] = useState(false);
   const videoRef = useRef<HTMLVideoElement>(null);
 
   useEffect(() => {
@@ -19,10 +25,34 @@ const Landing = () => {
     };
   }, []);
 
-  const message =
-    "Hi, I'm Vivien. I can guide you through our website and you may ask me any questions at any time. To start, please confirm that you are older than 18.";
+  const message = isAgeConfirmed 
+    ? "Perfect! I'm here to help you explore our luxury collection. What would you like to know?"
+    : "Hi, I'm Vivien. I can guide you through our website and you may ask me any questions at any time. To start, please confirm that you are older than 18.";
 
   useEffect(() => {
+    if (isAgeConfirmed) {
+      // Reset for chat mode
+      setDisplayedText("");
+      setIsTyping(true);
+      setShowButtons(false);
+      
+      // Show welcome message
+      setTimeout(() => {
+        const chatMessage = "Perfect! I'm here to help you explore our luxury collection. What would you like to know?";
+        let index = 0;
+        const interval = setInterval(() => {
+          if (index < chatMessage.length) {
+            setDisplayedText(chatMessage.slice(0, index + 1));
+            index++;
+          } else {
+            clearInterval(interval);
+            setIsTyping(false);
+          }
+        }, 30);
+      }, 500);
+      return;
+    }
+
     const video = videoRef.current;
     let interval: NodeJS.Timeout;
     const handleReady = () => {
@@ -63,12 +93,51 @@ const Landing = () => {
       video?.removeEventListener("loadedmetadata", handleReady);
       clearInterval(interval);
     };
-  }, []);
+  }, [isAgeConfirmed, message]);
 
   const handleYes = () => {
-    setTimeout(() => {
-      navigate("/home");
-    }, 500);
+    setIsAgeConfirmed(true);
+  };
+
+  const handleSendMessage = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!inputValue.trim() || isSending) return;
+
+    const userMessage = inputValue.trim();
+    setInputValue("");
+    setIsSending(true);
+
+    // Add user message to chat
+    const newUserMessage = {
+      id: Date.now().toString(),
+      content: userMessage,
+      role: 'user' as const
+    };
+    setChatMessages(prev => [...prev, newUserMessage]);
+
+    try {
+      // TODO: Replace with actual API call when ready
+      // const response = await fetch('/api/chat', {
+      //   method: 'POST',
+      //   headers: { 'Content-Type': 'application/json' },
+      //   body: JSON.stringify({ message: userMessage })
+      // });
+      // const data = await response.json();
+      
+      // Temporary placeholder response
+      setTimeout(() => {
+        const assistantMessage = {
+          id: (Date.now() + 1).toString(),
+          content: "I'm still learning about our luxury collection. Once I'm fully trained, I'll be able to provide detailed guidance about our products and help you find exactly what you're looking for.",
+          role: 'assistant' as const
+        };
+        setChatMessages(prev => [...prev, assistantMessage]);
+        setIsSending(false);
+      }, 1000);
+    } catch (error) {
+      console.error('Error sending message:', error);
+      setIsSending(false);
+    }
   };
 
   const handleNo = () => {
@@ -96,13 +165,28 @@ const Landing = () => {
           <img src={vivienImage} alt="Vivien" className="w-full h-full object-cover" />
         </div>
         <div className="text-white max-w-sm">
+          {/* Chat Messages */}
+          {isAgeConfirmed && chatMessages.length > 0 && (
+            <div className="mb-4 max-h-32 overflow-y-auto space-y-2">
+              {chatMessages.map((msg) => (
+                <div key={msg.id} className={`text-xs md:text-sm ${msg.role === 'user' ? 'text-yellow-300' : 'text-white'}`}>
+                  <span className="font-medium">{msg.role === 'user' ? 'You: ' : 'Vivien: '}</span>
+                  {msg.content}
+                </div>
+              ))}
+            </div>
+          )}
+          
+          {/* Main Text Display */}
           <div className="min-h-[96px] md:min-h-[112px]">
             <p className="font-playfair text-sm md:text-base lg:text-lg leading-relaxed">
               {displayedText}
               {isTyping && <span className="blinking-cursor">|</span>}
             </p>
           </div>
-          {showButtons && (
+          
+          {/* Age Confirmation Buttons */}
+          {showButtons && !isAgeConfirmed && (
             <div className="mt-4 md:mt-6 space-y-2 md:space-y-3">
               <MagneticButton
                 onClick={handleYes}
@@ -117,6 +201,26 @@ const Landing = () => {
                 No, I am not
               </MagneticButton>
             </div>
+          )}
+          
+          {/* Chat Input */}
+          {isAgeConfirmed && !isTyping && (
+            <form onSubmit={handleSendMessage} className="mt-4 md:mt-6 flex gap-2">
+              <Input
+                value={inputValue}
+                onChange={(e) => setInputValue(e.target.value)}
+                placeholder="Ask me anything about our collection..."
+                className="flex-1 bg-white/20 border-white/30 text-white placeholder:text-white/60 text-sm"
+                disabled={isSending}
+              />
+              <Button
+                type="submit"
+                disabled={!inputValue.trim() || isSending}
+                className="bg-gradient-to-r from-yellow-600 to-yellow-500 hover:from-yellow-500 hover:to-yellow-400 text-black font-medium px-4 text-sm"
+              >
+                {isSending ? '...' : 'Send'}
+              </Button>
+            </form>
           )}
         </div>
       </div>
