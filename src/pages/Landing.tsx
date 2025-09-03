@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { MagneticButton } from "@/components/animations/MagneticButton";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
+import { sendVivianMessage } from "@/services/vivianChatService";
 import vivienImage from "/uploads/976c0d6d-a066-409a-8ad6-6353840958ac.png";
 
 const Landing = () => {
@@ -116,26 +117,24 @@ const Landing = () => {
     setChatMessages(prev => [...prev, newUserMessage]);
 
     try {
-      // TODO: Replace with actual API call when ready
-      // const response = await fetch('/api/chat', {
-      //   method: 'POST',
-      //   headers: { 'Content-Type': 'application/json' },
-      //   body: JSON.stringify({ message: userMessage })
-      // });
-      // const data = await response.json();
+      // Get response from Vivian chat service
+      const reply = await sendVivianMessage(userMessage);
       
-      // Temporary placeholder response
-      setTimeout(() => {
-        const assistantMessage = {
-          id: (Date.now() + 1).toString(),
-          content: "I'm still learning about our luxury collection. Once I'm fully trained, I'll be able to provide detailed guidance about our products and help you find exactly what you're looking for.",
-          role: 'assistant' as const
-        };
-        setChatMessages(prev => [...prev, assistantMessage]);
-        setIsSending(false);
-      }, 1000);
+      const assistantMessage = {
+        id: (Date.now() + 1).toString(),
+        content: reply,
+        role: 'assistant' as const
+      };
+      setChatMessages(prev => [...prev, assistantMessage]);
     } catch (error) {
       console.error('Error sending message:', error);
+      const errorMessage = {
+        id: (Date.now() + 1).toString(),
+        content: "I'm having trouble connecting right now. Please try again.",
+        role: 'assistant' as const
+      };
+      setChatMessages(prev => [...prev, errorMessage]);
+    } finally {
       setIsSending(false);
     }
   };
