@@ -1,6 +1,9 @@
 import "jsr:@supabase/functions-js/edge-runtime.d.ts";
 
 const ABACUS_PREDICTIONS_URL = Deno.env.get("ABACUS_PREDICTIONS_URL");
+const ABACUS_API_KEY = Deno.env.get("ABACUS_API_KEY");
+const ABACUS_DEPLOYMENT_TOKEN = Deno.env.get("ABACUS_DEPLOYMENT_TOKEN");
+const ABACUS_DEPLOYMENT_ID = Deno.env.get("ABACUS_DEPLOYMENT_ID");
 
 const CORS = {
   "Access-Control-Allow-Origin": "*",
@@ -18,11 +21,16 @@ Deno.serve(async (req) => {
     const { messages = [], temperature = 0.3, max_tokens = 600 } = await req.json();
     
     console.log('Received request:', { messages: messages?.length, temperature, max_tokens });
-    console.log('ABACUS_PREDICTIONS_URL check:', ABACUS_PREDICTIONS_URL ? `Present (${ABACUS_PREDICTIONS_URL.substring(0, 50)}...)` : 'Missing');
+    console.log('Environment check:', {
+      predictionsUrl: ABACUS_PREDICTIONS_URL ? 'Present' : 'Missing',
+      apiKey: ABACUS_API_KEY ? 'Present' : 'Missing',
+      deploymentToken: ABACUS_DEPLOYMENT_TOKEN ? 'Present' : 'Missing',
+      deploymentId: ABACUS_DEPLOYMENT_ID ? 'Present' : 'Missing'
+    });
     
-    if (!ABACUS_PREDICTIONS_URL) {
-      console.error('ABACUS_PREDICTIONS_URL is not set');
-      return new Response(JSON.stringify({ error: "Predictions URL not configured" }), {
+    if (!ABACUS_PREDICTIONS_URL || !ABACUS_API_KEY || !ABACUS_DEPLOYMENT_TOKEN || !ABACUS_DEPLOYMENT_ID) {
+      console.error('Missing required Abacus configuration');
+      return new Response(JSON.stringify({ error: "Abacus configuration incomplete" }), {
         status: 500,
         headers: { ...CORS, 'Content-Type': 'application/json' },
       });
@@ -42,12 +50,15 @@ Deno.serve(async (req) => {
     }
 
     const body = {
+      deploymentToken: ABACUS_DEPLOYMENT_TOKEN,
+      deploymentId: ABACUS_DEPLOYMENT_ID,
       messages: abacusMessages,
       numCompletionTokens: max_tokens,
       temperature,
     };
 
     console.log('Request payload:', { 
+      deploymentId: body.deploymentId,
       messages_count: body.messages.length,
       numCompletionTokens: body.numCompletionTokens,
       temperature: body.temperature,
@@ -59,7 +70,10 @@ Deno.serve(async (req) => {
     
     const upstream = await fetch(ABACUS_PREDICTIONS_URL, {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
+      headers: { 
+        "Content-Type": "application/json",
+        "Authorization": `Bearer ${ABACUS_API_KEY}`
+      },
       body: JSON.stringify(body),
     });
 
