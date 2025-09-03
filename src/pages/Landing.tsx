@@ -104,6 +104,8 @@ const Landing = () => {
     setInputValue("");
     setIsSending(true);
 
+    console.log('🚀 Starting message send:', userMessage);
+
     // Keep focus on input
     setTimeout(() => {
       inputRef.current?.focus();
@@ -120,6 +122,16 @@ const Landing = () => {
     // Auto-scroll to bottom
     setTimeout(scrollToBottom, 100);
 
+    // Create placeholder assistant message for streaming
+    const assistantMessageId = (Date.now() + 1).toString();
+    const assistantMessage = {
+      id: assistantMessageId,
+      content: "",
+      role: 'assistant' as const
+    };
+    setChatMessages(prev => [...prev, assistantMessage]);
+    setIsSending(false);
+
     try {
       // Store session ID for conversation continuity
       const sessionId = sessionStorage.getItem('vivian-session-id') || crypto.randomUUID();
@@ -127,15 +139,8 @@ const Landing = () => {
         sessionStorage.setItem('vivian-session-id', sessionId);
       }
 
-      // Create placeholder assistant message for streaming
-      const assistantMessageId = (Date.now() + 1).toString();
-      const assistantMessage = {
-        id: assistantMessageId,
-        content: "",
-        role: 'assistant' as const
-      };
-      setChatMessages(prev => [...prev, assistantMessage]);
-      setIsSending(false);
+      console.log('📡 Calling edge function with sessionId:', sessionId);
+      console.log('📤 Sending messages:', [...chatMessages, newUserMessage].map(msg => ({ role: msg.role, content: msg.content.slice(0, 50) + '...' })));
 
       // Call the edge function directly for SSE streaming
       const response = await fetch('https://mawaqjqifmvijolucrlp.supabase.co/functions/v1/vivian-chat', {
@@ -154,8 +159,13 @@ const Landing = () => {
         })
       });
 
+      console.log('📡 Response status:', response.status);
+      console.log('📡 Response headers:', Object.fromEntries(response.headers.entries()));
+
       if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
+        const errorText = await response.text();
+        console.error('❌ HTTP Error Response:', errorText);
+        throw new Error(`HTTP error! status: ${response.status}, body: ${errorText}`);
       }
 
       const reader = response.body?.getReader();
@@ -166,28 +176,39 @@ const Landing = () => {
       const decoder = new TextDecoder();
       let buffer = '';
       let assistantContent = '';
+      let messageReceived = false;
+
+      console.log('🔄 Starting to read SSE stream...');
 
       // Read the SSE stream
       while (true) {
         const { done, value } = await reader.read();
         
         if (done) {
+          console.log('✅ Stream reading completed');
           break;
         }
 
         // Decode the chunk and add to buffer
-        buffer += decoder.decode(value, { stream: true });
+        const chunk = decoder.decode(value, { stream: true });
+        buffer += chunk;
+        
+        console.log('📥 Received chunk:', chunk);
         
         // Process complete lines
         const lines = buffer.split('\n');
         buffer = lines.pop() || ''; // Keep incomplete line in buffer
 
         for (const line of lines) {
+          console.log('🔍 Processing line:', line);
+          
           if (line.startsWith('data: ')) {
             const data = line.slice(6); // Remove 'data: ' prefix
             
+            console.log('📊 SSE data:', data);
+            
             if (data === '[DONE]') {
-              // Streaming complete
+              console.log('✅ Received [DONE] signal');
               setTimeout(() => {
                 scrollToBottom();
                 inputRef.current?.focus();
@@ -195,12 +216,44 @@ const Landing = () => {
               return;
             }
 
+            if (data.trim() === '') {
+              console.log('⏭️ Empty data line, skipping');
+              continue;
+            }
+
             try {
               const parsed = JSON.parse(data);
-              const content = parsed.choices?.[0]?.delta?.content;
+              console.log('🔧 Parsed SSE data:', parsed);
+              
+              // Try multiple possible content paths
+              let content = null;
+              
+              // OpenAI format
+              if (parsed.choices?.[0]?.delta?.content) {
+                content = parsed.choices[0].delta.content;
+                console.log('✅ Found content in OpenAI format:', content);
+              }
+              // Simple format
+              else if (parsed.content) {
+                content = parsed.content;
+                console.log('✅ Found content in simple format:', content);
+              }
+              // Message format
+              else if (parsed.message) {
+                content = parsed.message;
+                console.log('✅ Found content in message format:', content);
+              }
+              // Direct text format
+              else if (typeof parsed === 'string') {
+                content = parsed;
+                console.log('✅ Found content as direct string:', content);
+              }
               
               if (content) {
+                messageReceived = true;
                 assistantContent += content;
+                console.log('💬 Updating assistant content. Total length:', assistantContent.length);
+                
                 // Update the assistant message with accumulated content
                 setChatMessages(prev => 
                   prev.map(msg => 
@@ -212,11 +265,69 @@ const Landing = () => {
                 
                 // Auto-scroll as content updates
                 setTimeout(scrollToBottom, 10);
+              } else {
+                console.warn('⚠️ No content found in parsed data:', parsed);
               }
             } catch (parseError) {
-              console.warn('Failed to parse SSE data:', parseError);
+              console.warn('❌ Failed to parse SSE data:', parseError, 'Raw data:', data);
+              
+              // Try treating as plain text if JSON parsing fails
+              if (data.trim()) {
+                messageReceived = true;
+                assistantContent += data;
+                console.log('📝 Treating as plain text:', data);
+                
+                setChatMessages(prev => 
+                  prev.map(msg => 
+                    msg.id === assistantMessageId 
+                      ? { ...msg, content: assistantContent }
+                      : msg
+                  )
+                );
+                
+                setTimeout(scrollToBottom, 10);
+              }
             }
           }
+        }
+      }
+
+      // Check if we received any message content
+      if (!messageReceived || assistantContent.trim() === '') {
+        console.warn('⚠️ No message content received, using fallback');
+        
+        // Fallback: Try non-streaming request
+        const fallbackResponse = await fetch('https://mawaqjqifmvijolucrlp.supabase.co/functions/v1/vivian-chat', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im1hd2FxanFpZm12aWpvbHVjcmxwIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTE5NTYxMDUsImV4cCI6MjA2NzUzMjEwNX0.QrHerqd8iRD-RoBbZVAtkiSzE3DowV1m5O9mefnt1Gs`
+          },
+          body: JSON.stringify({
+            messages: [...chatMessages, newUserMessage].map(msg => ({
+              role: msg.role,
+              content: msg.content
+            })),
+            stream: false,
+            sessionId: sessionId
+          })
+        });
+
+        if (fallbackResponse.ok) {
+          const fallbackData = await fallbackResponse.json();
+          console.log('🔄 Fallback response:', fallbackData);
+          
+          const fallbackContent = fallbackData.message || fallbackData.content || "I'm here to help you with any questions.";
+          
+          setChatMessages(prev => 
+            prev.map(msg => 
+              msg.id === assistantMessageId 
+                ? { ...msg, content: fallbackContent }
+                : msg
+            )
+          );
+        } else {
+          throw new Error('Both streaming and fallback requests failed');
         }
       }
 
@@ -227,11 +338,11 @@ const Landing = () => {
       }, 100);
 
     } catch (error) {
-      console.error('Error sending message:', error);
+      console.error('❌ Error sending message:', error);
       
       // Remove any incomplete assistant message and add error message
       setChatMessages(prev => {
-        const filtered = prev.filter(msg => msg.content !== "");
+        const filtered = prev.filter(msg => msg.id !== assistantMessageId);
         return [...filtered, {
           id: (Date.now() + 1).toString(),
           content: "I apologize, but I'm having trouble connecting right now. Please try again in a moment.",
