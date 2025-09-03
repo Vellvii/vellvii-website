@@ -163,26 +163,39 @@ const Landing = () => {
         <div className="w-16 h-16 md:w-32 md:h-32 rounded-full overflow-hidden shadow-2xl border-2 border-white/10 flex-shrink-0">
           <img src={vivienImage} alt="Vivien" className="w-full h-full object-cover" />
         </div>
-        <div className="text-white max-w-sm">
-          {/* Chat Messages */}
+        <div className="bg-gradient-to-br from-card/95 to-muted/95 backdrop-blur-xl border border-secondary/20 rounded-2xl p-4 md:p-6 max-w-sm md:max-w-md shadow-luxury">
+          {/* Chat Messages Container */}
           {isAgeConfirmed && chatMessages.length > 0 && (
-            <div className="mb-4 max-h-32 overflow-y-auto space-y-2">
+            <div className="mb-4 max-h-48 overflow-y-auto scrollbar-luxury space-y-3">
               {chatMessages.map((msg) => (
-                <div key={msg.id} className={`text-xs md:text-sm ${msg.role === 'user' ? 'text-yellow-300' : 'text-white'}`}>
-                  <span className="font-medium">{msg.role === 'user' ? 'You: ' : 'Vivien: '}</span>
-                  {msg.content}
+                <div key={msg.id} className={`flex ${msg.role === 'user' ? 'justify-end' : 'justify-start'}`}>
+                  <div className={`
+                    max-w-[85%] px-4 py-2.5 rounded-2xl text-sm md:text-base leading-relaxed
+                    ${msg.role === 'user' 
+                      ? 'bg-gradient-to-r from-secondary to-secondary/90 text-secondary-foreground rounded-br-md' 
+                      : 'bg-gradient-to-r from-accent/20 to-accent/10 text-foreground border border-accent/30 rounded-bl-md'
+                    }
+                  `}>
+                    {msg.content}
+                  </div>
                 </div>
               ))}
             </div>
           )}
           
-          {/* Main Text Display */}
-          <div className="min-h-[96px] md:min-h-[112px]">
-            <p className="font-playfair text-sm md:text-base lg:text-lg leading-relaxed">
-              {displayedText}
-              {isTyping && <span className="blinking-cursor">|</span>}
-            </p>
-          </div>
+          {/* Main Text Display - Vivien's Initial Message */}
+          {(!isAgeConfirmed || (isAgeConfirmed && chatMessages.length === 0)) && (
+            <div className="mb-4">
+              <div className="flex justify-start">
+                <div className="bg-gradient-to-r from-accent/20 to-accent/10 border border-accent/30 rounded-2xl rounded-bl-md px-4 py-3 max-w-[90%]">
+                  <p className="font-playfair text-sm md:text-base lg:text-lg leading-relaxed text-foreground">
+                    {displayedText}
+                    {isTyping && <span className="blinking-cursor ml-1 text-secondary">|</span>}
+                  </p>
+                </div>
+              </div>
+            </div>
+          )}
           
           {/* Age Confirmation Buttons */}
           {showButtons && !isAgeConfirmed && (
