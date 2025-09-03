@@ -3,6 +3,20 @@ import { supabase } from "@/integrations/supabase/client";
 const SUPABASE_URL = "https://mawaqjqifmvijolucrlp.supabase.co";
 const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im1hd2FxanFpZm12aWpvbHVjcmxwIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTE5NTYxMDUsImV4cCI6MjA2NzUzMjEwNX0.QrHerqd8iRD-RoBbZVAtkiSzE3DowV1m5O9mefnt1Gs";
 
+export function extractVivianText(data: any): string {
+  // Try the usual suspects, in order
+  return (
+    data?.choices?.[0]?.message?.content ??
+    data?.choices?.[0]?.text ??
+    data?.output_text ??
+    data?.response ??
+    data?.answer ??
+    data?.message ??
+    data?.text ??
+    ""
+  );
+}
+
 export class VivianChatService {
   static async getChatResponse(userMessage: string, pageContext: string, onToken?: (token: string) => void): Promise<string> {
     try {
@@ -18,7 +32,7 @@ export class VivianChatService {
           messages: [
             { role: 'user', content: userMessage }
           ],
-          numCompletionTokens: 600,
+          max_tokens: 600,
           sessionId: crypto.randomUUID()
         })
       });
@@ -27,54 +41,23 @@ export class VivianChatService {
         throw new Error(`HTTP error! status: ${response.status}`);
       }
 
-      // Handle streaming response
-      if (response.headers.get('content-type')?.includes('text/event-stream')) {
-        const reader = response.body?.getReader();
-        if (!reader) throw new Error('No response body');
+      const ct = response.headers.get("content-type") || "";
+      const raw = await response.text();
+      console.log("VIVIAN raw response (first 400):", raw.slice(0, 400));
 
-        let fullResponse = '';
-        const decoder = new TextDecoder();
-
-        try {
-          while (true) {
-            const { done, value } = await reader.read();
-            if (done) break;
-
-            const chunk = decoder.decode(value);
-            const lines = chunk.split('\n');
-
-            for (const line of lines) {
-              if (line.startsWith('data: ')) {
-                const data = line.slice(6);
-                if (data === '[DONE]') continue;
-                
-                try {
-                  const parsed = JSON.parse(data);
-                  const content = parsed.choices?.[0]?.delta?.content || '';
-                  if (content) {
-                    fullResponse += content;
-                    onToken?.(content);
-                  }
-                } catch (e) {
-                  // Skip invalid JSON
-                }
-              }
-            }
-          }
-        } finally {
-          reader.releaseLock();
-        }
-
-        return fullResponse || "I'm here to help you with any questions about our luxury collection.";
-      } else {
-        // Handle non-streaming response
-        const data = await response.json();
-        if (data?.error) {
-          console.error('API error response:', data);
-          throw new Error(`API error: ${data.error}`);
-        }
-        return data?.message || "I'm here to help you with any questions about our luxury collection.";
+      if (!ct.includes("application/json")) {
+        throw new Error(`Unexpected content-type: ${ct}`);
       }
+
+      const json = JSON.parse(raw);
+      const text = extractVivianText(json);
+      
+      if (!text) {
+        console.warn("No text extracted; JSON shape:", json);
+        throw new Error("No text in Vivian response");
+      }
+      
+      return text;
     } catch (error) {
       console.error('VivianChatService error:', error);
       return "I'm here to help you with any questions about our luxury collection.";
