@@ -59,11 +59,11 @@ serve(async (req) => {
     const data = await abacusRes.json();
     console.log('Abacus API response data:', data);
 
-    const reply =
-      data.output_text ||
-      data?.choices?.[0]?.text ||
-      data?.response ||
-      "Vivien is thinking...";
+    // Extract Vivien's reply from the correct path in Abacus response
+    const reply = 
+      data?.result?.messages?.[1]?.text ||
+      data?.result?.messages?.find(msg => !msg.is_user)?.text ||
+      "I'm having trouble responding right now.";
 
     console.log('Sending reply:', reply);
 
