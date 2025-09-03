@@ -240,15 +240,15 @@ const Landing = () => {
 
       {/* Vivien Section */}
       <div className="vivien-container px-4 sm:px-0">
-        <div className="w-16 h-16 md:w-32 md:h-32 rounded-full overflow-hidden shadow-2xl border-2 border-white/10 flex-shrink-0">
+        <div className="w-12 h-12 sm:w-16 sm:h-16 md:w-32 md:h-32 rounded-full overflow-hidden shadow-2xl border-2 border-white/10 flex-shrink-0">
           <img src={vivienImage} alt="Vivien" className="w-full h-full object-cover" />
         </div>
         <div className={`
-          bg-gradient-to-br from-card/95 to-muted/95 backdrop-blur-xl border border-secondary/20 rounded-2xl p-3 sm:p-4 md:p-6 shadow-luxury
+          bg-gradient-to-br from-card/95 to-muted/95 backdrop-blur-xl border border-secondary/20 rounded-2xl shadow-luxury
           transition-all duration-700 ease-out flex flex-col
           ${isAgeConfirmed 
-            ? 'w-[95vw] sm:w-[85vw] md:w-[80vw] min-h-[60vh] sm:min-h-[65vh] max-h-[75vh] sm:max-h-[70vh]' 
-            : 'w-[90vw] max-w-sm sm:max-w-md'
+            ? 'w-[90vw] sm:w-[70vw] md:w-[60vw] lg:w-[50vw] max-w-2xl min-h-[50vh] sm:min-h-[55vh] max-h-[65vh] sm:max-h-[60vh] p-3 sm:p-4' 
+            : 'w-[85vw] max-w-xs sm:max-w-sm p-4 sm:p-6'
           }
         `}>
           {/* Chat Messages Container */}
@@ -273,23 +273,23 @@ const Landing = () => {
                 className="flex-1 overflow-y-auto scrollbar-luxury space-y-3 mb-4 pr-2"
                 style={{ height: '0', minHeight: '200px' }}
               >
-                {chatMessages.map((msg) => (
-                  <div key={msg.id} className={`flex ${msg.role === 'user' ? 'justify-end' : 'justify-start'} animate-fade-in`}>
-                    <div className={`
-                      max-w-[85%] px-4 py-2.5 rounded-2xl text-sm md:text-base leading-relaxed
-                      ${msg.role === 'user' 
-                        ? 'bg-gradient-to-r from-secondary to-secondary/90 text-secondary-foreground rounded-br-md' 
-                        : 'bg-gradient-to-r from-accent/20 to-accent/10 text-foreground border border-accent/30 rounded-bl-md'
-                      }
-                     `}>
-                       {msg.role === 'assistant' 
-                         ? (msg.displayedContent || '')
-                         : msg.content
+                 {chatMessages.map((msg) => (
+                   <div key={msg.id} className={`flex ${msg.role === 'user' ? 'justify-end' : 'justify-start'} animate-fade-in`}>
+                     <div className={`
+                       max-w-[75%] sm:max-w-[80%] px-3 py-2 sm:px-4 sm:py-2.5 rounded-2xl text-sm leading-relaxed
+                       ${msg.role === 'user' 
+                         ? 'bg-gradient-to-r from-secondary to-secondary/90 text-secondary-foreground rounded-br-md' 
+                         : 'bg-gradient-to-r from-accent/20 to-accent/10 text-foreground border border-accent/30 rounded-bl-md'
                        }
-                       {msg.role === 'assistant' && msg.isTyping && <span className="blinking-cursor ml-1 text-secondary">|</span>}
-                     </div>
-                  </div>
-                ))}
+                      `}>
+                        {msg.role === 'assistant' 
+                          ? (msg.displayedContent || '')
+                          : msg.content
+                        }
+                        {msg.role === 'assistant' && msg.isTyping && <span className="blinking-cursor ml-1 text-secondary">|</span>}
+                      </div>
+                   </div>
+                 ))}
                 
                 {/* Vivien Typing Indicator */}
                 {isVivienTyping && (
