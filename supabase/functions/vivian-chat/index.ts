@@ -68,6 +68,12 @@ Deno.serve(async (req) => {
         text: msg.content
       }));
 
+    console.log('Transformed messages:', { 
+      originalCount: messages.length,
+      filteredCount: abacusMessages.length,
+      messages: abacusMessages.map(m => ({ is_user: m.is_user, textLength: m.text.length }))
+    });
+
     const payload = {
       deployment_id: deploymentId,
       system_message: systemMessage,
@@ -78,10 +84,14 @@ Deno.serve(async (req) => {
 
     console.log('Payload for Abacus API:', { 
       deployment_id: payload.deployment_id,
+      system_message_length: payload.system_message.length,
       messages_count: payload.messages.length,
-      num_completion_tokens: payload.num_completion_tokens
+      num_completion_tokens: payload.num_completion_tokens,
+      stream: payload.stream
     });
 
+    console.log('Making request to Abacus API...');
+    
     const upstream = await fetch(ABACUS_URL, {
       method: "POST",
       headers: {
@@ -89,6 +99,13 @@ Deno.serve(async (req) => {
         "Content-Type": "application/json",
       },
       body: JSON.stringify(payload),
+    });
+
+    console.log('Abacus API response:', {
+      status: upstream.status,
+      statusText: upstream.statusText,
+      ok: upstream.ok,
+      hasBody: !!upstream.body
     });
 
     if (!upstream.ok || !upstream.body) {
@@ -108,6 +125,8 @@ Deno.serve(async (req) => {
       });
     }
 
+    console.log('Abacus API call successful, saving to database...');
+
     // Save conversation in Supabase
     const chatSessionId = sessionId || crypto.randomUUID();
     try {
@@ -121,20 +140,38 @@ Deno.serve(async (req) => {
       // Continue with response even if DB save fails
     }
 
+    console.log('Starting streaming response...');
+
     // Pass SSE stream straight through with keepalive
     const encoder = new TextEncoder();
     const body = new ReadableStream({
       async start(controller) {
-        controller.enqueue(encoder.encode("retry: 3000\n: connected\n\n"));
-        const hb = setInterval(() => controller.enqueue(encoder.encode(": keepalive\n\n")), 10000);
         try {
+          console.log('Starting stream controller...');
+          controller.enqueue(encoder.encode("retry: 3000\n: connected\n\n"));
+          const hb = setInterval(() => controller.enqueue(encoder.encode(": keepalive\n\n")), 10000);
+          
+          console.log('Getting stream reader...');
           const reader = upstream.body.getReader();
+          let chunkCount = 0;
+          
           while (true) {
             const { value, done } = await reader.read();
-            if (done) break;
+            chunkCount++;
+            
+            if (done) {
+              console.log(`Stream finished after ${chunkCount} chunks`);
+              break;
+            }
+            
             controller.enqueue(value);
           }
+          
           controller.enqueue(encoder.encode("data: [DONE]\n\n"));
+          console.log('Stream completed successfully');
+        } catch (streamError) {
+          console.error('Stream error:', streamError);
+          throw streamError;
         } finally {
           clearInterval(hb);
           controller.close();
