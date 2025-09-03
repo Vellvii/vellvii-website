@@ -182,65 +182,65 @@ const Landing = () => {
         </div>
         <div className={`
           bg-gradient-to-br from-card/95 to-muted/95 backdrop-blur-xl border border-secondary/20 rounded-2xl p-4 md:p-6 shadow-luxury
-          transition-all duration-700 ease-out
+          transition-all duration-700 ease-out flex flex-col
           ${isAgeConfirmed 
-            ? 'max-w-lg md:max-w-2xl min-h-[50vh] max-h-[60vh]' 
+            ? 'w-full max-w-2xl md:max-w-4xl min-h-[65vh] max-h-[70vh]' 
             : 'max-w-sm md:max-w-md'
           }
         `}>
           {/* Chat Messages Container */}
-          {isAgeConfirmed && chatMessages.length > 0 && (
-            <div 
-              ref={chatContainerRef}
-              className={`mb-4 overflow-y-auto scrollbar-luxury space-y-3 ${
-                isAgeConfirmed ? 'max-h-80' : 'max-h-48'
-              }`}
-            >
-              {chatMessages.map((msg) => (
-                <div key={msg.id} className={`flex ${msg.role === 'user' ? 'justify-end' : 'justify-start'} animate-fade-in`}>
-                  <div className={`
-                    max-w-[85%] px-4 py-2.5 rounded-2xl text-sm md:text-base leading-relaxed
-                    ${msg.role === 'user' 
-                      ? 'bg-gradient-to-r from-secondary to-secondary/90 text-secondary-foreground rounded-br-md' 
-                      : 'bg-gradient-to-r from-accent/20 to-accent/10 text-foreground border border-accent/30 rounded-bl-md'
-                    }
-                  `}>
-                    {msg.content}
+          <div className="flex-grow flex flex-col min-h-0">
+            {isAgeConfirmed && chatMessages.length > 0 && (
+              <div 
+                ref={chatContainerRef}
+                className="flex-grow overflow-y-auto scrollbar-luxury space-y-3 mb-4"
+              >
+                {chatMessages.map((msg) => (
+                  <div key={msg.id} className={`flex ${msg.role === 'user' ? 'justify-end' : 'justify-start'} animate-fade-in`}>
+                    <div className={`
+                      max-w-[85%] px-4 py-2.5 rounded-2xl text-sm md:text-base leading-relaxed
+                      ${msg.role === 'user' 
+                        ? 'bg-gradient-to-r from-secondary to-secondary/90 text-secondary-foreground rounded-br-md' 
+                        : 'bg-gradient-to-r from-accent/20 to-accent/10 text-foreground border border-accent/30 rounded-bl-md'
+                      }
+                    `}>
+                      {msg.content}
+                    </div>
                   </div>
-                </div>
-              ))}
-              
-              {/* Vivien Typing Indicator */}
-              {isVivienTyping && (
-                <div className="flex justify-start animate-fade-in">
-                  <div className="bg-gradient-to-r from-accent/20 to-accent/10 border border-accent/30 rounded-2xl rounded-bl-md px-4 py-3 max-w-[50%]">
-                    <div className="flex items-center space-x-1 text-foreground">
-                      <span className="text-sm">Vivien is typing</span>
-                      <div className="flex space-x-1">
-                        <div className="w-1 h-1 bg-secondary rounded-full animate-pulse"></div>
-                        <div className="w-1 h-1 bg-secondary rounded-full animate-pulse" style={{animationDelay: '0.2s'}}></div>
-                        <div className="w-1 h-1 bg-secondary rounded-full animate-pulse" style={{animationDelay: '0.4s'}}></div>
+                ))}
+                
+                {/* Vivien Typing Indicator */}
+                {isVivienTyping && (
+                  <div className="flex justify-start animate-fade-in">
+                    <div className="bg-gradient-to-r from-accent/20 to-accent/10 border border-accent/30 rounded-2xl rounded-bl-md px-4 py-3 max-w-[50%]">
+                      <div className="flex items-center space-x-1 text-foreground">
+                        <span className="text-sm">Vivien is typing</span>
+                        <div className="flex space-x-1">
+                          <div className="w-1 h-1 bg-secondary rounded-full animate-pulse"></div>
+                          <div className="w-1 h-1 bg-secondary rounded-full animate-pulse" style={{animationDelay: '0.2s'}}></div>
+                          <div className="w-1 h-1 bg-secondary rounded-full animate-pulse" style={{animationDelay: '0.4s'}}></div>
+                        </div>
                       </div>
                     </div>
                   </div>
-                </div>
-              )}
-            </div>
-          )}
-          
-          {/* Main Text Display - Vivien's Initial Message */}
-          {(!isAgeConfirmed || (isAgeConfirmed && chatMessages.length === 0)) && (
-            <div className="mb-4">
-              <div className="flex justify-start">
-                <div className="bg-gradient-to-r from-accent/20 to-accent/10 border border-accent/30 rounded-2xl rounded-bl-md px-4 py-3 max-w-[90%]">
-                  <p className="font-playfair text-sm md:text-base lg:text-lg leading-relaxed text-foreground">
-                    {displayedText}
-                    {isTyping && <span className="blinking-cursor ml-1 text-secondary">|</span>}
-                  </p>
+                )}
+              </div>
+            )}
+            
+            {/* Main Text Display - Vivien's Initial Message */}
+            {(!isAgeConfirmed || (isAgeConfirmed && chatMessages.length === 0)) && (
+              <div className="mb-4">
+                <div className="flex justify-start">
+                  <div className="bg-gradient-to-r from-accent/20 to-accent/10 border border-accent/30 rounded-2xl rounded-bl-md px-4 py-3 max-w-[90%]">
+                    <p className="font-playfair text-sm md:text-base lg:text-lg leading-relaxed text-foreground">
+                      {displayedText}
+                      {isTyping && <span className="blinking-cursor ml-1 text-secondary">|</span>}
+                    </p>
+                  </div>
                 </div>
               </div>
-            </div>
-          )}
+            )}
+          </div>
           
           {/* Age Confirmation Buttons */}
           {showButtons && !isAgeConfirmed && (
