@@ -12,10 +12,11 @@ const Landing = () => {
   const [displayedText, setDisplayedText] = useState("");
   const [showButtons, setShowButtons] = useState(false);
   const [isAgeConfirmed, setIsAgeConfirmed] = useState(false);
-  const [chatMessages, setChatMessages] = useState<Array<{id: string, content: string, role: 'user' | 'assistant'}>>([]);
+  const [chatMessages, setChatMessages] = useState<Array<{id: string, content: string, role: 'user' | 'assistant', displayedContent?: string, isTyping?: boolean}>>([]);
   const [inputValue, setInputValue] = useState("");
   const [isSending, setIsSending] = useState(false);
   const [isVivienTyping, setIsVivienTyping] = useState(false);
+  const [typingMessageId, setTypingMessageId] = useState<string | null>(null);
   const videoRef = useRef<HTMLVideoElement>(null);
   const chatContainerRef = useRef<HTMLDivElement>(null);
 
@@ -105,6 +106,39 @@ const Landing = () => {
     }
   }, [chatMessages, isVivienTyping]);
 
+  // Typing effect for assistant messages
+  const startTypingEffect = (messageId: string, fullText: string) => {
+    setTypingMessageId(messageId);
+    let index = 0;
+    
+    const typeChar = () => {
+      setChatMessages(prev => 
+        prev.map(msg => 
+          msg.id === messageId 
+            ? { ...msg, displayedContent: fullText.slice(0, index + 1), isTyping: true }
+            : msg
+        )
+      );
+      
+      index++;
+      
+      if (index < fullText.length) {
+        setTimeout(typeChar, 20);
+      } else {
+        setChatMessages(prev => 
+          prev.map(msg => 
+            msg.id === messageId 
+              ? { ...msg, isTyping: false }
+              : msg
+          )
+        );
+        setTypingMessageId(null);
+      }
+    };
+    
+    setTimeout(typeChar, 300);
+  };
+
   const handleYes = () => {
     setIsAgeConfirmed(true);
   };
@@ -137,9 +171,14 @@ const Landing = () => {
       const assistantMessage = {
         id: (Date.now() + 1).toString(),
         content: reply,
-        role: 'assistant' as const
+        role: 'assistant' as const,
+        displayedContent: '',
+        isTyping: true
       };
       setChatMessages(prev => [...prev, assistantMessage]);
+      
+      // Start typing effect
+      startTypingEffect(assistantMessage.id, reply);
     } catch (error) {
       console.error('Error sending message:', error);
       const errorMessage = {
@@ -190,6 +229,20 @@ const Landing = () => {
         `}>
           {/* Chat Messages Container */}
           <div className="flex-1 flex flex-col overflow-hidden">
+            {/* Initial Welcome Message - Always show when age confirmed */}
+            {isAgeConfirmed && (
+              <div className="mb-4">
+                <div className="flex justify-start">
+                  <div className="bg-gradient-to-r from-accent/20 to-accent/10 border border-accent/30 rounded-2xl rounded-bl-md px-4 py-3 max-w-[90%]">
+                    <p className="font-playfair text-sm md:text-base lg:text-lg leading-relaxed text-foreground">
+                      {displayedText}
+                      {isTyping && <span className="blinking-cursor ml-1 text-secondary">|</span>}
+                    </p>
+                  </div>
+                </div>
+              </div>
+            )}
+
             {isAgeConfirmed && chatMessages.length > 0 && (
               <div 
                 ref={chatContainerRef}
@@ -204,9 +257,13 @@ const Landing = () => {
                         ? 'bg-gradient-to-r from-secondary to-secondary/90 text-secondary-foreground rounded-br-md' 
                         : 'bg-gradient-to-r from-accent/20 to-accent/10 text-foreground border border-accent/30 rounded-bl-md'
                       }
-                    `}>
-                      {msg.content}
-                    </div>
+                     `}>
+                       {msg.role === 'assistant' 
+                         ? (msg.displayedContent || msg.content)
+                         : msg.content
+                       }
+                       {msg.role === 'assistant' && msg.isTyping && <span className="blinking-cursor ml-1 text-secondary">|</span>}
+                     </div>
                   </div>
                 ))}
                 
@@ -225,20 +282,6 @@ const Landing = () => {
                     </div>
                   </div>
                 )}
-              </div>
-            )}
-            
-            {/* Main Text Display - Vivien's Initial Message */}
-            {(!isAgeConfirmed || (isAgeConfirmed && chatMessages.length === 0)) && (
-              <div className="mb-4">
-                <div className="flex justify-start">
-                  <div className="bg-gradient-to-r from-accent/20 to-accent/10 border border-accent/30 rounded-2xl rounded-bl-md px-4 py-3 max-w-[90%]">
-                    <p className="font-playfair text-sm md:text-base lg:text-lg leading-relaxed text-foreground">
-                      {displayedText}
-                      {isTyping && <span className="blinking-cursor ml-1 text-secondary">|</span>}
-                    </p>
-                  </div>
-                </div>
               </div>
             )}
           </div>
