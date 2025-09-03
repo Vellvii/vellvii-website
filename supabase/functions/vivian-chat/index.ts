@@ -1,7 +1,7 @@
 import "jsr:@supabase/functions-js/edge-runtime.d.ts";
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.50.4';
 
-const ABACUS_URL = "https://api.abacus.ai/predict/getStreamingChatResponse";
+const ABACUS_PREDICTIONS_URL = Deno.env.get("ABACUS_PREDICTIONS_URL");
 const CORS = {
   "Access-Control-Allow-Origin": "*",
   "Access-Control-Allow-Headers": "authorization, x-client-info, apikey, content-type",
@@ -30,19 +30,15 @@ Deno.serve(async (req) => {
       });
     }
 
-    // Validate deployment credentials
-    const deploymentToken = Deno.env.get("ABACUS_DEPLOYMENT_TOKEN");
-    const deploymentId = Deno.env.get("ABACUS_DEPLOYMENT_ID");
-    
+    // Validate predictions URL
     console.log('Environment variables check:', {
-      deploymentToken: deploymentToken ? `Present (${deploymentToken.length} chars)` : 'Missing',
-      deploymentId: deploymentId ? `Present (${deploymentId.length} chars)` : 'Missing',
+      predictionsUrl: ABACUS_PREDICTIONS_URL ? `Present (${ABACUS_PREDICTIONS_URL.substring(0, 50)}...)` : 'Missing',
       allEnvVars: Object.keys(Deno.env.toObject()).filter(k => k.includes('ABACUS'))
     });
     
-    if (!deploymentToken || !deploymentId) {
-      console.error('ABACUS_DEPLOYMENT_TOKEN or ABACUS_DEPLOYMENT_ID is not set');
-      return new Response(JSON.stringify({ error: "Deployment credentials not configured" }), {
+    if (!ABACUS_PREDICTIONS_URL) {
+      console.error('ABACUS_PREDICTIONS_URL is not set');
+      return new Response(JSON.stringify({ error: "Predictions URL not configured" }), {
         status: 500,
         headers: { ...CORS, 'Content-Type': 'application/json' },
       });
@@ -78,23 +74,21 @@ Deno.serve(async (req) => {
     });
 
     const payload = {
-      deploymentToken: deploymentToken,
-      deploymentId: deploymentId,
       messages: abacusMessages,
       numCompletionTokens: numCompletionTokens,
+      temperature: 0.3,
     };
 
     console.log('Payload for Abacus API:', { 
-      deploymentToken: deploymentToken ? `Present (${deploymentToken.substring(0, 10)}...)` : 'missing',
-      deploymentId: payload.deploymentId,
       messages_count: payload.messages.length,
       numCompletionTokens: payload.numCompletionTokens,
+      temperature: payload.temperature,
       firstMessage: payload.messages[0]
     });
 
-    console.log('Making request to Abacus API...');
+    console.log('Making request to Abacus Predictions API...');
     
-    const upstream = await fetch(ABACUS_URL, {
+    const upstream = await fetch(ABACUS_PREDICTIONS_URL, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
