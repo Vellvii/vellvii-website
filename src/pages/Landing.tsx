@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { MagneticButton } from "@/components/animations/MagneticButton";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
+import { supabase } from "@/integrations/supabase/client";
 import vivienImage from "/uploads/976c0d6d-a066-409a-8ad6-6353840958ac.png";
 
 const Landing = () => {
@@ -120,27 +121,61 @@ const Landing = () => {
     setTimeout(scrollToBottom, 100);
 
     try {
-      // TODO: Replace with actual API call when ready
-      // Temporary placeholder response
-      setTimeout(() => {
+      // Call the real Vivian AI service via Supabase Edge Function
+      const { data, error } = await supabase.functions.invoke('vivian-chat', {
+        body: {
+          messages: [...chatMessages, newUserMessage].map(msg => ({
+            role: msg.role,
+            content: msg.content
+          })),
+          stream: true,
+          sessionId: sessionStorage.getItem('vivian-session-id') || crypto.randomUUID()
+        }
+      });
+
+      if (error) {
+        throw new Error(error.message);
+      }
+
+      // Store session ID for conversation continuity
+      if (!sessionStorage.getItem('vivian-session-id')) {
+        sessionStorage.setItem('vivian-session-id', crypto.randomUUID());
+      }
+
+      // Handle non-streaming response for now (can be enhanced later for streaming)
+      if (data?.choices?.[0]?.message?.content) {
         const assistantMessage = {
           id: (Date.now() + 1).toString(),
-          content: "I'm still learning about our luxury collection. Once I'm fully trained, I'll be able to provide detailed guidance about our products and help you find exactly what you're looking for.",
+          content: data.choices[0].message.content,
           role: 'assistant' as const
         };
         setChatMessages(prev => [...prev, assistantMessage]);
         setIsSending(false);
         
-        // Auto-scroll to bottom and keep focus
         setTimeout(() => {
           scrollToBottom();
           inputRef.current?.focus();
         }, 100);
-      }, 1000);
+      } else {
+        throw new Error('No response content received');
+      }
+
     } catch (error) {
       console.error('Error sending message:', error);
+      
+      // Fallback response on error
+      const errorMessage = {
+        id: (Date.now() + 1).toString(),
+        content: "I apologize, but I'm having trouble connecting right now. Please try again in a moment.",
+        role: 'assistant' as const
+      };
+      setChatMessages(prev => [...prev, errorMessage]);
       setIsSending(false);
-      inputRef.current?.focus();
+      
+      setTimeout(() => {
+        scrollToBottom();
+        inputRef.current?.focus();
+      }, 100);
     }
   };
 

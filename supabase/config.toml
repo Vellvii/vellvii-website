@@ -1,1 +1,4 @@
 project_id = "mawaqjqifmvijolucrlp"
+
+[functions.vivian-chat]
+verify_jwt = false
