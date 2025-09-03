@@ -1,7 +1,7 @@
 import "jsr:@supabase/functions-js/edge-runtime.d.ts";
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.50.4';
 
-const ABACUS_URL = "https://routellm.abacus.ai/v1/chat/completions";
+const ABACUS_URL = "https://api.abacus.ai/v1/deployments/getChatResponse";
 const CORS = {
   "Access-Control-Allow-Origin": "*",
   "Access-Control-Allow-Headers": "authorization, x-client-info, apikey, content-type",
@@ -30,19 +30,21 @@ Deno.serve(async (req) => {
       });
     }
 
-    // Validate API key
-    const apiKey = Deno.env.get("ABACUS_API_KEY");
+    // Validate deployment credentials
+    const deploymentToken = Deno.env.get("ABACUS_DEPLOYMENT_TOKEN");
+    const deploymentId = Deno.env.get("ABACUS_DEPLOYMENT_ID");
     
-    if (!apiKey) {
-      console.error('ABACUS_API_KEY is not set or empty');
-      return new Response(JSON.stringify({ error: "API key not configured" }), {
+    if (!deploymentToken || !deploymentId) {
+      console.error('ABACUS_DEPLOYMENT_TOKEN or ABACUS_DEPLOYMENT_ID is not set');
+      return new Response(JSON.stringify({ error: "Deployment credentials not configured" }), {
         status: 500,
         headers: { ...CORS, 'Content-Type': 'application/json' },
       });
     }
 
     console.log('Environment check:', { 
-      apiKey: apiKey ? 'set' : 'missing'
+      deploymentToken: deploymentToken ? 'set' : 'missing',
+      deploymentId: deploymentId ? 'set' : 'missing'
     });
 
     const systemMessage = "You are Vivian, Vellvii's refined, discreet support concierge. " +
@@ -63,14 +65,15 @@ Deno.serve(async (req) => {
     });
 
     const payload = {
-      model: "route-llm",
+      deploymentToken: deploymentToken,
+      deploymentId: deploymentId,
       messages: chatMessages,
       max_tokens: max_tokens,
       stream: true,
     };
 
     console.log('Payload for Abacus API:', { 
-      model: payload.model,
+      deploymentId: payload.deploymentId,
       messages_count: payload.messages.length,
       max_tokens: payload.max_tokens,
       stream: payload.stream
@@ -81,7 +84,6 @@ Deno.serve(async (req) => {
     const upstream = await fetch(ABACUS_URL, {
       method: "POST",
       headers: {
-        "Authorization": `Bearer ${apiKey}`,
         "Content-Type": "application/json",
       },
       body: JSON.stringify(payload),
