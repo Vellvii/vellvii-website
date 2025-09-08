@@ -335,7 +335,7 @@ const Landing = () => {
                 value={inputValue}
                 onChange={(e) => setInputValue(e.target.value)}
                 placeholder="Ask me anything about our collection..."
-                className="flex-1 bg-white/20 border-white/30 text-white placeholder:text-white/60 text-sm"
+                className="flex-1 bg-primary/60 border-white/30 text-white placeholder:text-white/70 text-sm"
                 disabled={isSending}
               />
               <Button
