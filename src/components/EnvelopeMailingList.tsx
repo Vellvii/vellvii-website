@@ -197,7 +197,7 @@ export const EnvelopeMailingList = ({
                 {/* 3D Flap overlay (HTML) for a true flip */}
                 <motion.div
                   initial={{ rotateX: 0 }}
-                  animate={{ rotateX: isEnvelopeOpen ? -150 : 0 }}
+                  animate={{ rotateX: isEnvelopeOpen ? 150 : 0 }}
                   transition={{ type: "spring", damping: 30, stiffness: 100, delay: 0.4 }}
                   className="absolute z-30"
                   style={{
@@ -207,16 +207,15 @@ export const EnvelopeMailingList = ({
                     height: '23.333%',
                     transformOrigin: '50% 100%',
                     pointerEvents: isEnvelopeOpen ? 'none' : 'auto',
-                    backfaceVisibility: 'hidden',
                     transformStyle: 'preserve-3d'
                   }}
                 >
                   <div
                     className="w-full h-full rounded-b-[2px]"
                     style={{
-                      background: 'linear-gradient(180deg, hsl(12, 62%, 70%), hsl(12, 48%, 56%))',
+                      background: 'linear-gradient(180deg, hsl(12, 48%, 56%), hsl(12, 62%, 70%))',
                       clipPath: 'polygon(0% 100%, 50% 0%, 100% 100%)',
-                      boxShadow: '0 6px 16px rgba(0,0,0,0.25)',
+                      boxShadow: '0 8px 24px rgba(0,0,0,0.35)',
                       border: '2px solid hsl(12, 50%, 55%)'
                     }}
                   >
