@@ -115,9 +115,9 @@ export const EnvelopeMailingList = ({
 
                 {/* Paper that slides out - HTML for z-index control */}
                 <motion.div
-                  initial={{ y: '12%', zIndex: 5 }}
+                  initial={{ y: '18%', zIndex: 5 }}
                   animate={{ 
-                    y: isEnvelopeOpen ? ['12%', '-30%', '0%'] : '12%',
+                    y: isEnvelopeOpen ? ['18%', '-60%', '0%'] : '18%',
                     zIndex: isEnvelopeOpen ? [5, 25, 25] : 5
                   }}
                   transition={{ duration: 0.9, ease: 'easeInOut', times: [0, 0.52, 1], delay: 0.35 }}
