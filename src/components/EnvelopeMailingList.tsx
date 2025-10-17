@@ -107,61 +107,67 @@ export const EnvelopeMailingList = ({
                     filter="url(#shadow)"
                   />
 
-                  {/* Paper that slides out */}
-                  <motion.g
-                    initial={{ y: 0 }}
-                    animate={{ y: isEnvelopeOpen ? -80 : 0 }}
-                    transition={{ type: "spring", damping: 24, stiffness: 140, delay: 0.35 }}
-                  >
-                    <rect
-                      x="70"
-                      y="120"
-                      width="260"
-                      height="200"
-                      fill="hsl(30, 35%, 96%)"
-                      stroke="hsl(30, 20%, 80%)"
-                      strokeWidth="1"
-                      rx="8"
-                      filter="url(#shadow)"
-                    />
-                    {/* Paper lines decoration */}
-                    <line x1="90" y1="160" x2="310" y2="160" stroke="hsl(12, 55%, 70%)" strokeWidth="1" opacity="0.3" />
-                    <line x1="90" y1="180" x2="310" y2="180" stroke="hsl(12, 55%, 70%)" strokeWidth="1" opacity="0.3" />
-                    <line x1="90" y1="200" x2="310" y2="200" stroke="hsl(12, 55%, 70%)" strokeWidth="1" opacity="0.3" />
-
-                    {/* Embedded form on the paper */}
-                    <foreignObject x="90" y="150" width="220" height="150">
-                      <div style={{ pointerEvents: 'auto', opacity: isEnvelopeOpen ? 1 : 0, transition: 'opacity 300ms 600ms' }}>
-                        <form onSubmit={handleSubmit} className="space-y-3">
-                          <label 
-                            htmlFor="envelope-email" 
-                            className="block text-xs font-playfair text-foreground/80 text-center"
-                          >
-                            Get notified about updates
-                          </label>
-                          <input
-                            id="envelope-email"
-                            type="email"
-                            value={email}
-                            onChange={(e) => onEmailChange(e.target.value)}
-                            placeholder="your@email.com"
-                            className="w-full px-3 py-2 text-xs bg-background/90 border-b-2 border-primary/30 focus:border-primary outline-none transition-colors text-center font-inter text-foreground placeholder:text-muted-foreground rounded"
-                            disabled={isSubmitting}
-                            autoComplete="email"
-                          />
-                          <button
-                            type="submit"
-                            disabled={isSubmitting}
-                            className="w-full py-2 px-4 bg-gradient-to-r from-primary to-secondary hover:from-secondary hover:to-accent text-primary-foreground font-medium text-xs rounded-full shadow-elegant transition-all disabled:opacity-50 disabled:cursor-not-allowed"
-                          >
-                            {isSubmitting ? "Sending..." : "Join"}
-                          </button>
-                        </form>
-                      </div>
-                    </foreignObject>
-                  </motion.g>
-
+                  {/* Inner lines for decoration */}
+                  <line x1="70" y1="140" x2="330" y2="140" stroke="hsl(12, 55%, 70%)" strokeWidth="1" opacity="0.3" />
+                  <line x1="70" y1="160" x2="330" y2="160" stroke="hsl(12, 55%, 70%)" strokeWidth="1" opacity="0.3" />
+                  <line x1="70" y1="180" x2="330" y2="180" stroke="hsl(12, 55%, 70%)" strokeWidth="1" opacity="0.3" />
                 </svg>
+
+                {/* Paper that slides out - HTML for z-index control */}
+                <motion.div
+                  initial={{ y: '23%', zIndex: 5 }}
+                  animate={{ 
+                    y: isEnvelopeOpen ? '-7%' : '23%',
+                    zIndex: isEnvelopeOpen ? 25 : 5
+                  }}
+                  transition={{ type: "spring", damping: 24, stiffness: 140, delay: 0.35 }}
+                  className="absolute left-[17.5%] w-[65%] h-[66.67%]"
+                  style={{
+                    background: 'hsl(30, 35%, 96%)',
+                    border: '1px solid hsl(30, 20%, 80%)',
+                    borderRadius: '8px',
+                    boxShadow: '0 4px 8px rgba(0,0,0,0.3)'
+                  }}
+                >
+                  {/* Paper decoration lines */}
+                  <div className="absolute top-[20%] left-[7.7%] right-[7.7%] h-[1px] bg-[hsl(12,55%,70%)] opacity-30" />
+                  <div className="absolute top-[30%] left-[7.7%] right-[7.7%] h-[1px] bg-[hsl(12,55%,70%)] opacity-30" />
+                  <div className="absolute top-[40%] left-[7.7%] right-[7.7%] h-[1px] bg-[hsl(12,55%,70%)] opacity-30" />
+                  
+                  {/* Embedded form on the paper */}
+                  <motion.div
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: isEnvelopeOpen ? 1 : 0 }}
+                    transition={{ delay: 0.7 }}
+                    className="absolute inset-0 flex items-start justify-center pt-[15%] px-[7.7%]"
+                  >
+                    <form onSubmit={handleSubmit} className="w-full space-y-3">
+                      <label 
+                        htmlFor="envelope-email" 
+                        className="block text-xs font-playfair text-foreground/80 text-center"
+                      >
+                        Get notified about updates
+                      </label>
+                      <input
+                        id="envelope-email"
+                        type="email"
+                        value={email}
+                        onChange={(e) => onEmailChange(e.target.value)}
+                        placeholder="your@email.com"
+                        className="w-full px-3 py-2 text-xs bg-background/90 border-b-2 border-primary/30 focus:border-primary outline-none transition-colors text-center font-inter text-foreground placeholder:text-muted-foreground rounded"
+                        disabled={isSubmitting}
+                        autoComplete="email"
+                      />
+                      <button
+                        type="submit"
+                        disabled={isSubmitting}
+                        className="w-full py-2 px-4 bg-gradient-to-r from-primary to-secondary hover:from-secondary hover:to-accent text-primary-foreground font-medium text-xs rounded-full shadow-elegant transition-all disabled:opacity-50 disabled:cursor-not-allowed"
+                      >
+                        {isSubmitting ? "Sending..." : "Join"}
+                      </button>
+                    </form>
+                  </motion.div>
+                </motion.div>
 
                 {/* 3D Flap overlay (HTML) for a true flip */}
                 <motion.div
