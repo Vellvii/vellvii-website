@@ -23,6 +23,7 @@ const Landing = () => {
     countryCode: '',
     gender: '',
     country: '',
+    consent: false,
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
   const videoRef = useRef<HTMLVideoElement>(null);
@@ -169,6 +170,15 @@ const Landing = () => {
       return;
     }
 
+    if (!mailingFormData.consent) {
+      toast({
+        title: "Consent required",
+        description: "Please agree to receive emails from our mailing list",
+        variant: "destructive",
+      });
+      return;
+    }
+
     setIsSubmitting(true);
     try {
       const { error } = await supabase.functions.invoke("join-mailing-list", {
@@ -191,6 +201,7 @@ const Landing = () => {
         countryCode: '',
         gender: '',
         country: '',
+        consent: false,
       });
     } catch (error: any) {
       console.error("Error joining mailing list:", error);
