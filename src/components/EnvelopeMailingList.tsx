@@ -211,7 +211,7 @@ export const EnvelopeMailingList = ({
                   className="absolute transform-gpu"
                   style={{
                     left: '12.5%',
-                    top: 'calc(33.33% + 1px)',
+                    top: '33.33%',
                     width: '75%',
                     height: '23.333%',
                     transformOrigin: '50% 0%',
@@ -229,6 +229,7 @@ export const EnvelopeMailingList = ({
                       clipPath: 'polygon(0% 0%, 50% 100%, 100% 0%)',
                       boxShadow: '0 8px 24px rgba(0,0,0,0.35)',
                       border: '2px solid hsl(12, 50%, 55%)',
+                      transformOrigin: '50% 0%',
                       backfaceVisibility: 'hidden',
                       transform: 'translateZ(0)'
                     }}
@@ -248,6 +249,7 @@ export const EnvelopeMailingList = ({
                       background: 'linear-gradient(180deg, hsl(12, 48%, 58%), hsl(12, 40%, 52%))',
                       clipPath: 'polygon(0% 0%, 50% 100%, 100% 0%)',
                       border: '2px solid hsl(12, 45%, 50%)',
+                      transformOrigin: '50% 0%',
                       transform: 'rotateX(180deg) translateZ(0)',
                       backfaceVisibility: 'hidden'
                     }}
