@@ -166,7 +166,7 @@ export const EnvelopeMailingList = ({
                 {/* 3D Flap overlay (HTML) for a true flip */}
                 <motion.div
                   initial={{ rotateX: 0 }}
-                  animate={{ rotateX: isEnvelopeOpen ? -140 : 0 }}
+                  animate={{ rotateX: isEnvelopeOpen ? 140 : 0 }}
                   transition={{ type: "spring", damping: 24, stiffness: 160, delay: 0.25 }}
                   className="absolute z-20"
                   style={{
@@ -175,7 +175,9 @@ export const EnvelopeMailingList = ({
                     width: '75%',
                     height: '23.333%',
                     transformOrigin: '50% 100%',
-                    pointerEvents: isEnvelopeOpen ? 'none' : 'auto'
+                    pointerEvents: isEnvelopeOpen ? 'none' : 'auto',
+                    backfaceVisibility: 'hidden',
+                    transformStyle: 'preserve-3d'
                   }}
                 >
                   <div
