@@ -131,18 +131,18 @@ export const EnvelopeMailingList = ({
                       : { zIndex: 0 }
                   }
                   transition={{
-                    duration: 1.6,
+                    duration: 1.4,
                     ease: 'easeInOut',
-                    times: [0, 0.55, 0.56],
+                    times: [0, 0.62, 0.63],
                     delay: 0.5
                   }}
                 >
                   <motion.div
-                    initial={{ y: '36%' }}
+                    initial={{ y: '100%' }}
                     animate={{ 
-                      y: isEnvelopeOpen ? ['36%', '-180%', '0%'] : '36%'
+                      y: isEnvelopeOpen ? ['100%', '-6%', '0%'] : '100%'
                     }}
-                    transition={{ duration: 1.6, ease: 'easeInOut', times: [0, 0.5, 1], delay: 0.5 }}
+                    transition={{ duration: 1.4, ease: 'easeInOut', times: [0, 0.72, 1], delay: 0.5 }}
                     className="absolute left-[6.666%] top-[8%] w-[86.666%] h-[84%]"
                     style={{
                       background: 'hsl(30, 35%, 96%)',
@@ -198,12 +198,12 @@ export const EnvelopeMailingList = ({
                 <motion.div
                   initial={{ rotateX: 0, zIndex: 30 }}
                   animate={{ 
-                    rotateX: isEnvelopeOpen ? -80 : 0,
+                    rotateX: isEnvelopeOpen ? -70 : 0,
                     zIndex: isEnvelopeOpen ? 5 : 30
                   }}
                   transition={{ 
-                    rotateX: { type: "spring", damping: 22, stiffness: 140, delay: 0.4 },
-                    zIndex: { duration: 0, delay: 0.7 }
+                    rotateX: { type: "spring", damping: 22, stiffness: 160, delay: 0.35 },
+                    zIndex: { duration: 0, delay: 0.58 }
                   }}
                   className="absolute"
                   style={{
