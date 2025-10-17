@@ -5,67 +5,67 @@
 
 @layer base {
   :root {
-    /* Light pink and bronze luxury theme */
-    --background: 15 35% 92%;
-    --foreground: 25 35% 25%;
+    /* Rose gold luxury theme */
+    --background: 10 40% 96%;
+    --foreground: 15 30% 20%;
     
-    /* Primary - Rich bronze */
-    --primary: 25 65% 35%;
-    --primary-foreground: 15 35% 95%;
+    /* Primary - Rich rose gold */
+    --primary: 12 60% 65%;
+    --primary-foreground: 10 40% 98%;
     
-    /* Secondary - Deep bronze accent */
-    --secondary: 25 75% 45%;
-    --secondary-foreground: 15 35% 95%;
+    /* Secondary - Deep rose gold accent */
+    --secondary: 12 55% 70%;
+    --secondary-foreground: 10 40% 98%;
     
-    /* Accent - Warm bronze */
-    --accent: 30 60% 50%;
-    --accent-foreground: 15 35% 95%;
+    /* Accent - Warm rose gold */
+    --accent: 15 50% 75%;
+    --accent-foreground: 10 40% 98%;
     
     /* Muted tones */
-    --muted: 15 25% 85%;
-    --muted-foreground: 25 35% 45%;
+    --muted: 10 30% 90%;
+    --muted-foreground: 15 35% 45%;
     
     /* Border and input */
-    --border: 15 25% 80%;
-    --input: 15 25% 88%;
-    --ring: 25 75% 45%;
+    --border: 10 25% 85%;
+    --input: 10 30% 92%;
+    --ring: 12 55% 70%;
     
     /* Card backgrounds */
-    --card: 15 30% 95%;
-    --card-foreground: 25 35% 25%;
+    --card: 10 35% 97%;
+    --card-foreground: 15 30% 20%;
     
     /* Popover */
-    --popover: 15 30% 95%;
-    --popover-foreground: 25 35% 25%;
+    --popover: 10 35% 97%;
+    --popover-foreground: 15 30% 20%;
     
     /* Destructive */
     --destructive: 0 62.8% 50.6%;
-    --destructive-foreground: 15 35% 95%;
+    --destructive-foreground: 10 40% 98%;
     
     /* Chart colors */
-    --chart-1: 25 65% 35%;
-    --chart-2: 25 75% 45%;
-    --chart-3: 30 60% 50%;
-    --chart-4: 15 25% 85%;
-    --chart-5: 25 35% 45%;
+    --chart-1: 12 60% 65%;
+    --chart-2: 12 55% 70%;
+    --chart-3: 15 50% 75%;
+    --chart-4: 10 30% 90%;
+    --chart-5: 15 35% 45%;
     
-    /* Custom luxury gradients */
-    --gradient-primary: linear-gradient(135deg, hsl(15, 30%, 88%), hsl(15, 35%, 92%));
-    --gradient-secondary: linear-gradient(135deg, hsl(25, 75%, 45%), hsl(30, 70%, 55%));
-    --gradient-luxury: linear-gradient(135deg, hsl(15, 35%, 92%) 0%, hsl(25, 65%, 35%) 50%, hsl(25, 75%, 45%) 100%);
-    --gradient-dark: linear-gradient(0deg, hsl(15, 30%, 88%) 0%, hsl(15, 35%, 92%) 100%);
-    --gradient-accent: linear-gradient(135deg, hsl(25, 65%, 35%), hsl(30, 60%, 50%));
-    --gradient-apple: linear-gradient(135deg, hsl(15, 35%, 90%) 0%, hsl(15, 30%, 88%) 50%, hsl(15, 35%, 92%) 100%);
-    --gradient-mesh: conic-gradient(from 180deg at 50% 50%, hsl(25 75% 45% / 0.1) 0deg, hsl(15 35% 92%) 60deg, hsl(25 65% 35% / 0.05) 120deg, hsl(15 35% 92%) 180deg, hsl(25 75% 45% / 0.1) 240deg, hsl(15 35% 92%) 360deg);
-    --gradient-hero: radial-gradient(ellipse at center top, hsl(25 75% 45% / 0.15), transparent 50%);
+    /* Custom rose gold gradients */
+    --gradient-primary: linear-gradient(135deg, hsl(10, 35%, 92%), hsl(10, 40%, 96%));
+    --gradient-secondary: linear-gradient(135deg, hsl(12, 55%, 70%), hsl(15, 50%, 75%));
+    --gradient-luxury: linear-gradient(135deg, hsl(10, 40%, 96%) 0%, hsl(12, 60%, 65%) 50%, hsl(12, 55%, 70%) 100%);
+    --gradient-dark: linear-gradient(0deg, hsl(10, 35%, 92%) 0%, hsl(10, 40%, 96%) 100%);
+    --gradient-accent: linear-gradient(135deg, hsl(12, 60%, 65%), hsl(15, 50%, 75%));
+    --gradient-apple: linear-gradient(135deg, hsl(10, 40%, 94%) 0%, hsl(10, 35%, 92%) 50%, hsl(10, 40%, 96%) 100%);
+    --gradient-mesh: conic-gradient(from 180deg at 50% 50%, hsl(12 55% 70% / 0.1) 0deg, hsl(10 40% 96%) 60deg, hsl(12 60% 65% / 0.05) 120deg, hsl(10 40% 96%) 180deg, hsl(12 55% 70% / 0.1) 240deg, hsl(10 40% 96%) 360deg);
+    --gradient-hero: radial-gradient(ellipse at center top, hsl(12 55% 70% / 0.15), transparent 50%);
     
-    /* Shadows with brand colors */
-    --shadow-luxury: 0 20px 60px -10px hsl(25 75% 45% / 0.2);
-    --shadow-glow: 0 0 40px hsl(25 75% 45% / 0.15);
-    --shadow-elegant: 0 10px 30px -10px hsl(25 65% 35% / 0.3);
-    --shadow-teal: 0 0 30px hsl(30 60% 50% / 0.3);
-    --shadow-apple: 0 2px 10px hsl(25 35% 25% / 0.15), 0 10px 25px hsl(25 35% 25% / 0.1);
-    --shadow-magnetic: 0 15px 35px hsl(25 75% 45% / 0.15), 0 5px 15px hsl(25 75% 45% / 0.1);
+    /* Shadows with rose gold colors */
+    --shadow-luxury: 0 20px 60px -10px hsl(12 55% 70% / 0.2);
+    --shadow-glow: 0 0 40px hsl(12 55% 70% / 0.15);
+    --shadow-elegant: 0 10px 30px -10px hsl(12 60% 65% / 0.3);
+    --shadow-teal: 0 0 30px hsl(15 50% 75% / 0.3);
+    --shadow-apple: 0 2px 10px hsl(15 30% 20% / 0.15), 0 10px 25px hsl(15 30% 20% / 0.1);
+    --shadow-magnetic: 0 15px 35px hsl(12 55% 70% / 0.15), 0 5px 15px hsl(12 55% 70% / 0.1);
     
     /* Animation and transitions */
     --transition-luxury: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
@@ -88,8 +88,8 @@
   }
 
   .dark {
-    --background: 15 35% 92%;
-    --foreground: 25 35% 25%;
+    --background: 10 40% 96%;
+    --foreground: 15 30% 20%;
   }
   
   * {
@@ -99,7 +99,7 @@
   html,
   body {
     @apply bg-background text-foreground font-inter;
-    background-color: hsl(15, 35%, 92%);
+    background-color: hsl(10, 40%, 96%);
     font-feature-settings: "rlig" 1, "calt" 1;
   }
 
@@ -183,7 +183,7 @@
   
   /* Gradient text */
   .gradient-text {
-    background: linear-gradient(135deg, hsl(25, 75%, 45%), hsl(30, 70%, 55%));
+    background: linear-gradient(135deg, hsl(12, 55%, 70%), hsl(15, 50%, 75%));
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
