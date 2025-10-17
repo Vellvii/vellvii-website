@@ -35,7 +35,7 @@ const Landing = () => {
     ? ""  // Will be handled by the construction message
     : "Hi, I'm Vivien. I can guide you through our website and you may ask me any questions at any time. To start, please confirm that you are older than 18.";
 
-  const constructionText = "Thank you so much for confirming, Vellvii and Vivien are currently under construction, if you have any questions please email Stefan below";
+  const constructionText = "Thank you so much for confirming, Vellvii and Vivien are currently under construction. If you have any questions, please email Stefan below or join our mailing list to get notified about updates and releases.";
 
   // Typing effect for construction message
   const startConstructionTyping = (fullText: string) => {
@@ -213,7 +213,7 @@ const Landing = () => {
                   <div className="flex flex-col gap-3 animate-fade-in">
                     <MagneticButton
                       onClick={handleEmailStefan}
-                      className="bounce-fade-in bg-gradient-to-r from-yellow-600 to-yellow-500 hover:from-yellow-500 hover:to-yellow-400 text-black font-medium py-2 px-6 text-sm rounded-lg"
+                      className="bounce-fade-in bg-gradient-to-r from-primary to-secondary hover:from-secondary hover:to-accent text-primary-foreground font-medium py-2 px-6 text-sm rounded-lg"
                     >
                       Email Stefan
                     </MagneticButton>
@@ -234,7 +234,7 @@ const Landing = () => {
             <div className="mt-4 md:mt-6 space-y-2 md:space-y-3">
               <MagneticButton
                 onClick={handleYes}
-                className="bounce-fade-in w-full bg-gradient-to-r from-yellow-600 to-yellow-500 hover:from-yellow-500 hover:to-yellow-400 text-black font-medium py-2 text-sm rounded-lg"
+                className="bounce-fade-in w-full bg-gradient-to-r from-primary to-secondary hover:from-secondary hover:to-accent text-primary-foreground font-medium py-2 text-sm rounded-lg"
               >
                 Yes, I am older than 18
               </MagneticButton>
@@ -271,7 +271,7 @@ const Landing = () => {
               <Button
                 onClick={handleJoinMailingList}
                 disabled={isSubmitting}
-                className="flex-1 bg-gradient-to-r from-yellow-600 to-yellow-500 hover:from-yellow-500 hover:to-yellow-400 text-black"
+                className="flex-1 bg-gradient-to-r from-primary to-secondary hover:from-secondary hover:to-accent text-primary-foreground"
               >
                 {isSubmitting ? "Joining..." : "Join"}
               </Button>
