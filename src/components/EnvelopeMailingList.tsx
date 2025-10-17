@@ -113,146 +113,79 @@ export const EnvelopeMailingList = ({
                   <line x1="70" y1="180" x2="330" y2="180" stroke="hsl(12, 55%, 70%)" strokeWidth="1" opacity="0.3" />
                 </svg>
 
-                {/* Clipping window over envelope body - keeps paper hidden behind until it rises */}
-                <motion.div
-                  className="absolute"
-                  style={{
-                    left: '12.5%',
-                    top: '33.33%',
-                    width: '75%',
-                    height: '59.6%',
-                    overflow: 'hidden',
-                    borderRadius: '4px'
-                  }}
-                  initial={{ zIndex: 0 }}
-                  animate={
-                    isEnvelopeOpen
-                      ? { zIndex: [0, 0, 25] }
-                      : { zIndex: 0 }
-                  }
-                  transition={{
-                    duration: 1.2,
-                    ease: 'easeInOut',
-                    times: [0, 0.75, 0.76],
-                    delay: 0.55
-                  }}
-                >
-                  <motion.div
-                    initial={{ y: '102%', rotateX: 6 }}
-                    animate={{ 
-                      y: isEnvelopeOpen ? ['102%', '-4%', '0%'] : '102%',
-                      rotateX: isEnvelopeOpen ? [6, 0, 0] : 6
-                    }}
-                    transition={{ duration: 1.2, ease: 'easeInOut', times: [0, 0.7, 1], delay: 0.55 }}
-                    className="absolute left-[6.666%] top-[8%] w-[86.666%] h-[84%] transform-gpu"
-                    style={{
-                      background: 'hsl(30, 35%, 96%)',
-                      border: '1px solid hsl(30, 20%, 80%)',
-                      borderRadius: '8px',
-                      boxShadow: '0 4px 8px rgba(0,0,0,0.3)',
-                      willChange: 'transform',
-                      pointerEvents: 'auto',
-                      backfaceVisibility: 'hidden',
-                      transformStyle: 'preserve-3d'
-                    }}
-                  >
-                    {/* Paper decoration lines */}
-                    <div className="absolute top-[20%] left-[7.7%] right-[7.7%] h-[1px] bg-[hsl(12,55%,70%)] opacity-30" />
-                    <div className="absolute top-[30%] left-[7.7%] right-[7.7%] h-[1px] bg-[hsl(12,55%,70%)] opacity-30" />
-                    <div className="absolute top-[40%] left-[7.7%] right-[7.7%] h-[1px] bg-[hsl(12,55%,70%)] opacity-30" />
-                    
-                    {/* Embedded form on the paper */}
-                    <motion.div
-                      initial={{ opacity: 0, y: 10 }}
-                      animate={{ opacity: isEnvelopeOpen ? 1 : 0, y: isEnvelopeOpen ? 0 : 10 }}
-                      transition={{ delay: 1.2, duration: 0.6 }}
-                      className="absolute inset-0 flex items-start justify-center pt-[12%] px-[10%]"
-                    >
-                      <form onSubmit={handleSubmit} className="w-full space-y-4">
-                        <label 
-                          htmlFor="envelope-email" 
-                          className="block text-sm font-playfair text-foreground/80 text-center"
-                        >
-                          Get notified about updates
-                        </label>
-                        <input
-                          id="envelope-email"
-                          type="email"
-                          value={email}
-                          onChange={(e) => onEmailChange(e.target.value)}
-                          placeholder="your@email.com"
-                          className="w-full px-3 py-2 text-sm bg-background/90 border-b-2 border-primary/30 focus:border-primary outline-none transition-colors text-center font-inter text-foreground placeholder:text-muted-foreground rounded"
-                          disabled={isSubmitting}
-                          autoComplete="email"
-                        />
-                        <button
-                          type="submit"
-                          disabled={isSubmitting}
-                          className="w-full py-2 px-4 bg-gradient-to-r from-primary to-secondary hover:from-secondary hover:to-accent text-primary-foreground font-medium text-sm rounded-full shadow-elegant transition-all disabled:opacity-50 disabled:cursor-not-allowed"
-                        >
-                          {isSubmitting ? "Sending..." : "Join"}
-                        </button>
-                      </form>
-                    </motion.div>
-                  </motion.div>
-                </motion.div>
+                {/* Logo on envelope body */}
+                <img
+                  src="/uploads/V-logo-transparent.png"
+                  alt="Vellvii logo"
+                  className="absolute left-1/2 top-[45%] -translate-x-1/2 -translate-y-1/2 w-[15%] opacity-90 z-5"
+                  style={{ filter: 'drop-shadow(0 2px 6px rgba(0,0,0,0.25))' }}
+                />
 
-                {/* 3D Flap overlay (HTML) for a true flip */}
+                {/* White paper sliding over envelope */}
                 <motion.div
-                  initial={{ rotateX: 0, zIndex: 40 }}
+                  initial={{ y: '100%' }}
                   animate={{ 
-                    rotateX: isEnvelopeOpen ? -120 : 0,
-                    zIndex: isEnvelopeOpen ? [40, 40, 5] : 40
+                    y: isEnvelopeOpen ? '0%' : '100%'
                   }}
                   transition={{ 
-                    rotateX: { type: "spring", damping: 18, stiffness: 160, delay: 0.2 },
-                    zIndex: { duration: 0, delay: 1.05 }
+                    type: "spring", 
+                    damping: 25, 
+                    stiffness: 180,
+                    delay: isEnvelopeOpen ? 0.3 : 0
                   }}
                   className="absolute transform-gpu"
                   style={{
                     left: '12.5%',
-                    top: 'calc(33.33% - 23.333% + 1px)',
+                    top: '33.33%',
                     width: '75%',
-                    height: '23.333%',
-                    transformOrigin: '50% 100%',
-                    pointerEvents: isEnvelopeOpen ? 'none' : 'auto',
-                    transformStyle: 'preserve-3d',
-                    willChange: 'transform'
+                    height: '60%',
+                    background: 'hsl(30, 35%, 96%)',
+                    border: '1px solid hsl(30, 20%, 80%)',
+                    borderRadius: '8px',
+                    boxShadow: '0 4px 12px rgba(0,0,0,0.25)',
+                    zIndex: 20,
+                    willChange: 'transform',
+                    pointerEvents: isEnvelopeOpen ? 'auto' : 'none'
                   }}
                 >
-                  {/* FRONT FACE (outside of flap) */}
-                  <div
-                    className="absolute inset-0"
-                    style={{
-                      background: 'linear-gradient(180deg, hsl(12, 62%, 70%), hsl(12, 48%, 56%))',
-                      clipPath: 'polygon(0% 100%, 50% 0%, 100% 100%)',
-                      boxShadow: '0 8px 24px rgba(0,0,0,0.35)',
-                      border: '1px solid hsl(12, 50%, 55%)',
-                      transformOrigin: '50% 100%',
-                      backfaceVisibility: 'hidden',
-                      transform: 'translateZ(0.5px)'
-                    }}
+                  {/* Paper decoration lines */}
+                  <div className="absolute top-[15%] left-[8%] right-[8%] h-[1px] bg-[hsl(12,55%,70%)] opacity-30" />
+                  <div className="absolute top-[25%] left-[8%] right-[8%] h-[1px] bg-[hsl(12,55%,70%)] opacity-30" />
+                  <div className="absolute top-[35%] left-[8%] right-[8%] h-[1px] bg-[hsl(12,55%,70%)] opacity-30" />
+                  
+                  {/* Embedded form on the paper */}
+                  <motion.div
+                    initial={{ opacity: 0, y: 10 }}
+                    animate={{ opacity: isEnvelopeOpen ? 1 : 0, y: isEnvelopeOpen ? 0 : 10 }}
+                    transition={{ delay: 0.8, duration: 0.5 }}
+                    className="absolute inset-0 flex items-start justify-center pt-[12%] px-[10%]"
                   >
-                    <img
-                      src="/uploads/V-logo-transparent.png"
-                      alt="Vellvii logo seal"
-                      style={{ filter: 'drop-shadow(0 2px 4px rgba(0,0,0,0.3))' }}
-                      className="absolute left-1/2 top-[30%] -translate-x-1/2 -translate-y-1/2 w-[16%] opacity-95"
-                    />
-                  </div>
-
-                  {/* BACK FACE (inside of flap) */}
-                  <div
-                    className="absolute inset-0"
-                    style={{
-                      background: 'linear-gradient(180deg, hsl(12, 48%, 58%), hsl(12, 40%, 52%))',
-                      clipPath: 'polygon(0% 100%, 50% 0%, 100% 100%)',
-                      border: '1px solid hsl(12, 45%, 50%)',
-                      transformOrigin: '50% 100%',
-                      transform: 'rotateX(180deg) translateZ(0.5px)',
-                      backfaceVisibility: 'hidden'
-                    }}
-                  />
+                    <form onSubmit={handleSubmit} className="w-full space-y-4">
+                      <label 
+                        htmlFor="envelope-email" 
+                        className="block text-sm font-playfair text-foreground/80 text-center"
+                      >
+                        Get notified about updates
+                      </label>
+                      <input
+                        id="envelope-email"
+                        type="email"
+                        value={email}
+                        onChange={(e) => onEmailChange(e.target.value)}
+                        placeholder="your@email.com"
+                        className="w-full px-3 py-2 text-sm bg-background/90 border-b-2 border-primary/30 focus:border-primary outline-none transition-colors text-center font-inter text-foreground placeholder:text-muted-foreground rounded"
+                        disabled={isSubmitting}
+                        autoComplete="email"
+                      />
+                      <button
+                        type="submit"
+                        disabled={isSubmitting}
+                        className="w-full py-2 px-4 bg-gradient-to-r from-primary to-secondary hover:from-secondary hover:to-accent text-primary-foreground font-medium text-sm rounded-full shadow-elegant transition-all disabled:opacity-50 disabled:cursor-not-allowed"
+                      >
+                        {isSubmitting ? "Sending..." : "Join"}
+                      </button>
+                    </form>
+                  </motion.div>
                 </motion.div>
 
               </div>
