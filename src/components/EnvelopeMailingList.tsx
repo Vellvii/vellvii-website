@@ -402,7 +402,7 @@ export const EnvelopeMailingList = ({
                     className="absolute inset-0 flex flex-col"
                   >
                     <form onSubmit={handleSubmit} className="w-full h-full px-6 py-4 flex flex-col">
-                      <h3 className="text-sm font-playfair text-foreground/90 text-center mb-3">
+                      <h3 className="text-sm font-playfair text-[hsl(12,55%,45%)] text-center mb-3 font-semibold">
                         Join Our Mailing List
                       </h3>
                       
@@ -411,7 +411,7 @@ export const EnvelopeMailingList = ({
                         {/* Name Fields */}
                         <div className="grid grid-cols-2 gap-2">
                           <div>
-                            <label htmlFor="firstName" className="block text-[11px] font-medium text-foreground/70 mb-0.5">
+                            <label htmlFor="firstName" className="block text-[11px] font-medium text-[hsl(12,55%,50%)] mb-0.5">
                               First Name *
                             </label>
                             <input
@@ -420,13 +420,13 @@ export const EnvelopeMailingList = ({
                               value={formData.firstName}
                               onChange={(e) => onFormChange({ ...formData, firstName: e.target.value })}
                               placeholder="John"
-                              className="w-full px-2 py-1 text-xs bg-white/50 border border-foreground/20 rounded focus:outline-none focus:border-primary transition-colors text-foreground"
+                              className="w-full px-2 py-1 text-xs bg-white/70 border border-[hsl(12,55%,85%)] rounded-lg focus:outline-none focus:border-[hsl(12,55%,65%)] focus:ring-1 focus:ring-[hsl(12,55%,65%)] transition-all text-foreground placeholder:text-foreground/40"
                               disabled={isSubmitting}
                               required
                             />
                           </div>
                           <div>
-                            <label htmlFor="lastName" className="block text-[11px] font-medium text-foreground/70 mb-0.5">
+                            <label htmlFor="lastName" className="block text-[11px] font-medium text-[hsl(12,55%,50%)] mb-0.5">
                               Last Name *
                             </label>
                             <input
@@ -435,7 +435,7 @@ export const EnvelopeMailingList = ({
                               value={formData.lastName}
                               onChange={(e) => onFormChange({ ...formData, lastName: e.target.value })}
                               placeholder="Doe"
-                              className="w-full px-2 py-1 text-xs bg-white/50 border border-foreground/20 rounded focus:outline-none focus:border-primary transition-colors text-foreground"
+                              className="w-full px-2 py-1 text-xs bg-white/70 border border-[hsl(12,55%,85%)] rounded-lg focus:outline-none focus:border-[hsl(12,55%,65%)] focus:ring-1 focus:ring-[hsl(12,55%,65%)] transition-all text-foreground placeholder:text-foreground/40"
                               disabled={isSubmitting}
                               required
                             />
@@ -444,7 +444,7 @@ export const EnvelopeMailingList = ({
 
                         {/* Email */}
                         <div>
-                          <label htmlFor="email" className="block text-[11px] font-medium text-foreground/70 mb-0.5">
+                          <label htmlFor="email" className="block text-[11px] font-medium text-[hsl(12,55%,50%)] mb-0.5">
                             Email *
                           </label>
                           <input
@@ -453,7 +453,7 @@ export const EnvelopeMailingList = ({
                             value={formData.email}
                             onChange={(e) => onFormChange({ ...formData, email: e.target.value })}
                             placeholder="john@example.com"
-                            className="w-full px-2 py-1 text-xs bg-white/50 border border-foreground/20 rounded focus:outline-none focus:border-primary transition-colors text-foreground"
+                            className="w-full px-2 py-1 text-xs bg-white/70 border border-[hsl(12,55%,85%)] rounded-lg focus:outline-none focus:border-[hsl(12,55%,65%)] focus:ring-1 focus:ring-[hsl(12,55%,65%)] transition-all text-foreground placeholder:text-foreground/40"
                             disabled={isSubmitting}
                             required
                           />
@@ -461,14 +461,14 @@ export const EnvelopeMailingList = ({
 
                         {/* Phone with Country Code */}
                         <div>
-                          <label htmlFor="phone" className="block text-[11px] font-medium text-foreground/70 mb-0.5">
+                          <label htmlFor="phone" className="block text-[11px] font-medium text-[hsl(12,55%,50%)] mb-0.5">
                             Phone Number *
                           </label>
                           <div className="flex gap-2">
                             <select
                               value={formData.countryCode}
                               onChange={(e) => onFormChange({ ...formData, countryCode: e.target.value })}
-                              className="px-2 py-1 text-xs bg-white/50 border border-foreground/20 rounded focus:outline-none focus:border-primary transition-colors text-foreground"
+                              className="px-2 py-1 text-xs bg-white/70 border border-[hsl(12,55%,85%)] rounded-lg focus:outline-none focus:border-[hsl(12,55%,65%)] focus:ring-1 focus:ring-[hsl(12,55%,65%)] transition-all text-foreground"
                               disabled={isSubmitting}
                               required
                             >
@@ -485,7 +485,7 @@ export const EnvelopeMailingList = ({
                               value={formData.phone}
                               onChange={(e) => onFormChange({ ...formData, phone: e.target.value.replace(/\D/g, '') })}
                               placeholder="1234567890"
-                              className="flex-1 px-2 py-1 text-xs bg-white/50 border border-foreground/20 rounded focus:outline-none focus:border-primary transition-colors text-foreground"
+                              className="flex-1 px-2 py-1 text-xs bg-white/70 border border-[hsl(12,55%,85%)] rounded-lg focus:outline-none focus:border-[hsl(12,55%,65%)] focus:ring-1 focus:ring-[hsl(12,55%,65%)] transition-all text-foreground placeholder:text-foreground/40"
                               disabled={isSubmitting}
                               required
                             />
@@ -494,49 +494,49 @@ export const EnvelopeMailingList = ({
 
                         {/* Gender */}
                         <div>
-                          <label className="block text-[11px] font-medium text-foreground/70 mb-1">
+                          <label className="block text-[11px] font-medium text-[hsl(12,55%,50%)] mb-1">
                             Gender *
                           </label>
                           <div className="flex gap-4">
-                            <label className="flex items-center gap-1.5 cursor-pointer">
+                            <label className="flex items-center gap-1.5 cursor-pointer group">
                               <input
                                 type="radio"
                                 name="gender"
                                 value="male"
                                 checked={formData.gender === 'male'}
                                 onChange={(e) => onFormChange({ ...formData, gender: e.target.value as 'male' | 'female' })}
-                                className="w-3.5 h-3.5 text-primary focus:ring-primary"
+                                className="w-3.5 h-3.5 text-[hsl(12,55%,65%)] focus:ring-[hsl(12,55%,65%)] border-[hsl(12,55%,75%)]"
                                 disabled={isSubmitting}
                                 required
                               />
-                              <span className="text-xs text-foreground">Male</span>
+                              <span className="text-xs text-foreground group-hover:text-[hsl(12,55%,50%)] transition-colors">Male</span>
                             </label>
-                            <label className="flex items-center gap-1.5 cursor-pointer">
+                            <label className="flex items-center gap-1.5 cursor-pointer group">
                               <input
                                 type="radio"
                                 name="gender"
                                 value="female"
                                 checked={formData.gender === 'female'}
                                 onChange={(e) => onFormChange({ ...formData, gender: e.target.value as 'male' | 'female' })}
-                                className="w-3.5 h-3.5 text-primary focus:ring-primary"
+                                className="w-3.5 h-3.5 text-[hsl(12,55%,65%)] focus:ring-[hsl(12,55%,65%)] border-[hsl(12,55%,75%)]"
                                 disabled={isSubmitting}
                                 required
                               />
-                              <span className="text-xs text-foreground">Female</span>
+                              <span className="text-xs text-foreground group-hover:text-[hsl(12,55%,50%)] transition-colors">Female</span>
                             </label>
                           </div>
                         </div>
 
                         {/* Country */}
                         <div>
-                          <label htmlFor="country" className="block text-[11px] font-medium text-foreground/70 mb-0.5">
+                          <label htmlFor="country" className="block text-[11px] font-medium text-[hsl(12,55%,50%)] mb-0.5">
                             Country *
                           </label>
                           <select
                             id="country"
                             value={formData.country}
                             onChange={(e) => onFormChange({ ...formData, country: e.target.value })}
-                            className="w-full px-2 py-1 text-xs bg-white/50 border border-foreground/20 rounded focus:outline-none focus:border-primary transition-colors text-foreground"
+                            className="w-full px-2 py-1 text-xs bg-white/70 border border-[hsl(12,55%,85%)] rounded-lg focus:outline-none focus:border-[hsl(12,55%,65%)] focus:ring-1 focus:ring-[hsl(12,55%,65%)] transition-all text-foreground"
                             disabled={isSubmitting}
                             required
                           >
@@ -551,17 +551,17 @@ export const EnvelopeMailingList = ({
                       </div>
 
                       {/* Consent Checkbox - Fixed at bottom */}
-                      <div className="pt-2 pb-2 border-t border-foreground/10">
-                        <label className="flex items-start gap-2 cursor-pointer">
+                      <div className="pt-2 pb-2 border-t border-[hsl(12,55%,85%)]">
+                        <label className="flex items-start gap-2 cursor-pointer group">
                           <input
                             type="checkbox"
                             checked={formData.consent}
                             onChange={(e) => onFormChange({ ...formData, consent: e.target.checked })}
-                            className="mt-0.5 w-4 h-4 text-primary focus:ring-primary border-foreground/30 rounded"
+                            className="mt-0.5 w-4 h-4 text-[hsl(12,55%,65%)] focus:ring-[hsl(12,55%,65%)] border-[hsl(12,55%,75%)] rounded"
                             disabled={isSubmitting}
                             required
                           />
-                          <span className="text-[10px] leading-tight text-foreground/80">
+                          <span className="text-[10px] leading-tight text-foreground/80 group-hover:text-[hsl(12,55%,50%)] transition-colors">
                             I agree to receive emails from Vellvii's mailing list *
                           </span>
                         </label>
@@ -571,7 +571,7 @@ export const EnvelopeMailingList = ({
                       <button
                         type="submit"
                         disabled={isSubmitting}
-                        className="w-full py-2 px-4 bg-gradient-to-r from-primary to-secondary hover:from-secondary hover:to-accent text-primary-foreground font-medium text-xs rounded-lg shadow-elegant transition-all disabled:opacity-50 disabled:cursor-not-allowed"
+                        className="w-full py-2 px-4 bg-gradient-to-r from-[hsl(12,55%,70%)] to-[hsl(15,50%,75%)] hover:from-[hsl(12,60%,65%)] hover:to-[hsl(15,55%,70%)] text-white font-medium text-xs rounded-xl shadow-lg hover:shadow-xl transition-all disabled:opacity-50 disabled:cursor-not-allowed"
                       >
                         {isSubmitting ? "Submitting..." : "Join Mailing List"}
                       </button>
