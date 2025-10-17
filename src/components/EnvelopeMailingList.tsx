@@ -158,9 +158,9 @@ export const EnvelopeMailingList = ({
                     initial={{ opacity: 0, y: 10 }}
                     animate={{ opacity: isEnvelopeOpen ? 1 : 0, y: isEnvelopeOpen ? 0 : 10 }}
                     transition={{ delay: 0.8, duration: 0.5 }}
-                    className="absolute inset-0 px-[10%]"
+                    className="absolute inset-0 flex items-center justify-center"
                   >
-                    <form onSubmit={handleSubmit} className="w-full flex flex-col">
+                    <form onSubmit={handleSubmit} className="w-full px-[10%]">
                       <label 
                         htmlFor="envelope-email" 
                         className="block text-sm font-playfair text-foreground/80 text-center absolute left-[10%] right-[10%]"
@@ -182,7 +182,7 @@ export const EnvelopeMailingList = ({
                       <button
                         type="submit"
                         disabled={isSubmitting}
-                        className="w-full py-3 px-4 bg-gradient-to-r from-primary to-secondary hover:from-secondary hover:to-accent text-primary-foreground font-medium text-base rounded-full shadow-elegant transition-all disabled:opacity-50 disabled:cursor-not-allowed absolute left-[10%] right-[10%]"
+                        className="py-3 px-4 bg-gradient-to-r from-primary to-secondary hover:from-secondary hover:to-accent text-primary-foreground font-medium text-base rounded-full shadow-elegant transition-all disabled:opacity-50 disabled:cursor-not-allowed absolute left-[10%] right-[10%]"
                         style={{ top: '48%' }}
                       >
                         {isSubmitting ? "Sending..." : "Join"}
