@@ -62,44 +62,26 @@ const Landing = () => {
       return;
     }
 
-    const video = videoRef.current;
     let interval: NodeJS.Timeout;
-    const handleReady = () => {
-      setTimeout(() => {
-        video?.play();
-      }, 2000);
-
-      setTimeout(() => {
-        if (!video) return;
-        const videoDuration = video.duration || 5;
-        const halfwayPoint = (videoDuration * 1000) / 2;
-        
-        setTimeout(() => {
-          const speed = (halfwayPoint) / message.length;
-          setIsTyping(true);
-          let index = 0;
-          interval = setInterval(() => {
-            if (index < message.length) {
-              setDisplayedText(message.slice(0, index + 1));
-              index++;
-            } else {
-              clearInterval(interval);
-              setIsTyping(false);
-              setShowButtons(true);
-            }
-          }, speed);
-        }, halfwayPoint);
-      }, 500);
-    };
-
-    if (video?.readyState >= 1) {
-      handleReady();
-    } else {
-      video?.addEventListener("loadedmetadata", handleReady);
-    }
+    
+    // Start typing after 2 seconds
+    setTimeout(() => {
+      setIsTyping(true);
+      const speed = 50; // Speed of typing in milliseconds
+      let index = 0;
+      interval = setInterval(() => {
+        if (index < message.length) {
+          setDisplayedText(message.slice(0, index + 1));
+          index++;
+        } else {
+          clearInterval(interval);
+          setIsTyping(false);
+          setShowButtons(true);
+        }
+      }, speed);
+    }, 2000);
 
     return () => {
-      video?.removeEventListener("loadedmetadata", handleReady);
       clearInterval(interval);
     };
   }, [isAgeConfirmed, message]);
@@ -126,7 +108,7 @@ const Landing = () => {
       <img
         src="/uploads/Vellvii-full-logo-transparent.png"
         alt="Vellvii Logo"
-        className={`w-[90vw] sm:w-3/4 md:w-1/2 max-w-md max-h-[40vh] h-auto transition-all duration-1000 ${
+        className={`w-[90vw] sm:w-3/4 md:w-1/2 max-w-md max-h-[40vh] object-contain transition-all duration-1000 ${
           isAgeConfirmed ? 'animate-fade-out translate-y-8 opacity-0 pointer-events-none' : ''
         }`}
       />
