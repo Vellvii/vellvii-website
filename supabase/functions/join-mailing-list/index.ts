@@ -137,7 +137,7 @@ const handler = async (req: Request): Promise<Response> => {
                   <!-- Header with gradient -->
                   <tr>
                     <td style="background: linear-gradient(135deg, #E9967A 0%, #FF7F50 100%); padding: 48px 40px; text-align: center;">
-                      <img src="https://mawaqjqifmvijolucrlp.supabase.co/storage/v1/object/public/chat-images/Vellvii-full-logo-transparent.png" alt="Vellvii" style="max-width: 200px; height: auto; display: block; margin: 0 auto;" />
+                      <img src="https://mawaqjqifmvijolucrlp.supabase.co/storage/v1/object/public/email-assets/Vellvii-full-logo-transparent.png" alt="Vellvii" style="max-width: 200px; height: auto; display: block; margin: 0 auto;" />
                     </td>
                   </tr>
                   <!-- Content -->
