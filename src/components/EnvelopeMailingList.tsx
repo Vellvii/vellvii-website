@@ -237,7 +237,7 @@ export const EnvelopeMailingList = ({
                       src="/uploads/V-logo-transparent.png"
                       alt="Vellvii logo seal"
                       style={{ filter: 'drop-shadow(0 2px 4px rgba(0,0,0,0.3))' }}
-                      className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-[14%] opacity-95"
+                      className="absolute left-1/2 top-[30%] -translate-x-1/2 -translate-y-1/2 w-[16%] opacity-95"
                     />
                   </div>
 
