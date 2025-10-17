@@ -2,3 +2,6 @@ project_id = "mawaqjqifmvijolucrlp"
 
 [functions.vivian-chat]
 verify_jwt = false
+
+[functions.join-mailing-list]
+verify_jwt = false
