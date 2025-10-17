@@ -123,14 +123,12 @@ const Landing = () => {
         alt="V Logo"
         className="w-32 sm:w-40 h-auto"
       />
-      <video
-        ref={videoRef}
-        src="/uploads/Vellvii-lgo-shimmer.mp4"
+      <img
+        src="/uploads/Vellvii-full-logo-transparent.png"
+        alt="Vellvii Logo"
         className={`w-[90vw] sm:w-3/4 md:w-1/2 max-w-md max-h-[40vh] h-auto transition-all duration-1000 ${
           isAgeConfirmed ? 'animate-fade-out translate-y-8 opacity-0 pointer-events-none' : ''
         }`}
-        muted
-        playsInline
       />
 
       {/* Vivien Section */}
