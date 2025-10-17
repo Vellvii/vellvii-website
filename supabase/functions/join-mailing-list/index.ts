@@ -82,6 +82,18 @@ const handler = async (req: Request): Promise<Response> => {
                           </td>
                         </tr>
                       </table>
+                      <!-- Support Section -->
+                      <div style="margin-top: 40px; padding-top: 32px; border-top: 1px solid #E9E9E9;">
+                        <p style="color: #6A6A6A; font-size: 14px; line-height: 1.6; margin: 0 0 12px 0; text-align: center;">
+                          Have questions? We're here to help.
+                        </p>
+                        <p style="text-align: center; margin: 0;">
+                          <a href="mailto:support@vellvii.com" style="color: #E9967A; text-decoration: none; font-weight: 600; font-size: 15px; display: inline-flex; align-items: center; gap: 8px;">
+                            <span style="display: inline-block; width: 20px; height: 20px; line-height: 20px; font-size: 16px;">✉️</span>
+                            support@vellvii.com
+                          </a>
+                        </p>
+                      </div>
                     </td>
                   </tr>
                   <!-- Footer -->
