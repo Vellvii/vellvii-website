@@ -1,5 +1,6 @@
 import { serve } from "https://deno.land/std@0.190.0/http/server.ts";
 import { Resend } from "npm:resend@2.0.0";
+import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.39.3';
 
 const resend = new Resend(Deno.env.get("RESEND_API_KEY"));
 
@@ -10,7 +11,13 @@ const corsHeaders = {
 };
 
 interface MailingListRequest {
+  firstName: string;
+  lastName: string;
   email: string;
+  phone: string;
+  countryCode: string;
+  gender: 'male' | 'female';
+  country: string;
 }
 
 const handler = async (req: Request): Promise<Response> => {
@@ -20,13 +27,32 @@ const handler = async (req: Request): Promise<Response> => {
   }
 
   try {
-    const { email }: MailingListRequest = await req.json();
+    const { 
+      firstName, 
+      lastName, 
+      email, 
+      phone, 
+      countryCode, 
+      gender, 
+      country 
+    }: MailingListRequest = await req.json();
 
     console.log("Processing mailing list signup for:", email);
 
-    // Validate email format
+    // Validate all required fields
+    if (!firstName || !lastName || !email || !phone || !countryCode || !gender || !country) {
+      return new Response(
+        JSON.stringify({ error: "All fields are required" }),
+        {
+          status: 400,
+          headers: { "Content-Type": "application/json", ...corsHeaders },
+        }
+      );
+    }
+
+    // Validate email
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!email || !emailRegex.test(email)) {
+    if (!emailRegex.test(email)) {
       return new Response(
         JSON.stringify({ error: "Invalid email address" }),
         {
@@ -36,12 +62,65 @@ const handler = async (req: Request): Promise<Response> => {
       );
     }
 
-    // Add to Resend audience (you'll need to create an audience in Resend dashboard)
-    // For now, we'll send a confirmation email
+    // Validate phone number (10-15 digits)
+    if (phone.length < 10 || phone.length > 15 || !/^\d+$/.test(phone)) {
+      return new Response(
+        JSON.stringify({ error: "Invalid phone number" }),
+        {
+          status: 400,
+          headers: { "Content-Type": "application/json", ...corsHeaders },
+        }
+      );
+    }
+
+    // Validate gender
+    if (gender !== 'male' && gender !== 'female') {
+      return new Response(
+        JSON.stringify({ error: "Invalid gender" }),
+        {
+          status: 400,
+          headers: { "Content-Type": "application/json", ...corsHeaders },
+        }
+      );
+    }
+
+    // Create Supabase client
+    const supabaseUrl = Deno.env.get('SUPABASE_URL')!;
+    const supabaseKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!;
+    const supabase = createClient(supabaseUrl, supabaseKey);
+
+    // Insert into database
+    const { error: dbError } = await supabase
+      .from('mailing_list_signups')
+      .insert({
+        first_name: firstName,
+        last_name: lastName,
+        email: email,
+        phone: phone,
+        country_code: countryCode,
+        gender: gender,
+        country: country,
+      });
+
+    if (dbError) {
+      console.error('Database error:', dbError);
+      if (dbError.code === '23505') { // Unique constraint violation
+        return new Response(
+          JSON.stringify({ error: "This email is already registered" }),
+          {
+            status: 400,
+            headers: { "Content-Type": "application/json", ...corsHeaders },
+          }
+        );
+      }
+      throw dbError;
+    }
+
+    // Send personalized welcome email to user
     const emailResponse = await resend.emails.send({
       from: "Vellvii <noreply@vellvii.com>",
       to: [email],
-      subject: "Welcome to Vellvii",
+      subject: `Welcome to Vellvii, ${firstName}!`,
       html: `
         <!DOCTYPE html>
         <html lang="en">
@@ -64,7 +143,7 @@ const handler = async (req: Request): Promise<Response> => {
                   <!-- Content -->
                   <tr>
                     <td style="padding: 48px 40px;">
-                      <h1 style="color: #2C2C2C; font-size: 32px; font-weight: 600; margin: 0 0 24px 0; text-align: center; font-family: Georgia, serif;">Welcome to Vellvii</h1>
+                      <h1 style="color: #2C2C2C; font-size: 32px; font-weight: 600; margin: 0 0 16px 0; text-align: center; font-family: Georgia, serif;">Welcome, ${firstName}!</h1>
                       <div style="height: 2px; width: 60px; background: linear-gradient(90deg, #E9967A, #FF7F50); margin: 0 auto 32px; border-radius: 2px;"></div>
                       <p style="color: #4A4A4A; font-size: 16px; line-height: 1.7; margin: 0 0 20px 0; text-align: center;">
                         Thank you for joining our exclusive mailing list. You'll be the first to discover our latest innovations in luxury wellness.
@@ -117,17 +196,21 @@ const handler = async (req: Request): Promise<Response> => {
       `,
     });
 
-    // Also notify Stefan about the new signup
+    // Notify Stefan about the new signup with all demographic data
     await resend.emails.send({
       from: "Vellvii <noreply@vellvii.com>",
       to: ["stefan@vellvii.com"],
-      subject: "New Mailing List Signup",
+      subject: `New Signup: ${firstName} ${lastName}`,
       html: `
         <div style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px; background: #f5f5f5;">
           <div style="background: white; border-radius: 12px; padding: 30px; box-shadow: 0 2px 8px rgba(0,0,0,0.1);">
             <h2 style="color: #2C2C2C; margin-bottom: 24px; font-size: 24px; font-weight: 600;">New Mailing List Signup 🎉</h2>
-            <div style="background: #FAF3E0; border-left: 4px solid #E9967A; padding: 16px; border-radius: 4px; margin-bottom: 16px;">
-              <p style="margin: 0 0 8px 0; color: #2C2C2C;"><strong style="color: #E9967A;">Email:</strong> ${email}</p>
+            <div style="background: #FAF3E0; border-left: 4px solid #E9967A; padding: 20px; border-radius: 4px; margin-bottom: 16px;">
+              <p style="margin: 0 0 12px 0; color: #2C2C2C;"><strong style="color: #E9967A;">Name:</strong> ${firstName} ${lastName}</p>
+              <p style="margin: 0 0 12px 0; color: #2C2C2C;"><strong style="color: #E9967A;">Email:</strong> ${email}</p>
+              <p style="margin: 0 0 12px 0; color: #2C2C2C;"><strong style="color: #E9967A;">Phone:</strong> ${countryCode} ${phone}</p>
+              <p style="margin: 0 0 12px 0; color: #2C2C2C;"><strong style="color: #E9967A;">Gender:</strong> ${gender.charAt(0).toUpperCase() + gender.slice(1)}</p>
+              <p style="margin: 0 0 12px 0; color: #2C2C2C;"><strong style="color: #E9967A;">Country:</strong> ${country}</p>
               <p style="margin: 0; color: #666; font-size: 14px;"><strong>Time:</strong> ${new Date().toLocaleString('en-US', { dateStyle: 'full', timeStyle: 'short' })}</p>
             </div>
           </div>

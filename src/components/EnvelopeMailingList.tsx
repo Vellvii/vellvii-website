@@ -2,20 +2,44 @@ import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { X } from "lucide-react";
 
+export interface MailingListFormData {
+  firstName: string;
+  lastName: string;
+  email: string;
+  phone: string;
+  countryCode: string;
+  gender: 'male' | 'female' | '';
+  country: string;
+}
+
 interface EnvelopeMailingListProps {
   isOpen: boolean;
   onClose: () => void;
-  email: string;
-  onEmailChange: (email: string) => void;
+  formData: MailingListFormData;
+  onFormChange: (data: MailingListFormData) => void;
   onSubmit: () => void;
   isSubmitting: boolean;
 }
 
+const COUNTRY_CODES = [
+  { code: '+1', country: 'US/CA' },
+  { code: '+27', country: 'ZA' },
+  { code: '+44', country: 'UK' },
+  { code: '+61', country: 'AU' },
+  { code: '+91', country: 'IN' },
+];
+
+const COUNTRIES = [
+  'United States', 'United Kingdom', 'Canada', 'Australia', 'South Africa',
+  'Germany', 'France', 'Italy', 'Spain', 'Netherlands', 'Belgium', 'Switzerland',
+  'India', 'Japan', 'China', 'Brazil', 'Mexico', 'Argentina', 'Other'
+];
+
 export const EnvelopeMailingList = ({
   isOpen,
   onClose,
-  email,
-  onEmailChange,
+  formData,
+  onFormChange,
   onSubmit,
   isSubmitting,
 }: EnvelopeMailingListProps) => {
@@ -121,7 +145,7 @@ export const EnvelopeMailingList = ({
                   style={{ filter: 'drop-shadow(0 2px 6px rgba(0,0,0,0.25))' }}
                 />
 
-                {/* White paper sliding over envelope */}
+                {/* White paper sliding over envelope - expanded for form */}
                 <motion.div
                   initial={{ y: '100%' }}
                   animate={{ 
@@ -133,12 +157,12 @@ export const EnvelopeMailingList = ({
                     stiffness: 180,
                     delay: isEnvelopeOpen ? 0.3 : 0
                   }}
-                  className="absolute transform-gpu"
+                  className="absolute transform-gpu overflow-hidden"
                   style={{
-                    left: '12.5%',
-                    top: '33.33%',
-                    width: '75%',
-                    height: '60%',
+                    left: '8%',
+                    top: '20%',
+                    width: '84%',
+                    height: '75%',
                     background: 'hsl(30, 35%, 96%)',
                     border: '1px solid hsl(30, 20%, 80%)',
                     borderRadius: '8px',
@@ -148,52 +172,178 @@ export const EnvelopeMailingList = ({
                     pointerEvents: isEnvelopeOpen ? 'auto' : 'none'
                   }}
                 >
-                  {/* Paper decoration lines */}
-                  <div className="absolute top-[15%] left-[8%] right-[8%] h-[1px] bg-[hsl(12,55%,70%)] opacity-30" />
-                  <div className="absolute top-[25%] left-[8%] right-[8%] h-[1px] bg-[hsl(12,55%,70%)] opacity-30" />
-                  <div className="absolute top-[35%] left-[8%] right-[8%] h-[1px] bg-[hsl(12,55%,70%)] opacity-30" />
-                  
-                  {/* Embedded form on the paper */}
+                  {/* Embedded form on the paper - scrollable */}
                   <motion.div
                     initial={{ opacity: 0, y: 10 }}
                     animate={{ opacity: isEnvelopeOpen ? 1 : 0, y: isEnvelopeOpen ? 0 : 10 }}
                     transition={{ delay: 0.8, duration: 0.5 }}
-                    className="absolute inset-0 flex items-center justify-center"
+                    className="absolute inset-0 overflow-y-auto"
+                    style={{ scrollbarWidth: 'thin', scrollbarColor: 'hsl(12, 55%, 70%) transparent' }}
                   >
-                    <form onSubmit={handleSubmit} className="w-full px-[10%]">
-                      <label 
-                        htmlFor="envelope-email" 
-                        className="block text-sm font-playfair text-foreground/80 text-center absolute left-[10%] right-[10%]"
-                        style={{ top: '20%', transform: 'translateY(-50%)' }}
-                      >
-                        Get notified about updates
-                      </label>
-                      <input
-                        id="envelope-email"
-                        type="email"
-                        value={email}
-                        onChange={(e) => onEmailChange(e.target.value)}
-                        placeholder="your@email.com"
-                        className="px-3 py-1.5 text-sm bg-transparent border-none outline-none transition-colors text-center font-inter text-foreground placeholder:text-foreground/60 absolute left-[10%] right-[10%]"
-                        disabled={isSubmitting}
-                        autoComplete="email"
-                        style={{ top: '30%', transform: 'translateY(-50%)' }}
-                      />
+                    <form onSubmit={handleSubmit} className="w-full px-6 py-6 space-y-3">
+                      <h3 className="text-base font-playfair text-foreground/90 text-center mb-4">
+                        Join Our Mailing List
+                      </h3>
+                      
+                      {/* Name Fields */}
+                      <div className="grid grid-cols-2 gap-2">
+                        <div>
+                          <label htmlFor="firstName" className="block text-xs font-medium text-foreground/70 mb-1">
+                            First Name *
+                          </label>
+                          <input
+                            id="firstName"
+                            type="text"
+                            value={formData.firstName}
+                            onChange={(e) => onFormChange({ ...formData, firstName: e.target.value })}
+                            placeholder="John"
+                            className="w-full px-2 py-1.5 text-sm bg-white/50 border border-foreground/20 rounded focus:outline-none focus:border-primary transition-colors text-foreground"
+                            disabled={isSubmitting}
+                            required
+                          />
+                        </div>
+                        <div>
+                          <label htmlFor="lastName" className="block text-xs font-medium text-foreground/70 mb-1">
+                            Last Name *
+                          </label>
+                          <input
+                            id="lastName"
+                            type="text"
+                            value={formData.lastName}
+                            onChange={(e) => onFormChange({ ...formData, lastName: e.target.value })}
+                            placeholder="Doe"
+                            className="w-full px-2 py-1.5 text-sm bg-white/50 border border-foreground/20 rounded focus:outline-none focus:border-primary transition-colors text-foreground"
+                            disabled={isSubmitting}
+                            required
+                          />
+                        </div>
+                      </div>
+
+                      {/* Email */}
+                      <div>
+                        <label htmlFor="email" className="block text-xs font-medium text-foreground/70 mb-1">
+                          Email *
+                        </label>
+                        <input
+                          id="email"
+                          type="email"
+                          value={formData.email}
+                          onChange={(e) => onFormChange({ ...formData, email: e.target.value })}
+                          placeholder="john@example.com"
+                          className="w-full px-2 py-1.5 text-sm bg-white/50 border border-foreground/20 rounded focus:outline-none focus:border-primary transition-colors text-foreground"
+                          disabled={isSubmitting}
+                          required
+                        />
+                      </div>
+
+                      {/* Phone with Country Code */}
+                      <div>
+                        <label htmlFor="phone" className="block text-xs font-medium text-foreground/70 mb-1">
+                          Phone Number *
+                        </label>
+                        <div className="flex gap-2">
+                          <select
+                            value={formData.countryCode}
+                            onChange={(e) => onFormChange({ ...formData, countryCode: e.target.value })}
+                            className="px-2 py-1.5 text-sm bg-white/50 border border-foreground/20 rounded focus:outline-none focus:border-primary transition-colors text-foreground"
+                            disabled={isSubmitting}
+                            required
+                          >
+                            <option value="">Code</option>
+                            {COUNTRY_CODES.map(({ code, country }) => (
+                              <option key={code} value={code}>
+                                {code} {country}
+                              </option>
+                            ))}
+                          </select>
+                          <input
+                            id="phone"
+                            type="tel"
+                            value={formData.phone}
+                            onChange={(e) => onFormChange({ ...formData, phone: e.target.value.replace(/\D/g, '') })}
+                            placeholder="1234567890"
+                            className="flex-1 px-2 py-1.5 text-sm bg-white/50 border border-foreground/20 rounded focus:outline-none focus:border-primary transition-colors text-foreground"
+                            disabled={isSubmitting}
+                            required
+                          />
+                        </div>
+                      </div>
+
+                      {/* Gender */}
+                      <div>
+                        <label className="block text-xs font-medium text-foreground/70 mb-2">
+                          Gender *
+                        </label>
+                        <div className="flex gap-4">
+                          <label className="flex items-center gap-2 cursor-pointer">
+                            <input
+                              type="radio"
+                              name="gender"
+                              value="male"
+                              checked={formData.gender === 'male'}
+                              onChange={(e) => onFormChange({ ...formData, gender: e.target.value as 'male' | 'female' })}
+                              className="w-4 h-4 text-primary focus:ring-primary"
+                              disabled={isSubmitting}
+                              required
+                            />
+                            <span className="text-sm text-foreground">Male</span>
+                          </label>
+                          <label className="flex items-center gap-2 cursor-pointer">
+                            <input
+                              type="radio"
+                              name="gender"
+                              value="female"
+                              checked={formData.gender === 'female'}
+                              onChange={(e) => onFormChange({ ...formData, gender: e.target.value as 'male' | 'female' })}
+                              className="w-4 h-4 text-primary focus:ring-primary"
+                              disabled={isSubmitting}
+                              required
+                            />
+                            <span className="text-sm text-foreground">Female</span>
+                          </label>
+                        </div>
+                      </div>
+
+                      {/* Country */}
+                      <div>
+                        <label htmlFor="country" className="block text-xs font-medium text-foreground/70 mb-1">
+                          Country *
+                        </label>
+                        <select
+                          id="country"
+                          value={formData.country}
+                          onChange={(e) => onFormChange({ ...formData, country: e.target.value })}
+                          className="w-full px-2 py-1.5 text-sm bg-white/50 border border-foreground/20 rounded focus:outline-none focus:border-primary transition-colors text-foreground"
+                          disabled={isSubmitting}
+                          required
+                        >
+                          <option value="">Select country</option>
+                          {COUNTRIES.map((country) => (
+                            <option key={country} value={country}>
+                              {country}
+                            </option>
+                          ))}
+                        </select>
+                      </div>
+
+                      {/* Submit Button */}
                       <button
                         type="submit"
                         disabled={isSubmitting}
-                        className="py-3 px-4 bg-gradient-to-r from-primary to-secondary hover:from-secondary hover:to-accent text-primary-foreground font-medium text-base rounded-full shadow-elegant transition-all disabled:opacity-50 disabled:cursor-not-allowed absolute left-[10%] right-[10%]"
-                        style={{ top: '48%' }}
+                        className="w-full mt-4 py-2.5 px-4 bg-gradient-to-r from-primary to-secondary hover:from-secondary hover:to-accent text-primary-foreground font-medium text-sm rounded-lg shadow-elegant transition-all disabled:opacity-50 disabled:cursor-not-allowed"
                       >
-                        {isSubmitting ? "Sending..." : "Join"}
+                        {isSubmitting ? "Submitting..." : "Join Mailing List"}
                       </button>
+
+                      {/* Logo at bottom */}
+                      <div className="pt-4">
+                        <img
+                          src="/uploads/Vellvii-full-logo-transparent.png"
+                          alt="Vellvii"
+                          className="w-20 mx-auto opacity-40"
+                        />
+                      </div>
                     </form>
-                    <img
-                      src="/uploads/Vellvii-full-logo-transparent.png"
-                      alt="Vellvii"
-                      className="w-28 mx-auto opacity-50 absolute left-1/2 -translate-x-1/2"
-                      style={{ bottom: '4%' }}
-                    />
                   </motion.div>
                 </motion.div>
 

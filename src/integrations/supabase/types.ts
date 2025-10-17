@@ -7,7 +7,7 @@ export type Json =
   | Json[]
 
 export type Database = {
-  // Allows to automatically instanciate createClient with right options
+  // Allows to automatically instantiate createClient with right options
   // instead of createClient<Database, { PostgrestVersion: 'XX' }>(URL, KEY)
   __InternalSupabase: {
     PostgrestVersion: "12.2.3 (519615d)"
@@ -18,7 +18,11 @@ export type Database = {
         Row: {
           concierge: string
           created_at: string
+          group_description: string | null
+          group_name: string | null
           id: string
+          is_group: boolean | null
+          max_participants: number | null
           title: string | null
           updated_at: string
           user_id: string | null
@@ -26,7 +30,11 @@ export type Database = {
         Insert: {
           concierge: string
           created_at?: string
+          group_description?: string | null
+          group_name?: string | null
           id?: string
+          is_group?: boolean | null
+          max_participants?: number | null
           title?: string | null
           updated_at?: string
           user_id?: string | null
@@ -34,7 +42,11 @@ export type Database = {
         Update: {
           concierge?: string
           created_at?: string
+          group_description?: string | null
+          group_name?: string | null
           id?: string
+          is_group?: boolean | null
+          max_participants?: number | null
           title?: string | null
           updated_at?: string
           user_id?: string | null
@@ -46,25 +58,58 @@ export type Database = {
           content: string
           conversation_id: string
           created_at: string
+          delivery_status: string | null
+          edited_at: string | null
+          encrypted_content: string | null
+          file_size: number | null
           id: string
+          image_url: string | null
+          is_encrypted: boolean | null
+          mime_type: string | null
           page_context: string | null
+          recipient_id: string | null
+          reply_to_id: string | null
           role: string
+          search_vector: unknown | null
+          video_url: string | null
         }
         Insert: {
           content: string
           conversation_id: string
           created_at?: string
+          delivery_status?: string | null
+          edited_at?: string | null
+          encrypted_content?: string | null
+          file_size?: number | null
           id?: string
+          image_url?: string | null
+          is_encrypted?: boolean | null
+          mime_type?: string | null
           page_context?: string | null
+          recipient_id?: string | null
+          reply_to_id?: string | null
           role: string
+          search_vector?: unknown | null
+          video_url?: string | null
         }
         Update: {
           content?: string
           conversation_id?: string
           created_at?: string
+          delivery_status?: string | null
+          edited_at?: string | null
+          encrypted_content?: string | null
+          file_size?: number | null
           id?: string
+          image_url?: string | null
+          is_encrypted?: boolean | null
+          mime_type?: string | null
           page_context?: string | null
+          recipient_id?: string | null
+          reply_to_id?: string | null
           role?: string
+          search_vector?: unknown | null
+          video_url?: string | null
         }
         Relationships: [
           {
@@ -74,44 +119,312 @@ export type Database = {
             referencedRelation: "chat_conversations"
             referencedColumns: ["id"]
           },
+          {
+            foreignKeyName: "chat_messages_reply_to_id_fkey"
+            columns: ["reply_to_id"]
+            isOneToOne: false
+            referencedRelation: "chat_messages"
+            referencedColumns: ["id"]
+          },
         ]
+      }
+      conversation_participants: {
+        Row: {
+          conversation_id: string
+          id: string
+          joined_at: string
+          left_at: string | null
+          role: string
+          user_id: string
+        }
+        Insert: {
+          conversation_id: string
+          id?: string
+          joined_at?: string
+          left_at?: string | null
+          role?: string
+          user_id: string
+        }
+        Update: {
+          conversation_id?: string
+          id?: string
+          joined_at?: string
+          left_at?: string | null
+          role?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "conversation_participants_conversation_id_fkey"
+            columns: ["conversation_id"]
+            isOneToOne: false
+            referencedRelation: "chat_conversations"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      mailing_list_signups: {
+        Row: {
+          country: string
+          country_code: string
+          created_at: string
+          email: string
+          first_name: string
+          gender: string
+          id: string
+          last_name: string
+          phone: string
+        }
+        Insert: {
+          country: string
+          country_code: string
+          created_at?: string
+          email: string
+          first_name: string
+          gender: string
+          id?: string
+          last_name: string
+          phone: string
+        }
+        Update: {
+          country?: string
+          country_code?: string
+          created_at?: string
+          email?: string
+          first_name?: string
+          gender?: string
+          id?: string
+          last_name?: string
+          phone?: string
+        }
+        Relationships: []
+      }
+      message_reactions: {
+        Row: {
+          created_at: string
+          emoji: string
+          id: string
+          message_id: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          emoji: string
+          id?: string
+          message_id: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          emoji?: string
+          id?: string
+          message_id?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "message_reactions_message_id_fkey"
+            columns: ["message_id"]
+            isOneToOne: false
+            referencedRelation: "chat_messages"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      partner_connections: {
+        Row: {
+          connection_method: string | null
+          created_at: string
+          expires_at: string | null
+          id: string
+          invitation_code: string
+          recipient_id: string | null
+          requester_id: string
+          status: string
+          updated_at: string
+        }
+        Insert: {
+          connection_method?: string | null
+          created_at?: string
+          expires_at?: string | null
+          id?: string
+          invitation_code: string
+          recipient_id?: string | null
+          requester_id: string
+          status?: string
+          updated_at?: string
+        }
+        Update: {
+          connection_method?: string | null
+          created_at?: string
+          expires_at?: string | null
+          id?: string
+          invitation_code?: string
+          recipient_id?: string | null
+          requester_id?: string
+          status?: string
+          updated_at?: string
+        }
+        Relationships: []
       }
       profiles: {
         Row: {
+          bio: string | null
           concierge: string | null
           created_at: string
+          date_of_birth: string | null
           email: string
           id: string
           name: string | null
           phone: string | null
           profile_picture: string | null
+          region: string | null
           role: string | null
           updated_at: string
           user_id: string
         }
         Insert: {
+          bio?: string | null
           concierge?: string | null
           created_at?: string
+          date_of_birth?: string | null
           email: string
           id?: string
           name?: string | null
           phone?: string | null
           profile_picture?: string | null
+          region?: string | null
           role?: string | null
           updated_at?: string
           user_id: string
         }
         Update: {
+          bio?: string | null
           concierge?: string | null
           created_at?: string
+          date_of_birth?: string | null
           email?: string
           id?: string
           name?: string | null
           phone?: string | null
           profile_picture?: string | null
+          region?: string | null
           role?: string | null
           updated_at?: string
           user_id?: string
+        }
+        Relationships: []
+      }
+      push_subscriptions: {
+        Row: {
+          auth_key: string
+          created_at: string
+          endpoint: string
+          id: string
+          p256dh_key: string
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          auth_key: string
+          created_at?: string
+          endpoint: string
+          id?: string
+          p256dh_key: string
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          auth_key?: string
+          created_at?: string
+          endpoint?: string
+          id?: string
+          p256dh_key?: string
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      typing_indicators: {
+        Row: {
+          conversation_id: string
+          created_at: string
+          id: string
+          is_typing: boolean
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          conversation_id: string
+          created_at?: string
+          id?: string
+          is_typing?: boolean
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          conversation_id?: string
+          created_at?: string
+          id?: string
+          is_typing?: boolean
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "typing_indicators_conversation_id_fkey"
+            columns: ["conversation_id"]
+            isOneToOne: false
+            referencedRelation: "chat_conversations"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      user_encryption_keys: {
+        Row: {
+          created_at: string
+          id: string
+          private_key_encrypted: string
+          public_key: string
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          private_key_encrypted: string
+          public_key: string
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          private_key_encrypted?: string
+          public_key?: string
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      vivian_chats: {
+        Row: {
+          created_at: string
+          id: string
+          messages: Json
+          session_id: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          messages: Json
+          session_id: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          messages?: Json
+          session_id?: string
         }
         Relationships: []
       }
@@ -120,7 +433,10 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      cleanup_expired_invitations: {
+        Args: Record<PropertyKey, never>
+        Returns: undefined
+      }
     }
     Enums: {
       [_ in never]: never

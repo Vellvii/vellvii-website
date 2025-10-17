@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import { MagneticButton } from "@/components/animations/MagneticButton";
-import { EnvelopeMailingList } from "@/components/EnvelopeMailingList";
+import { EnvelopeMailingList, MailingListFormData } from "@/components/EnvelopeMailingList";
 import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/hooks/use-toast";
 import vivienImage from "/uploads/976c0d6d-a066-409a-8ad6-6353840958ac.png";
@@ -15,7 +15,15 @@ const Landing = () => {
   const [constructionMessage, setConstructionMessage] = useState("");
   const [showEmailButton, setShowEmailButton] = useState(false);
   const [showMailingDialog, setShowMailingDialog] = useState(false);
-  const [mailingEmail, setMailingEmail] = useState("");
+  const [mailingFormData, setMailingFormData] = useState<MailingListFormData>({
+    firstName: '',
+    lastName: '',
+    email: '',
+    phone: '',
+    countryCode: '',
+    gender: '',
+    country: '',
+  });
   const [isSubmitting, setIsSubmitting] = useState(false);
   const videoRef = useRef<HTMLVideoElement>(null);
   const { toast } = useToast();
@@ -105,7 +113,17 @@ const Landing = () => {
   };
 
   const handleJoinMailingList = async () => {
-    if (!mailingEmail.trim()) {
+    // Validate all required fields
+    if (!mailingFormData.firstName.trim() || !mailingFormData.lastName.trim()) {
+      toast({
+        title: "Name required",
+        description: "Please enter your first and last name",
+        variant: "destructive",
+      });
+      return;
+    }
+
+    if (!mailingFormData.email.trim()) {
       toast({
         title: "Email required",
         description: "Please enter your email address",
@@ -115,7 +133,7 @@ const Landing = () => {
     }
 
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!emailRegex.test(mailingEmail)) {
+    if (!emailRegex.test(mailingFormData.email)) {
       toast({
         title: "Invalid email",
         description: "Please enter a valid email address",
@@ -124,10 +142,37 @@ const Landing = () => {
       return;
     }
 
+    if (!mailingFormData.countryCode || !mailingFormData.phone.trim()) {
+      toast({
+        title: "Phone required",
+        description: "Please enter your phone number with country code",
+        variant: "destructive",
+      });
+      return;
+    }
+
+    if (!mailingFormData.gender) {
+      toast({
+        title: "Gender required",
+        description: "Please select your gender",
+        variant: "destructive",
+      });
+      return;
+    }
+
+    if (!mailingFormData.country) {
+      toast({
+        title: "Country required",
+        description: "Please select your country",
+        variant: "destructive",
+      });
+      return;
+    }
+
     setIsSubmitting(true);
     try {
       const { error } = await supabase.functions.invoke("join-mailing-list", {
-        body: { email: mailingEmail },
+        body: mailingFormData,
       });
 
       if (error) throw error;
@@ -137,7 +182,16 @@ const Landing = () => {
         description: "You've been added to our mailing list. Check your email for confirmation.",
       });
       setShowMailingDialog(false);
-      setMailingEmail("");
+      // Reset form
+      setMailingFormData({
+        firstName: '',
+        lastName: '',
+        email: '',
+        phone: '',
+        countryCode: '',
+        gender: '',
+        country: '',
+      });
     } catch (error: any) {
       console.error("Error joining mailing list:", error);
       toast({
@@ -251,8 +305,8 @@ const Landing = () => {
       <EnvelopeMailingList
         isOpen={showMailingDialog}
         onClose={() => setShowMailingDialog(false)}
-        email={mailingEmail}
-        onEmailChange={setMailingEmail}
+        formData={mailingFormData}
+        onFormChange={setMailingFormData}
         onSubmit={handleJoinMailingList}
         isSubmitting={isSubmitting}
       />
