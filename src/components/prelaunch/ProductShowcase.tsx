@@ -36,7 +36,7 @@ const showcaseFeatures = [{
   }, {
     title: "Intelligent Charging System",
     description: "Seamlessly charges your devices while keeping them beautifully organized.",
-    thumbnails: ["/placeholder.svg", "/placeholder.svg", "/placeholder.svg"]
+    thumbnails: ["/uploads/Red_Dox_charge_inside.png", "/uploads/Vellvii_description_sketches_open_ls.png", "/uploads/White_charge_outside.png"]
   }, {
     title: "Interchangeable Compartment",
     description: "Customizable storage that adapts to your unique collection.",
