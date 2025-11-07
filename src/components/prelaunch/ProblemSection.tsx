@@ -48,7 +48,7 @@ export const ProblemSection = () => {
                   <h3 className="text-xl font-semibold text-white font-playfair">
                     {problem.title}
                   </h3>
-                  <p className="text-white/60 leading-relaxed">
+                  <p className="text-white/90 leading-relaxed">
                     {problem.description}
                   </p>
                 </CardContent>
