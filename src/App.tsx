@@ -22,6 +22,7 @@ import LuxuryStorage from "./pages/LuxuryStorage";
 import DockingStation from "./pages/DockingStation";
 import SexSaddle from "./pages/SexSaddle";
 import NotFound from "./pages/NotFound";
+import PrelaunchDOX from "./pages/PrelaunchDOX";
 
 const queryClient = new QueryClient();
 
@@ -37,6 +38,7 @@ const InnerApp = () => {
         <PageTransition>
           <Routes>
             <Route path="/" element={<Landing />} />
+            <Route path="/prelaunch-dox" element={<PrelaunchDOX />} />
             {isDev && (
               <>
                 <Route path="/home" element={<Home />} />
