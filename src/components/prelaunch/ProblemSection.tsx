@@ -3,6 +3,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import makeshiftIcon from "@/assets/icon-makeshift-era.png";
 import stigmaIcon from "@/assets/icon-stigma-storage.png";
 import privacyIcon from "@/assets/icon-privacy-sophistication.png";
+import improvisedStorageImage from "@/assets/dox-improvised-storage.png";
 
 const problems = [{
   icon: makeshiftIcon,
@@ -55,17 +56,11 @@ export const ProblemSection = () => {
         <ScrollReveal delay={0.4}>
           <div className="grid md:grid-cols-2 gap-4 max-w-5xl mx-auto">
             <div className="relative aspect-[4/3] rounded-xl overflow-hidden glass-dark">
-              <div className="absolute inset-0 bg-gradient-to-br from-red-900/20 via-red-800/10 to-transparent" />
-              <div className="relative w-full h-full flex flex-col items-center justify-center p-8">
-                <div className="absolute top-4 left-4 px-3 py-1 bg-red-500/20 border border-red-500/30 rounded-full">
-                  <span className="text-red-400 text-xs font-semibold uppercase tracking-wider">Before</span>
-                </div>
-                <p className="text-white/40 text-sm font-medium text-center">
-                  IMAGE: Improvised Storage
-                  <br />
-                  <span className="text-xs">(The makeshift places that never honored pleasure)</span>
-                </p>
-              </div>
+              <img 
+                src={improvisedStorageImage} 
+                alt="Improvised Storage" 
+                className="w-full h-full object-cover"
+              />
             </div>
 
             <div className="relative aspect-[4/3] rounded-xl overflow-hidden glass-dark">
