@@ -3,7 +3,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import makeshiftIcon from "@/assets/icon-makeshift-era.png";
 import stigmaIcon from "@/assets/icon-stigma-storage.png";
 import privacyIcon from "@/assets/icon-privacy-sophistication.png";
-import improvisedStorageImage from "@/assets/dox-improvised-storage.png";
+import doxCloseUpImage from "@/assets/dox-close-up.webp";
 import sanctuaryWithinImage from "@/assets/dox-sanctuary-within.jpg";
 
 const problems = [{
@@ -56,6 +56,14 @@ export const ProblemSection = () => {
         {/* Before/After Visual */}
         <ScrollReveal delay={0.4}>
           <div className="grid md:grid-cols-2 gap-4 max-w-5xl mx-auto">
+            <div className="relative aspect-[4/3] rounded-xl overflow-hidden glass-dark">
+              <img 
+                src={doxCloseUpImage} 
+                alt="Dox Close Up" 
+                className="w-full h-full object-cover"
+              />
+            </div>
+
             <div className="relative aspect-[4/3] rounded-xl overflow-hidden glass-dark">
               <img 
                 src={sanctuaryWithinImage} 
