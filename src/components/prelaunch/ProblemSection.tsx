@@ -34,27 +34,8 @@ export const ProblemSection = () => {
           </p>
         </ScrollReveal>
 
-        {/* Problem Cards */}
-        <div className="grid md:grid-cols-3 gap-6 lg:gap-8 mb-16">
-          {problems.map((problem, index) => <ScrollReveal key={problem.title} delay={0.1 * index} direction="up">
-              <Card className="glass-dark border-white/10 hover:border-primary/30 transition-all duration-300 hover-glow h-full">
-                <CardContent className="p-6 sm:p-8 text-center space-y-4">
-                  <div className="w-16 h-16 mx-auto rounded-full bg-primary/10 flex items-center justify-center overflow-hidden">
-                    <img src={problem.icon} alt={problem.title} className="w-10 h-10 object-contain" />
-                  </div>
-                  <h3 className="text-xl font-semibold font-playfair text-slate-950">
-                    {problem.title}
-                  </h3>
-                  <p className="leading-relaxed text-zinc-600">
-                    {problem.description}
-                  </p>
-                </CardContent>
-              </Card>
-            </ScrollReveal>)}
-        </div>
-
         {/* Before/After Visual */}
-        <ScrollReveal delay={0.4}>
+        <ScrollReveal delay={0.3}>
           <div className="grid md:grid-cols-2 gap-4 max-w-5xl mx-auto">
             <div className="relative aspect-[4/3] rounded-xl overflow-hidden glass-dark">
               <img 
@@ -73,6 +54,25 @@ export const ProblemSection = () => {
             </div>
           </div>
         </ScrollReveal>
+
+        {/* Problem Cards */}
+        <div className="grid md:grid-cols-3 gap-6 lg:gap-8 mt-16">
+          {problems.map((problem, index) => <ScrollReveal key={problem.title} delay={0.1 * index} direction="up">
+              <Card className="glass-dark border-white/10 hover:border-primary/30 transition-all duration-300 hover-glow h-full">
+                <CardContent className="p-6 sm:p-8 text-center space-y-4">
+                  <div className="w-16 h-16 mx-auto rounded-full bg-primary/10 flex items-center justify-center overflow-hidden">
+                    <img src={problem.icon} alt={problem.title} className="w-10 h-10 object-contain" />
+                  </div>
+                  <h3 className="text-xl font-semibold font-playfair text-slate-950">
+                    {problem.title}
+                  </h3>
+                  <p className="leading-relaxed text-zinc-600">
+                    {problem.description}
+                  </p>
+                </CardContent>
+              </Card>
+            </ScrollReveal>)}
+        </div>
       </div>
     </section>;
 };
