@@ -2,9 +2,10 @@ import { useState } from "react";
 import { ScrollReveal } from "@/components/animations/ScrollReveal";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import doxClosedExterior from "@/assets/dox-closed-exterior.png";
 
 const images = [
-  { label: "DOX CLOSED - Faux Leather Exterior", description: "High-quality waterproof faux leather with rose-gold trims" },
+  { image: doxClosedExterior, label: "DOX CLOSED - Faux Leather Exterior", description: "High-quality waterproof faux leather with rose-gold trims" },
   { label: "DOX OPEN - A Sanctuary Within", description: "Soft velvet interior with removable compartment tray" },
   { label: "DDS - Dildo Docking Station", description: "Poured acrylic glass surface, engineered elegance" },
   { label: "FINGERPRINT LOCK - Biometric Security", description: "One touch. One owner. Total control." },
@@ -42,16 +43,26 @@ export const ProductShowcase = () => {
             <div className="relative aspect-[4/3] rounded-2xl overflow-hidden glass-dark shadow-luxury">
               <div className="absolute inset-0 bg-gradient-to-br from-primary/10 via-secondary/5 to-transparent" />
               
-              {/* Image Placeholder */}
-              <div className="relative w-full h-full flex flex-col items-center justify-center p-8 transition-opacity duration-500">
-                <p className="text-white/60 text-base font-medium text-center mb-2">
-                  {images[currentIndex].label}
-                </p>
-                <p className="text-white/40 text-sm text-center">
-                  {images[currentIndex].description}
-                  <br />
-                  <span className="text-xs">(4:3 aspect ratio)</span>
-                </p>
+              {/* Image Display */}
+              <div className="relative w-full h-full transition-opacity duration-500">
+                {images[currentIndex].image ? (
+                  <img 
+                    src={images[currentIndex].image} 
+                    alt={images[currentIndex].label}
+                    className="w-full h-full object-cover scale-120"
+                  />
+                ) : (
+                  <div className="flex flex-col items-center justify-center h-full p-8">
+                    <p className="text-white/60 text-base font-medium text-center mb-2">
+                      {images[currentIndex].label}
+                    </p>
+                    <p className="text-white/40 text-sm text-center">
+                      {images[currentIndex].description}
+                      <br />
+                      <span className="text-xs">(4:3 aspect ratio)</span>
+                    </p>
+                  </div>
+                )}
               </div>
 
               {/* Navigation Buttons */}
