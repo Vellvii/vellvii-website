@@ -4,112 +4,173 @@ import { ChevronLeft, ChevronRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import doxClosedExterior from "@/assets/dox-closed-exterior.png";
 
-const images = [
-  { image: doxClosedExterior, label: "DOX CLOSED - Faux Leather Exterior", description: "High-quality waterproof faux leather with rose-gold trims" },
-  { video: "/uploads/dox-open-animation.mp4", label: "DOX OPEN - A Sanctuary Within", description: "Soft velvet interior with removable compartment tray" },
-  { label: "DDS - Dildo Docking Station", description: "Poured acrylic glass surface, engineered elegance" },
-  { label: "FINGERPRINT LOCK - Biometric Security", description: "One touch. One owner. Total control." },
-  { label: "LIFESTYLE - Pleasure, Elevated", description: "Designed to look, feel, and function like luxury" },
+type MediaItem = {
+  image?: string;
+  video?: string;
+  label: string;
+  description: string;
+};
+
+const showcaseFeatures = [
+  {
+    number: 1,
+    title: "Luxury Storage",
+    subtitle: "Stores Beautifully",
+    images: [
+      { image: doxClosedExterior, label: "DOX CLOSED - Faux Leather Exterior", description: "High-quality waterproof faux leather with rose-gold trims" },
+      { video: "/uploads/dox-open-animation.mp4", label: "DOX OPEN - A Sanctuary Within", description: "Soft velvet interior with removable compartment tray" },
+    ]
+  },
+  {
+    number: 2,
+    title: "Intelligent Charging",
+    subtitle: "Charges Intelligently",
+    images: [
+      { label: "DDS - Dildo Docking Station", description: "Poured acrylic glass surface, engineered elegance" },
+      { label: "WIRELESS CHARGING - Effortless Power", description: "Simply place and charge" },
+    ]
+  },
+  {
+    number: 3,
+    title: "Enhanced Experience",
+    subtitle: "Enhances Intimately",
+    images: [
+      { label: "FINGERPRINT LOCK - Biometric Security", description: "One touch. One owner. Total control." },
+      { label: "LIFESTYLE - Pleasure, Elevated", description: "Designed to look, feel, and function like luxury" },
+    ]
+  }
 ];
 
-export const ProductShowcase = () => {
+const FeatureCarousel = ({ feature, index }: { feature: typeof showcaseFeatures[0], index: number }) => {
   const [currentIndex, setCurrentIndex] = useState(0);
 
   const nextSlide = () => {
-    setCurrentIndex((prev) => (prev + 1) % images.length);
+    setCurrentIndex((prev) => (prev + 1) % feature.images.length);
   };
 
   const prevSlide = () => {
-    setCurrentIndex((prev) => (prev - 1 + images.length) % images.length);
+    setCurrentIndex((prev) => (prev - 1 + feature.images.length) % feature.images.length);
   };
 
+  return (
+    <ScrollReveal delay={0.2 * index}>
+      <div className="mb-24">
+        {/* Number Indicator */}
+        <div className="flex items-center justify-center mb-8">
+          <div className="w-16 h-16 rounded-full bg-primary/20 backdrop-blur-sm border-2 border-primary/40 flex items-center justify-center">
+            <span className="text-3xl font-bold text-primary font-playfair">#{feature.number}</span>
+          </div>
+        </div>
+
+        {/* Feature Title */}
+        <div className="text-center mb-8">
+          <h3 className="text-2xl sm:text-3xl font-bold text-white font-playfair mb-2">
+            {feature.title}
+          </h3>
+          <p className="text-lg text-white/60">
+            {feature.subtitle}
+          </p>
+        </div>
+
+        {/* Carousel */}
+        <div className="max-w-4xl mx-auto">
+          <div className="relative aspect-[4/3] rounded-2xl overflow-hidden glass-dark shadow-luxury">
+            <div className="absolute inset-0 bg-gradient-to-br from-primary/10 via-secondary/5 to-transparent" />
+            
+            {/* Image/Video Display */}
+            <div className="relative w-full h-full transition-opacity duration-500">
+              {'image' in feature.images[currentIndex] && feature.images[currentIndex].image ? (
+                <img 
+                  src={feature.images[currentIndex].image!} 
+                  alt={feature.images[currentIndex].label}
+                  className="w-full h-full object-cover scale-120"
+                />
+              ) : 'video' in feature.images[currentIndex] && feature.images[currentIndex].video ? (
+                <video 
+                  src={feature.images[currentIndex].video!}
+                  autoPlay
+                  loop
+                  muted
+                  playsInline
+                  className="w-full h-full object-cover"
+                />
+              ) : (
+                <div className="flex flex-col items-center justify-center h-full p-8">
+                  <p className="text-white/60 text-base font-medium text-center mb-2">
+                    {feature.images[currentIndex].label}
+                  </p>
+                  <p className="text-white/40 text-sm text-center">
+                    {feature.images[currentIndex].description}
+                    <br />
+                    <span className="text-xs">(4:3 aspect ratio)</span>
+                  </p>
+                </div>
+              )}
+            </div>
+
+            {/* Navigation Buttons */}
+            {feature.images.length > 1 && (
+              <>
+                <Button
+                  onClick={prevSlide}
+                  variant="ghost"
+                  size="icon"
+                  className="absolute left-4 top-1/2 -translate-y-1/2 bg-white/10 hover:bg-white/20 backdrop-blur-sm border border-white/20"
+                >
+                  <ChevronLeft className="w-6 h-6 text-white" />
+                </Button>
+                <Button
+                  onClick={nextSlide}
+                  variant="ghost"
+                  size="icon"
+                  className="absolute right-4 top-1/2 -translate-y-1/2 bg-white/10 hover:bg-white/20 backdrop-blur-sm border border-white/20"
+                >
+                  <ChevronRight className="w-6 h-6 text-white" />
+                </Button>
+
+                {/* Dot Navigation */}
+                <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-2">
+                  {feature.images.map((_, imgIndex) => (
+                    <button
+                      key={imgIndex}
+                      onClick={() => setCurrentIndex(imgIndex)}
+                      className={`w-2 h-2 rounded-full transition-all duration-300 ${
+                        imgIndex === currentIndex
+                          ? "bg-primary w-8"
+                          : "bg-white/30 hover:bg-white/50"
+                      }`}
+                      aria-label={`Go to slide ${imgIndex + 1}`}
+                    />
+                  ))}
+                </div>
+              </>
+            )}
+          </div>
+        </div>
+      </div>
+    </ScrollReveal>
+  );
+};
+
+export const ProductShowcase = () => {
   return (
     <section className="py-16 md:py-24 relative overflow-hidden">
       <div className="absolute inset-0 bg-gradient-to-b from-transparent via-primary/5 to-transparent" />
       
       <div className="container mx-auto px-4 sm:px-6 relative z-10">
         <ScrollReveal>
-          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white text-center mb-16 font-playfair">
+          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white text-center mb-4 font-playfair">
             3-in-1 Innovation
           </h2>
-          <p className="text-lg text-white/60 text-center max-w-3xl mx-auto mb-16 -mt-12">
+          <p className="text-lg text-white/60 text-center max-w-3xl mx-auto mb-16">
             A discreet innovation that stores beautifully, charges intelligently, and enhances intimately
           </p>
         </ScrollReveal>
 
-        {/* Main Carousel */}
-        <ScrollReveal delay={0.2}>
-          <div className="max-w-4xl mx-auto">
-            <div className="relative aspect-[4/3] rounded-2xl overflow-hidden glass-dark shadow-luxury">
-              <div className="absolute inset-0 bg-gradient-to-br from-primary/10 via-secondary/5 to-transparent" />
-              
-              {/* Image/Video Display */}
-              <div className="relative w-full h-full transition-opacity duration-500">
-                {images[currentIndex].image ? (
-                  <img 
-                    src={images[currentIndex].image} 
-                    alt={images[currentIndex].label}
-                    className="w-full h-full object-cover scale-120"
-                  />
-                ) : images[currentIndex].video ? (
-                  <video 
-                    src={images[currentIndex].video}
-                    autoPlay
-                    loop
-                    muted
-                    playsInline
-                    className="w-full h-full object-cover"
-                  />
-                ) : (
-                  <div className="flex flex-col items-center justify-center h-full p-8">
-                    <p className="text-white/60 text-base font-medium text-center mb-2">
-                      {images[currentIndex].label}
-                    </p>
-                    <p className="text-white/40 text-sm text-center">
-                      {images[currentIndex].description}
-                      <br />
-                      <span className="text-xs">(4:3 aspect ratio)</span>
-                    </p>
-                  </div>
-                )}
-              </div>
-
-              {/* Navigation Buttons */}
-              <Button
-                onClick={prevSlide}
-                variant="ghost"
-                size="icon"
-                className="absolute left-4 top-1/2 -translate-y-1/2 bg-white/10 hover:bg-white/20 backdrop-blur-sm border border-white/20"
-              >
-                <ChevronLeft className="w-6 h-6 text-white" />
-              </Button>
-              <Button
-                onClick={nextSlide}
-                variant="ghost"
-                size="icon"
-                className="absolute right-4 top-1/2 -translate-y-1/2 bg-white/10 hover:bg-white/20 backdrop-blur-sm border border-white/20"
-              >
-                <ChevronRight className="w-6 h-6 text-white" />
-              </Button>
-
-              {/* Dot Navigation */}
-              <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-2">
-                {images.map((_, index) => (
-                  <button
-                    key={index}
-                    onClick={() => setCurrentIndex(index)}
-                    className={`w-2 h-2 rounded-full transition-all duration-300 ${
-                      index === currentIndex
-                        ? "bg-primary w-8"
-                        : "bg-white/30 hover:bg-white/50"
-                    }`}
-                    aria-label={`Go to slide ${index + 1}`}
-                  />
-                ))}
-              </div>
-            </div>
-          </div>
-        </ScrollReveal>
+        {/* Three Feature Carousels */}
+        {showcaseFeatures.map((feature, index) => (
+          <FeatureCarousel key={feature.number} feature={feature} index={index} />
+        ))}
       </div>
     </section>
   );
