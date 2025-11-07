@@ -4,6 +4,7 @@ import makeshiftIcon from "@/assets/icon-makeshift-era.png";
 import stigmaIcon from "@/assets/icon-stigma-storage.png";
 import privacyIcon from "@/assets/icon-privacy-sophistication.png";
 import improvisedStorageImage from "@/assets/dox-improvised-storage.png";
+import sanctuaryWithinImage from "@/assets/dox-sanctuary-within.jpg";
 
 const problems = [{
   icon: makeshiftIcon,
@@ -64,17 +65,11 @@ export const ProblemSection = () => {
             </div>
 
             <div className="relative aspect-[4/3] rounded-xl overflow-hidden glass-dark">
-              <div className="absolute inset-0 bg-gradient-to-br from-primary/20 via-secondary/10 to-transparent" />
-              <div className="relative w-full h-full flex flex-col items-center justify-center p-8">
-                <div className="absolute top-4 left-4 px-3 py-1 bg-primary/20 border border-primary/30 rounded-full">
-                  <span className="text-primary text-xs font-semibold uppercase tracking-wider">After</span>
-                </div>
-                <p className="text-white/40 text-sm font-medium text-center">
-                  IMAGE: A Sanctuary Within
-                  <br />
-                  <span className="text-xs">(Soft velvet, golden accents, perfect order)</span>
-                </p>
-              </div>
+              <img 
+                src={sanctuaryWithinImage} 
+                alt="A Sanctuary Within" 
+                className="w-full h-full object-cover"
+              />
             </div>
           </div>
         </ScrollReveal>
