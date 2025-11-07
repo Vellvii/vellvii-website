@@ -40,7 +40,7 @@ const showcaseFeatures = [{
   }, {
     title: "Interchangeable Compartment",
     description: "Customizable storage that adapts to your unique collection.",
-    thumbnails: ["/placeholder.svg", "/placeholder.svg", "/placeholder.svg"]
+    thumbnails: ["/uploads/RedOpen1.png", "/uploads/BlackOpen2.png", "/uploads/Vellvii_description_sketches_open_ls-2.png"]
   }]
 }, {
   number: 2,
