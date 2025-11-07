@@ -70,8 +70,7 @@ const showcaseFeatures = [
   {
     number: 2,
     title: "Flagship Introduction - Conscious Innovation",
-    subtitle: "The most innovative solution of the century.
-                'DDS - Dildo Docking Station'",
+    subtitle: "The most innovative solution of the century. 'DDS - Dildo Docking Station'",
     images: [
       {
         image: "/uploads/BeigeDDSPieces.png",
