@@ -32,7 +32,7 @@ const showcaseFeatures = [{
   subcategories: [{
     title: "Biometric Fingerprint Lock",
     description: "One touch. One owner. Total control of your intimate collection.",
-    thumbnails: ["/placeholder.svg", "/placeholder.svg", "/placeholder.svg"]
+    thumbnails: ["/uploads/fingerprint-video.webm", "/placeholder.svg", "/placeholder.svg"]
   }, {
     title: "Intelligent Charging System",
     description: "Seamlessly charges your devices while keeping them beautifully organized.",
@@ -152,22 +152,35 @@ const FeatureCarousel = ({
                     
                     {/* Thumbnails */}
                     <div className="flex gap-2 justify-center mt-4">
-                      {sub.thumbnails.map((thumb, thumbIndex) => (
-                        <button
-                          key={thumbIndex}
-                          onClick={() => {
-                            setLightboxImage(thumb);
-                            setLightboxOpen(true);
-                          }}
-                          className="w-20 h-20 rounded-lg overflow-hidden border border-white/20 hover:border-primary/50 transition-all hover:scale-105"
-                        >
-                          <img
-                            src={thumb}
-                            alt={`${sub.title} thumbnail ${thumbIndex + 1}`}
-                            className="w-full h-full object-cover"
-                          />
-                        </button>
-                      ))}
+                      {sub.thumbnails.map((thumb, thumbIndex) => {
+                        const isVideo = thumb.endsWith('.mp4') || thumb.endsWith('.webm');
+                        return (
+                          <button
+                            key={thumbIndex}
+                            onClick={() => {
+                              setLightboxImage(thumb);
+                              setLightboxOpen(true);
+                            }}
+                            className="w-20 h-20 rounded-lg overflow-hidden border border-white/20 hover:border-primary/50 transition-all hover:scale-105"
+                          >
+                            {isVideo ? (
+                              <video
+                                src={thumb}
+                                muted
+                                loop
+                                playsInline
+                                className="w-full h-full object-cover"
+                              />
+                            ) : (
+                              <img
+                                src={thumb}
+                                alt={`${sub.title} thumbnail ${thumbIndex + 1}`}
+                                className="w-full h-full object-cover"
+                              />
+                            )}
+                          </button>
+                        );
+                      })}
                     </div>
                   </CardContent>
                 </Card>
@@ -177,11 +190,22 @@ const FeatureCarousel = ({
         {/* Lightbox Dialog */}
         <Dialog open={lightboxOpen} onOpenChange={setLightboxOpen}>
           <DialogContent className="max-w-4xl bg-black/90 border-white/20">
-            <img
-              src={lightboxImage}
-              alt="Lightbox view"
-              className="w-full h-auto rounded-lg"
-            />
+            {(lightboxImage.endsWith('.mp4') || lightboxImage.endsWith('.webm')) ? (
+              <video
+                src={lightboxImage}
+                autoPlay
+                loop
+                muted
+                playsInline
+                className="w-full h-auto rounded-lg"
+              />
+            ) : (
+              <img
+                src={lightboxImage}
+                alt="Lightbox view"
+                className="w-full h-auto rounded-lg"
+              />
+            )}
           </DialogContent>
         </Dialog>
       </div>
