@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { ScrollReveal } from "@/components/animations/ScrollReveal";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -28,6 +28,18 @@ const showcaseFeatures = [{
     video: "/uploads/dox-open-animation.mp4",
     label: "DOX OPEN - A Sanctuary Within",
     description: "Soft velvet interior with removable compartment tray"
+  }, {
+    image: "/uploads/Dox_white_open_plugged_in_content2.png",
+    label: "DOX IN USE - Organized Storage",
+    description: "Customizable compartments for your collection"
+  }, {
+    image: "/uploads/dox_with_toys_2.jpg",
+    label: "DOX LIFESTYLE - Elegant Display",
+    description: "Fits seamlessly into any room"
+  }, {
+    image: "/uploads/dox_with_toys_1.jpg",
+    label: "DOX BLACK - Premium Finish",
+    description: "Sleek design with rose-gold accents"
   }],
   subcategories: [{
     title: "Biometric Fingerprint Lock",
@@ -77,6 +89,18 @@ const FeatureCarousel = ({
   const [currentIndex, setCurrentIndex] = useState(0);
   const [lightboxOpen, setLightboxOpen] = useState(false);
   const [lightboxImage, setLightboxImage] = useState("");
+  
+  // Auto-play carousel every 3 seconds
+  useEffect(() => {
+    if (feature.images.length > 1) {
+      const interval = setInterval(() => {
+        setCurrentIndex(prev => (prev + 1) % feature.images.length);
+      }, 3000);
+      
+      return () => clearInterval(interval);
+    }
+  }, [feature.images.length]);
+  
   const nextSlide = () => {
     setCurrentIndex(prev => (prev + 1) % feature.images.length);
   };
