@@ -130,18 +130,24 @@ const FeatureCarousel = ({
   // Auto-play carousel with custom timing for last image
   useEffect(() => {
     if (feature.images.length > 1) {
-      // Last image shows for 6 seconds, others for 3 seconds
-      const delay = currentIndex === feature.images.length - 1 ? 6000 : 3000;
-      
-      const interval = setInterval(() => {
-        setIsTransitioning(true);
-        setTimeout(() => {
-          setCurrentIndex((prev) => (prev + 1) % feature.images.length);
-          setIsTransitioning(false);
-        }, 300);
-      }, delay);
+      const scheduleNext = (index: number) => {
+        // Last image shows for 6 seconds, others for 3 seconds
+        const delay = index === feature.images.length - 1 ? 6000 : 3000;
+        
+        return setTimeout(() => {
+          setIsTransitioning(true);
+          setTimeout(() => {
+            setCurrentIndex((prev) => {
+              const next = (prev + 1) % feature.images.length;
+              return next;
+            });
+            setIsTransitioning(false);
+          }, 300);
+        }, delay);
+      };
 
-      return () => clearInterval(interval);
+      const timer = scheduleNext(currentIndex);
+      return () => clearTimeout(timer);
     }
   }, [feature.images.length, currentIndex]);
 
