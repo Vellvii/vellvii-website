@@ -184,12 +184,12 @@ const SubcategoryCarousel = ({
 
         {/* Carousel */}
         <div className="max-w-4xl mx-auto">
-          <div className="relative rounded-2xl overflow-hidden glass-dark shadow-luxury">
+          <div className="relative aspect-[4/3] rounded-2xl overflow-hidden glass-dark shadow-luxury">
             <div className="absolute inset-0 bg-gradient-to-br from-primary/10 via-secondary/5 to-transparent" />
 
             {/* Image/Video Display */}
             <div
-              className={`relative w-full transition-opacity duration-300 ${isTransitioning ? "opacity-0" : "opacity-100"}`}
+              className={`relative w-full h-full transition-opacity duration-300 ${isTransitioning ? "opacity-0" : "opacity-100"}`}
             >
               {isVideo ? (
                 <video
@@ -198,13 +198,13 @@ const SubcategoryCarousel = ({
                   loop
                   muted
                   playsInline
-                  className="w-full h-auto"
+                  className="w-full h-full object-cover"
                 />
               ) : (
                 <img
                   src={currentThumb}
                   alt={`${subcategory.title} ${currentIndex + 1}`}
-                  className="w-full h-auto cursor-pointer"
+                  className="w-full h-full object-cover scale-120"
                   onClick={() => {
                     setLightboxImage(currentThumb);
                     setLightboxOpen(true);
