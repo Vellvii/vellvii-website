@@ -31,7 +31,7 @@ export const EmailCaptureSection = () => {
           </ScrollReveal>
 
           <ScrollReveal delay={0.3}>
-            <WaitlistCounter count={2437} />
+            <WaitlistCounter />
           </ScrollReveal>
 
           <ScrollReveal delay={0.4}>

@@ -1,19 +1,54 @@
 import { useEffect, useState } from "react";
 import { motion, useSpring, useTransform } from "framer-motion";
+import { supabase } from "@/integrations/supabase/client";
 
-interface WaitlistCounterProps {
-  count: number;
-}
-
-export const WaitlistCounter = ({ count }: WaitlistCounterProps) => {
-  const [displayCount, setDisplayCount] = useState(0);
+export const WaitlistCounter = () => {
+  const [count, setCount] = useState(0);
   const spring = useSpring(0, { stiffness: 75, damping: 15 });
   const display = useTransform(spring, (current) => Math.floor(current).toLocaleString());
 
+  // Fetch initial count
   useEffect(() => {
-    spring.set(count);
-    setDisplayCount(count);
-  }, [count, spring]);
+    const fetchCount = async () => {
+      const { count: emailCount, error } = await supabase
+        .from('mailing_list_signups')
+        .select('*', { count: 'exact', head: true });
+      
+      if (!error && emailCount !== null) {
+        setCount(emailCount);
+        spring.set(emailCount);
+      }
+    };
+
+    fetchCount();
+  }, [spring]);
+
+  // Set up realtime subscription for new signups
+  useEffect(() => {
+    const channel = supabase
+      .channel('mailing-list-changes')
+      .on(
+        'postgres_changes',
+        {
+          event: 'INSERT',
+          schema: 'public',
+          table: 'mailing_list_signups'
+        },
+        () => {
+          // Increment count when new signup is added
+          setCount((prev) => {
+            const newCount = prev + 1;
+            spring.set(newCount);
+            return newCount;
+          });
+        }
+      )
+      .subscribe();
+
+    return () => {
+      supabase.removeChannel(channel);
+    };
+  }, [spring]);
 
   return (
     <div className="flex flex-col items-center gap-3 py-8">
