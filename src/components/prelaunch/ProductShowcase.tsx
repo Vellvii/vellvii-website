@@ -88,6 +88,11 @@ const showcaseFeatures = [
         description: "Rose-gold accents with textured surface",
       },
       {
+        video: "/uploads/dds-animation.mp4",
+        label: "DDS - Innovation in Motion",
+        description: "Experience the elegant design transformation",
+      },
+      {
         image: "/uploads/Red-Dildo.png",
         label: "DDS - Wireless Charging",
         description: "Simply place and charge",
