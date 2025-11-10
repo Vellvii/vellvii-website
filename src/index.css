@@ -345,4 +345,47 @@
   .phone-input input::placeholder {
     @apply text-white/40;
   }
+
+  /* Phone input dropdown menu styling */
+  .PhoneInputCountrySelect option {
+    @apply bg-gray-900 text-white;
+    padding: 8px 12px;
+  }
+
+  .PhoneInputCountrySelect {
+    background-color: rgb(17, 24, 39) !important;
+    color: white !important;
+    border: 1px solid rgba(255, 255, 255, 0.1) !important;
+    border-radius: 0.375rem;
+    padding: 4px 8px;
+  }
+
+  .PhoneInputCountrySelect option:hover {
+    @apply bg-gray-800;
+  }
+
+  .PhoneInputCountrySelectDropdown {
+    background-color: rgb(17, 24, 39) !important;
+    border: 1px solid rgba(255, 255, 255, 0.2) !important;
+    border-radius: 0.5rem;
+    box-shadow: 0 10px 40px -10px rgba(0, 0, 0, 0.5);
+    z-index: 1000;
+    max-height: 200px;
+    overflow-y: auto;
+  }
+
+  .PhoneInputCountrySelectDropdown .PhoneInputCountrySelectOption {
+    @apply text-white bg-gray-900;
+    padding: 8px 12px;
+    cursor: pointer;
+  }
+
+  .PhoneInputCountrySelectDropdown .PhoneInputCountrySelectOption:hover {
+    @apply bg-gray-800;
+  }
+
+  .PhoneInputCountrySelectDropdown .PhoneInputCountrySelectOption--selected {
+    background-color: hsl(var(--primary)) !important;
+    color: white !important;
+  }
 }
