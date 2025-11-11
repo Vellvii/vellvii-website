@@ -83,11 +83,6 @@ const showcaseFeatures = [
     tagline: "DDS - Dildo Docking Station",
     images: [
       {
-        image: "/uploads/dds-brand-message.png",
-        label: "DDS - Brand Philosophy",
-        description: "For those who believe pleasure deserves prestige",
-      },
-      {
         image: "/uploads/dds-suction-cup-purpose.png",
         label: "DDS - The Purpose",
         description: "Where design meets desire",
@@ -96,6 +91,11 @@ const showcaseFeatures = [
         image: "/uploads/Red-Dildo.png",
         label: "DDS - Wireless Charging",
         description: "Simply place and charge",
+      },
+      {
+        image: "/uploads/dds-brand-message.png",
+        label: "DDS - Brand Philosophy",
+        description: "For those who believe pleasure deserves prestige",
       },
       {
         image: "/uploads/DDS_Autocad_sketch_w_descriptions.png",
