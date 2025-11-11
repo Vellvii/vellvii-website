@@ -129,6 +129,11 @@ const showcaseFeatures = [
         label: "CHARGING DETAIL - Rose Gold Precision",
         description: "Close-up of the intelligent charging system",
       },
+      {
+        image: "/uploads/art-of-o-refinement.png",
+        label: "THE ART OF 'O' - Refined Form",
+        description: "From fantasy to furniture — welcome to refinement",
+      },
     ],
   },
 ];
