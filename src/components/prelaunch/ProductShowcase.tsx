@@ -110,9 +110,9 @@ const showcaseFeatures = [
     subtitle: "\"Designed to Hold More than Your Collection...Designed to Hold You\"",
     images: [
       {
-        image: "/uploads/BeigeVDS.png",
-        label: "VELLVII THE ART OF YOU - Signature Design",
-        description: "Rose-gold branding on premium beige finish",
+        image: "/uploads/position-of-power-intro.png",
+        label: "PHILOSOPHY - Gallery Presence",
+        description: "What was once taboo now belongs in a gallery",
       },
       {
         image: "/uploads/RedDoxEvolveFrontRight.png",
