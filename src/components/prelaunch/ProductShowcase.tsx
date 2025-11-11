@@ -83,9 +83,9 @@ const showcaseFeatures = [
     tagline: "DDS - Dildo Docking Station",
     images: [
       {
-        image: "/uploads/Black-Dildo-Close.png",
-        label: "DDS - Premium Finish",
-        description: "Rose-gold accents with textured surface",
+        image: "/uploads/dds-brand-message.png",
+        label: "DDS - Brand Philosophy",
+        description: "For those who believe pleasure deserves prestige",
       },
       {
         image: "/uploads/dds-suction-cup-purpose.png",
