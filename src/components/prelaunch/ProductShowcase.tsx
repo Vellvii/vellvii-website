@@ -135,7 +135,7 @@ const showcaseFeatures = [
     aspectRatio: "aspect-video",
     images: [
       {
-        video: "/uploads/VDS_video.webm",
+        image: "/uploads/VDS_top_white.png",
         label: "VDS - VELLVII DOCKING STATION",
         description: "Crafted to cradle the Vellvii Pleasure Collection in elegance, it's a masterpiece of deliberate engineering - refined, practical, and irresistibly beautiful. Because when design serves desire, it becomes something extraordinary.",
       },
@@ -145,7 +145,7 @@ const showcaseFeatures = [
         description: "Everyone deserves to own something beautiful, personal, and unapologetically theirs. The Dox isn't about hiding, it's about honoring. Crafted to elevate the most intimate parts of life, without shame, without guilt - Only Art.",
       },
       {
-        video: "/uploads/VDS_video.webm",
+        image: "/uploads/VDS_Autocad_sketch_w_descriptions.png",
         label: "VELLVII COLLECTION",
         description: "With intense and deliberate focus on our mantra — \"The Art of 'O'.\" Every curve, every detail, every innovation is a study in sensual design. Crafted not just to perform, but to move you - emotionally, physically, beautifully. Vellvii doesn't chase pleasure. We sculpt it. We perfect it. We turn it into art.",
       },
