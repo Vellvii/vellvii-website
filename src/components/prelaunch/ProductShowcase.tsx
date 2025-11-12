@@ -156,6 +156,9 @@ const SubcategoryCarousel = ({
   const [lightboxImage, setLightboxImage] = useState("");
   const loadedSet = useRef<Set<string>>(new Set());
   const waitRef = useRef<number | null>(null);
+  // Lock sources during the 2s crossfade to avoid flicker
+  const [tFrom, setTFrom] = useState<string | null>(null);
+  const [tTo, setTTo] = useState<string | null>(null);
 
   const preloadMedia = (url: string) => {
     if (!url || loadedSet.current.has(url)) return;
@@ -180,15 +183,27 @@ const SubcategoryCarousel = ({
     }
   };
   function startTransition(targetIndex?: number) {
+    const next = typeof targetIndex === "number"
+      ? targetIndex
+      : (currentIndex + 1) % subcategory.thumbnails.length;
+
+    // Capture stable sources for the full 2s crossfade
+    const fromUrl = subcategory.thumbnails[currentIndex];
+    const toUrl = subcategory.thumbnails[next];
+    setTFrom(fromUrl);
+    setTTo(toUrl);
+    setNextIndex(next);
+
+    // Double rAF to ensure classes are applied before animating
     requestAnimationFrame(() => {
       requestAnimationFrame(() => {
         setIsTransitioning(true);
         window.setTimeout(() => {
-          setCurrentIndex((prev) => {
-            if (typeof targetIndex === "number") return targetIndex;
-            return (prev + 1) % subcategory.thumbnails.length;
-          });
+          setCurrentIndex(next);
           setIsTransitioning(false);
+          // Clear locks after transition completes
+          setTFrom(null);
+          setTTo(null);
         }, 2000);
       });
     });
@@ -270,8 +285,11 @@ const SubcategoryCarousel = ({
   };
   const currentThumb = subcategory.thumbnails[currentIndex];
   const nextThumb = subcategory.thumbnails[nextIndex];
-  const isCurrentVideo = currentThumb.endsWith(".mp4") || currentThumb.endsWith(".webm");
-  const isNextVideo = nextThumb.endsWith(".mp4") || nextThumb.endsWith(".webm");
+  // During transition, lock the displayed sources to avoid any mid-transition re-renders
+  const displayCurrent = isTransitioning && tFrom ? tFrom : currentThumb;
+  const displayNext = isTransitioning && tTo ? tTo : nextThumb;
+  const isCurrentVideo = displayCurrent.endsWith(".mp4") || displayCurrent.endsWith(".webm");
+  const isNextVideo = displayNext.endsWith(".mp4") || displayNext.endsWith(".webm");
 
   return (
     <ScrollReveal delay={0.1 * index}>
@@ -293,7 +311,7 @@ const SubcategoryCarousel = ({
             >
               {isCurrentVideo ? (
                 <video
-                  src={currentThumb}
+                  src={displayCurrent}
                   autoPlay
                   loop
                   muted
@@ -303,11 +321,11 @@ const SubcategoryCarousel = ({
                 />
               ) : (
                 <img
-                  src={currentThumb}
+                  src={displayCurrent}
                   alt={`${subcategory.title} ${currentIndex + 1}`}
                   className="w-full h-full object-cover scale-120"
                   onClick={() => {
-                    setLightboxImage(currentThumb);
+                    setLightboxImage(displayCurrent);
                     setLightboxOpen(true);
                   }}
                 />
@@ -319,7 +337,7 @@ const SubcategoryCarousel = ({
             >
               {isNextVideo ? (
                 <video
-                  src={nextThumb}
+                  src={displayNext}
                   autoPlay
                   loop
                   muted
@@ -329,11 +347,11 @@ const SubcategoryCarousel = ({
                 />
               ) : (
                 <img
-                  src={nextThumb}
+                  src={displayNext}
                   alt={`${subcategory.title} ${nextIndex + 1}`}
                   className="w-full h-full object-cover scale-120"
                   onClick={() => {
-                    setLightboxImage(nextThumb);
+                    setLightboxImage(displayNext);
                     setLightboxOpen(true);
                   }}
                 />
@@ -423,6 +441,8 @@ const FeatureCarousel = ({
   const [lightboxImage, setLightboxImage] = useState("");
   const loadedSet = useRef<Set<string>>(new Set());
   const waitRef = useRef<number | null>(null);
+  const [tFrom, setTFrom] = useState<string | null>(null);
+  const [tTo, setTTo] = useState<string | null>(null);
 
   const preloadMedia = (url: string) => {
     if (!url || loadedSet.current.has(url)) return;
@@ -457,14 +477,29 @@ const FeatureCarousel = ({
   }, [currentIndex, feature.images.length]);
 
   const startTransition = (targetIndex?: number) => {
+    const next = typeof targetIndex === 'number' ? targetIndex : (currentIndex + 1) % feature.images.length;
+
+    const fromItem = feature.images[currentIndex];
+    const toItem = feature.images[next];
+    const fromSrc = ("image" in fromItem && fromItem.image)
+      ? String(fromItem.image)
+      : (("video" in fromItem && fromItem.video) ? String(fromItem.video) : "");
+    const toSrc = ("image" in toItem && toItem.image)
+      ? String(toItem.image)
+      : (("video" in toItem && toItem.video) ? String(toItem.video) : "");
+
+    setTFrom(fromSrc);
+    setTTo(toSrc);
+    setNextIndex(next);
+
     requestAnimationFrame(() => {
       requestAnimationFrame(() => {
         setIsTransitioning(true);
         window.setTimeout(() => {
-          setCurrentIndex((prev) =>
-            typeof targetIndex === 'number' ? targetIndex : (prev + 1) % feature.images.length
-          );
+          setCurrentIndex(next);
           setIsTransitioning(false);
+          setTFrom(null);
+          setTTo(null);
         }, 2000);
       });
     });
@@ -543,6 +578,20 @@ const FeatureCarousel = ({
       setIsTransitioning(false);
     }, 2000);
   };
+  // Derive display sources for crossfade
+  const currentItem = feature.images[currentIndex];
+  const nextItem = feature.images[nextIndex];
+  const currentSrc = ("image" in currentItem && currentItem.image)
+    ? String(currentItem.image)
+    : (("video" in currentItem && currentItem.video) ? String(currentItem.video) : "");
+  const nextSrc = ("image" in nextItem && nextItem.image)
+    ? String(nextItem.image)
+    : (("video" in nextItem && nextItem.video) ? String(nextItem.video) : "");
+  const displayCurrent = isTransitioning && tFrom ? tFrom : currentSrc;
+  const displayNext = isTransitioning && tTo ? tTo : nextSrc;
+  const isCurrentVid = displayCurrent.endsWith(".mp4") || displayCurrent.endsWith(".webm");
+  const isNextVid = displayNext.endsWith(".mp4") || displayNext.endsWith(".webm");
+
   return (
     <ScrollReveal delay={0.2 * index}>
       <div className="mb-24">
@@ -571,32 +620,22 @@ const FeatureCarousel = ({
             <div
               className={`absolute inset-0 w-full h-full transition-opacity duration-[2000ms] ease-in-out pointer-events-none will-change-[opacity] transform-gpu [backface-visibility:hidden] ${isTransitioning ? "opacity-0" : "opacity-100"}`}
             >
-              {"image" in feature.images[currentIndex] && feature.images[currentIndex].image ? (
-                <img
-                  src={String(feature.images[currentIndex].image)}
-                  alt={feature.images[currentIndex].label}
-                  className="w-full h-full object-cover scale-120"
-                />
-              ) : "video" in feature.images[currentIndex] && feature.images[currentIndex].video ? (
+              {isCurrentVid ? (
                 <video
-                  src={String(feature.images[currentIndex].video)}
+                  src={displayCurrent}
                   autoPlay
                   loop
                   muted
                   playsInline
+                  preload="auto"
                   className="w-full h-full object-cover"
                 />
               ) : (
-                <div className="flex flex-col items-center justify-center h-full p-8">
-                  <p className="text-white/60 text-base font-medium text-center mb-2">
-                    {feature.images[currentIndex].label}
-                  </p>
-                  <p className="text-white/40 text-sm text-center">
-                    {feature.images[currentIndex].description}
-                    <br />
-                    <span className="text-xs">(4:3 aspect ratio)</span>
-                  </p>
-                </div>
+                <img
+                  src={displayCurrent}
+                  alt={currentItem.label}
+                  className="w-full h-full object-cover scale-120"
+                />
               )}
             </div>
 
@@ -604,22 +643,23 @@ const FeatureCarousel = ({
             <div
               className={`absolute inset-0 w-full h-full transition-opacity duration-[2000ms] ease-in-out pointer-events-none will-change-[opacity] transform-gpu [backface-visibility:hidden] ${isTransitioning ? "opacity-100" : "opacity-0"}`}
             >
-              {"image" in feature.images[nextIndex] && feature.images[nextIndex].image ? (
-                <img
-                  src={String(feature.images[nextIndex].image)}
-                  alt={feature.images[nextIndex].label}
-                  className="w-full h-full object-cover scale-120"
-                />
-              ) : "video" in feature.images[nextIndex] && feature.images[nextIndex].video ? (
+              {isNextVid ? (
                 <video
-                  src={String(feature.images[nextIndex].video)}
+                  src={displayNext}
                   autoPlay
                   loop
                   muted
                   playsInline
+                  preload="auto"
                   className="w-full h-full object-cover"
                 />
-              ) : null}
+              ) : (
+                <img
+                  src={displayNext}
+                  alt={nextItem.label}
+                  className="w-full h-full object-cover scale-120"
+                />
+              )}
             </div>
 
             {/* Navigation Buttons */}
