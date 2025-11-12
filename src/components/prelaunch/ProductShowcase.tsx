@@ -150,47 +150,87 @@ const SubcategoryCarousel = ({
   index: number;
 }) => {
   const [currentIndex, setCurrentIndex] = useState(0);
+  const [nextIndex, setNextIndex] = useState(1);
   const [isTransitioning, setIsTransitioning] = useState(false);
   const [lightboxOpen, setLightboxOpen] = useState(false);
   const [lightboxImage, setLightboxImage] = useState("");
+  const loadedSet = useRef<Set<string>>(new Set());
+  const waitRef = useRef<number | null>(null);
+
+  const preloadImage = (url: string) => {
+    if (!url || loadedSet.current.has(url)) return;
+    const img = new Image();
+    img.src = url;
+    img.onload = () => {
+      loadedSet.current.add(url);
+    };
+  };
+
+  function startTransition(targetIndex?: number) {
+    setIsTransitioning(true);
+    window.setTimeout(() => {
+      setCurrentIndex((prev) => {
+        if (typeof targetIndex === "number") return targetIndex;
+        return (prev + 1) % subcategory.thumbnails.length;
+      });
+      setIsTransitioning(false);
+    }, 2000);
+  }
 
   // Auto-play carousel
   useEffect(() => {
-    if (subcategory.thumbnails.length > 1) {
-      const currentThumb = subcategory.thumbnails[currentIndex];
-      const isVideo = currentThumb.endsWith(".mp4") || currentThumb.endsWith(".webm");
-      const delay = isVideo ? 10000 : 6000; // Videos: 10s, Images: 6s
-      
-      const timer = setTimeout(() => {
-        setIsTransitioning(true);
-        setTimeout(() => {
-          setCurrentIndex((prev) => (prev + 1) % subcategory.thumbnails.length);
-          setIsTransitioning(false);
-        }, 300);
-      }, delay);
+    if (subcategory.thumbnails.length <= 1) return;
 
-      return () => clearTimeout(timer);
-    }
+    const currentThumb = subcategory.thumbnails[currentIndex];
+    const isVideo = currentThumb.endsWith(".mp4") || currentThumb.endsWith(".webm");
+    const displayTime = isVideo ? 10000 : 6000;
+
+    const timer = window.setTimeout(() => {
+      const next = (currentIndex + 1) % subcategory.thumbnails.length;
+      setNextIndex(next);
+      const nextThumb = subcategory.thumbnails[next];
+      const isNextVideo = nextThumb.endsWith(".mp4") || nextThumb.endsWith(".webm");
+
+      if (!isNextVideo && nextThumb && !loadedSet.current.has(nextThumb)) {
+        preloadImage(nextThumb);
+        const check = () => {
+          if (loadedSet.current.has(nextThumb)) {
+            startTransition();
+          } else {
+            waitRef.current = window.setTimeout(check, 100);
+          }
+        };
+        check();
+      } else {
+        startTransition();
+      }
+    }, displayTime);
+
+    return () => {
+      clearTimeout(timer);
+      if (waitRef.current) {
+        clearTimeout(waitRef.current);
+        waitRef.current = null;
+      }
+    };
   }, [subcategory.thumbnails.length, currentIndex]);
 
   const nextSlide = () => {
-    setIsTransitioning(true);
-    setTimeout(() => {
-      setCurrentIndex((prev) => (prev + 1) % subcategory.thumbnails.length);
-      setIsTransitioning(false);
-    }, 300);
+    const next = (currentIndex + 1) % subcategory.thumbnails.length;
+    setNextIndex(next);
+    startTransition(next);
   };
 
   const prevSlide = () => {
-    setIsTransitioning(true);
-    setTimeout(() => {
-      setCurrentIndex((prev) => (prev - 1 + subcategory.thumbnails.length) % subcategory.thumbnails.length);
-      setIsTransitioning(false);
-    }, 300);
+    const prev = (currentIndex - 1 + subcategory.thumbnails.length) % subcategory.thumbnails.length;
+    setNextIndex(prev);
+    startTransition(prev);
   };
 
   const currentThumb = subcategory.thumbnails[currentIndex];
-  const isVideo = currentThumb.endsWith(".mp4") || currentThumb.endsWith(".webm");
+  const nextThumb = subcategory.thumbnails[nextIndex];
+  const isCurrentVideo = currentThumb.endsWith(".mp4") || currentThumb.endsWith(".webm");
+  const isNextVideo = nextThumb.endsWith(".mp4") || nextThumb.endsWith(".webm");
 
   return (
     <ScrollReveal delay={0.1 * index}>
@@ -206,11 +246,11 @@ const SubcategoryCarousel = ({
           <div className="relative aspect-[4/3] rounded-2xl overflow-hidden glass-dark shadow-luxury">
             <div className="absolute inset-0 bg-gradient-to-br from-primary/10 via-secondary/5 to-transparent" />
 
-            {/* Image/Video Display */}
+            {/* Crossfade Layers */}
             <div
-              className={`relative w-full h-full transition-opacity duration-300 ${isTransitioning ? "opacity-0" : "opacity-100"}`}
+              className={`absolute inset-0 w-full h-full transition-opacity duration-[2000ms] ease-in-out ${isTransitioning ? "opacity-0" : "opacity-100"}`}
             >
-              {isVideo ? (
+              {isCurrentVideo ? (
                 <video
                   src={currentThumb}
                   autoPlay
@@ -226,6 +266,31 @@ const SubcategoryCarousel = ({
                   className="w-full h-full object-cover scale-120"
                   onClick={() => {
                     setLightboxImage(currentThumb);
+                    setLightboxOpen(true);
+                  }}
+                />
+              )}
+            </div>
+
+            <div
+              className={`absolute inset-0 w-full h-full transition-opacity duration-[2000ms] ease-in-out ${isTransitioning ? "opacity-100" : "opacity-0"}`}
+            >
+              {isNextVideo ? (
+                <video
+                  src={nextThumb}
+                  autoPlay
+                  loop
+                  muted
+                  playsInline
+                  className="w-full h-full object-cover"
+                />
+              ) : (
+                <img
+                  src={nextThumb}
+                  alt={`${subcategory.title} ${nextIndex + 1}`}
+                  className="w-full h-full object-cover scale-120"
+                  onClick={() => {
+                    setLightboxImage(nextThumb);
                     setLightboxOpen(true);
                   }}
                 />
