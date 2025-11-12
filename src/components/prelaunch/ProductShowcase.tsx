@@ -31,28 +31,18 @@ const showcaseFeatures = [
     images: [
       {
         image: "/uploads/Dox_white_open_plugged_in_content2.png",
-        label: "DOX IN USE - Organized Storage",
-        description: "Customizable compartments for your collection",
+        label: "Perfectly Organized. Discreetly Decadent.",
+        description: "Custom compartments cradle your collection in quiet luxury - because every piece deserves a place of its own.",
       },
       {
         image: "/uploads/dox_with_toys_2.jpg",
-        label: "DOX LIFESTYLE - Elegant Display",
-        description: "Fits seamlessly into any room",
+        label: "Unapologetically Beautiful.",
+        description: "The Dox blends into any space with quiet confidence, a statement piece that turns your private passions into part of your décor.",
       },
       {
         image: "/uploads/dox_with_toys_1.jpg",
-        label: "DOX BLACK - Premium Finish",
-        description: "Sleek design with rose-gold accents",
-      },
-      {
-        image: "/uploads/Dox_white_lifestyle1.jpg",
-        label: "DOX WHITE - Lifestyle Elegance",
-        description: "Refined beauty in your personal space",
-      },
-      {
-        image: "/uploads/Dox_black_shelf_close_up.png",
-        label: "DOX BLACK - Sophisticated Display",
-        description: "Blends seamlessly with your curated collection",
+        label: "Sleek. Seductive. Unforgettable.",
+        description: "A flawless finish in soft rose-gold tones turns design into desire, refinement you can feel before you even open it.",
       },
     ],
     subcategories: [
