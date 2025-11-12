@@ -82,28 +82,28 @@ const showcaseFeatures = [
     images: [
       {
         image: "/uploads/dds-suction-cup-purpose.png",
-        label: "DDS - The Purpose",
-        description: "Where design meets desire",
+        label: "VELLVII DDS – THE DILDO DOCKING STATION",
+        description: "The DDS is where form and function meet sensual innovation. What began as a bold idea, to elevate pleasure beyond the ordinary, became a sculptural masterpiece of modern design.",
       },
       {
         image: "/uploads/Black-Dildo-Close-2.png",
-        label: "DDS - Close Detail",
-        description: "Precision design and elegant finish",
+        label: "Dare to compare. We'll wait.",
+        description: "No other creation comes close to the craftsmanship, precision, and presence of the DDS. This isn't competition, it's creation perfected.",
       },
       {
         image: "/uploads/Red-Dildo.png",
-        label: "DDS - Wireless Charging",
-        description: "Simply place and charge",
+        label: "",
+        description: "",
       },
       {
         image: "/uploads/dds-brand-message.png",
-        label: "DDS - Brand Philosophy",
-        description: "For those who believe pleasure deserves prestige",
+        label: "",
+        description: "",
       },
       {
         image: "/uploads/DDS_Autocad_sketch_w_descriptions.png",
-        label: "DDS - Engineering Details",
-        description: "Precision layers with Vellvii signature rose gold finish",
+        label: "",
+        description: "",
       },
     ],
   },
