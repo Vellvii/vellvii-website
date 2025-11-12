@@ -164,10 +164,10 @@ const showcaseFeatures = [
         title: "G-VIBE",
         description: "Dual stimulation perfected through innovative design.",
         thumbnails: [
-          "/uploads/G-Vibe1.jpg",
-          "/uploads/G-Vibe2.jpg",
-          "/uploads/G-Vibe3.jpg",
-          "/uploads/G-Vibe-transparent.png",
+          "/uploads/RedGVibeSide.png",
+          "/uploads/RedPinkGVibe2_1.png",
+          "/uploads/Pulse_G-vibe_on_pedestal.jpg",
+          "/uploads/BlackPinkGVibe1_1.png",
         ],
       },
       {
