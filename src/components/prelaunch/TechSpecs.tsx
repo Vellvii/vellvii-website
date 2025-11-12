@@ -6,7 +6,7 @@ const leftSpecs = [
   { label: "Accents", value: "Rose-gold trims & leather handle" },
   { label: "Interior", value: "Soft velvet lining with golden accents" },
   { label: "Tray", value: "Removable inner compartment" },
-  { label: "Colors", value: "Midnight Black, Rose Gold Edition" },
+  { label: "Colors", value: "Midnight Black, Deep Red, Cream, Rose Gold accents" },
 ];
 
 const rightSpecs = [
