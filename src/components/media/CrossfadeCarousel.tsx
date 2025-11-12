@@ -32,8 +32,9 @@ export const CrossfadeCarousel = ({
   const [lightboxOpen, setLightboxOpen] = useState(false);
   const [lightboxImage, setLightboxImage] = useState("");
   const [currentIndex, setCurrentIndex] = useState(0);
-  const [nextIndex, setNextIndex] = useState(1);
   const [isTransitioning, setIsTransitioning] = useState(false);
+  const [displayedCurrent, setDisplayedCurrent] = useState(items[0]);
+  const [displayedNext, setDisplayedNext] = useState(items[1] || items[0]);
   
   const loadedSet = useRef<Set<string>>(new Set());
   const transitionTimerRef = useRef<number | null>(null);
@@ -87,7 +88,9 @@ export const CrossfadeCarousel = ({
       await preloadMedia(items[next]);
     }
 
-    setNextIndex(next);
+    // Lock the URLs for stable rendering during transition
+    setDisplayedCurrent(items[currentIndex]);
+    setDisplayedNext(items[next]);
     setIsTransitioning(true);
 
     // Clear any existing timer
@@ -95,9 +98,12 @@ export const CrossfadeCarousel = ({
       clearTimeout(transitionTimerRef.current);
     }
 
-    // After transition completes, update current index
+    // After transition completes, update current index and displayed content
     transitionTimerRef.current = window.setTimeout(() => {
       setCurrentIndex(next);
+      setDisplayedCurrent(items[next]);
+      const nextAfterTransition = (next + 1) % items.length;
+      setDisplayedNext(items[nextAfterTransition]);
       setIsTransitioning(false);
     }, transitionDuration);
   };
@@ -117,7 +123,6 @@ export const CrossfadeCarousel = ({
 
   useEffect(() => {
     const next = (currentIndex + 1) % items.length;
-    setNextIndex(next);
     preloadMedia(items[next]);
   }, [currentIndex, items.length]);
 
@@ -156,10 +161,10 @@ export const CrossfadeCarousel = ({
             isTransitioning ? "opacity-0 z-0" : "opacity-100 z-10"
           )}
         >
-          {isVideo(items[currentIndex]) ? (
+          {isVideo(displayedCurrent) ? (
             <video
-              key={items[currentIndex]}
-              src={items[currentIndex]}
+              key={displayedCurrent}
+              src={displayedCurrent}
               autoPlay
               loop
               muted
@@ -168,11 +173,11 @@ export const CrossfadeCarousel = ({
             />
           ) : (
             <img
-              key={items[currentIndex]}
-              src={items[currentIndex]}
+              key={displayedCurrent}
+              src={displayedCurrent}
               alt={`${altPrefix} ${currentIndex + 1}`}
               className="w-full h-full object-cover cursor-pointer"
-              onClick={() => handleImageClick(items[currentIndex])}
+              onClick={() => handleImageClick(displayedCurrent)}
             />
           )}
         </div>
@@ -184,10 +189,10 @@ export const CrossfadeCarousel = ({
             isTransitioning ? "opacity-100 z-10" : "opacity-0 z-0"
           )}
         >
-          {isVideo(items[nextIndex]) ? (
+          {isVideo(displayedNext) ? (
             <video
-              key={items[nextIndex]}
-              src={items[nextIndex]}
+              key={displayedNext}
+              src={displayedNext}
               autoPlay
               loop
               muted
@@ -196,11 +201,11 @@ export const CrossfadeCarousel = ({
             />
           ) : (
             <img
-              key={items[nextIndex]}
-              src={items[nextIndex]}
-              alt={`${altPrefix} ${nextIndex + 1}`}
+              key={displayedNext}
+              src={displayedNext}
+              alt={`${altPrefix} ${currentIndex + 1}`}
               className="w-full h-full object-cover cursor-pointer"
-              onClick={() => handleImageClick(items[nextIndex])}
+              onClick={() => handleImageClick(displayedNext)}
             />
           )}
         </div>
