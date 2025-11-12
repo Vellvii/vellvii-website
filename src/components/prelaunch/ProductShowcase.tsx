@@ -100,6 +100,7 @@ const showcaseFeatures = [
     title: "Flagship Introduction - Conscious Innovation",
     subtitle: "The most innovative solution of the century.",
     tagline: "DDS - Dildo Docking Station",
+    aspectRatio: "aspect-video",
     images: [
       {
         image: "/uploads/Vellvii_description_sketches_separated_VDS_DDS_blk_img_1.png",
