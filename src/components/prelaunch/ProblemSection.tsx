@@ -7,13 +7,13 @@ import doxCloseUpImage from "@/assets/dox-close-up.webp";
 import sanctuaryWithinImage from "@/assets/dox-sanctuary-within.jpg";
 
 const problems = [{
-  icon: makeshiftIcon,
-  title: "The Makeshift Era is Over",
-  description: "Walls, tiles, toilet seats — places that never belonged in your story. Your pleasure deserves better than improvised spaces."
-}, {
   icon: stigmaIcon,
   title: "Stigma Disguised as Storage",
   description: "Hiding your wellness collection in drawers and bags, as if pleasure needs to apologize for existing."
+}, {
+  icon: makeshiftIcon,
+  title: "The Makeshift Era is Over",
+  description: "Walls, tiles, toilet seats — places that never belonged in your story. Your pleasure deserves better than improvised spaces."
 }, {
   icon: privacyIcon,
   title: "Privacy Without Sophistication",
