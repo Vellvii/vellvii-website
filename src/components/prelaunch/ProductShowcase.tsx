@@ -87,7 +87,7 @@ const showcaseFeatures = [
       },
       {
         image: "/uploads/Black-Dildo-Close-2.png",
-        label: "Dare to compare. We'll wait.",
+        label: "DARE TO COMPARE. WE'LL WAIT.",
         description: "No other creation comes close to the craftsmanship, precision, and presence of the DDS. This isn't competition, it's creation perfected.",
       },
       {
