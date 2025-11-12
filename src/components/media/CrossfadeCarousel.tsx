@@ -88,8 +88,7 @@ export const CrossfadeCarousel = ({
       await preloadMedia(items[next]);
     }
 
-    // Lock the URLs for stable rendering during transition
-    setDisplayedCurrent(items[currentIndex]);
+    // Prepare next image/video for crossfade (don't touch current - it's already displaying)
     setDisplayedNext(items[next]);
     setIsTransitioning(true);
 
