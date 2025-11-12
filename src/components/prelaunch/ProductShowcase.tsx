@@ -115,29 +115,29 @@ const showcaseFeatures = [
     subtitle: "\"Designed to Hold More than Your Collection...Designed to Hold You\"",
     images: [
       {
-        image: "/uploads/PulsePoBCloseBL.png",
-        label: "POSITION OF POWER - Wireless Charging",
-        description: "Elegant charging on black luxury surface",
+        image: "/uploads/BeigeDoxGVibeFrontRightClose.png",
+        label: "EVOLVE COLLECTION - Beige Elegance",
+        description: "Premium beige finish with rose-gold accents",
       },
       {
-        image: "/uploads/RedDoxEvolveFrontRight.png",
-        label: "EVOLVE SYSTEM - Complete Collection",
-        description: "DOX with integrated charging and storage",
+        image: "/uploads/RedPinkGVibe2.png",
+        label: "EVOLVE COLLECTION - Red Luxury",
+        description: "Bold red DOX with integrated charging",
       },
       {
-        image: "/uploads/position-of-power-intro.png",
-        label: "PHILOSOPHY - Gallery Presence",
-        description: "What was once taboo now belongs in a gallery",
+        image: "/uploads/BlackPinkEvolve1.png",
+        label: "EVOLVE COLLECTION - Black Sophistication",
+        description: "Sleek black design with elegant contrast",
       },
       {
-        image: "/uploads/RedDoxEvolveFrontRightClose.png",
-        label: "CHARGING DETAIL - Rose Gold Precision",
-        description: "Close-up of the intelligent charging system",
+        image: "/uploads/BeigeRedPulseBackSide.png",
+        label: "POSITION OF POWER - Pulse Detail",
+        description: "Ergonomic design meets wireless charging",
       },
       {
-        image: "/uploads/art-of-o-refinement.png",
-        label: "THE ART OF 'O' - Refined Form",
-        description: "From fantasy to furniture — welcome to refinement",
+        image: "/uploads/BlackPinkGVibe1.png",
+        label: "EVOLVE COLLECTION - Complete System",
+        description: "The ultimate luxury storage and charging solution",
       },
     ],
   },
@@ -306,50 +306,56 @@ const FeatureCarousel = ({
   index: number;
 }) => {
   const [currentIndex, setCurrentIndex] = useState(0);
-  const [isTransitioning, setIsTransitioning] = useState(false);
+  const [nextIndex, setNextIndex] = useState(1);
+  const [isCrossfading, setIsCrossfading] = useState(false);
   const [lightboxOpen, setLightboxOpen] = useState(false);
   const [lightboxImage, setLightboxImage] = useState("");
   const [isPaused, setIsPaused] = useState(false);
 
-  // Auto-play carousel - videos: 10s, images: 6s
+  // Auto-play carousel with crossfade effect
+  // Images: 5s visible + 2s crossfade = 7s total
+  // Videos: 10s visible + 2s crossfade = 12s total
   useEffect(() => {
     if (feature.images.length > 1 && !isPaused) {
-      const scheduleNext = (index: number) => {
-        const currentItem = feature.images[index];
-        const isVideo = "video" in currentItem && currentItem.video;
-        // Videos show for 10 seconds, images for 6 seconds
-        const delay = isVideo ? 10000 : 6000;
+      const currentItem = feature.images[currentIndex];
+      const isVideo = "video" in currentItem && currentItem.video;
+      const displayTime = isVideo ? 10000 : 5000; // Full visibility time
+      const crossfadeTime = 2000; // Crossfade duration
+      
+      // Start crossfade after display time
+      const crossfadeTimer = setTimeout(() => {
+        setNextIndex((currentIndex + 1) % feature.images.length);
+        setIsCrossfading(true);
         
-        return setTimeout(() => {
-          setIsTransitioning(true);
-          setTimeout(() => {
-            setCurrentIndex((prev) => {
-              const next = (prev + 1) % feature.images.length;
-              return next;
-            });
-            setIsTransitioning(false);
-          }, 300);
-        }, delay);
-      };
+        // Complete transition after crossfade
+        setTimeout(() => {
+          setCurrentIndex((prev) => (prev + 1) % feature.images.length);
+          setIsCrossfading(false);
+        }, crossfadeTime);
+      }, displayTime);
 
-      const timer = scheduleNext(currentIndex);
-      return () => clearTimeout(timer);
+      return () => clearTimeout(crossfadeTimer);
     }
   }, [feature.images.length, currentIndex, isPaused]);
 
   const nextSlide = () => {
-    setIsTransitioning(true);
+    const next = (currentIndex + 1) % feature.images.length;
+    setNextIndex(next);
+    setIsCrossfading(true);
     setTimeout(() => {
-      setCurrentIndex((prev) => (prev + 1) % feature.images.length);
-      setIsTransitioning(false);
-    }, 300);
+      setCurrentIndex(next);
+      setIsCrossfading(false);
+    }, 2000);
   };
+  
   const prevSlide = () => {
-    setIsTransitioning(true);
+    const prev = (currentIndex - 1 + feature.images.length) % feature.images.length;
+    setNextIndex(prev);
+    setIsCrossfading(true);
     setTimeout(() => {
-      setCurrentIndex((prev) => (prev - 1 + feature.images.length) % feature.images.length);
-      setIsTransitioning(false);
-    }, 300);
+      setCurrentIndex(prev);
+      setIsCrossfading(false);
+    }, 2000);
   };
   return (
     <ScrollReveal delay={0.2 * index}>
@@ -375,9 +381,9 @@ const FeatureCarousel = ({
           <div className="relative aspect-[4/3] rounded-2xl overflow-hidden glass-dark shadow-luxury">
             <div className="absolute inset-0 bg-gradient-to-br from-primary/10 via-secondary/5 to-transparent" />
 
-            {/* Image/Video Display */}
+            {/* Current Image/Video Layer */}
             <div
-              className={`relative w-full h-full transition-opacity duration-300 ${isTransitioning ? "opacity-0" : "opacity-100"}`}
+              className={`absolute inset-0 w-full h-full transition-opacity duration-[2000ms] ${isCrossfading ? "opacity-0" : "opacity-100"}`}
             >
               {"image" in feature.images[currentIndex] && feature.images[currentIndex].image ? (
                 <img
@@ -407,6 +413,28 @@ const FeatureCarousel = ({
                 </div>
               )}
             </div>
+
+            {/* Next Image/Video Layer (for crossfade) */}
+            {isCrossfading && (
+              <div className="absolute inset-0 w-full h-full transition-opacity duration-[2000ms] opacity-100">
+                {"image" in feature.images[nextIndex] && feature.images[nextIndex].image ? (
+                  <img
+                    src={String(feature.images[nextIndex].image)}
+                    alt={feature.images[nextIndex].label}
+                    className="w-full h-full object-cover scale-120"
+                  />
+                ) : "video" in feature.images[nextIndex] && feature.images[nextIndex].video ? (
+                  <video
+                    src={String(feature.images[nextIndex].video)}
+                    autoPlay
+                    loop
+                    muted
+                    playsInline
+                    className="w-full h-full object-cover"
+                  />
+                ) : null}
+              </div>
+            )}
 
             {/* Navigation Buttons */}
             {feature.images.length > 1 && (
