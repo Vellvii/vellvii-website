@@ -13,7 +13,7 @@ const problems = [{
 }, {
   icon: makeshiftIcon,
   title: "Shower Walls and Toilet Seats?",
-  description: "For decades, pleasure was stuck to walls and hidden behind doors. Why do that when elegant, intelligent, and breathtakingly refined solutions exist? The Vellvii Dox — where design meets desire."
+  description: "For decades, pleasure was stuck to walls and hidden behind doors. Why do that when elegant, intelligent, and breathtakingly refined solutions exist? The Vellvii Dox - where design meets desire."
 }, {
   icon: privacyIcon,
   title: "Privacy Without Sophistication",
