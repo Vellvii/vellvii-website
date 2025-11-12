@@ -145,17 +145,7 @@ const showcaseFeatures = [
     subtitle: "The Art of \"O\"",
     images: [
       {
-        image: "/uploads/BlackPinkEvolve1.png",
-        label: "Sculpted for Sensation",
-        description: "Where engineering meets artistry in the pursuit of perfect pleasure.",
-      },
-      {
-        image: "/uploads/BeigeDoxGVibeFrontRightClose.png",
-        label: "Refined. Personal. Unapologetically Yours.",
-        description: "A collection designed to move you - emotionally, physically, beautifully.",
-      },
-      {
-        image: "/uploads/RedPinkGVibe2.png",
+        video: "/uploads/Dox_VDS_transition_Video.mp4",
         label: "The Art of 'O'",
         description: "Every curve, every detail, every innovation is a study in sensual design.",
       },
