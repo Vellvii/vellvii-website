@@ -2,7 +2,7 @@ import { ScrollReveal } from "@/components/animations/ScrollReveal";
 import { Card, CardContent } from "@/components/ui/card";
 import makeshiftIcon from "@/assets/icon-makeshift-era.png";
 import stigmaIcon from "@/assets/icon-v-logo.png";
-import privacyIcon from "@/assets/icon-privacy-sophistication.png";
+import privacyIcon from "@/assets/icon-not-only-in-movies.png";
 import doxCloseUpImage from "@/assets/dox-close-up.webp";
 import sanctuaryWithinImage from "@/assets/dox-sanctuary-within.jpg";
 
