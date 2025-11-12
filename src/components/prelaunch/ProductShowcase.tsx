@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { ScrollReveal } from "@/components/animations/ScrollReveal";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -291,41 +291,108 @@ const FeatureCarousel = ({
   index: number;
 }) => {
   const [currentIndex, setCurrentIndex] = useState(0);
+  const [nextIndex, setNextIndex] = useState(1);
   const [isTransitioning, setIsTransitioning] = useState(false);
   const [lightboxOpen, setLightboxOpen] = useState(false);
   const [lightboxImage, setLightboxImage] = useState("");
+  const loadedSet = useRef<Set<string>>(new Set());
+  const waitRef = useRef<number | null>(null);
 
-  // Auto-play carousel with smooth crossfade
+  const preloadImage = (url: string) => {
+    if (!url || loadedSet.current.has(url)) return;
+    const img = new Image();
+    img.src = url;
+    img.onload = () => {
+      loadedSet.current.add(url);
+    };
+  };
+
+  // Keep nextIndex in sync and preload it
   useEffect(() => {
-    if (feature.images.length > 1) {
-      const currentItem = feature.images[currentIndex];
-      const isVideo = "video" in currentItem && currentItem.video;
-      const displayTime = isVideo ? 10000 : 5000;
-      
-      const timer = setTimeout(() => {
-        setIsTransitioning(true);
-        setTimeout(() => {
-          setCurrentIndex((prev) => (prev + 1) % feature.images.length);
-          setIsTransitioning(false);
-        }, 2000); // 2 second crossfade
-      }, displayTime);
-
-      return () => clearTimeout(timer);
+    const next = (currentIndex + 1) % feature.images.length;
+    setNextIndex(next);
+    const nextItem = feature.images[next];
+    if ("image" in nextItem && nextItem.image) {
+      preloadImage(String(nextItem.image));
     }
+  }, [currentIndex, feature.images.length]);
+
+  const startTransition = () => {
+    setIsTransitioning(true);
+    window.setTimeout(() => {
+      setCurrentIndex((prev) => (prev + 1) % feature.images.length);
+      setIsTransitioning(false);
+    }, 2000);
+  };
+
+  // Auto-play with preloading guard (Images: 5s + 2s fade, Videos: 10s + 2s fade)
+  useEffect(() => {
+    if (feature.images.length <= 1) return;
+
+    const currentItem = feature.images[currentIndex];
+    const isVideo = "video" in currentItem && currentItem.video;
+    const displayTime = isVideo ? 10000 : 5000;
+
+    const timer = window.setTimeout(() => {
+      const next = (currentIndex + 1) % feature.images.length;
+      setNextIndex(next);
+      const nextItem = feature.images[next];
+
+      if ("image" in nextItem && nextItem.image) {
+        const url = String(nextItem.image);
+        if (loadedSet.current.has(url)) {
+          startTransition();
+        } else {
+          preloadImage(url);
+          const check = () => {
+            if (loadedSet.current.has(url)) {
+              startTransition();
+            } else {
+              waitRef.current = window.setTimeout(check, 100);
+            }
+          };
+          check();
+        }
+      } else {
+        startTransition();
+      }
+    }, displayTime);
+
+    return () => {
+      clearTimeout(timer);
+      if (waitRef.current) {
+        clearTimeout(waitRef.current);
+        waitRef.current = null;
+      }
+    };
   }, [feature.images.length, currentIndex]);
 
   const nextSlide = () => {
+    const next = (currentIndex + 1) % feature.images.length;
+    setNextIndex(next);
+    const nextItem = feature.images[next];
+    if ("image" in nextItem && nextItem.image) {
+      const url = String(nextItem.image);
+      if (!loadedSet.current.has(url)) preloadImage(url);
+    }
     setIsTransitioning(true);
-    setTimeout(() => {
-      setCurrentIndex((prev) => (prev + 1) % feature.images.length);
+    window.setTimeout(() => {
+      setCurrentIndex(next);
       setIsTransitioning(false);
     }, 2000);
   };
   
   const prevSlide = () => {
+    const prev = (currentIndex - 1 + feature.images.length) % feature.images.length;
+    setNextIndex(prev);
+    const prevItem = feature.images[prev];
+    if ("image" in prevItem && prevItem.image) {
+      const url = String(prevItem.image);
+      if (!loadedSet.current.has(url)) preloadImage(url);
+    }
     setIsTransitioning(true);
-    setTimeout(() => {
-      setCurrentIndex((prev) => (prev - 1 + feature.images.length) % feature.images.length);
+    window.setTimeout(() => {
+      setCurrentIndex(prev);
       setIsTransitioning(false);
     }, 2000);
   };
@@ -353,9 +420,9 @@ const FeatureCarousel = ({
           <div className="relative aspect-[4/3] rounded-2xl overflow-hidden glass-dark shadow-luxury">
             <div className="absolute inset-0 bg-gradient-to-br from-primary/10 via-secondary/5 to-transparent" />
 
-            {/* Image/Video Display */}
+            {/* Current Layer (fades out) */}
             <div
-              className={`w-full h-full transition-opacity duration-[2000ms] ease-in-out ${isTransitioning ? "opacity-0" : "opacity-100"}`}
+              className={`absolute inset-0 w-full h-full transition-opacity duration-[2000ms] ease-in-out ${isTransitioning ? "opacity-0" : "opacity-100"}`}
             >
               {"image" in feature.images[currentIndex] && feature.images[currentIndex].image ? (
                 <img
@@ -384,6 +451,28 @@ const FeatureCarousel = ({
                   </p>
                 </div>
               )}
+            </div>
+
+            {/* Next Layer (fades in) */}
+            <div
+              className={`absolute inset-0 w-full h-full transition-opacity duration-[2000ms] ease-in-out ${isTransitioning ? "opacity-100" : "opacity-0"}`}
+            >
+              {"image" in feature.images[nextIndex] && feature.images[nextIndex].image ? (
+                <img
+                  src={String(feature.images[nextIndex].image)}
+                  alt={feature.images[nextIndex].label}
+                  className="w-full h-full object-cover scale-120"
+                />
+              ) : "video" in feature.images[nextIndex] && feature.images[nextIndex].video ? (
+                <video
+                  src={String(feature.images[nextIndex].video)}
+                  autoPlay
+                  loop
+                  muted
+                  playsInline
+                  className="w-full h-full object-cover"
+                />
+              ) : null}
             </div>
 
             {/* Navigation Buttons */}
