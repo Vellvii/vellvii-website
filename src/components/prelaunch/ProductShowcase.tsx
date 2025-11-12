@@ -44,6 +44,16 @@ const showcaseFeatures = [
         label: "DOX BLACK - Premium Finish",
         description: "Sleek design with rose-gold accents",
       },
+      {
+        image: "/uploads/Dox_white_lifestyle1.jpg",
+        label: "DOX WHITE - Lifestyle Elegance",
+        description: "Refined beauty in your personal space",
+      },
+      {
+        image: "/uploads/Dox_black_shelf_close_up.png",
+        label: "DOX BLACK - Sophisticated Display",
+        description: "Blends seamlessly with your curated collection",
+      },
     ],
     subcategories: [
       {
