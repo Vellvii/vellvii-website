@@ -20,7 +20,7 @@ const faqs = [
     answer: "The DDS (Dildo Docking Station) is the conscious evolution of pleasure engineering. It features a tri-layer construction topped with poured acrylic glass — perfectly smooth, crystal-clear, and built for flawless suction. Finally, pleasure has its dedicated, elegant space.",
   },
   {
-    question: "What materials is the DOX made from?",
+    question: "What materials is the DOX made of?",
     answer: "The DOX features a high-quality waterproof faux leather exterior with rose-gold trims and a leather handle. Inside, you'll find soft velvet lining with golden accents and a removable inner tray. Every detail is designed to demand to be touched.",
   },
   {
