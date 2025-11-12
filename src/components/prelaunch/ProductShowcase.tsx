@@ -15,6 +15,7 @@ type FeatureItem = {
   tagline?: string;
   images: MediaItem[];
   subcategories?: Subcategory[];
+  aspectRatio?: string;
 };
 
 type Subcategory = {
@@ -131,6 +132,7 @@ const showcaseFeatures = [
     number: 3,
     title: "A Position of Power",
     subtitle: '"Designed to Hold More than Your Collection...Designed to Hold You"',
+    aspectRatio: "aspect-video",
     images: [
       {
         video: "/uploads/VDS_video.webm",
@@ -264,7 +266,7 @@ const FeatureCarousel = ({
           <div className="rounded-3xl overflow-hidden shadow-float ring-1 ring-white/10">
             <CrossfadeCarousel
               items={imageUrls}
-              aspectRatio="aspect-[4/3]"
+              aspectRatio={feature.aspectRatio || "aspect-[4/3]"}
               enableLightbox={true}
               altPrefix={feature.title}
               imageDisplayTime={5000}
