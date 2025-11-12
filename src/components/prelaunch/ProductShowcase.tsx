@@ -155,13 +155,7 @@ const showcaseFeatures = [
     number: 4,
     title: "VELLVII COLLECTION",
     subtitle: "The Art of \"O\"",
-    images: [
-      {
-        video: "/uploads/Dox_VDS_transition_Video.mp4",
-        label: "The Art of 'O'",
-        description: "Every curve, every detail, every innovation is a study in sensual design.",
-      },
-    ],
+    images: [],
     subcategories: [
       {
         title: "PULSE",
@@ -262,32 +256,36 @@ const FeatureCarousel = ({
           )}
         </div>
 
-        <div className="max-w-6xl mx-auto mb-16">
-          <div className="rounded-3xl overflow-hidden shadow-float ring-1 ring-white/10">
-            <CrossfadeCarousel
-              items={imageUrls}
-              aspectRatio={feature.aspectRatio || "aspect-[4/3]"}
-              enableLightbox={true}
-              altPrefix={feature.title}
-              imageDisplayTime={5000}
-              videoDisplayTime={8000}
-            />
-          </div>
-        </div>
-
-        <div className="max-w-6xl mx-auto grid grid-cols-1 sm:grid-cols-3 gap-8 mb-16 px-4">
-          {feature.images.filter(item => item.label && item.description).map((item, idx) => (
-            <div
-              key={idx}
-              className="group p-8 rounded-2xl glass-dark border border-white/10 hover:border-white/20 transition-all duration-500 hover:shadow-card"
-            >
-              <h4 className="text-xl font-bold text-white mb-3 group-hover:text-primary transition-colors duration-300">
-                {item.label}
-              </h4>
-              <p className="text-base text-white/70 leading-relaxed font-light">{item.description}</p>
+        {imageUrls.length > 0 && (
+          <>
+            <div className="max-w-6xl mx-auto mb-16">
+              <div className="rounded-3xl overflow-hidden shadow-float ring-1 ring-white/10">
+                <CrossfadeCarousel
+                  items={imageUrls}
+                  aspectRatio={feature.aspectRatio || "aspect-[4/3]"}
+                  enableLightbox={true}
+                  altPrefix={feature.title}
+                  imageDisplayTime={5000}
+                  videoDisplayTime={8000}
+                />
+              </div>
             </div>
-          ))}
-        </div>
+
+            <div className="max-w-6xl mx-auto grid grid-cols-1 sm:grid-cols-3 gap-8 mb-16 px-4">
+              {feature.images.filter(item => item.label && item.description).map((item, idx) => (
+                <div
+                  key={idx}
+                  className="group p-8 rounded-2xl glass-dark border border-white/10 hover:border-white/20 transition-all duration-500 hover:shadow-card"
+                >
+                  <h4 className="text-xl font-bold text-white mb-3 group-hover:text-primary transition-colors duration-300">
+                    {item.label}
+                  </h4>
+                  <p className="text-base text-white/70 leading-relaxed font-light">{item.description}</p>
+                </div>
+              ))}
+            </div>
+          </>
+        )}
 
         {feature.subcategories && (
           <div className="max-w-6xl mx-auto space-y-12 px-4">
