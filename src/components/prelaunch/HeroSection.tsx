@@ -27,7 +27,7 @@ export const HeroSection = () => {
 
           <AnimatedText 
             text="Pleasure: Redefined"
-            className="text-5xl sm:text-6xl lg:text-7xl xl:text-8xl font-bold text-white leading-[1.1] tracking-tight"
+            className="text-5xl sm:text-6xl lg:text-7xl xl:text-8xl font-bold text-white leading-[1.1] tracking-tight mx-auto justify-center"
             delay={0.4}
           />
 

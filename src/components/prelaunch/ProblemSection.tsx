@@ -73,7 +73,7 @@ export const ProblemSection = () => {
                   <h3 className="text-xl font-bold font-baskerville text-slate-950">
                     {problem.title}
                   </h3>
-                  <p className="leading-relaxed text-zinc-600 font-light">
+                  <p className="leading-relaxed text-zinc-800 font-light">
                     {problem.description}
                   </p>
                 </CardContent>

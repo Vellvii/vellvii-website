@@ -41,6 +41,8 @@ export const CrossfadeCarousel = ({
   
   const loadedSet = useRef<Set<string>>(new Set());
   const transitionTimerRef = useRef<number | null>(null);
+  const touchStartX = useRef<number | null>(null);
+  const touchEndX = useRef<number | null>(null);
 
   const isVideo = (url: string) => {
     if (!url) return false;
@@ -154,13 +156,46 @@ export const CrossfadeCarousel = ({
     }
   };
 
+  const handleTouchStart = (e: React.TouchEvent) => {
+    touchStartX.current = e.touches[0].clientX;
+  };
+
+  const handleTouchMove = (e: React.TouchEvent) => {
+    touchEndX.current = e.touches[0].clientX;
+  };
+
+  const handleTouchEnd = () => {
+    if (!touchStartX.current || !touchEndX.current) return;
+    
+    const difference = touchStartX.current - touchEndX.current;
+    const swipeThreshold = 50;
+    
+    if (Math.abs(difference) > swipeThreshold) {
+      if (difference > 0) {
+        // Swiped left - go to next
+        nextSlide();
+      } else {
+        // Swiped right - go to previous
+        prevSlide();
+      }
+    }
+    
+    touchStartX.current = null;
+    touchEndX.current = null;
+  };
+
   // Determine which layer shows which media
   const visibleLayer = activeLayer === 'A' ? layerA : layerB;
   const hiddenLayer = activeLayer === 'A' ? layerB : layerA;
 
   return (
     <>
-      <div className={cn("relative rounded-2xl overflow-hidden glass-dark shadow-luxury", aspectRatio, className)}>
+      <div 
+        className={cn("relative rounded-2xl overflow-hidden glass-dark shadow-luxury", aspectRatio, className)}
+        onTouchStart={handleTouchStart}
+        onTouchMove={handleTouchMove}
+        onTouchEnd={handleTouchEnd}
+      >
         <div className="absolute inset-0 bg-gradient-to-br from-primary/10 via-secondary/5 to-transparent" />
 
         {/* Layer A */}
