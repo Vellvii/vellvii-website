@@ -21,6 +21,12 @@ const milestones = [
     description: "You are here — Join the revolution",
   },
   {
+    title: "Official Crowdfunding",
+    status: "upcoming",
+    date: "Q1 2025",
+    description: "Be part of making history",
+  },
+  {
     title: "Manufacturing",
     status: "upcoming",
     date: "Mid 2025",
@@ -58,9 +64,9 @@ export const TimelineSection = () => {
             <div className="relative">
               {/* Progress Line */}
               <div className="absolute top-6 left-0 right-0 h-0.5 bg-white/10" />
-              <div className="absolute top-6 left-0 h-0.5 bg-gradient-secondary transition-all duration-1000" style={{ width: '40%' }} />
+              <div className="absolute top-6 left-0 h-0.5 bg-gradient-secondary transition-all duration-1000" style={{ width: '33%' }} />
 
-              <div className="grid grid-cols-5 gap-4">
+              <div className="grid grid-cols-6 gap-4">
                 {milestones.map((milestone, index) => (
                   <div key={index} className="relative">
                     {/* Icon */}
