@@ -70,7 +70,7 @@ export type Database = {
           recipient_id: string | null
           reply_to_id: string | null
           role: string
-          search_vector: unknown | null
+          search_vector: unknown
           video_url: string | null
         }
         Insert: {
@@ -89,7 +89,7 @@ export type Database = {
           recipient_id?: string | null
           reply_to_id?: string | null
           role: string
-          search_vector?: unknown | null
+          search_vector?: unknown
           video_url?: string | null
         }
         Update: {
@@ -108,7 +108,7 @@ export type Database = {
           recipient_id?: string | null
           reply_to_id?: string | null
           role?: string
-          search_vector?: unknown | null
+          search_vector?: unknown
           video_url?: string | null
         }
         Relationships: [
@@ -433,10 +433,7 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
-      cleanup_expired_invitations: {
-        Args: Record<PropertyKey, never>
-        Returns: undefined
-      }
+      cleanup_expired_invitations: { Args: never; Returns: undefined }
     }
     Enums: {
       [_ in never]: never
