@@ -140,7 +140,7 @@ const showcaseFeatures = [
     images: [
       {
         video: "/uploads/VDS_video.webm",
-        label: "VELLVII SOLUTION",
+        label: "VDS : VELLVII DOCKING STATION",
         description: "Everyone deserves to own something beautiful, personal, and unapologetically theirs. The Dox isn't about hiding, it's about honoring. Crafted to elevate the most intimate parts of life, without shame, without guilt - Only Art.",
       },
       {
