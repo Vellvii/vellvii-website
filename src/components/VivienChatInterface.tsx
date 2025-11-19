@@ -45,8 +45,8 @@ export const VivienChatInterface = () => {
     setIsLoading(true);
 
     try {
-      // Filter out the initial greeting (id "1") and send full conversation history
-      const conversationHistory = messages.filter(m => m.id !== "1");
+      // Filter out the initial greeting (id "1") and include the new user message
+      const conversationHistory = [...messages.filter(m => m.id !== "1"), userMessage];
       const response = await sendVivianMessage(conversationHistory, currentInput);
 
       const assistantMessage: Message = {
