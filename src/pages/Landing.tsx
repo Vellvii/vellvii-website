@@ -4,7 +4,7 @@ import { MagneticButton } from "@/components/animations/MagneticButton";
 import { EnvelopeMailingList, MailingListFormData } from "@/components/EnvelopeMailingList";
 import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/hooks/use-toast";
-import ConciergeChat from "@/components/ConciergeChat";
+import { VivienChatInterface } from "@/components/VivienChatInterface";
 import vivienImage from "/uploads/976c0d6d-a066-409a-8ad6-6353840958ac.png";
 
 const Landing = () => {
@@ -260,35 +260,10 @@ const Landing = () => {
               </div>
             )}
 
-            {/* Construction Message Display */}
+            {/* Vivien Chat Interface */}
             {isAgeConfirmed && (
-              <div className="flex-1 flex flex-col justify-center">
-                <div className="flex justify-start mb-6">
-                  <div className="bg-gradient-to-r from-accent/20 to-accent/10 border border-accent/30 rounded-2xl rounded-bl-md px-4 py-3 max-w-[90%]">
-                    <p className="font-playfair text-sm md:text-base lg:text-lg leading-relaxed text-foreground">
-                      {constructionMessage}
-                      {constructionMessage && constructionMessage.length < constructionText.length && <span className="blinking-cursor ml-1 text-secondary">|</span>}
-                    </p>
-                  </div>
-                </div>
-
-                {/* Action Buttons */}
-                {showEmailButton && (
-                  <div className="flex flex-col gap-3 animate-fade-in">
-                    <MagneticButton
-                      onClick={handleEmailStefan}
-                      className="bounce-fade-in bg-gradient-to-r from-primary to-secondary hover:from-secondary hover:to-accent text-primary-foreground font-medium py-2 px-6 text-sm rounded-lg"
-                    >
-                      Email Stefan
-                    </MagneticButton>
-                    <MagneticButton
-                      onClick={() => setShowMailingDialog(true)}
-                      className="bounce-fade-in border border-white/30 text-white hover:bg-white/10 py-2 px-6 text-sm rounded-lg bg-transparent"
-                    >
-                      Join Mailing List
-                    </MagneticButton>
-                  </div>
-                )}
+              <div className="flex-1 flex flex-col overflow-hidden">
+                <VivienChatInterface />
               </div>
             )}
           </div>
@@ -322,9 +297,6 @@ const Landing = () => {
         onSubmit={handleJoinMailingList}
         isSubmitting={isSubmitting}
       />
-
-      {/* Vivien AI Chat */}
-      <ConciergeChat />
     </div>
   );
 };
