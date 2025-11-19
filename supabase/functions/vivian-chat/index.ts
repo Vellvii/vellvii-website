@@ -59,10 +59,10 @@ serve(async (req) => {
     const data = await abacusRes.json();
     console.log('Abacus API response data:', data);
 
-    // Extract Vivien's reply from the correct path in Abacus response
+    // Extract the LAST assistant message (most recent response)
+    const assistantMessages = data?.result?.messages?.filter(msg => !msg.is_user) || [];
     const reply = 
-      data?.result?.messages?.[1]?.text ||
-      data?.result?.messages?.find(msg => !msg.is_user)?.text ||
+      assistantMessages[assistantMessages.length - 1]?.text ||
       "I'm having trouble responding right now.";
 
     console.log('Sending reply:', reply);
