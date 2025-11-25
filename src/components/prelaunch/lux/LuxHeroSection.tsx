@@ -76,9 +76,9 @@ export const LuxHeroSection = () => {
 
           <ScrollReveal delay={0.5}>
             <p className="text-lg sm:text-xl lg:text-2xl text-white/70 max-w-4xl mx-auto leading-relaxed font-light">
-              Seamlessly handcrafted in genuine leather. A sartorial declaration for those who travel beyond first class.
-              <br />
-              <span className="text-white/90 font-normal">LUX hides your essentials in plain sight - because true luxury lives in the unseen.</span>
+              Introducing LUX - a masterpiece of designer leather craftsmanship refined with next-generation biometric technology.
+              <br /><br />
+              For the traveler who enjoys private lounges, discreet check-ins, and a life where privacy is the most valuable currency… LUX is the only companion worthy of your journey.
             </p>
           </ScrollReveal>
 
