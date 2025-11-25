@@ -37,8 +37,7 @@ export const LuxPrivacyPocketSection = () => {
             <div className="max-w-3xl mx-auto">
               <CrossfadeCarousel
                 items={[
-                  '/uploads/lux-bag-final-v4.jpg',
-                  '/uploads/lux-lifestyle-2-updated.png'
+                  '/uploads/lux-privacy-pocket-lifestyle.jpg'
                 ]}
                 aspectRatio="aspect-[4/3]"
               />
