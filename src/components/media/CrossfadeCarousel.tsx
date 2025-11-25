@@ -15,6 +15,7 @@ interface CrossfadeCarouselProps {
   imageDisplayTime?: number;
   transitionDuration?: number;
   altPrefix?: string;
+  videoPlaybackRate?: number;
 }
 
 export const CrossfadeCarousel = ({
@@ -28,6 +29,7 @@ export const CrossfadeCarousel = ({
   imageDisplayTime = 6000,
   transitionDuration = 2000,
   altPrefix = "Slide",
+  videoPlaybackRate = 1.0,
 }: CrossfadeCarouselProps) => {
   const [lightboxOpen, setLightboxOpen] = useState(false);
   const [lightboxImage, setLightboxImage] = useState("");
@@ -44,6 +46,8 @@ export const CrossfadeCarousel = ({
   const autoAdvanceTimerRef = useRef<number | null>(null);
   const touchStartX = useRef<number | null>(null);
   const touchEndX = useRef<number | null>(null);
+  const videoARef = useRef<HTMLVideoElement>(null);
+  const videoBRef = useRef<HTMLVideoElement>(null);
 
   const isVideo = (url: string) => {
     if (!url) return false;
@@ -239,6 +243,7 @@ export const CrossfadeCarousel = ({
         >
           {isVideo(layerA) ? (
             <video
+              ref={videoARef}
               key={`layer-a-${layerA}`}
               src={layerA}
               autoPlay
@@ -246,6 +251,10 @@ export const CrossfadeCarousel = ({
               muted
               playsInline
               className="w-full h-full object-cover"
+              onLoadedMetadata={(e) => {
+                const video = e.currentTarget;
+                video.playbackRate = videoPlaybackRate;
+              }}
             />
           ) : (
             <img
@@ -270,6 +279,7 @@ export const CrossfadeCarousel = ({
         >
           {isVideo(layerB) ? (
             <video
+              ref={videoBRef}
               key={`layer-b-${layerB}`}
               src={layerB}
               autoPlay
@@ -277,6 +287,10 @@ export const CrossfadeCarousel = ({
               muted
               playsInline
               className="w-full h-full object-cover"
+              onLoadedMetadata={(e) => {
+                const video = e.currentTarget;
+                video.playbackRate = videoPlaybackRate;
+              }}
             />
           ) : (
             <img

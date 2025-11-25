@@ -29,7 +29,7 @@ export const LuxMomentSection = () => {
 
           <ScrollReveal delay={0.5}>
             <div className="max-w-3xl mx-auto">
-              <CrossfadeCarousel items={['/uploads/dox-open-animation.mp4', '/uploads/Dox_white_open_plugged_in_content2.png']} aspectRatio="aspect-[4/3]" />
+              <CrossfadeCarousel items={['/uploads/lux-moment-lifestyle.mp4']} aspectRatio="aspect-[4/3]" videoPlaybackRate={0.75} />
             </div>
           </ScrollReveal>
         </div>
