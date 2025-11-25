@@ -1,13 +1,10 @@
 import { ScrollReveal } from "@/components/animations/ScrollReveal";
-import { MagneticButton } from "@/components/animations/MagneticButton";
 import { AnimatedText } from "@/components/animations/AnimatedText";
+import { LuxCountdown } from "./LuxCountdown";
+import { LuxReserveCTA } from "./LuxReserveCTA";
+import { CrossfadeCarousel } from "@/components/media/CrossfadeCarousel";
 
 export const LuxHeroSection = () => {
-  const scrollToExplore = () => {
-    const section = document.getElementById('lux-philosophy');
-    section?.scrollIntoView({ behavior: 'smooth' });
-  };
-
   return (
     <section className="min-h-screen flex items-center justify-center relative overflow-hidden py-20 px-4">
       {/* Background gradient */}
@@ -37,14 +34,25 @@ export const LuxHeroSection = () => {
             </p>
           </ScrollReveal>
 
+          <ScrollReveal delay={0.5}>
+            <LuxCountdown />
+          </ScrollReveal>
+
           <ScrollReveal delay={0.6}>
-            <MagneticButton
-              onClick={scrollToExplore}
-              className="group px-12 py-6 bg-gradient-to-r from-primary via-accent to-primary bg-[length:200%_100%] text-black rounded-2xl font-bold text-xl shadow-elegant hover:shadow-glow transition-all duration-700 pulse-glow relative overflow-hidden"
-            >
-              <span className="relative z-10">Explore LUX</span>
-              <div className="absolute inset-0 bg-gradient-shimmer opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
-            </MagneticButton>
+            <LuxReserveCTA />
+          </ScrollReveal>
+
+          {/* Hero Carousel */}
+          <ScrollReveal delay={0.7}>
+            <div className="mt-16 max-w-4xl mx-auto">
+              <CrossfadeCarousel
+                items={[
+                  '/public/uploads/dox-white-lifestyle-2.jpg',
+                  '/public/uploads/dox-black-bookshelf.png'
+                ]}
+                aspectRatio="aspect-[16/9]"
+              />
+            </div>
           </ScrollReveal>
         </div>
       </div>
