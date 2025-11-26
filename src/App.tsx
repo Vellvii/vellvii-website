@@ -40,7 +40,7 @@ const InnerApp = () => {
           <Routes>
             <Route path="/" element={<Landing />} />
             <Route path="/prelaunch-dox" element={<PrelaunchDOX />} />
-            <Route path="/prelaunch-lux" element={<PrelaunchLux />} />
+            <Route path="/Vellvii-Lux" element={<PrelaunchLux />} />
             {isDev && (
               <>
                 <Route path="/home" element={<Home />} />
