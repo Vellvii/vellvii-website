@@ -178,7 +178,7 @@ export const EmailCaptureForm = () => {
                   />
                 </FormControl>
                 <FormLabel className="text-white/90 text-sm leading-relaxed cursor-pointer font-light">
-                  I want exclusive launch pricing and to save <span className="text-primary font-bold">$200</span>
+                  I want his exclusive VIP offer at <span className="text-primary font-bold">$99</span>
                 </FormLabel>
               </div>
             </FormItem>
