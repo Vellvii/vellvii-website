@@ -31,17 +31,7 @@ export const EmailCaptureSection = () => {
           </ScrollReveal>
 
           <ScrollReveal delay={0.3}>
-            <WaitlistCounter />
-          </ScrollReveal>
-
-          <ScrollReveal delay={0.4}>
-            <div className="mt-12 mb-8">
-              <EmailCaptureForm />
-            </div>
-          </ScrollReveal>
-
-          <ScrollReveal delay={0.5}>
-            <div className="grid sm:grid-cols-2 gap-4 max-w-2xl mx-auto mt-12">
+            <div className="grid sm:grid-cols-2 gap-4 max-w-2xl mx-auto mt-8 mb-12">
               {benefits.map((benefit, index) => (
                 <div key={index} className="flex items-start gap-3 glass-dark p-4 rounded-lg border border-white/10">
                   <div className="w-6 h-6 rounded-full bg-primary/20 flex items-center justify-center flex-shrink-0 mt-0.5">
@@ -50,6 +40,16 @@ export const EmailCaptureSection = () => {
                   <p className="text-white/80 text-sm leading-relaxed font-light">{benefit}</p>
                 </div>
               ))}
+            </div>
+          </ScrollReveal>
+
+          <ScrollReveal delay={0.4}>
+            <WaitlistCounter />
+          </ScrollReveal>
+
+          <ScrollReveal delay={0.5}>
+            <div className="mt-12 mb-8">
+              <EmailCaptureForm />
             </div>
           </ScrollReveal>
 
