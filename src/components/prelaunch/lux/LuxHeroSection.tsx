@@ -47,6 +47,16 @@ export const LuxHeroSection = () => {
                 The Vellvii LUX
               </h1>
             </ScrollReveal>
+
+            {/* Tagline Hook */}
+            <ScrollReveal delay={0.25}>
+              <p className="text-2xl sm:text-3xl lg:text-4xl font-light italic text-white/90 font-baskerville mt-8" style={{
+                textShadow: '0 0 40px rgba(178, 145, 108, 0.5)',
+                animation: 'shimmer 3s ease-in-out infinite'
+              }}>
+                Because Your Sex Toys Deserve...........
+              </p>
+            </ScrollReveal>
           </div>
         </div>
       </div>
