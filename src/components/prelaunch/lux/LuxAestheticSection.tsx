@@ -49,7 +49,7 @@ export const LuxAestheticSection = () => {
             <div className="w-screen relative left-1/2 right-1/2 -mx-[50vw]" style={{
             boxShadow: 'var(--shadow-luxury)'
           }}>
-              <CrossfadeCarousel items={['/uploads/lux-lifestyle-final-v4.png']} aspectRatio="aspect-[16/9]" className="rounded-none" />
+              <CrossfadeCarousel items={['/uploads/lux-lifestyle-final-v5.jpg']} aspectRatio="aspect-[16/9]" className="rounded-none" />
             </div>
           </ScrollReveal>
         </div>
