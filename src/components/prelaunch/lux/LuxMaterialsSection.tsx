@@ -2,12 +2,11 @@ import { ScrollReveal } from "@/components/animations/ScrollReveal";
 import { LuxReserveCTA } from "./LuxReserveCTA";
 import { CrossfadeCarousel } from "@/components/media/CrossfadeCarousel";
 export const LuxMaterialsSection = () => {
-  return (
-    <section className="min-h-screen py-32 lg:py-48 relative overflow-hidden">
+  return <section className="min-h-screen py-32 lg:py-48 relative overflow-hidden">
       {/* Dramatic dark background */}
       <div className="absolute inset-0" style={{
-        background: 'var(--gradient-luxury)'
-      }} />
+      background: 'var(--gradient-luxury)'
+    }} />
       <div className="absolute inset-0 bg-gradient-to-b from-black/40 via-transparent to-black/40" />
       
       <div className="w-full relative z-10 px-4 sm:px-8 lg:px-12">
@@ -15,10 +14,8 @@ export const LuxMaterialsSection = () => {
           <div className="text-center space-y-12 lg:space-y-16">
             <ScrollReveal>
               <h2 className="text-3xl sm:text-4xl lg:text-5xl xl:text-6xl font-bold text-white font-baskerville leading-tight" style={{
-                textShadow: '0 0 80px rgba(178, 145, 108, 0.4)'
-              }}>
-                Your Pleasure. Your Privacy. Your Fingerprint.
-              </h2>
+              textShadow: '0 0 80px rgba(178, 145, 108, 0.4)'
+            }}> Your Fingerprint.</h2>
             </ScrollReveal>
 
             <ScrollReveal delay={0.2}>
@@ -42,17 +39,12 @@ export const LuxMaterialsSection = () => {
 
           <ScrollReveal delay={0.5}>
             <div className="w-screen relative left-1/2 right-1/2 -mx-[50vw]" style={{
-              boxShadow: 'var(--shadow-luxury)'
-            }}>
-              <CrossfadeCarousel 
-                items={['/uploads/lux-fingerprint-security-v2.mp4']} 
-                aspectRatio="aspect-[16/9]"
-                className="rounded-none"
-              />
+            boxShadow: 'var(--shadow-luxury)'
+          }}>
+              <CrossfadeCarousel items={['/uploads/lux-fingerprint-security-v2.mp4']} aspectRatio="aspect-[16/9]" className="rounded-none" />
             </div>
           </ScrollReveal>
         </div>
       </div>
-    </section>
-  );
+    </section>;
 };

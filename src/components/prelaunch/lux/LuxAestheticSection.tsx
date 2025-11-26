@@ -1,10 +1,8 @@
 import { ScrollReveal } from "@/components/animations/ScrollReveal";
 import { LuxReserveCTA } from "./LuxReserveCTA";
 import { CrossfadeCarousel } from "@/components/media/CrossfadeCarousel";
-
 export const LuxAestheticSection = () => {
-  return (
-    <section className="min-h-screen py-32 lg:py-48 relative overflow-hidden">
+  return <section className="min-h-screen py-32 lg:py-48 relative overflow-hidden">
       <div className="absolute inset-0 bg-gradient-to-b from-transparent via-primary/8 to-transparent" />
       
       <div className="w-full relative z-10 px-4 sm:px-8 lg:px-12">
@@ -12,8 +10,8 @@ export const LuxAestheticSection = () => {
           <div className="text-center space-y-12 lg:space-y-16">
             <ScrollReveal>
               <h2 className="text-3xl sm:text-4xl lg:text-5xl xl:text-6xl font-bold text-white font-baskerville leading-tight" style={{
-                textShadow: '0 0 60px rgba(178, 145, 108, 0.3)'
-              }}>
+              textShadow: '0 0 60px rgba(178, 145, 108, 0.3)'
+            }}>
                 Resting softly.
                 <br />
                 <span className="gradient-text">Returning stronger.</span>
@@ -23,7 +21,7 @@ export const LuxAestheticSection = () => {
             <ScrollReveal delay={0.2}>
               <div className="space-y-6 text-lg sm:text-xl lg:text-2xl text-white/80 font-light leading-relaxed max-w-4xl mx-auto">
                 <p>No messy cables. No awkward angles.</p>
-                <p className="gradient-text text-xl sm:text-2xl lg:text-3xl">Just a perfect, effortless connection.</p>
+                <p className="gradient-text text-xl sm:text-2xl lg:text-3xl">Perfect Charging Solution for Your Toys.</p>
                 <p>Every detail whispers purpose.</p>
               </div>
             </ScrollReveal>
@@ -49,17 +47,12 @@ export const LuxAestheticSection = () => {
 
           <ScrollReveal delay={0.6}>
             <div className="w-screen relative left-1/2 right-1/2 -mx-[50vw]" style={{
-              boxShadow: 'var(--shadow-luxury)'
-            }}>
-              <CrossfadeCarousel 
-                items={['/uploads/lux-lifestyle-final-v4.png']} 
-                aspectRatio="aspect-[16/9]"
-                className="rounded-none"
-              />
+            boxShadow: 'var(--shadow-luxury)'
+          }}>
+              <CrossfadeCarousel items={['/uploads/lux-lifestyle-final-v4.png']} aspectRatio="aspect-[16/9]" className="rounded-none" />
             </div>
           </ScrollReveal>
         </div>
       </div>
-    </section>
-  );
+    </section>;
 };
