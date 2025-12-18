@@ -39,9 +39,9 @@ const InnerApp = () => {
       <SmoothScroll>
         <PageTransition>
           <Routes>
-            <Route path="/" element={<Landing />} />
+            <Route path="/" element={<DoxLanding />} />
             <Route path="/prelaunch-dox" element={<PrelaunchDOX />} />
-            <Route path="/dox-landing" element={<DoxLanding />} />
+            <Route path="/landing" element={<Landing />} />
             <Route path="/Vellvii-Lux" element={<PrelaunchLux />} />
             {isDev && (
               <>
@@ -59,7 +59,7 @@ const InnerApp = () => {
               </>
             )}
             {/* All other routes redirect to landing during development */}
-            <Route path="*" element={<Landing />} />
+            <Route path="*" element={<DoxLanding />} />
           </Routes>
         </PageTransition>
       </SmoothScroll>
