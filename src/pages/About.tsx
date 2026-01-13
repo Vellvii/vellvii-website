@@ -5,9 +5,17 @@ import { Link } from "react-router-dom";
 import { ArrowLeft, Heart, Shield, Star, Award } from "lucide-react";
 import ConciergeChat from "@/components/ConciergeChat";
 import UserMenu from "@/components/UserMenu";
+import { SEO } from "@/components/SEO";
 
 const About = () => {
   return (
+    <>
+      <SEO
+        title="Luxury Sexual Wellness Brand | Vellvii Story"
+        description="Discover Vellvii - a luxury brand redefining sexual wellness with premium pleasure design, high-end adult innovation, and elegant intimacy products."
+        canonical="/about"
+        organizationData
+      />
     <div className="min-h-screen bg-gradient-dark">
       {/* Navigation */}
       <nav className="flex justify-between items-center p-4 sm:p-6 min-h-[80px]">
@@ -25,8 +33,9 @@ const About = () => {
         <div className="max-w-4xl mx-auto text-center">
           <Badge variant="secondary" className="mb-6">Our Story</Badge>
           <div className="mb-8">
-            <img src="/uploads/fd8fd5ce-f65c-4c0c-b093-af821cbd5a34.png" alt="Vellvii" className="h-24 sm:h-28 md:h-36 mx-auto" />
+            <img src="/uploads/fd8fd5ce-f65c-4c0c-b093-af821cbd5a34.png" alt="Vellvii luxury sexual wellness brand logo" className="h-24 sm:h-28 md:h-36 mx-auto" />
           </div>
+          <h1 className="sr-only">Luxury Sexual Wellness Brand - Vellvii</h1>
           <p className="text-lg sm:text-xl text-secondary italic mb-8 max-w-3xl mx-auto px-4">
             The art of "O"
           </p>
@@ -39,7 +48,7 @@ const About = () => {
           <div className="grid lg:grid-cols-2 gap-8 lg:gap-12 items-center">
             <div className="space-y-6">
               <h2 className="text-3xl sm:text-4xl font-playfair font-bold text-foreground mb-6">
-                Our Mission
+                Premium Pleasure Design Philosophy
               </h2>
               <p className="text-base sm:text-lg text-muted-foreground leading-relaxed">
                 At Vellvii, we believe that intimacy deserves the finest craftsmanship. 

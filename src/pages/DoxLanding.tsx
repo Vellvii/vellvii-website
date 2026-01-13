@@ -2,6 +2,7 @@ import { useState, useRef, useEffect } from "react";
 import { Play } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import prelaunchLogo from "@/assets/prelaunch-logo.png";
+import { SEO } from "@/components/SEO";
 
 const RESERVE_URL = "https://prelaunch.com/projects/5ff3ce3f-6669-4243-918c-4d57d98b63f6/reservation";
 const DISCUSSIONS_URL = "https://prelaunch.com/projects/vellvii-dox-vellvii-dox-pleasure-in-a-luxury-vault/discussions";
@@ -109,10 +110,24 @@ const DoxLanding = () => {
   }, [isPlaying]);
 
   return (
+    <>
+      <SEO
+        title="Luxury Sex Toy Storage | Vellvii Dox Docking Station"
+        description="Discover the Vellvii Dox - a luxury docking station for sex toys with biometric security, premium charging dock, and discreet designer storage."
+        canonical="/"
+        organizationData
+        productData={{
+          name: "Vellvii Dox",
+          description: "Luxury docking station for sex toys featuring biometric fingerprint lock, USB-C charging dock, and premium vegan leather with velvet interior.",
+          availability: "PreOrder",
+          brand: "Vellvii",
+          images: ["/uploads/Dox1.jpg", "/uploads/Dox2.jpg", "/uploads/Dox3.jpg"],
+        }}
+      />
     <div className="min-h-screen bg-black flex flex-col items-center justify-center relative overflow-hidden">
       {/* Background gradient */}
       <div className="absolute inset-0 bg-gradient-to-b from-black via-black/95 to-black/90" />
-      
+
       {/* Subtle gold accent */}
       <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-primary/5 via-transparent to-transparent" />
 
@@ -130,15 +145,15 @@ const DoxLanding = () => {
               {/* Vellvii Logo */}
               <img 
                 src="/uploads/Vellvii-full-logo-transparent.png" 
-                alt="Vellvii" 
+                alt="Vellvii luxury pleasure brand logo" 
                 className="h-16 md:h-20 mx-auto mb-6 drop-shadow-[0_0_15px_rgba(212,175,55,0.4)]"
               />
               <h1 className="font-baskerville text-5xl md:text-7xl text-primary tracking-wide mb-3">
-                Vellvii Dox
+                Luxury Sex Toy Docking Station
               </h1>
-              <p className="font-montserrat text-lg md:text-xl text-white tracking-widest uppercase drop-shadow-[0_0_10px_rgba(255,255,255,0.8)] animate-pulse">
-                Explained in 60 seconds
-              </p>
+              <h2 className="font-montserrat text-lg md:text-xl text-white tracking-widest uppercase drop-shadow-[0_0_10px_rgba(255,255,255,0.8)] animate-pulse">
+                Vellvii Dox - Explained in 60 seconds
+              </h2>
             </motion.div>
           )}
         </AnimatePresence>
@@ -272,6 +287,7 @@ const DoxLanding = () => {
         </div>
       </div>
     </div>
+    </>
   );
 };
 

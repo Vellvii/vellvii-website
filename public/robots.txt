@@ -1,3 +1,6 @@
+# Vellvii Robots.txt
+# Luxury Sex Toy Storage & Premium Adult Wellness
+
 User-agent: Googlebot
 Allow: /
 
@@ -10,5 +13,14 @@ Allow: /
 User-agent: facebookexternalhit
 Allow: /
 
+User-agent: LinkedInBot
+Allow: /
+
 User-agent: *
 Allow: /
+
+# Sitemap
+Sitemap: https://vellvii.com/sitemap.xml
+
+# Disallow admin and dev paths
+Disallow: /*?dev=true
