@@ -6,11 +6,18 @@ import { ArrowLeft, Mail, Phone, MapPin, Store, Users, MessageCircle } from "luc
 import { useAuth } from "@/hooks/useAuth";
 import UserMenu from "@/components/UserMenu";
 import ConciergeChat from "@/components/ConciergeChat";
+import { SEO } from "@/components/SEO";
 
 const Contact = () => {
   const { user } = useAuth();
 
   return (
+    <>
+      <SEO
+        title="Contact Vellvii | Luxury Brand Support"
+        description="Contact Vellvii luxury brand for product inquiries, premium customer service, and partnership opportunities. Speak to our dedicated support team."
+        canonical="/contact"
+      />
     <div className="min-h-screen bg-gradient-dark">
       {/* Navigation */}
       <nav className="p-4 sm:p-6 flex justify-between items-center min-h-[80px]">
@@ -28,10 +35,10 @@ const Contact = () => {
         <div className="max-w-4xl mx-auto text-center">
           <Badge variant="secondary" className="mb-6">Get in Touch</Badge>
           <h1 className="text-3xl sm:text-4xl lg:text-5xl font-playfair font-bold gradient-text mb-6">
-            Contact Us
+            Contact Vellvii Luxury Brand
           </h1>
           <p className="text-base sm:text-lg lg:text-xl text-muted-foreground mb-8 max-w-3xl mx-auto px-4">
-            Whether you're a customer or potential partner, we're here to help
+            Premium customer service for luxury adult wellness inquiries and partnership opportunities
           </p>
         </div>
       </section>

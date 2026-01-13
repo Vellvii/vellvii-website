@@ -6,9 +6,20 @@ import { ArrowLeft, Heart, Star, Shield, Package } from "lucide-react";
 import UserMenu from "@/components/UserMenu";
 import { ProductCard } from "@/components/ProductCard";
 import { ImageSlider } from "@/components/ImageSlider";
+import { SEO } from "@/components/SEO";
 
 const Products = () => {
   return (
+    <>
+      <SEO
+        title="Luxury Sex Toys | Premium Adult Wellness Collection"
+        description="Explore Vellvii's luxury sex toys collection featuring premium pleasure devices, designer intimacy products, and high-end adult wellness accessories."
+        canonical="/products"
+        breadcrumbs={[
+          { name: "Home", url: "/" },
+          { name: "Products", url: "/products" },
+        ]}
+      />
     <div className="min-h-screen bg-gradient-dark">
       {/* Navigation */}
       <nav className="flex justify-between items-center p-4 sm:p-6">
@@ -26,10 +37,10 @@ const Products = () => {
         <div className="max-w-4xl mx-auto text-center">
           <Badge variant="secondary" className="mb-4">Luxury Collection</Badge>
           <h1 className="text-5xl font-playfair font-bold gradient-text mb-6">
-            Our Products
+            Luxury Sex Toys for Discerning Clients
           </h1>
           <p className="text-xl text-muted-foreground mb-8 max-w-3xl mx-auto">
-            Each piece in our collection is meticulously crafted to deliver unparalleled quality and sophisticated pleasure
+            Each piece in our premium pleasure collection is meticulously crafted to deliver unparalleled quality and sophisticated intimate wellness
           </p>
         </div>
       </section>
@@ -177,6 +188,7 @@ const Products = () => {
         </div>
       </section>
     </div>
+    </>
   );
 };
 
