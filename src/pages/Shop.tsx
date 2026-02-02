@@ -8,6 +8,7 @@ import { ShoppingCart, Loader2 } from "lucide-react";
 import { toast } from "sonner";
 import { ShopifyProduct } from "@/lib/shopify";
 import { SEO } from "@/components/SEO";
+import { PrelaunchFooter } from "@/components/prelaunch/PrelaunchFooter";
 
 const ProductCard = ({ product }: { product: ShopifyProduct }) => {
   const addItem = useCartStore(state => state.addItem);
@@ -143,6 +144,8 @@ const Shop = () => {
             </div>
           )}
         </div>
+        
+        <PrelaunchFooter />
       </div>
     </>
   );

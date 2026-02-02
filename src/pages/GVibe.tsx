@@ -12,6 +12,7 @@ import { useCart } from "@/hooks/useCart";
 import { useToast } from "@/hooks/use-toast";
 import { N8nService } from "@/services/n8nService";
 import { getProductById } from "@/lib/productData";
+import { PrelaunchFooter } from "@/components/prelaunch/PrelaunchFooter";
 
 const GVibe = () => {
   const [concierge, setConcierge] = useState<string | null>(null);
@@ -212,22 +213,7 @@ const GVibe = () => {
       {/* Similar Products */}
       <SimilarProducts currentProduct="g-vibe" />
       
-      {/* Creative Credit Footer */}
-      <footer className="py-8 px-6 border-t border-white/10">
-        <div className="max-w-4xl mx-auto text-center">
-          <p className="text-sm text-white/60 font-inter">
-            Masterfully built with dedication by{" "}
-            <a
-              href="https://lumarostudios.com"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-primary hover:text-secondary transition-colors duration-300 font-medium hover:underline"
-            >
-              Lumaro Studios
-            </a>
-          </p>
-        </div>
-      </footer>
+      <PrelaunchFooter />
       
       <ConciergeChat />
     </div>
