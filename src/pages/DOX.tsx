@@ -11,7 +11,7 @@ import UserMenu from "@/components/UserMenu";
 import { useCart } from "@/hooks/useCart";
 import { useToast } from "@/hooks/use-toast";
 import { getProductById } from "@/lib/productData";
-
+import { PrelaunchFooter } from "@/components/prelaunch/PrelaunchFooter";
 const DOX = () => {
   const [concierge, setConcierge] = useState<string | null>(null);
   const [isCartOpen, setIsCartOpen] = useState(false);
@@ -213,22 +213,8 @@ const DOX = () => {
       {/* Similar Products */}
       <SimilarProducts currentProduct="dox" />
       
-      {/* Creative Credit Footer */}
-      <footer className="py-8 px-6 border-t border-white/10">
-        <div className="max-w-4xl mx-auto text-center">
-          <p className="text-sm text-white/60 font-inter">
-            Carefully crafted with attention to detail by{" "}
-            <a
-              href="https://lumarostudios.com"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-primary hover:text-secondary transition-colors duration-300 font-medium hover:underline"
-            >
-              Lumaro Studios
-            </a>
-          </p>
-        </div>
-      </footer>
+      {/* Footer */}
+      <PrelaunchFooter />
       
       <ConciergeChat />
     </div>

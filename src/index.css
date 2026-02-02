@@ -346,6 +346,114 @@
   }
 }
 
+/* ========== PROFESSIONAL DARK SURFACE SYSTEM ========== */
+@layer components {
+  /* Dark surfaces for premium shop/product pages */
+  .surface-dark {
+    background: linear-gradient(180deg, hsl(15, 12%, 8%) 0%, hsl(15, 15%, 10%) 100%);
+  }
+  
+  .surface-dark-rich {
+    background: linear-gradient(180deg, hsl(15, 10%, 6%) 0%, hsl(15, 12%, 9%) 50%, hsl(15, 15%, 11%) 100%);
+  }
+  
+  /* Dark cards with proper contrast */
+  .card-dark {
+    background: hsl(15, 15%, 12%);
+    border: 1px solid hsl(0 0% 100% / 0.08);
+    transition: var(--transition-luxury);
+  }
+  
+  .card-dark:hover {
+    border-color: hsl(40 65% 72% / 0.3);
+    box-shadow: 0 20px 60px -15px hsl(0 0% 0% / 0.5),
+                0 0 40px hsl(40 65% 72% / 0.08);
+    transform: translateY(-4px);
+  }
+  
+  /* Text utilities for dark backgrounds */
+  .text-light-primary {
+    color: hsl(0 0% 100% / 0.95);
+  }
+  
+  .text-light-secondary {
+    color: hsl(0 0% 100% / 0.7);
+  }
+  
+  .text-light-muted {
+    color: hsl(0 0% 100% / 0.5);
+  }
+  
+  /* Trust badge styling */
+  .trust-badge {
+    @apply flex items-center gap-3 px-4 py-3;
+    background: hsl(15, 15%, 10%);
+    border: 1px solid hsl(0 0% 100% / 0.06);
+    border-radius: 0.75rem;
+  }
+  
+  .trust-badge-icon {
+    @apply w-10 h-10 rounded-full flex items-center justify-center flex-shrink-0;
+    background: hsl(40 65% 72% / 0.15);
+    color: hsl(40, 65%, 72%);
+  }
+  
+  /* Sticky product bar */
+  .sticky-product-bar {
+    @apply fixed bottom-0 left-0 right-0 z-50 py-3 px-4;
+    background: hsl(15, 12%, 10% / 0.95);
+    border-top: 1px solid hsl(0 0% 100% / 0.1);
+    backdrop-filter: blur(20px);
+    transform: translateY(100%);
+    transition: transform 0.3s ease;
+  }
+  
+  .sticky-product-bar.visible {
+    transform: translateY(0);
+  }
+  
+  /* Premium product image container */
+  .product-image-container {
+    @apply relative overflow-hidden rounded-2xl;
+    background: linear-gradient(180deg, hsl(15, 12%, 10%) 0%, hsl(15, 15%, 14%) 100%);
+    border: 1px solid hsl(0 0% 100% / 0.06);
+  }
+  
+  .product-image-container img {
+    @apply w-full h-full object-cover transition-transform duration-700;
+  }
+  
+  .product-image-container:hover img {
+    transform: scale(1.03);
+  }
+  
+  /* Premium button for dark surfaces */
+  .btn-premium {
+    @apply inline-flex items-center justify-center font-montserrat font-semibold transition-all duration-300;
+    background: linear-gradient(135deg, hsl(40, 65%, 72%) 0%, hsl(45, 70%, 78%) 100%);
+    color: hsl(15, 15%, 10%);
+    border-radius: 0.5rem;
+    box-shadow: 0 4px 20px hsl(40 65% 72% / 0.3);
+  }
+  
+  .btn-premium:hover {
+    box-shadow: 0 8px 30px hsl(40 65% 72% / 0.4);
+    transform: translateY(-2px);
+  }
+  
+  /* Collection hero styling */
+  .collection-hero {
+    @apply relative py-24 px-4 text-center overflow-hidden;
+    background: linear-gradient(180deg, hsl(15, 10%, 6%) 0%, hsl(15, 12%, 10%) 100%);
+  }
+  
+  .collection-hero::before {
+    content: '';
+    @apply absolute inset-0 pointer-events-none;
+    background: radial-gradient(ellipse 80% 50% at 50% 0%, hsl(40 65% 72% / 0.12), transparent 60%);
+  }
+}
+
 @layer utilities {
   .font-baskerville {
     font-family: 'Libre Baskerville', 'Baskerville Old Face', serif;
