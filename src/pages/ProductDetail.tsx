@@ -12,6 +12,7 @@ import { TrustBadges } from "@/components/TrustBadges";
 import { StickyProductBar } from "@/components/StickyProductBar";
 import { ImageLightbox } from "@/components/ImageLightbox";
 import { DoxVideoSection } from "@/components/DoxVideoSection";
+import { RelatedProducts } from "@/components/RelatedProducts";
 
 const ProductDetail = () => {
   const { handle } = useParams<{ handle: string }>();
@@ -213,6 +214,9 @@ const ProductDetail = () => {
 
         {/* DOX Video Section - Only for DOX product */}
         {isDoxProduct && <DoxVideoSection onReserve={handleAddToCart} />}
+
+        {/* Related Products */}
+        <RelatedProducts currentHandle={handle || ""} maxProducts={6} />
 
         {/* Sticky Product Bar */}
         <StickyProductBar
