@@ -7,6 +7,7 @@ import { ShoppingCart, Loader2, ArrowLeft, Check } from "lucide-react";
 import { toast } from "sonner";
 import { SEO } from "@/components/SEO";
 import { useState } from "react";
+import { PrelaunchFooter } from "@/components/prelaunch/PrelaunchFooter";
 
 const ProductDetail = () => {
   const { handle } = useParams<{ handle: string }>();
@@ -193,6 +194,8 @@ const ProductDetail = () => {
             </div>
           </div>
         </div>
+        
+        <PrelaunchFooter />
       </div>
     </>
   );
