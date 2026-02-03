@@ -21,7 +21,7 @@ export const BrandPhilosophy = () => {
             initial={{ opacity: 0, y: 20 }}
             animate={inView ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.6 }}
-            className="text-primary font-montserrat text-sm tracking-[0.3em] mb-8 block"
+            className="text-primary/90 font-montserrat text-sm tracking-[0.3em] mb-8 block font-medium"
           >
             V E L L V I I
           </motion.span>
@@ -41,11 +41,11 @@ export const BrandPhilosophy = () => {
             transition={{ duration: 0.6, delay: 0.4 }}
             className="flex items-center justify-center gap-4"
           >
-            <div className="h-px w-12 bg-primary/40" />
-            <span className="font-montserrat text-light-secondary tracking-widest text-sm">
+            <div className="h-px w-12 bg-primary/50" />
+            <span className="font-montserrat text-white/80 tracking-widest text-sm">
               LUXURY • PRIVACY • PLEASURE
             </span>
-            <div className="h-px w-12 bg-primary/40" />
+            <div className="h-px w-12 bg-primary/50" />
           </motion.div>
         </div>
       </div>

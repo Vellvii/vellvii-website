@@ -83,7 +83,7 @@ const FeaturePanel = ({ feature, index }: { feature: FeaturePanel; index: number
           initial={{ opacity: 0, x: feature.reverse ? 30 : -30 }}
           animate={inView ? { opacity: 1, x: 0 } : {}}
           transition={{ duration: 0.6, delay: 0.2 }}
-          className="text-primary font-montserrat text-sm tracking-[0.3em] mb-2"
+          className="text-primary/90 font-montserrat text-sm tracking-[0.3em] mb-2 font-medium"
         >
           {feature.title}
         </motion.span>
@@ -99,7 +99,7 @@ const FeaturePanel = ({ feature, index }: { feature: FeaturePanel; index: number
           initial={{ opacity: 0, x: feature.reverse ? 30 : -30 }}
           animate={inView ? { opacity: 1, x: 0 } : {}}
           transition={{ duration: 0.6, delay: 0.4 }}
-          className="font-montserrat text-light-secondary text-lg leading-relaxed max-w-md"
+          className="font-montserrat text-white/80 text-lg leading-relaxed max-w-md"
         >
           {feature.description}
         </motion.p>

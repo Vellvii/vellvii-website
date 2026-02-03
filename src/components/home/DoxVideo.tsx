@@ -45,13 +45,13 @@ export const DoxVideo = () => {
       <div className="container mx-auto px-4">
         <ScrollReveal>
           <div className="text-center mb-12">
-            <span className="text-primary font-montserrat text-sm tracking-[0.3em] mb-4 block">
+            <span className="text-primary/90 font-montserrat text-sm tracking-[0.3em] mb-4 block font-medium">
               EXPERIENCE
             </span>
             <h2 className="font-baskerville text-3xl md:text-5xl text-white mb-4">
               DOX in 60 Seconds
             </h2>
-            <p className="font-montserrat text-light-secondary max-w-xl mx-auto">
+            <p className="font-montserrat text-white/80 max-w-xl mx-auto">
               Discover how the Vellvii DOX transforms your private wellness experience
             </p>
           </div>

@@ -35,7 +35,7 @@ export const TrustSection = () => {
       <div className="container mx-auto px-4">
         <ScrollReveal>
           <div className="text-center mb-16">
-            <span className="text-primary font-montserrat text-sm tracking-[0.3em] mb-4 block">
+            <span className="text-primary/90 font-montserrat text-sm tracking-[0.3em] mb-4 block font-medium">
               WHY VELLVII
             </span>
             <h2 className="font-baskerville text-3xl md:text-5xl text-white">
@@ -54,7 +54,7 @@ export const TrustSection = () => {
                 <h3 className="font-montserrat font-medium text-white mb-2 text-sm md:text-base">
                   {item.title}
                 </h3>
-                <p className="font-montserrat text-light-secondary text-xs md:text-sm leading-relaxed">
+                <p className="font-montserrat text-white/70 text-xs md:text-sm leading-relaxed">
                   {item.description}
                 </p>
               </div>

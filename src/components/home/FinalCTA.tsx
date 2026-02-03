@@ -26,7 +26,7 @@ export const FinalCTA = () => {
             initial={{ opacity: 0, y: 20 }}
             animate={inView ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.6 }}
-            className="text-primary font-montserrat text-sm tracking-[0.3em] mb-6 block"
+            className="text-primary/90 font-montserrat text-sm tracking-[0.3em] mb-6 block font-medium"
           >
             READY?
           </motion.span>
@@ -44,7 +44,7 @@ export const FinalCTA = () => {
             initial={{ opacity: 0, y: 20 }}
             animate={inView ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.6, delay: 0.2 }}
-            className="font-montserrat text-light-secondary text-lg mb-10 max-w-xl mx-auto"
+            className="font-montserrat text-white/80 text-lg mb-10 max-w-xl mx-auto"
           >
             Join the movement redefining intimate wellness with thoughtful design and uncompromising quality.
           </motion.p>

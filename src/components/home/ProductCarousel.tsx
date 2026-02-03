@@ -15,7 +15,7 @@ export const ProductCarousel = () => {
         <ScrollReveal>
           <div className="flex flex-col md:flex-row md:items-end md:justify-between mb-12">
             <div>
-              <span className="text-primary font-montserrat text-sm tracking-[0.3em] mb-4 block">
+              <span className="text-primary/90 font-montserrat text-sm tracking-[0.3em] mb-4 block font-medium">
                 THE COLLECTION
               </span>
               <h2 className="font-baskerville text-3xl md:text-5xl text-white">
