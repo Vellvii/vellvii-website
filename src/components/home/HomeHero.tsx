@@ -71,7 +71,7 @@ export const HomeHero = () => {
             <Button
               variant="outline"
               size="lg"
-              className="border-white/30 text-white hover:bg-white/10 font-montserrat tracking-wide px-8 py-6 text-base w-full sm:w-auto"
+              className="border-white text-white bg-white/10 hover:bg-white/20 font-montserrat tracking-wide px-8 py-6 text-base w-full sm:w-auto backdrop-blur-sm"
             >
               Shop Collection
             </Button>
