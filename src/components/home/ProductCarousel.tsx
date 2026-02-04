@@ -58,7 +58,7 @@ export const ProductCarousel = () => {
                     transition={{ delay: index * 0.1 }}
                     className="flex-shrink-0 w-[280px] md:w-[320px] snap-start"
                   >
-                    <Link to={`/product/${product.node.handle}`} className="block group">
+                    <Link to={`/products/${product.node.handle}`} className="block group">
                       <div className="bg-surface-dark rounded-xl p-4 transition-all duration-300 hover:bg-surface-dark/80 hover:shadow-lg hover:shadow-primary/5">
                         <div className="aspect-square rounded-lg overflow-hidden mb-4 bg-black/20">
                           {product.node.images.edges[0] && (
