@@ -51,7 +51,7 @@ const ProductDetail = () => {
     })?.node || product.node.variants.edges[0]?.node;
   }, [product, selectedOptions]);
 
-  // Find images that match the selected color (by alt text or position)
+  // Find images that match the selected color (by alt text or URL)
   const filteredImages = useMemo(() => {
     if (!product?.node?.images?.edges) return [];
     
@@ -60,10 +60,16 @@ const ProductDetail = () => {
     
     if (!selectedColor) return allImages;
     
-    // Try to find images with matching alt text containing the color
+    // Try to find images with matching alt text or URL containing the color
     const colorMatchedImages = allImages.filter((img) => {
       const altText = img.node.altText?.toLowerCase() || '';
-      return altText.includes(selectedColor);
+      const url = img.node.url?.toLowerCase() || '';
+      
+      // Check for color in alt text or URL (handles various naming conventions)
+      return altText.includes(selectedColor) || 
+             url.includes(selectedColor) ||
+             url.includes(selectedColor.replace(' ', '-')) ||
+             url.includes(selectedColor.replace(' ', '_'));
     });
     
     // If we found color-matched images, use those; otherwise show all
@@ -320,6 +326,7 @@ const ProductDetail = () => {
                                 'red': '#8B0000',
                                 'deep red': '#8B0000',
                                 'cream': '#F5F5DC',
+                                'beige': '#D4B896',
                                 'white': '#FFFFFF',
                                 'rose gold': '#B76E79',
                                 'pink': '#FFC0CB',
