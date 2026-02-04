@@ -110,7 +110,7 @@ export const DoxVideo = () => {
                     </motion.h3>
 
                     <div className="flex flex-col sm:flex-row gap-4">
-                      <Link to="/product/vellvii-dox">
+                      <Link to="/products/vellvii-dox">
                         <Button
                           size="lg"
                           className="bg-primary text-black hover:bg-primary/90 font-montserrat font-semibold px-8"
@@ -138,7 +138,7 @@ export const DoxVideo = () => {
         {/* CTA Below Video */}
         <ScrollReveal delay={0.4}>
           <div className="text-center mt-10">
-            <Link to="/product/vellvii-dox">
+            <Link to="/products/vellvii-dox">
               <Button
                 size="lg"
                 className="bg-primary text-black hover:bg-primary/90 font-montserrat font-semibold tracking-wide px-10 shadow-elegant hover:shadow-glow transition-all duration-500"

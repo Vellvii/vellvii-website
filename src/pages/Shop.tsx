@@ -43,7 +43,7 @@ const ProductCard = ({ product }: { product: ShopifyProduct }) => {
   const price = product.node.priceRange.minVariantPrice;
 
   return (
-    <Link to={`/product/${product.node.handle}`} className="group block">
+    <Link to={`/products/${product.node.handle}`} className="group block">
       <div className="card-dark rounded-xl sm:rounded-2xl overflow-hidden">
         <div className="product-image-container aspect-[3/4] sm:aspect-[4/5]">
           {image ? (
