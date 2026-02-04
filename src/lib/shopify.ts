@@ -139,7 +139,7 @@ const PRODUCT_FIELDS = `
       currencyCode
     }
   }
-  images(first: 10) {
+  images(first: 50) {
     edges {
       node {
         url
@@ -147,7 +147,7 @@ const PRODUCT_FIELDS = `
       }
     }
   }
-  media(first: 10) {
+  media(first: 50) {
     edges {
       node {
         mediaContentType
