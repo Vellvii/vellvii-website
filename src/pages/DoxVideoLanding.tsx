@@ -12,11 +12,13 @@ import {
   DialogDescription,
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
+import { supabase } from "@/integrations/supabase/client";
 import * as z from "zod";
 
 const PRELAUNCH_URL = "https://prelaunch.com/projects/5ff3ce3f-6669-4243-918c-4d57d98b63f6/reservation?userEmail=stefan%40vellvii.com&reservationId=c3452574-55cf-49e6-aa12-79b4c18131ac";
 
 const emailSchema = z.string().trim().min(1, "Email is required").email("Please enter a valid email").max(255, "Email too long");
+
 const DoxVideoLanding = () => {
   const [isPlaying, setIsPlaying] = useState(false);
   const [videoEnded, setVideoEnded] = useState(false);
@@ -26,6 +28,7 @@ const DoxVideoLanding = () => {
   const [emailError, setEmailError] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
+  const [successMessage, setSuccessMessage] = useState("");
 
   const handleNotifySubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -38,11 +41,22 @@ const DoxVideoLanding = () => {
     }
     
     setIsSubmitting(true);
-    // Simulate API call - can connect to edge function later
-    await new Promise(resolve => setTimeout(resolve, 1000));
-    console.log("USA notification email:", result.data);
-    setIsSubmitting(false);
-    setIsSubmitted(true);
+    
+    try {
+      const { data, error } = await supabase.functions.invoke("usa-launch-notify", {
+        body: { email: result.data, source: "dox_video_landing" },
+      });
+      
+      if (error) throw error;
+      
+      setSuccessMessage(data?.message || "You're on the list!");
+      setIsSubmitted(true);
+    } catch (err: any) {
+      console.error("Notification signup error:", err);
+      setEmailError(err.message || "Something went wrong. Please try again.");
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   const handlePlay = async () => {
@@ -248,8 +262,8 @@ const DoxVideoLanding = () => {
                 <DialogTitle className="text-2xl font-baskerville text-light-primary">
                   You're on the List!
                 </DialogTitle>
-                <p className="text-white/70 text-sm">
-                  We'll notify you as soon as DOX becomes available in the USA.
+                <p className="text-muted-foreground text-sm">
+                  {successMessage || "We'll notify you as soon as DOX becomes available in the USA."}
                 </p>
               </div>
             ) : (

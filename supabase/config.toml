@@ -5,3 +5,6 @@ verify_jwt = false
 
 [functions.join-mailing-list]
 verify_jwt = false
+
+[functions.usa-launch-notify]
+verify_jwt = false
