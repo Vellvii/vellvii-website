@@ -1,57 +1,53 @@
 
 
-# Warranty Page for Vellvii DOX & LUX
+# Warranty Registration System
 
 ## Overview
-Create a dedicated warranty page that clearly communicates the **lifetime warranty** coverage for the DOX and LUX storage products, distinguishing them from the standard warranty on the three toy products. The page will also include a clear **no refunds policy**.
+Build a warranty registration system where customers scan a product-specific QR code (one for DOX, one for LUX), then register using their **order number** and **receipt upload** as proof of purchase. Registration is ideally within 7 days but has no hard deadline.
 
 ---
 
-## Page Structure
+## How It Works
 
-### Header Section
-- Vellvii logo (clickable, links to home)
-- Page title: "Lifetime Warranty"
-- Subtitle: "Our Promise of Lasting Quality"
+### Customer Flow
+1. Customer receives DOX or LUX with a QR code card
+2. Scans QR code → opens `/warranty/register?product=dox` or `?product=lux`
+3. Fills out form: name, email, order number, purchase date
+4. Uploads photo of receipt/order confirmation
+5. Receives confirmation with registration ID
+6. Can now file warranty claims using this registration
 
-### Section 1: Lifetime Warranty Products
-Cover the **DOX** and **LUX** with clear messaging:
+### QR Code Setup (Manual)
+You only need **2 QR codes** total:
+- **DOX**: `https://vellvii-site.lovable.app/warranty/register?product=dox`
+- **LUX**: `https://vellvii-site.lovable.app/warranty/register?product=lux`
 
-**What's Covered:**
-- Hinge mechanism failure
-- Fingerprint lock malfunction
-- Leather fading or discoloration under normal use
-- Charging dock issues
-- Velvet lining defects
-- Structural integrity issues
+These can be printed on cards included with every product.
 
-**What's NOT Covered:**
-- Intentional damage or misuse
-- Physical trauma (drops, crushing, forcing open)
-- Damage from improper cleaning products
-- Normal wear and tear from excessive use
-- Modifications or unauthorized repairs
-- Water damage (submerging the product)
+---
 
-### Section 2: Toy Product Warranty
-Brief mention that the Pulse, Vibe, and G-Vibe have a **standard 1-year warranty** covering manufacturing defects only.
+## Registration Form
 
-### Section 3: No Refunds Policy
-Clear, prominent section stating:
-- **All sales are final** - no refunds under any circumstances
-- Due to the intimate nature of products, returns are not accepted
-- Warranty claims result in **repair or replacement only**, not refunds
-- Defective items will be replaced at Vellvii's discretion
+| Field | Type | Required |
+|-------|------|----------|
+| Product Type | Auto-filled from QR | Yes |
+| Full Name | Text | Yes |
+| Email Address | Email | Yes |
+| Phone Number | Phone input | No |
+| Order Number | Text | Yes |
+| Purchase Date | Date picker | Yes |
+| Receipt/Proof | File upload (image) | Yes |
 
-### Section 4: How to File a Warranty Claim
-Step-by-step process:
-1. Email hello@vellvii.com with order number and issue description
-2. Include photos of the defect
-3. Team reviews within 48 hours
-4. Receive repair, replacement, or further instructions
+---
 
-### Footer
-Standard PrelaunchFooter component
+## Changes to Warranty Page
+
+Add a new **"Registration Required"** section with:
+- Explanation that warranty must be registered
+- "Ideally within 7 days" messaging (soft deadline)
+- Clear warning: unregistered products cannot receive warranty service
+- Link/button to register manually at `/warranty/register`
+- "Already registered?" note for returning customers
 
 ---
 
@@ -59,19 +55,52 @@ Standard PrelaunchFooter component
 
 | File | Action | Purpose |
 |------|--------|---------|
-| `src/pages/Warranty.tsx` | Create | New warranty page component |
-| `src/App.tsx` | Modify | Add route `/warranty` |
-| `src/components/prelaunch/PrelaunchFooter.tsx` | Modify | Add "Warranty" link to footer navigation |
+| `src/pages/WarrantyRegister.tsx` | Create | Registration form page |
+| `src/pages/Warranty.tsx` | Modify | Add registration required section |
+| `src/App.tsx` | Modify | Add `/warranty/register` route |
+| Database migration | Create | `warranty_registrations` table |
+| Storage bucket | Create | `warranty-receipts` for receipt uploads |
+
+---
+
+## Database Design
+
+### Table: `warranty_registrations`
+
+| Column | Type | Notes |
+|--------|------|-------|
+| id | uuid | Primary key |
+| registration_id | text | Human-readable ID (e.g., "WR-ABC123") |
+| product_type | text | 'dox' or 'lux' |
+| customer_name | text | Required |
+| customer_email | text | Required |
+| customer_phone | text | Optional |
+| order_number | text | Required |
+| purchase_date | date | Required |
+| receipt_url | text | URL to uploaded receipt |
+| registered_at | timestamptz | When registered |
+| created_at | timestamptz | Row creation |
+
+### RLS Policies
+- **Public INSERT**: Anyone can register (no auth required)
+- **Admin SELECT/UPDATE/DELETE**: Only admins can view/manage registrations
+
+### Storage Bucket
+- Name: `warranty-receipts`
+- Public: No (private, accessed via signed URLs by admin)
+- Policy: Anyone can upload, only admins can read
 
 ---
 
 ## Design Notes
-- Follow existing legal page styling (PrivacyPolicy/TermsOfService pattern)
-- Dark background with prose content
-- Gold/primary accent for headers
-- No Refunds section will have slightly stronger visual emphasis (subtle border or background)
-- Mobile-responsive layout
-- SEO component with proper meta tags
+
+- Mobile-first design (users scan QR with phones)
+- Match existing luxury dark theme
+- Use existing form patterns from EmailCaptureForm
+- Success state with confetti/checkmark animation
+- Clear error messages for missing fields
+- File upload preview before submission
+- Responsive layout for all devices
 
 ---
 
@@ -79,14 +108,19 @@ Standard PrelaunchFooter component
 
 **New Route:**
 ```text
-/warranty -> Warranty.tsx
+/warranty/register → WarrantyRegister.tsx
 ```
 
-**SEO Meta:**
-- Title: "Lifetime Warranty | Vellvii"
-- Description: "Vellvii offers a lifetime warranty on DOX and LUX luxury storage products. All sales are final with no refunds. Coverage includes manufacturing defects."
-- Canonical: `/warranty`
+**Query Parameter:**
+- `product=dox` or `product=lux` (auto-selects product type)
+- Manual selection available if no param
 
-**Footer Link Addition:**
-Add "Warranty" between "Privacy Policy" and "Terms of Service" in the footer navigation.
+**Registration ID Format:**
+- Generated on submit: `WR-` + 6 random alphanumeric characters
+- Example: `WR-K8M2X9`
+
+**File Upload:**
+- Accepts: JPG, PNG, PDF
+- Max size: 10MB
+- Stored in Supabase Storage `warranty-receipts` bucket
 
