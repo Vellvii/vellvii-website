@@ -1,40 +1,83 @@
 
 
-# Swap Landing Pages (Without Vivien Chat)
+# Simple DOX Video Landing Page
 
 ## Summary
-Make the DOX-focused prelaunch page (with 60-second video) the main home page at `/`, remove the Vivien chat from it, and park the current Apple-inspired showcase at `/showcase`.
+Create a minimal, focused landing page that centers entirely on the 60-second DOX explainer video. This becomes the homepage at `/`, while the current multi-section PrelaunchDOX and Apple-inspired DoxLanding pages get parked at separate routes.
 
 ---
 
-## Changes
+## The New Page: Simple DOX Video Focus
 
-### 1. Update Routes in App.tsx
-
-| Route | Current | New |
-|-------|---------|-----|
-| `/` | DoxLanding (7-section showcase) | PrelaunchDOX (DOX video focus) |
-| `/showcase` | — | DoxLanding (parked for later) |
-| `/prelaunch-dox` | PrelaunchDOX | Keep for backwards compatibility |
-
-### 2. Remove Vivien Chat from PrelaunchDOX
-
-Remove the `<FloatingVivienChat />` component and its import from `src/pages/PrelaunchDOX.tsx`.
+A clean, distraction-free page with:
+- Dark luxury background
+- Vellvii logo at top
+- Large video player (The_Vellvii_Dox_1.webm) as the centerpiece
+- "DOX in 60 Seconds" heading
+- Play button overlay before playing
+- After video ends: Reserve CTA button + "Discuss" button
+- Mobile fullscreen support (auto-enters fullscreen on play)
+- Footer with minimal links
 
 ---
 
-## Files to Modify
+## Route Changes
 
-| File | Change |
-|------|--------|
-| `src/App.tsx` | Update route: `/` → PrelaunchDOX, add `/showcase` → DoxLanding |
-| `src/pages/PrelaunchDOX.tsx` | Remove FloatingVivienChat import and component |
+| Route | Content | Purpose |
+|-------|---------|---------|
+| `/` | **New simple DOX video page** | Main homepage - video focus |
+| `/showcase` | DoxLanding (7-section Apple) | Parked for future |
+| `/prelaunch` | PrelaunchDOX (multi-section) | Parked for future |
+| `/landing` | AgeGateLanding (Vivien intro) | Keep as-is |
 
 ---
 
-## Result
+## Files to Create/Modify
 
-- **Homepage (`/`)**: DOX prelaunch with 60-sec video, problem/solution, features, specs, timeline, FAQ — no chat
-- **Parked (`/showcase`)**: Apple-inspired 7-section page saved for future use
-- **Backwards compatibility**: `/prelaunch-dox` still works
+| File | Action | Purpose |
+|------|--------|---------|
+| `src/pages/DoxVideoLanding.tsx` | Create | New simple video-focused page |
+| `src/App.tsx` | Modify | Update routes as shown above |
+
+---
+
+## Page Layout
+
+```text
+┌─────────────────────────────────────┐
+│           [Vellvii Logo]            │
+├─────────────────────────────────────┤
+│                                     │
+│        "DOX in 60 Seconds"          │
+│                                     │
+│   ┌───────────────────────────┐     │
+│   │                           │     │
+│   │    [▶ Play Button]        │     │
+│   │       VIDEO               │     │
+│   │                           │     │
+│   └───────────────────────────┘     │
+│                                     │
+│   (After video ends:)               │
+│   [Reserve Your DOX] [Discuss]      │
+│                                     │
+├─────────────────────────────────────┤
+│           Footer Links              │
+└─────────────────────────────────────┘
+```
+
+---
+
+## Technical Details
+
+**Video behavior:**
+- Uses existing `The_Vellvii_Dox_1.webm`
+- Play button overlay before starting
+- Mobile: auto-enters fullscreen on play
+- End screen with Reserve CTA linking to prelaunch.com
+
+**Styling:**
+- Matches existing luxury dark theme
+- Uses existing CSS variables and gradients
+- Responsive design (mobile-first)
+- Rose-gold accents
 
