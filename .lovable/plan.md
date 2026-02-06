@@ -1,92 +1,101 @@
 
 
-# Replace "Join the Discussion" with "Notify Me When Available in USA" Email Capture
+# Store USA Launch Notification Emails
 
 ## Summary
-Replace the current "Join the Discussion" button with a prominent "Notify Me When Available in USA" button that opens a modal with a simple email capture form.
+Create a simple database table and edge function to capture and store emails from users who want to be notified when DOX is available in the USA.
 
 ---
 
-## What You'll Get
-
-**The Button:**
-- Large, eye-catching button replacing "Join the Discussion"
-- Text: "Notify Me When Available in USA"
-- USA flag icon for visual clarity
-- Same styling treatment as the Reserve button (luxury gradient)
-
-**The Modal (when clicked):**
-- Clean, simple dialog overlay
-- Headline: "Get Notified for USA Launch"
-- Just one field: Email address
-- Submit button: "Notify Me"
-- Success state after submission
+## Current State
+- Emails are only logged to console (lost on page refresh)
+- No persistence or way to access submitted emails
 
 ---
 
-## Design
+## Solution
 
-```text
-┌─────────────────────────────────────┐
-│                                     │
-│    [Reserve Your DOX] (gold)        │
-│                                     │
-│    [🇺🇸 Notify Me When              │
-│        Available in USA]            │
-│                                     │
-└─────────────────────────────────────┘
+### 1. New Database Table
 
-        ↓ When clicked ↓
+| Column | Type | Description |
+|--------|------|-------------|
+| id | uuid | Primary key |
+| email | text | User's email (unique) |
+| created_at | timestamp | When they signed up |
+| source | text | Where signup came from (default: 'dox_video_landing') |
 
-┌─────────────────────────────────────┐
-│                 ✕                   │
-│                                     │
-│     Get Notified for USA Launch     │
-│                                     │
-│     Be first to know when DOX       │
-│     becomes available in your area  │
-│                                     │
-│     ┌─────────────────────────┐     │
-│     │ Enter your email        │     │
-│     └─────────────────────────┘     │
-│                                     │
-│         [Notify Me]                 │
-│                                     │
-└─────────────────────────────────────┘
+```sql
+CREATE TABLE public.usa_launch_notifications (
+  id uuid PRIMARY KEY DEFAULT gen_random_uuid(),
+  email text NOT NULL UNIQUE,
+  source text DEFAULT 'dox_video_landing',
+  created_at timestamptz DEFAULT now()
+);
+
+-- RLS: Anyone can insert, admins can view
+ALTER TABLE usa_launch_notifications ENABLE ROW LEVEL SECURITY;
+
+CREATE POLICY "Anyone can sign up for USA notifications"
+  ON usa_launch_notifications FOR INSERT
+  WITH CHECK (true);
+
+CREATE POLICY "Admins can view all USA notifications"
+  ON usa_launch_notifications FOR SELECT
+  USING (EXISTS (
+    SELECT 1 FROM profiles
+    WHERE profiles.user_id = auth.uid() AND profiles.role = 'admin'
+  ));
 ```
 
+### 2. New Edge Function: `usa-launch-notify`
+
+Simple function that:
+- Accepts email
+- Validates format
+- Inserts into database
+- Sends confirmation email (using existing Resend setup)
+- Notifies stefan@vellvii.com of new signup
+
+### 3. Update Frontend
+
+Connect the form submission to the new edge function instead of console.log.
+
 ---
 
-## Files to Modify
+## Files to Create/Modify
 
-| File | Change |
+| File | Action |
 |------|--------|
-| `src/pages/DoxVideoLanding.tsx` | Replace "Join Discussion" button with "Notify Me" button + modal |
+| Database migration | Create `usa_launch_notifications` table |
+| `supabase/functions/usa-launch-notify/index.ts` | New edge function |
+| `src/pages/DoxVideoLanding.tsx` | Call edge function on submit |
 
 ---
 
-## Technical Details
+## How to Access the Emails
 
-### Modal Implementation
-- Use existing `Dialog` component from `@radix-ui/react-dialog`
-- Simple email-only form with Zod validation
-- For now, log email to console (can be connected to edge function later)
-- Success state with confirmation message
-
-### Button Appears In Two Places
-1. **Below video** (main CTA area, lines 193-201)
-2. **Inside video end screen** (can add there too, or keep simple)
-
-### Validation
-- Email required and must be valid format
-- Max 255 characters
-- Proper error messages
+Once implemented, you (as admin) can:
+1. View in Supabase Dashboard > Table Editor > `usa_launch_notifications`
+2. Export as CSV from the dashboard
+3. Query via SQL: `SELECT * FROM usa_launch_notifications ORDER BY created_at DESC`
 
 ---
 
-## Result
-- Cleaner user experience focused on email capture for USA launch
-- Reduces friction (no external link)
-- Captures leads directly on the page
-- Can later connect to mailing list edge function
+## Email Flow
+
+```text
+User submits email
+       ↓
+Edge function validates
+       ↓
+   ┌───┴───┐
+   ↓       ↓
+Insert   Send emails
+to DB    (Resend)
+           ↓
+      ┌────┴────┐
+      ↓         ↓
+   User      Stefan
+confirmation  notification
+```
 
