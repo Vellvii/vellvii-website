@@ -210,25 +210,24 @@ const DoxVideoLanding = () => {
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: 20 }}
                 transition={{ delay: 0.2 }}
-                className="flex flex-col sm:flex-row gap-4 mt-8 w-full max-w-md px-4"
+                className="flex flex-col sm:flex-row gap-3 mt-8 w-full max-w-xl px-4"
               >
                 <a
                   href={PRELAUNCH_URL}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex-1 group px-8 py-4 bg-gradient-to-r from-primary via-accent to-primary bg-[length:200%_100%] text-black rounded-xl font-bold text-base shadow-elegant hover:shadow-glow transition-all duration-700 hover:bg-right relative overflow-hidden flex items-center justify-center gap-2"
+                  className="group px-6 py-3 bg-gradient-to-r from-primary via-accent to-primary bg-[length:200%_100%] text-black rounded-lg font-semibold text-sm shadow-elegant hover:shadow-glow transition-all duration-500 hover:bg-right relative overflow-hidden flex items-center justify-center gap-2 whitespace-nowrap"
                 >
                   <span className="relative z-10">Reserve Your DOX</span>
-                  <img src={prelaunchLogo} alt="Prelaunch.com" className="h-5 w-5 relative z-10" />
-                  <div className="absolute inset-0 bg-gradient-shimmer opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
+                  <img src={prelaunchLogo} alt="Prelaunch.com" className="h-4 w-4 relative z-10" />
+                  <div className="absolute inset-0 bg-gradient-shimmer opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
                 </a>
                 <button
                   onClick={() => setNotifyOpen(true)}
-                  className="flex-1 group px-8 py-4 bg-gradient-to-r from-secondary via-accent to-secondary bg-[length:200%_100%] text-foreground rounded-xl font-bold text-base shadow-elegant hover:shadow-glow transition-all duration-700 hover:bg-right relative overflow-hidden text-center flex items-center justify-center gap-2"
+                  className="group px-6 py-3 border border-primary/40 hover:border-primary bg-card/50 backdrop-blur-sm text-light-primary rounded-lg font-semibold text-sm transition-all duration-300 hover:bg-primary/10 flex items-center justify-center gap-2 whitespace-nowrap"
                 >
-                  <span className="text-lg">🇺🇸</span>
-                  <span className="relative z-10">Notify Me When Available in USA</span>
-                  <div className="absolute inset-0 bg-gradient-shimmer opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
+                  <span>🇺🇸</span>
+                  <span>Notify Me for USA</span>
                 </button>
               </motion.div>
             )}
