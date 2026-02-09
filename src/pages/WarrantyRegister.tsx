@@ -135,22 +135,29 @@ const WarrantyRegister = () => {
         throw new Error("Failed to upload receipt: " + uploadError.message);
       }
       
-      // Insert registration record
-      const { error: insertError } = await supabase
-        .from("warranty_registrations")
-        .insert({
-          registration_id: newRegistrationId,
-          product_type: productType,
-          customer_name: customerName,
-          customer_email: customerEmail,
-          customer_phone: customerPhone || null,
-          order_number: orderNumber,
-          purchase_date: purchaseDate,
-          receipt_url: fileName,
-        });
+      // Call edge function to insert record and send emails
+      const { data, error: functionError } = await supabase.functions.invoke(
+        "warranty-register",
+        {
+          body: {
+            registration_id: newRegistrationId,
+            product_type: productType,
+            customer_name: customerName,
+            customer_email: customerEmail,
+            customer_phone: customerPhone || null,
+            order_number: orderNumber,
+            purchase_date: purchaseDate,
+            receipt_url: fileName,
+          },
+        }
+      );
       
-      if (insertError) {
-        throw new Error("Failed to register warranty: " + insertError.message);
+      if (functionError) {
+        throw new Error("Failed to register warranty: " + functionError.message);
+      }
+      
+      if (data?.error) {
+        throw new Error(data.error);
       }
       
       setRegistrationId(newRegistrationId);
@@ -158,7 +165,7 @@ const WarrantyRegister = () => {
       
       toast({
         title: "Warranty Registered!",
-        description: `Your registration ID is ${newRegistrationId}`,
+        description: `Your registration ID is ${newRegistrationId}. A confirmation email has been sent.`,
       });
       
     } catch (error) {
