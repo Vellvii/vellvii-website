@@ -1,64 +1,74 @@
 
 
-# Store USA Launch Notification Emails
+# Warranty Registration Email Notifications
 
 ## Summary
-Create a simple database table and edge function to capture and store emails from users who want to be notified when DOX is available in the USA.
+Add email notifications when customers register their warranty - sending a confirmation to the customer and a detailed notification to warranties@vellvii.com.
 
 ---
 
-## Current State
-- Emails are only logged to console (lost on page refresh)
-- No persistence or way to access submitted emails
+## Current Flow vs New Flow
+
+| Step | Current | New |
+|------|---------|-----|
+| Upload receipt | Frontend → Storage | Frontend → Storage |
+| Insert to DB | Frontend → Database | Frontend → Edge Function → Database |
+| Customer email | ❌ None | ✅ Confirmation with registration ID |
+| Admin email | ❌ None | ✅ Full details to warranties@vellvii.com |
 
 ---
 
-## Solution
+## Implementation
 
-### 1. New Database Table
+### 1. New Edge Function: `warranty-register`
 
-| Column | Type | Description |
-|--------|------|-------------|
-| id | uuid | Primary key |
-| email | text | User's email (unique) |
-| created_at | timestamp | When they signed up |
-| source | text | Where signup came from (default: 'dox_video_landing') |
+The edge function will:
+- Receive registration data from frontend
+- Insert into `warranty_registrations` table
+- Send confirmation email to customer
+- Send notification email to warranties@vellvii.com with all details
 
-```sql
-CREATE TABLE public.usa_launch_notifications (
-  id uuid PRIMARY KEY DEFAULT gen_random_uuid(),
-  email text NOT NULL UNIQUE,
-  source text DEFAULT 'dox_video_landing',
-  created_at timestamptz DEFAULT now()
-);
-
--- RLS: Anyone can insert, admins can view
-ALTER TABLE usa_launch_notifications ENABLE ROW LEVEL SECURITY;
-
-CREATE POLICY "Anyone can sign up for USA notifications"
-  ON usa_launch_notifications FOR INSERT
-  WITH CHECK (true);
-
-CREATE POLICY "Admins can view all USA notifications"
-  ON usa_launch_notifications FOR SELECT
-  USING (EXISTS (
-    SELECT 1 FROM profiles
-    WHERE profiles.user_id = auth.uid() AND profiles.role = 'admin'
-  ));
+```text
+Customer submits form
+        ↓
+   Upload receipt to storage (stays in frontend)
+        ↓
+   Call edge function with registration data
+        ↓
+    ┌───┴───┐
+    ↓       ↓
+ Insert    Send emails (Resend)
+  to DB       ↓
+          ┌───┴───┐
+          ↓       ↓
+      Customer   Admin
+   confirmation  notification
 ```
 
-### 2. New Edge Function: `usa-launch-notify`
+### 2. Email Content
 
-Simple function that:
-- Accepts email
-- Validates format
-- Inserts into database
-- Sends confirmation email (using existing Resend setup)
-- Notifies stefan@vellvii.com of new signup
+**Customer Confirmation:**
+- Registration ID (highlighted)
+- Product registered (DOX/LUX)
+- What the warranty covers
+- How to contact for claims
+- Branded Vellvii styling
 
-### 3. Update Frontend
+**Admin Notification (warranties@vellvii.com):**
+- Customer name, email, phone
+- Product type
+- Order number
+- Purchase date
+- Registration ID
+- Link to view receipt in Supabase storage
+- Timestamp
 
-Connect the form submission to the new edge function instead of console.log.
+### 3. Frontend Changes
+
+Update `WarrantyRegister.tsx` to:
+- Keep the file upload to storage (this stays the same)
+- Call the edge function instead of directly inserting to database
+- Handle response and show success/error messages
 
 ---
 
@@ -66,36 +76,36 @@ Connect the form submission to the new edge function instead of console.log.
 
 | File | Action |
 |------|--------|
-| Database migration | Create `usa_launch_notifications` table |
-| `supabase/functions/usa-launch-notify/index.ts` | New edge function |
-| `src/pages/DoxVideoLanding.tsx` | Call edge function on submit |
+| `supabase/functions/warranty-register/index.ts` | Create new edge function |
+| `supabase/config.toml` | Add function config |
+| `src/pages/WarrantyRegister.tsx` | Call edge function instead of direct DB insert |
 
 ---
 
-## How to Access the Emails
+## Technical Details
 
-Once implemented, you (as admin) can:
-1. View in Supabase Dashboard > Table Editor > `usa_launch_notifications`
-2. Export as CSV from the dashboard
-3. Query via SQL: `SELECT * FROM usa_launch_notifications ORDER BY created_at DESC`
-
----
-
-## Email Flow
-
-```text
-User submits email
-       ↓
-Edge function validates
-       ↓
-   ┌───┴───┐
-   ↓       ↓
-Insert   Send emails
-to DB    (Resend)
-           ↓
-      ┌────┴────┐
-      ↓         ↓
-   User      Stefan
-confirmation  notification
+**Edge Function Input:**
+```typescript
+{
+  registration_id: string;
+  product_type: "dox" | "lux";
+  customer_name: string;
+  customer_email: string;
+  customer_phone?: string;
+  order_number: string;
+  purchase_date: string;
+  receipt_url: string; // filename in storage
+}
 ```
+
+**Customer Email Preview:**
+- Subject: "Your Vellvii Warranty is Registered ✓"
+- Dark theme matching brand
+- Registration ID prominently displayed
+- Reassuring message about lifetime coverage
+
+**Admin Email Preview:**
+- Subject: "🛡️ New Warranty Registration - [ProductType] - [CustomerName]"
+- All customer details
+- Direct link to receipt in Supabase storage dashboard
 
