@@ -1,41 +1,10 @@
 
 
-# Update Retail Partner Description
+# Update Admin Notification Email
 
-## Summary
-Change the "Retail Partner" option text from "Amazon, etc." to something that accurately reflects physical brick and mortar stores that purchase wholesale from Vellvii.
+## What changes
+The USA launch notification system currently sends admin alerts to `stefan@vellvii.com`. This will be updated to send to `hello@vellvii.com` instead.
 
----
-
-## Change Required
-
-| Element | Current Text | New Text |
-|---------|-------------|----------|
-| Retail Partner subtitle | "Amazon, etc." | "Authorized retailer" |
-
----
-
-## Implementation
-
-Update line 378 in `src/pages/WarrantyRegister.tsx`:
-
-**Before:**
-```tsx
-<span className="font-semibold text-light-primary">Retail Partner</span>
-<p className="text-xs text-muted-foreground mt-1">Amazon, etc.</p>
-```
-
-**After:**
-```tsx
-<span className="font-semibold text-light-primary">Retail Partner</span>
-<p className="text-xs text-muted-foreground mt-1">Authorized retailer</p>
-```
-
----
-
-## Files to Modify
-
-| File | Change |
-|------|--------|
-| `src/pages/WarrantyRegister.tsx` | Update subtitle text on line 378 |
+## Technical detail
+One line change in `supabase/functions/usa-launch-notify/index.ts` -- update the `to` field in the admin notification email from `stefan@vellvii.com` to `hello@vellvii.com`.
 
