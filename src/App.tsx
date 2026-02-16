@@ -43,6 +43,7 @@ import Shop from "./pages/Shop";
 import ProductDetail from "./pages/ProductDetail";
 import VellviiKickstarter from "./pages/VellviiKickstarter";
 import VellviiKickstarter2 from "./pages/VellviiKickstarter2";
+import VellviiPrototype from "./pages/VellviiPrototype";
 
 const queryClient = new QueryClient();
 
@@ -66,6 +67,7 @@ const InnerApp = () => {
             <Route path="/Vellvii-Lux" element={<PrelaunchLux />} />
             <Route path="/Vellvii-Kickstarter" element={<VellviiKickstarter />} />
             <Route path="/Vellvii-Kickstarter2" element={<VellviiKickstarter2 />} />
+            <Route path="/Vellvii-Prototype" element={<VellviiPrototype />} />
             <Route path="/v/1" element={<Video1 />} />
             <Route path="/v/2" element={<Video2 />} />
             <Route path="/v/3" element={<Video3 />} />
