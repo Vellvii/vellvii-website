@@ -154,7 +154,17 @@ export const KSPHero = () => {
             ))}
           </div>
 
-          <ScrollReveal delay={2.2}>
+          <motion.p
+            className="text-base sm:text-lg lg:text-xl text-primary/80 font-baskerville italic max-w-2xl mx-auto pt-4"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 1, delay: 2.2, ease: "easeOut" }}
+          >
+            A sexual wellness &amp; intimacy product that should have existed years ago.
+          </motion.p>
+
+
+          <ScrollReveal delay={2.6}>
             <div className="flex items-center justify-center gap-3 pt-4">
               <div className="w-px h-16 bg-gradient-to-b from-transparent via-primary/60 to-transparent" />
               <p className="text-white/40 text-sm uppercase tracking-widest font-semibold">
