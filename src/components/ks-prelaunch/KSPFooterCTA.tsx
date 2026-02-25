@@ -23,7 +23,7 @@ export const KSPFooterCTA = () => {
 
           <ScrollReveal delay={0.15}>
             <p className="text-base sm:text-lg text-white/40 font-light max-w-xl mx-auto">
-              The Vellvii DOX + all 3 Pleasure Collection devices — Pulse, G-Vibe &amp; Evolve.
+              The <span className="text-primary font-bold">Vellvii DOX</span> + all 3 <span className="text-primary font-bold">Pleasure Collection</span> devices — <span className="text-white/90 font-semibold">Pulse, G-Vibe &amp; Evolve</span>.
             </p>
           </ScrollReveal>
 
