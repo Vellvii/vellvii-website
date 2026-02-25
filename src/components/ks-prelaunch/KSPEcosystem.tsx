@@ -3,9 +3,9 @@ import { ImageIcon } from "lucide-react";
 
 export const KSPEcosystem = () => {
   const products = [
-    { name: "Vellvii Pulse", tagline: "Deep, Resonant Vibration" },
-    { name: "Vellvii G-Vibe", tagline: "Precision G-Spot Stimulation" },
-    { name: "Vellvii Evolve", tagline: "Adaptive Pleasure, Redefined" },
+    { name: "Vellvii Pulse", tagline: "Deep, Resonant Vibration", image: null },
+    { name: "Vellvii G-Vibe", tagline: "Precision G-Spot Stimulation", image: null },
+    { name: "Vellvii Evolve", tagline: "Adaptive Pleasure, Redefined", image: "/uploads/PinkEvolve2PSide.png" },
   ];
 
   return (
@@ -40,14 +40,18 @@ export const KSPEcosystem = () => {
           {products.map((product, i) => (
             <ScrollReveal key={i} delay={0.3 + i * 0.1}>
               <div className="relative aspect-[3/4] rounded-2xl overflow-hidden ring-1 ring-white/10 bg-white/[0.03] flex flex-col items-center justify-center gap-4 group hover:ring-primary/30 transition-all duration-500">
-                <div className="w-14 h-14 rounded-full border border-primary/20 flex items-center justify-center">
-                  <ImageIcon className="w-6 h-6 text-primary/40" />
-                </div>
-                <div className="text-center px-4">
+                {product.image ? (
+                  <img src={product.image} alt={product.name} className="absolute inset-0 w-full h-full object-contain p-6" />
+                ) : (
+                  <div className="w-14 h-14 rounded-full border border-primary/20 flex items-center justify-center">
+                    <ImageIcon className="w-6 h-6 text-primary/40" />
+                  </div>
+                )}
+                <div className={`text-center px-4 ${product.image ? 'absolute bottom-6' : ''}`}>
                   <p className="text-white font-baskerville font-bold text-lg mb-1">{product.name}</p>
                   <p className="text-white/40 text-sm font-light">{product.tagline}</p>
                 </div>
-                <p className="text-white/20 text-[10px] uppercase tracking-widest">Image coming soon</p>
+                {!product.image && <p className="text-white/20 text-[10px] uppercase tracking-widest">Image coming soon</p>}
               </div>
             </ScrollReveal>
           ))}
