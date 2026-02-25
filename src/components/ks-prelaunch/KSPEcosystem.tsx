@@ -3,8 +3,8 @@ import { ImageIcon } from "lucide-react";
 
 export const KSPEcosystem = () => {
   const products = [
-    { name: "Vellvii Pulse", tagline: "Deep, Resonant Vibration", image: null },
-    { name: "Vellvii G-Vibe", tagline: "Precision G-Spot Stimulation", image: null },
+    { name: "Vellvii Pulse", tagline: "Deep, Resonant Vibration", image: "/uploads/PinkPulseBack.png" },
+    { name: "Vellvii G-Vibe", tagline: "Precision G-Spot Stimulation", image: "/uploads/PinkGVibeSide.png" },
     { name: "Vellvii Evolve", tagline: "Adaptive Pleasure, Redefined", image: "/uploads/PinkEvolve2PSide.png" },
   ];
 
