@@ -1,5 +1,6 @@
 import { ScrollReveal } from "@/components/animations/ScrollReveal";
 import doxCloseUp from "@/assets/dox-close-up.webp";
+import { KSPPriceSticker } from "./KSPPriceSticker";
 
 export const KSPInnovation = () => {
   return (
@@ -45,6 +46,18 @@ export const KSPInnovation = () => {
             </div>
           </div>
         </ScrollReveal>
+
+        {/* DOX Price Sticker on Chapter 2 */}
+        <div className="flex justify-center mt-10">
+          <KSPPriceSticker
+            label="The DOX"
+            retailPrice="$299"
+            kickstarterPrice="$199"
+            vipPrice="$149"
+            rotation={3}
+            size="md"
+          />
+        </div>
 
         {/* How it solves */}
         <div className="grid sm:grid-cols-2 gap-4 mt-12 max-w-3xl mx-auto">

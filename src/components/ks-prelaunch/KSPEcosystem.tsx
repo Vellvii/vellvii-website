@@ -1,5 +1,6 @@
 import { ScrollReveal } from "@/components/animations/ScrollReveal";
 import { ImageIcon } from "lucide-react";
+import { KSPPriceSticker } from "./KSPPriceSticker";
 
 export const KSPEcosystem = () => {
   const products = [
@@ -60,7 +61,16 @@ export const KSPEcosystem = () => {
                 </div>
                 <div className="text-center px-2">
                   <p className="text-white font-baskerville font-bold text-lg mb-1">{product.name}</p>
-                  <p className="text-white/40 text-sm font-light">{product.tagline}</p>
+                  <p className="text-white/40 text-sm font-light mb-3">{product.tagline}</p>
+                </div>
+                <div className="flex justify-center">
+                  <KSPPriceSticker
+                    retailPrice="$169"
+                    kickstarterPrice="$129"
+                    vipPrice="$99"
+                    rotation={i === 0 ? -2 : i === 1 ? 1.5 : -1}
+                    size="sm"
+                  />
                 </div>
               </div>
             </ScrollReveal>
