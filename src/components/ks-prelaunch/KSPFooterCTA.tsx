@@ -1,5 +1,6 @@
 import { ScrollReveal } from "@/components/animations/ScrollReveal";
 import { CountdownTimer } from "@/components/prelaunch/CountdownTimer";
+import { KSPPriceSticker } from "./KSPPriceSticker";
 
 const KICKSTARTER_URL = "https://www.kickstarter.com/projects/vellvii/vellvii-dox";
 
@@ -28,6 +29,20 @@ export const KSPFooterCTA = () => {
 
           <ScrollReveal delay={0.3}>
             <CountdownTimer targetDate="2026-03-10T12:00:00Z" size="small" />
+          </ScrollReveal>
+
+          {/* Full Ecosystem Sticker */}
+          <ScrollReveal delay={0.35}>
+            <div className="flex justify-center">
+              <KSPPriceSticker
+                label="Full Ecosystem"
+                retailPrice="$749"
+                kickstarterPrice="$499"
+                vipPrice="$399"
+                rotation={-2}
+                size="lg"
+              />
+            </div>
           </ScrollReveal>
 
           <ScrollReveal delay={0.4}>

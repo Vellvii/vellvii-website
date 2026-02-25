@@ -1,6 +1,7 @@
 import { ScrollReveal } from "@/components/animations/ScrollReveal";
 import { motion } from "framer-motion";
 import { useMemo } from "react";
+import { KSPPriceSticker } from "./KSPPriceSticker";
 
 const Particle = ({ delay, x, y, size, duration }: { delay: number; x: number; y: number; size: number; duration: number }) => (
   <motion.div
@@ -163,6 +164,18 @@ export const KSPHero = () => {
             A sexual wellness &amp; intimacy product that should have existed years ago.
           </motion.p>
 
+
+          {/* DOX Price Sticker */}
+          <div className="flex justify-center pt-6">
+            <KSPPriceSticker
+              label="The DOX"
+              retailPrice="$299"
+              kickstarterPrice="$199"
+              vipPrice="$149"
+              rotation={-2}
+              size="lg"
+            />
+          </div>
 
           <ScrollReveal delay={2.6}>
             <div className="flex items-center justify-center gap-3 pt-4">
