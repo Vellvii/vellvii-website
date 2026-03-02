@@ -15,7 +15,7 @@ import { Input } from "@/components/ui/input";
 import { supabase } from "@/integrations/supabase/client";
 import * as z from "zod";
 
-const PRELAUNCH_URL = "https://prelaunch.com/projects/5ff3ce3f-6669-4243-918c-4d57d98b63f6/reservation?userEmail=stefan%40vellvii.com&reservationId=c3452574-55cf-49e6-aa12-79b4c18131ac";
+const KICKSTARTER_URL = "https://www.kickstarter.com/projects/vellvii/vellvii-dox-a-premium-luxury-vault-for-intimacy-and-storage";
 
 const emailSchema = z.string().trim().min(1, "Email is required").email("Please enter a valid email").max(255, "Email too long");
 
@@ -197,18 +197,17 @@ const DoxVideoLanding = () => {
                       Watch Again
                     </motion.button>
 
-                    {/* Reserve CTA */}
+                    {/* Kickstarter CTA */}
                     <motion.a
                       initial={{ opacity: 0, x: 10 }}
                       animate={{ opacity: 1, x: 0 }}
                       transition={{ delay: 0.4 }}
-                      href={PRELAUNCH_URL}
+                      href={KICKSTARTER_URL}
                       target="_blank"
                       rel="noopener noreferrer"
                       className="flex-1 px-6 py-3 bg-gradient-to-r from-primary via-accent to-primary bg-[length:200%_100%] text-black rounded-xl font-bold text-sm shadow-elegant hover:shadow-glow transition-all duration-700 hover:bg-right text-center flex items-center justify-center gap-2"
                     >
-                      <span>Reserve Your DOX</span>
-                      <img src={prelaunchLogo} alt="" className="h-4 w-4" />
+                      <span>Follow Us on Kickstarter</span>
                     </motion.a>
                   </div>
                 </motion.div>
@@ -224,25 +223,24 @@ const DoxVideoLanding = () => {
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: 20 }}
                 transition={{ delay: 0.2 }}
-                className="flex flex-col gap-3 mt-8 w-full max-w-sm px-4 items-center"
+                className="flex flex-col gap-4 mt-8 w-full max-w-lg px-4 items-center"
               >
                 <a
-                  href={PRELAUNCH_URL}
+                  href={KICKSTARTER_URL}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="w-full group px-6 py-4 bg-gradient-to-r from-primary via-accent to-primary bg-[length:200%_100%] text-black rounded-xl font-bold text-base shadow-elegant hover:shadow-glow transition-all duration-500 hover:bg-right relative overflow-hidden flex items-center justify-center gap-2"
+                  className="w-full group relative overflow-hidden rounded-2xl"
                 >
-                  <span className="relative z-10">Reserve Your DOX</span>
-                  <img src={prelaunchLogo} alt="Prelaunch.com" className="h-5 w-5 relative z-10" />
-                  <div className="absolute inset-0 bg-gradient-shimmer opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                  <div className="absolute inset-0 bg-gradient-to-r from-primary via-accent to-primary bg-[length:300%_100%] animate-[shimmer_2s_ease-in-out_infinite]" />
+                  <div className="relative z-10 px-6 py-5 sm:py-6 flex flex-col items-center gap-2">
+                    <span className="text-black font-bold text-lg sm:text-xl tracking-wide uppercase">
+                      Follow Us on Kickstarter
+                    </span>
+                    <span className="text-black/70 text-xs sm:text-sm font-medium">
+                      Click Notify Me to Follow Us
+                    </span>
+                  </div>
                 </a>
-                <button
-                  onClick={() => setNotifyOpen(true)}
-                  className="w-full group px-4 py-4 bg-gradient-to-r from-primary/20 via-accent/30 to-primary/20 border-2 border-primary/50 hover:border-primary text-light-primary rounded-xl font-bold text-sm sm:text-base transition-all duration-300 hover:bg-primary/20 flex items-center justify-center gap-2 text-center"
-                >
-                  <span className="text-base sm:text-lg">🇺🇸</span>
-                  <span>Notify Me – USA Launch</span>
-                </button>
               </motion.div>
             )}
           </AnimatePresence>
