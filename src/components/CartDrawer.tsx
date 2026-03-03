@@ -39,14 +39,14 @@ export const CartDrawer = () => {
 
   return (
     <>
-      {/* Sticky Buy Now/Cart Trigger Button - Show Shop when empty, Cart when items exist */}
-      {!isOpen && (
+      {/* Sticky Cart Button - Only show when items exist */}
+      {!isOpen && totalItems > 0 && (
         <Button
           className="fixed top-3 right-3 sm:top-4 sm:right-4 z-[999] bg-primary text-primary-foreground hover:bg-primary/90 shadow-luxury pulse-glow font-montserrat font-semibold text-xs sm:text-sm px-3 sm:px-4 h-9 sm:h-10"
-          onClick={() => totalItems > 0 ? setIsOpen(true) : window.location.href = '/shop'}
+          onClick={() => setIsOpen(true)}
         >
           <ShoppingCart className="w-3.5 h-3.5 sm:w-4 sm:h-4 mr-1.5 sm:mr-2" />
-          {totalItems > 0 ? `Cart (${totalItems})` : 'Shop Now'}
+          Cart ({totalItems})
         </Button>
       )}
 
