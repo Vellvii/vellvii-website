@@ -1,6 +1,7 @@
 import { motion } from "framer-motion";
 import { SEO } from "@/components/SEO";
 import { ArrowRight } from "lucide-react";
+import { trackKickstarterClick } from "@/lib/trackKickstarterClick";
 
 const KICKSTARTER_URL = "https://www.kickstarter.com/projects/vellvii/vellvii-dox-a-premium-luxury-vault-for-intimacy-and-storage";
 
@@ -95,6 +96,7 @@ const DoxVideoLanding = () => {
             href={KICKSTARTER_URL}
             target="_blank"
             rel="noopener noreferrer"
+            onClick={() => trackKickstarterClick("Follow Us on Kickstarter")}
             className="group relative w-full max-w-md"
           >
             {/* Shimmer background */}
