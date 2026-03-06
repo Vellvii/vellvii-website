@@ -1,5 +1,6 @@
 import { useState, useRef } from "react";
 import { Play, CheckCircle2, Loader2 } from "lucide-react";
+import { CountdownTimer } from "@/components/prelaunch/CountdownTimer";
 import { motion, AnimatePresence } from "framer-motion";
 import { SEO } from "@/components/SEO";
 import { PrelaunchFooter } from "@/components/prelaunch/PrelaunchFooter";
