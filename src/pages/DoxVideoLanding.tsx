@@ -168,49 +168,24 @@ const DoxVideoLanding = () => {
               )}
             </AnimatePresence>
 
-            {/* End Screen */}
+            {/* End Screen - Watch Again only */}
             <AnimatePresence>
               {videoEnded && (
                 <motion.div
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
                   exit={{ opacity: 0 }}
-                  className="absolute inset-0 flex flex-col items-center justify-center bg-black/80 backdrop-blur-sm px-4"
+                  className="absolute inset-0 flex items-center justify-center bg-black/60 backdrop-blur-sm"
                 >
-                  <motion.h3
-                    initial={{ opacity: 0, y: -10 }}
-                    animate={{ opacity: 1, y: 0 }}
+                  <motion.button
+                    initial={{ opacity: 0, scale: 0.9 }}
+                    animate={{ opacity: 1, scale: 1 }}
                     transition={{ delay: 0.2 }}
-                    className="font-baskerville text-xl sm:text-2xl md:text-3xl text-primary mb-6 sm:mb-8 text-center"
+                    onClick={handleReplay}
+                    className="px-8 py-4 border border-primary/50 hover:border-primary text-primary rounded-xl transition-all font-montserrat text-base hover:bg-primary/10"
                   >
-                    Ready to Experience Luxury?
-                  </motion.h3>
-
-                  <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 w-full max-w-md">
-                    {/* Watch Again */}
-                    <motion.button
-                      initial={{ opacity: 0, x: -10 }}
-                      animate={{ opacity: 1, x: 0 }}
-                      transition={{ delay: 0.3 }}
-                      onClick={handleReplay}
-                      className="px-6 py-3 border border-white/30 hover:border-primary/50 text-light-primary rounded-xl transition-all font-montserrat text-sm"
-                    >
-                      Watch Again
-                    </motion.button>
-
-                    {/* Kickstarter CTA */}
-                    <motion.a
-                      initial={{ opacity: 0, x: 10 }}
-                      animate={{ opacity: 1, x: 0 }}
-                      transition={{ delay: 0.4 }}
-                      href={KICKSTARTER_URL}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="flex-1 px-6 py-3 bg-gradient-to-r from-primary via-accent to-primary bg-[length:200%_100%] text-black rounded-xl font-bold text-sm shadow-elegant hover:shadow-glow transition-all duration-700 hover:bg-right text-center flex items-center justify-center gap-2"
-                    >
-                      <span>Follow Us on Kickstarter</span>
-                    </motion.a>
-                  </div>
+                    Watch Again
+                  </motion.button>
                 </motion.div>
               )}
             </AnimatePresence>
