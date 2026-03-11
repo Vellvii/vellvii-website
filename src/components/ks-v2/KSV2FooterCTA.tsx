@@ -78,20 +78,14 @@ export const KSV2FooterCTA = () => {
                 animate={{ opacity: [0.5, 0.9, 0.5] }}
                 transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
               />
-              <div
-                className="relative px-16 py-7 rounded-2xl font-bold text-xl sm:text-2xl text-black"
-                style={{ background: "linear-gradient(135deg, hsl(40 70% 75%), hsl(40 65% 60%))" }}
-              >
-                Notify Me on Launch
-              </div>
-            </a>
-          </ScrollReveal>
-
-          <ScrollReveal delay={0.4}>
-            <p className="text-white/30 text-sm font-light">
-              No payment required. Just click to follow & get notified.
-            </p>
-          </ScrollReveal>
+                <div
+                  className="relative px-16 py-7 rounded-2xl font-bold text-xl sm:text-2xl text-black"
+                  style={{ background: "linear-gradient(135deg, hsl(40 70% 75%), hsl(40 65% 60%))" }}
+                >
+                  Back Us on Kickstarter
+                </div>
+              </a>
+            </ScrollReveal>
 
           {/* Founder quote */}
           <ScrollReveal delay={0.5}>
