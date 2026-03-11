@@ -243,7 +243,7 @@ const DoxVideoLanding = () => {
               className="text-lg sm:text-xl lg:text-2xl text-muted-foreground font-light tracking-wide"
             >
               Project Ends:{" "}
-              <span className="font-bold text-foreground">10 April 2026</span>
+              <span className="font-bold text-foreground">9 April 2026</span>
             </motion.p>
 
             {/* Countdown */}
@@ -253,7 +253,7 @@ const DoxVideoLanding = () => {
               transition={{ delay: 0.7 }}
               className="flex justify-center"
             >
-              <CountdownTimer targetDate="2026-04-10T23:59:59Z" size="large" />
+              <CountdownTimer targetDate="2026-04-09T23:59:59Z" size="large" />
             </motion.div>
 
             {/* Big CTA */}

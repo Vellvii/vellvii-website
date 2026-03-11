@@ -53,14 +53,14 @@ export const KSV2FooterCTA = () => {
           <ScrollReveal delay={0.15}>
             <p className="text-xl sm:text-2xl lg:text-3xl text-white/80 font-light tracking-wide">
               Project Ends:{" "}
-              <span className="font-bold text-white">10 April 2026</span>
+              <span className="font-bold text-white">9 April 2026</span>
             </p>
           </ScrollReveal>
 
           {/* Countdown */}
           <ScrollReveal delay={0.25}>
             <div className="flex justify-center">
-              <CountdownTimer targetDate="2026-04-10T23:59:59Z" size="large" />
+              <CountdownTimer targetDate="2026-04-09T23:59:59Z" size="large" />
             </div>
           </ScrollReveal>
 
