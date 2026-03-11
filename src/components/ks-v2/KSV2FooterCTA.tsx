@@ -25,8 +25,22 @@ export const KSV2FooterCTA = () => {
                 animation: "shimmer-text 3s ease-in-out infinite",
               }}
             >
-              Follow Us On Kickstarter
+              Officially Live On Kickstarter.
             </h2>
+            <a
+              href={KICKSTARTER_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-4xl sm:text-6xl lg:text-8xl font-bold uppercase leading-[0.95] tracking-tight hover:opacity-80 transition-opacity underline decoration-2 underline-offset-8"
+              style={{
+                background: "linear-gradient(135deg, hsl(40 70% 75%), hsl(40 65% 60%))",
+                WebkitBackgroundClip: "text",
+                WebkitTextFillColor: "transparent",
+                backgroundClip: "text",
+              }}
+            >
+              Book Your Dox.
+            </a>
             <style>{`
               @keyframes shimmer-text {
                 0%, 100% { background-position: 0% 50%; }
