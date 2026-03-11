@@ -60,7 +60,7 @@ export const KSV2FooterCTA = () => {
           {/* Countdown */}
           <ScrollReveal delay={0.25}>
             <div className="flex justify-center">
-              <CountdownTimer targetDate="2026-03-10T13:30:00Z" size="large" />
+              <CountdownTimer targetDate="2026-04-10T23:59:59Z" size="large" />
             </div>
           </ScrollReveal>
 
