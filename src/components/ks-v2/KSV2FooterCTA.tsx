@@ -52,17 +52,15 @@ export const KSV2FooterCTA = () => {
           {/* Launch date */}
           <ScrollReveal delay={0.15}>
             <p className="text-xl sm:text-2xl lg:text-3xl text-white/80 font-light tracking-wide">
-              Launch Date:{" "}
-              <span className="font-bold text-white">10 March 2026</span>
-              {" · "}
-              <span className="font-bold text-white">08:30 NY Time</span>
+              Project Ends:{" "}
+              <span className="font-bold text-white">10 April 2026</span>
             </p>
           </ScrollReveal>
 
           {/* Countdown */}
           <ScrollReveal delay={0.25}>
             <div className="flex justify-center">
-              <CountdownTimer targetDate="2026-03-10T13:30:00Z" size="large" />
+              <CountdownTimer targetDate="2026-04-10T23:59:59Z" size="large" />
             </div>
           </ScrollReveal>
 
@@ -80,20 +78,14 @@ export const KSV2FooterCTA = () => {
                 animate={{ opacity: [0.5, 0.9, 0.5] }}
                 transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
               />
-              <div
-                className="relative px-16 py-7 rounded-2xl font-bold text-xl sm:text-2xl text-black"
-                style={{ background: "linear-gradient(135deg, hsl(40 70% 75%), hsl(40 65% 60%))" }}
-              >
-                Notify Me on Launch
-              </div>
-            </a>
-          </ScrollReveal>
-
-          <ScrollReveal delay={0.4}>
-            <p className="text-white/30 text-sm font-light">
-              No payment required. Just click to follow & get notified.
-            </p>
-          </ScrollReveal>
+                <div
+                  className="relative px-16 py-7 rounded-2xl font-bold text-xl sm:text-2xl text-black"
+                  style={{ background: "linear-gradient(135deg, hsl(40 70% 75%), hsl(40 65% 60%))" }}
+                >
+                  Back Us on Kickstarter
+                </div>
+              </a>
+            </ScrollReveal>
 
           {/* Founder quote */}
           <ScrollReveal delay={0.5}>

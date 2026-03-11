@@ -235,17 +235,15 @@ const DoxVideoLanding = () => {
               }
             `}</style>
 
-            {/* Launch date */}
+            {/* Project end date */}
             <motion.p
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ delay: 0.5 }}
               className="text-lg sm:text-xl lg:text-2xl text-muted-foreground font-light tracking-wide"
             >
-              Launch Date:{" "}
-              <span className="font-bold text-foreground">10 March 2026</span>
-              {" · "}
-              <span className="font-bold text-foreground">08:30 NY Time</span>
+              Project Ends:{" "}
+              <span className="font-bold text-foreground">10 April 2026</span>
             </motion.p>
 
             {/* Countdown */}
@@ -255,7 +253,7 @@ const DoxVideoLanding = () => {
               transition={{ delay: 0.7 }}
               className="flex justify-center"
             >
-              <CountdownTimer targetDate="2026-03-10T13:30:00Z" size="large" />
+              <CountdownTimer targetDate="2026-04-10T23:59:59Z" size="large" />
             </motion.div>
 
             {/* Big CTA */}
@@ -280,12 +278,9 @@ const DoxVideoLanding = () => {
                   className="relative px-12 sm:px-16 py-5 sm:py-7 rounded-2xl font-bold text-lg sm:text-2xl text-black"
                   style={{ background: "linear-gradient(135deg, hsl(40 70% 75%), hsl(40 65% 60%))" }}
                 >
-                  Notify Me on Launch
+                  Back Us on Kickstarter
                 </div>
               </a>
-              <p className="text-muted-foreground/50 text-xs sm:text-sm mt-4 font-light">
-                No payment required. Just click to follow & get notified.
-              </p>
             </motion.div>
           </div>
         </main>
