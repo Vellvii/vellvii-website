@@ -278,12 +278,9 @@ const DoxVideoLanding = () => {
                   className="relative px-12 sm:px-16 py-5 sm:py-7 rounded-2xl font-bold text-lg sm:text-2xl text-black"
                   style={{ background: "linear-gradient(135deg, hsl(40 70% 75%), hsl(40 65% 60%))" }}
                 >
-                  Notify Me on Launch
+                  Back Us on Kickstarter
                 </div>
               </a>
-              <p className="text-muted-foreground/50 text-xs sm:text-sm mt-4 font-light">
-                No payment required. Just click to follow & get notified.
-              </p>
             </motion.div>
           </div>
         </main>
