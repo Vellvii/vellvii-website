@@ -362,7 +362,7 @@ const ProductDetail = () => {
                 </div>
 
                 {/* Variant Options (Color, Size, etc.) */}
-                {product.node.options && product.node.options.length > 0 && (
+                {product.node.options && product.node.options.length > 0 && !(product.node.options.length === 1 && product.node.options[0].name === 'Title' && product.node.options[0].values.length === 1 && product.node.options[0].values[0] === 'Default Title') && (
                   <div className="space-y-4">
                     {product.node.options.map((option) => (
                       <div key={option.name} className="space-y-2">
