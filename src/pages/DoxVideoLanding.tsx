@@ -5,6 +5,8 @@ import { motion, AnimatePresence } from "framer-motion";
 import { SEO } from "@/components/SEO";
 import { PrelaunchFooter } from "@/components/prelaunch/PrelaunchFooter";
 import { LuxCountdown } from "@/components/lux/LuxPreOrderPanel";
+import { useShopifyProducts } from "@/hooks/useShopifyProducts";
+import { Skeleton } from "@/components/ui/skeleton";
 import {
   Dialog,
   DialogContent,
