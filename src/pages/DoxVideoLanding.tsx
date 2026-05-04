@@ -35,7 +35,7 @@ const COLLECTION: CollectionItem[] = [
   {
     name: "Vellvii Lux",
     tagline: "Limited pre-order. Ships first week of June.",
-    image: "/uploads/lux-bag-cream.jpg",
+    image: "/uploads/lux-bag-final-v4.jpg",
     to: "/products/vellvii-lux",
     badge: "Pre-Order",
   },
