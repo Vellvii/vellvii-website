@@ -453,7 +453,8 @@ const ProductDetail = () => {
 
                 {isLuxProduct && (
                   <>
-                    <LuxStockCounter quantityAvailable={variant?.quantityAvailable} />
+                    {/* Live inventory requires `unauthenticated_read_product_inventory` Storefront scope; falls back to total units. */}
+                    <LuxStockCounter quantityAvailable={undefined} />
                     <LuxUrgencyBlock />
                     <LuxShippingClarity />
                   </>
