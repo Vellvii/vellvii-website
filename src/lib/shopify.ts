@@ -186,6 +186,7 @@ const PRODUCT_FIELDS = `
           currencyCode
         }
         availableForSale
+        quantityAvailable
         selectedOptions {
           name
           value
