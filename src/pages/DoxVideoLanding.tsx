@@ -373,44 +373,72 @@ const DoxVideoLanding = () => {
             </div>
 
             <div className="grid grid-cols-2 md:grid-cols-3 gap-3 sm:gap-5 md:gap-6">
-              {COLLECTION.map((item, idx) => (
-                <motion.div
-                  key={item.name}
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true, margin: "-50px" }}
-                  transition={{ delay: idx * 0.05, duration: 0.5 }}
-                >
-                  <Link
-                    to={item.to}
-                    className="group block rounded-xl sm:rounded-2xl overflow-hidden border border-white/10 bg-card/50 hover:border-primary/40 transition-all duration-500 hover:shadow-elegant"
-                  >
-                    <div className="relative aspect-[4/5] overflow-hidden bg-black/30">
-                      <img
-                        src={item.image}
-                        alt={item.name}
-                        loading="lazy"
-                        className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
-                      />
-                      {item.badge && (
-                        <div className="absolute top-2 left-2 sm:top-3 sm:left-3 px-2.5 py-1 rounded-full bg-primary/95 backdrop-blur-sm">
-                          <span className="font-montserrat text-[9px] sm:text-[10px] font-semibold uppercase tracking-wider text-primary-foreground">
-                            {item.badge}
-                          </span>
-                        </div>
-                      )}
+              {productsLoading
+                ? Array.from({ length: 6 }).map((_, i) => (
+                    <div
+                      key={i}
+                      className="rounded-xl sm:rounded-2xl overflow-hidden border border-white/10 bg-card/50"
+                    >
+                      <Skeleton className="aspect-[4/5] w-full" />
+                      <div className="p-3 sm:p-4 space-y-2">
+                        <Skeleton className="h-4 w-3/4" />
+                        <Skeleton className="h-3 w-1/2" />
+                      </div>
                     </div>
-                    <div className="p-3 sm:p-4">
-                      <h3 className="font-baskerville font-bold text-base sm:text-lg text-light-primary group-hover:text-primary transition-colors mb-1">
-                        {item.name}
-                      </h3>
-                      <p className="font-montserrat text-[11px] sm:text-xs text-light-secondary leading-relaxed line-clamp-2">
-                        {item.tagline}
-                      </p>
-                    </div>
-                  </Link>
-                </motion.div>
-              ))}
+                  ))
+                : shopifyProducts && shopifyProducts.length > 0
+                ? shopifyProducts.slice(0, 6).map((product, idx) => {
+                    const node = product.node;
+                    const image = node.images.edges[0]?.node;
+                    const variant = node.variants.edges[0]?.node;
+                    const inStock = variant?.availableForSale ?? false;
+                    const price = parseFloat(node.priceRange.minVariantPrice.amount);
+                    return (
+                      <motion.div
+                        key={node.id}
+                        initial={{ opacity: 0, y: 20 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        viewport={{ once: true, margin: "-50px" }}
+                        transition={{ delay: idx * 0.05, duration: 0.5 }}
+                      >
+                        <Link
+                          to={`/products/${node.handle}`}
+                          className="group block rounded-xl sm:rounded-2xl overflow-hidden border border-white/10 bg-card/50 hover:border-primary/40 transition-all duration-500 hover:shadow-elegant"
+                        >
+                          <div className="relative aspect-[4/5] overflow-hidden bg-black/30">
+                            {image && (
+                              <img
+                                src={image.url}
+                                alt={image.altText || node.title}
+                                loading="lazy"
+                                className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                              />
+                            )}
+                            {!inStock && (
+                              <div className="absolute top-2 left-2 sm:top-3 sm:left-3 px-2.5 py-1 rounded-full bg-red-600/95 backdrop-blur-sm">
+                                <span className="font-montserrat text-[9px] sm:text-[10px] font-semibold uppercase tracking-wider text-white">
+                                  Sold Out
+                                </span>
+                              </div>
+                            )}
+                          </div>
+                          <div className="p-3 sm:p-4">
+                            <h3 className="font-baskerville font-bold text-base sm:text-lg text-light-primary group-hover:text-primary transition-colors mb-1">
+                              {node.title}
+                            </h3>
+                            <p className="font-montserrat text-[11px] sm:text-xs text-primary leading-relaxed">
+                              ${price.toFixed(0)}
+                            </p>
+                          </div>
+                        </Link>
+                      </motion.div>
+                    );
+                  })
+                : (
+                    <p className="col-span-full text-center text-light-secondary font-montserrat text-sm py-8">
+                      Products coming soon.
+                    </p>
+                  )}
             </div>
           </div>
         </section>
