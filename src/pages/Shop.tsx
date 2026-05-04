@@ -7,7 +7,7 @@ import { SEO } from "@/components/SEO";
 import { ScrollHeader } from "@/components/ScrollHeader";
 import { PrelaunchFooter } from "@/components/prelaunch/PrelaunchFooter";
 import { cn } from "@/lib/utils";
-import { Search, X, ShoppingCart, Loader2, SlidersHorizontal } from "lucide-react";
+import { Search, X, ShoppingCart, Loader2 } from "lucide-react";
 import { useCartStore } from "@/stores/cartStore";
 import { toast } from "sonner";
 
