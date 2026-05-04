@@ -48,7 +48,8 @@ export const LuxFreeGiftBadge = () => (
   </div>
 );
 
-export const LuxCountdown = ({ endDate = "2026-06-01T00:00:00Z" }: { endDate?: string }) => {
+// Midnight Pacific Time (Los Angeles) — June 1, 2026 is during PDT (UTC-7)
+export const LuxCountdown = ({ endDate = "2026-06-01T00:00:00-07:00" }: { endDate?: string }) => {
   const [time, setTime] = useState<TimeLeft>(() => calc(endDate));
   useEffect(() => {
     const t = setInterval(() => setTime(calc(endDate)), 1000 * 30);

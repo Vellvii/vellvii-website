@@ -17,7 +17,8 @@ export const LuxCountdown = () => {
 
   useEffect(() => {
     const calculateTimeLeft = () => {
-      const difference = +new Date("2026-04-01T00:00:00") - +new Date();
+      // Midnight Pacific Time (Los Angeles) — April 1, 2026 is during PDT (UTC-7)
+      const difference = +new Date("2026-04-01T00:00:00-07:00") - +new Date();
       
       if (difference > 0) {
         setTimeLeft({
