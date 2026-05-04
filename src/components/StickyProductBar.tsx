@@ -8,6 +8,7 @@ interface StickyProductBarProps {
   onAddToCart: () => void;
   isLoading?: boolean;
   isAvailable?: boolean;
+  ctaLabel?: string;
 }
 
 export const StickyProductBar = ({
@@ -16,6 +17,7 @@ export const StickyProductBar = ({
   onAddToCart,
   isLoading = false,
   isAvailable = true,
+  ctaLabel,
 }: StickyProductBarProps) => {
   const [isVisible, setIsVisible] = useState(false);
 
