@@ -7,7 +7,9 @@ import { SEO } from "@/components/SEO";
 import { ScrollHeader } from "@/components/ScrollHeader";
 import { PrelaunchFooter } from "@/components/prelaunch/PrelaunchFooter";
 import { cn } from "@/lib/utils";
-import { Search, X } from "lucide-react";
+import { Search, X, ShoppingCart, Loader2, SlidersHorizontal } from "lucide-react";
+import { useCartStore } from "@/stores/cartStore";
+import { toast } from "sonner";
 
 // Simple fuzzy match - checks if query letters appear in order within the target
 const fuzzyMatch = (query: string, target: string): { match: boolean; score: number } => {
