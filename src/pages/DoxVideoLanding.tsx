@@ -152,27 +152,33 @@ const DoxVideoLanding = () => {
           />
         </header>
 
-        {/* [1b] Hero Image */}
+        {/* [1b] Hero Video */}
         <section className="px-4 mb-10 sm:mb-14">
           <div className="max-w-6xl mx-auto relative rounded-2xl sm:rounded-3xl overflow-hidden border border-white/10 shadow-elegant">
-            <div className="aspect-[16/9] sm:aspect-[21/9] w-full">
-              <img
-                src="/uploads/lux-private-jet-lounge-hero.jpg"
-                alt="Vellvii Lux - The Art of 'O'"
+            <div className="aspect-[16/9] sm:aspect-[21/9] w-full bg-black">
+              <video
+                autoPlay
+                muted
+                loop
+                playsInline
+                poster="/uploads/Dox1.jpg"
                 className="w-full h-full object-cover"
-              />
+              >
+                <source src="/uploads/HEROPAGE.webm" type="video/webm" />
+              </video>
             </div>
-            <div className="absolute inset-0 bg-gradient-to-t from-background via-background/40 to-transparent pointer-events-none" />
+            <div className="absolute inset-0 bg-gradient-to-t from-background via-background/30 to-transparent pointer-events-none" />
             <div className="absolute bottom-0 left-0 right-0 p-5 sm:p-8 md:p-10 text-center">
               <p className="font-montserrat text-[10px] sm:text-xs uppercase tracking-[0.3em] text-primary mb-1 sm:mb-2">
                 The Art of 'O'
               </p>
               <p className="font-baskerville text-lg sm:text-2xl md:text-3xl text-light-primary">
-                Quiet luxury, designed for desire.
+                Luxury Wellness, Refined.
               </p>
             </div>
           </div>
         </section>
+
 
 
         {/* [2] Backer thank-you + processing status */}
