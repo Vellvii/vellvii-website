@@ -330,24 +330,24 @@ const ProductDetail = () => {
               </div>
 
               {/* Product Info */}
-              <div className="lg:sticky lg:top-24 space-y-5 sm:space-y-6 lg:space-y-8">
+              <div className={`lg:sticky lg:top-24 ${isLuxProduct ? "space-y-3 sm:space-y-5" : "space-y-5 sm:space-y-6 lg:space-y-8"}`}>
                 <div>
                   <p className="text-primary font-montserrat text-xs sm:text-sm uppercase tracking-[0.15em] sm:tracking-[0.2em] mb-2 sm:mb-3">
                     Vellvii
                   </p>
-                  <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-baskerville font-bold text-light-primary mb-3 sm:mb-4 leading-tight">
+                  <h1 className={`font-baskerville font-bold text-light-primary leading-tight ${isLuxProduct ? "text-xl sm:text-3xl md:text-4xl lg:text-5xl mb-2 sm:mb-4" : "text-2xl sm:text-3xl md:text-4xl lg:text-5xl mb-3 sm:mb-4"}`}>
                     {product.node.title}
                   </h1>
                   {isLuxProduct && (
-                    <div className="mb-4">
+                    <div className="mb-3 sm:mb-4">
                       <LuxPreOrderBanner />
                     </div>
                   )}
-                  <p className="text-3xl sm:text-4xl font-bold gradient-text font-montserrat">
+                  <p className={`font-bold gradient-text font-montserrat ${isLuxProduct ? "text-2xl sm:text-4xl" : "text-3xl sm:text-4xl"}`}>
                     ${price.toFixed(0)}
                   </p>
                   {isLuxProduct && (
-                    <div className="mt-3">
+                    <div className="mt-2 sm:mt-3">
                       <LuxFreeGiftBadge />
                     </div>
                   )}
@@ -355,11 +355,13 @@ const ProductDetail = () => {
 
                 {isLuxProduct && <LuxCountdown />}
 
-                <div className="prose max-w-none">
-                  <p className="text-light-secondary leading-relaxed whitespace-pre-line font-montserrat text-sm sm:text-base lg:text-lg">
-                    {product.node.description}
-                  </p>
-                </div>
+                {!isLuxProduct && (
+                  <div className="prose max-w-none">
+                    <p className="text-light-secondary leading-relaxed whitespace-pre-line font-montserrat text-sm sm:text-base lg:text-lg">
+                      {product.node.description}
+                    </p>
+                  </div>
+                )}
 
                 {/* Variant Options (Color, Size, etc.) */}
                 {product.node.options && product.node.options.length > 0 && !(product.node.options.length === 1 && product.node.options[0].name === 'Title' && product.node.options[0].values.length === 1 && product.node.options[0].values[0] === 'Default Title') && (
@@ -431,7 +433,7 @@ const ProductDetail = () => {
                   size="lg"
                   className={`w-full btn-premium ${
                     isLuxProduct
-                      ? "h-14 sm:h-16 text-lg sm:text-xl font-bold tracking-wide"
+                      ? "h-12 sm:h-16 text-base sm:text-xl font-bold tracking-wide"
                       : "h-12 sm:h-14 text-base sm:text-lg"
                   }`}
                   onClick={handleAddToCart}
@@ -457,6 +459,11 @@ const ProductDetail = () => {
                     <LuxStockCounter quantityAvailable={undefined} />
                     <LuxUrgencyBlock />
                     <LuxShippingClarity />
+                    <div className="prose max-w-none pt-2">
+                      <p className="text-light-secondary leading-relaxed whitespace-pre-line font-montserrat text-sm sm:text-base lg:text-lg">
+                        {product.node.description}
+                      </p>
+                    </div>
                   </>
                 )}
 
