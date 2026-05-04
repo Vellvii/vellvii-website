@@ -167,15 +167,6 @@ const DoxVideoLanding = () => {
                 <source src="/uploads/HEROPAGE.webm" type="video/webm" />
               </video>
             </div>
-            <div className="absolute inset-0 bg-gradient-to-t from-background via-background/30 to-transparent pointer-events-none" />
-            <div className="absolute bottom-0 left-0 right-0 p-5 sm:p-8 md:p-10 text-center">
-              <p className="font-montserrat text-[10px] sm:text-xs uppercase tracking-[0.3em] text-primary mb-1 sm:mb-2">
-                The Art of 'O'
-              </p>
-              <p className="font-baskerville text-lg sm:text-2xl md:text-3xl text-light-primary">
-                Luxury Wellness, Refined.
-              </p>
-            </div>
           </div>
         </section>
 
