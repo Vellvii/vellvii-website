@@ -51,6 +51,8 @@ export const StickyProductBar = ({
             <Loader2 className="w-4 h-4 sm:w-5 sm:h-5 animate-spin" />
           ) : !isAvailable ? (
             <span className="text-xs sm:text-base">Sold Out</span>
+          ) : ctaLabel ? (
+            <span className="text-xs sm:text-base font-semibold">{ctaLabel}</span>
           ) : (
             <>
               <ShoppingCart className="w-4 h-4 sm:w-5 sm:h-5 mr-1 sm:mr-2" />
