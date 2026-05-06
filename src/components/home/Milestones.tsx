@@ -89,7 +89,7 @@ export const Milestones = () => {
           </p>
         </ScrollReveal>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 md:divide-x divide-y md:divide-y-0 divide-primary/10">
+        <div className="grid grid-cols-2 md:grid-cols-4 md:divide-x divide-y md:divide-y-0 divide-primary/10">
           {milestones.map((m, i) => (
             <ScrollReveal key={m.name} delay={0.25 + i * 0.1}>
               <a
