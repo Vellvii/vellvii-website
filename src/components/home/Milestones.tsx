@@ -26,7 +26,7 @@ const milestones: Milestone[] = [
   {
     name: "Kickstarter",
     logo: kickstarterLogo,
-    caption: "Successfully funded · April 10, 2026",
+    caption: "5,805% funded · April 2026",
     href: KICKSTARTER_URL,
     external: true,
     logoHeight: "h-7 md:h-8",
