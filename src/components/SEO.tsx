@@ -15,10 +15,22 @@ interface SEOProps {
     brand?: string;
     sku?: string;
     images?: string[];
+    priceValidUntil?: string;
+    itemCondition?: string;
+    url?: string;
   };
   faqData?: Array<{ question: string; answer: string }>;
   organizationData?: boolean;
   breadcrumbs?: Array<{ name: string; url: string }>;
+  keywords?: string;
+  videoData?: {
+    name: string;
+    description: string;
+    thumbnailUrl: string;
+    contentUrl: string;
+    uploadDate: string;
+  };
+  hreflang?: string;
 }
 
 const SITE_URL = 'https://vellvii.com';
