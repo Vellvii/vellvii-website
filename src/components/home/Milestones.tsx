@@ -3,7 +3,7 @@ import prelaunchLogo from "@/assets/logos/prelaunch.svg";
 import stimulateLogo from "@/assets/logos/stimulate.png";
 import kickstarterLogo from "@/assets/logos/kickstarter.png";
 
-const KICKSTARTER_URL = "https://www.kickstarter.com/projects/vellvii/vellvii-dox";
+const KICKSTARTER_URL = "https://www.kickstarter.com/projects/vellvii/vellvii-dox-a-premium-luxury-vault-for-intimacy-and-storage";
 const SHOP_URL = "/shop";
 const STIMULATE_URL =
   "https://stimulatetheshow.com/2026-emerging-brands-experience-mentorship-experience/";
@@ -26,7 +26,7 @@ const milestones: Milestone[] = [
   {
     name: "Kickstarter",
     logo: kickstarterLogo,
-    caption: "Successfully funded · April 10, 2026",
+    caption: "5,805% funded · April 2026",
     href: KICKSTARTER_URL,
     external: true,
     logoHeight: "h-7 md:h-8",

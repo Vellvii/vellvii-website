@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 
-const KICKSTARTER_URL = "https://www.kickstarter.com/projects/vellvii/vellvii-dox";
+const KICKSTARTER_URL = "https://www.kickstarter.com/projects/vellvii/vellvii-dox-a-premium-luxury-vault-for-intimacy-and-storage";
 
 export const KSV2StickyBar = () => {
   const [visible, setVisible] = useState(false);

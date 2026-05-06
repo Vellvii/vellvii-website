@@ -2,7 +2,7 @@ import { ScrollReveal } from "@/components/animations/ScrollReveal";
 import { CountdownTimer } from "@/components/prelaunch/CountdownTimer";
 import { KSPPriceSticker } from "./KSPPriceSticker";
 
-const KICKSTARTER_URL = "https://www.kickstarter.com/projects/vellvii/vellvii-dox";
+const KICKSTARTER_URL = "https://www.kickstarter.com/projects/vellvii/vellvii-dox-a-premium-luxury-vault-for-intimacy-and-storage";
 
 export const KSPFooterCTA = () => {
   return (
