@@ -76,9 +76,9 @@ export const homeFAQs: FAQItem[] = [
   {
     question: "Where can I buy Vellvii?",
     answerText:
-      "Vellvii is available directly at vellvii.com and through select authorized retailers. The earliest units are reserved through the Kickstarter campaign and the official Prelaunch VIP list.",
+      "Vellvii is currently available exclusively through our online store at vellvii.com. Authorized retail partnerships are in process and will be announced here once finalized.",
     answer:
-      "Vellvii is available directly at vellvii.com and through select authorized retailers. The earliest units are reserved through the Kickstarter campaign and the official Prelaunch VIP list.",
+      "Vellvii is currently available exclusively through our online store at vellvii.com. Authorized retail partnerships are in process and will be announced here once finalized.",
   },
 ];
 
