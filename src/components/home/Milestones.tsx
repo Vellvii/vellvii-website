@@ -2,6 +2,7 @@ import { ScrollReveal } from "@/components/animations/ScrollReveal";
 import prelaunchLogo from "@/assets/logos/prelaunch.svg";
 import stimulateLogo from "@/assets/logos/stimulate.png";
 import kickstarterLogo from "@/assets/logos/kickstarter.png";
+import gadgetflowLogo from "@/assets/logos/gadgetflow.png";
 
 const KICKSTARTER_URL = "https://www.kickstarter.com/projects/vellvii/vellvii-dox-a-premium-luxury-vault-for-intimacy-and-storage";
 const SHOP_URL = "/shop";
@@ -48,6 +49,14 @@ const milestones: Milestone[] = [
     external: true,
     logoHeight: "h-9 md:h-10",
   },
+  {
+    name: "Gadget Flow",
+    logo: gadgetflowLogo,
+    caption: "Editorial review · 2026",
+    href: "https://thegadgetflow.com/blog/vellvii-dox-review-luxury-docking-and-storage-system/",
+    external: true,
+    logoHeight: "h-6 md:h-7",
+  },
 ];
 
 export const Milestones = () => {
@@ -80,7 +89,7 @@ export const Milestones = () => {
           </p>
         </ScrollReveal>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 md:divide-x divide-y md:divide-y-0 divide-primary/10">
+        <div className="grid grid-cols-2 md:grid-cols-4 md:divide-x divide-y md:divide-y-0 divide-primary/10">
           {milestones.map((m, i) => (
             <ScrollReveal key={m.name} delay={0.25 + i * 0.1}>
               <a
