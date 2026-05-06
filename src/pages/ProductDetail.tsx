@@ -50,6 +50,16 @@ const ProductDetail = () => {
     }
   }, [product]);
 
+  // GA4 conversion event for Lux PDP views
+  useEffect(() => {
+    if (isLuxProduct && product && typeof window !== "undefined" && (window as any).gtag) {
+      (window as any).gtag("event", "lux_pdp_view", {
+        product_handle: handle,
+        product_title: product.node.title,
+      });
+    }
+  }, [isLuxProduct, product, handle]);
+
   // Find the selected variant based on selected options
   const selectedVariant = useMemo(() => {
     if (!product?.node?.variants?.edges) return null;
