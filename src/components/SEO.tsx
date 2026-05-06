@@ -15,10 +15,22 @@ interface SEOProps {
     brand?: string;
     sku?: string;
     images?: string[];
+    priceValidUntil?: string;
+    itemCondition?: string;
+    url?: string;
   };
   faqData?: Array<{ question: string; answer: string }>;
   organizationData?: boolean;
   breadcrumbs?: Array<{ name: string; url: string }>;
+  keywords?: string;
+  videoData?: {
+    name: string;
+    description: string;
+    thumbnailUrl: string;
+    contentUrl: string;
+    uploadDate: string;
+  };
+  hreflang?: string;
 }
 
 const SITE_URL = 'https://vellvii.com';
@@ -34,6 +46,9 @@ export const SEO = ({
   faqData,
   organizationData,
   breadcrumbs,
+  keywords,
+  videoData,
+  hreflang = 'en-us',
 }: SEOProps) => {
   const fullTitle = title.includes('Vellvii') ? title : `${title} | Vellvii`;
   const canonicalUrl = canonical ? `${SITE_URL}${canonical}` : undefined;
@@ -74,12 +89,29 @@ export const SEO = ({
             price: productData.price,
             priceCurrency: productData.currency || 'USD',
             availability: `https://schema.org/${productData.availability || 'PreOrder'}`,
+            itemCondition: `https://schema.org/${productData.itemCondition || 'NewCondition'}`,
+            ...(productData.priceValidUntil && { priceValidUntil: productData.priceValidUntil }),
+            ...(productData.url && { url: productData.url.startsWith('http') ? productData.url : `${SITE_URL}${productData.url}` }),
+            seller: { '@type': 'Organization', name: 'Vellvii' },
           },
         }),
         ...(productData.images && {
-          image: productData.images.map((img) => `${SITE_URL}${img}`),
+          image: productData.images.map((img) => (img.startsWith('http') ? img : `${SITE_URL}${img}`)),
         }),
         ...(productData.sku && { sku: productData.sku }),
+      }
+    : null;
+
+  // Video Schema
+  const videoSchema = videoData
+    ? {
+        '@context': 'https://schema.org',
+        '@type': 'VideoObject',
+        name: videoData.name,
+        description: videoData.description,
+        thumbnailUrl: videoData.thumbnailUrl.startsWith('http') ? videoData.thumbnailUrl : `${SITE_URL}${videoData.thumbnailUrl}`,
+        contentUrl: videoData.contentUrl.startsWith('http') ? videoData.contentUrl : `${SITE_URL}${videoData.contentUrl}`,
+        uploadDate: videoData.uploadDate,
       }
     : null;
 
@@ -119,9 +151,11 @@ export const SEO = ({
       <title>{fullTitle}</title>
       <meta name="title" content={fullTitle} />
       <meta name="description" content={description} />
+      {keywords && <meta name="keywords" content={keywords} />}
 
       {/* Canonical URL */}
       {canonicalUrl && <link rel="canonical" href={canonicalUrl} />}
+      {canonicalUrl && <link rel="alternate" hrefLang={hreflang} href={canonicalUrl} />}
 
       {/* Open Graph / Facebook */}
       <meta property="og:type" content={type} />
@@ -130,6 +164,16 @@ export const SEO = ({
       <meta property="og:image" content={fullImageUrl} />
       {canonicalUrl && <meta property="og:url" content={canonicalUrl} />}
       <meta property="og:site_name" content="Vellvii" />
+      <meta property="og:locale" content="en_US" />
+      {productData?.price && (
+        <meta property="product:price:amount" content={String(productData.price)} />
+      )}
+      {productData?.price && (
+        <meta property="product:price:currency" content={productData.currency || 'USD'} />
+      )}
+      {productData?.availability && (
+        <meta property="product:availability" content={productData.availability.toLowerCase()} />
+      )}
 
       {/* Twitter */}
       <meta name="twitter:card" content="summary_large_image" />
@@ -138,7 +182,7 @@ export const SEO = ({
       <meta name="twitter:image" content={fullImageUrl} />
 
       {/* Additional SEO */}
-      <meta name="robots" content="index, follow" />
+      <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1" />
       <meta name="language" content="English" />
       <meta name="author" content="Vellvii" />
 
@@ -151,6 +195,11 @@ export const SEO = ({
       {productSchema && (
         <script type="application/ld+json">
           {JSON.stringify(productSchema)}
+        </script>
+      )}
+      {videoSchema && (
+        <script type="application/ld+json">
+          {JSON.stringify(videoSchema)}
         </script>
       )}
       {faqSchema && (
