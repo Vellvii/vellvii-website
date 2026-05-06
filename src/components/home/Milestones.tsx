@@ -14,9 +14,13 @@ interface Milestone {
   caption: string;
   href: string;
   external?: boolean;
-  /** width in px on desktop (preserves optical balance) */
   logoHeight: string;
+  /** Optional per-logo CSS filter override */
+  filter?: string;
 }
+
+const GOLD_MONO =
+  "brightness(0) invert(1) sepia(0.35) saturate(1.6) hue-rotate(355deg) brightness(0.95) opacity(0.85)";
 
 const milestones: Milestone[] = [
   {
@@ -33,6 +37,8 @@ const milestones: Milestone[] = [
     caption: "Reservation campaign · Complete",
     href: SHOP_URL,
     logoHeight: "h-7 md:h-8",
+    // Desaturate to a soft champagne grayscale while preserving the white P inside the tile
+    filter: "grayscale(1) sepia(0.25) brightness(1.15) contrast(0.95) opacity(0.85)",
   },
   {
     name: "Stimulate",
