@@ -214,6 +214,14 @@ const ProductDetail = () => {
       selectedOptions: variant.selectedOptions || [],
     });
 
+    if (isLuxProduct && typeof window !== "undefined" && (window as any).gtag) {
+      (window as any).gtag("event", "lux_add_to_cart", {
+        currency: variant.price.currencyCode,
+        value: parseFloat(variant.price.amount),
+        items: [{ item_id: variant.id, item_name: product.node.title, quantity: 1, price: parseFloat(variant.price.amount) }],
+      });
+    }
+
     toast.success(`${product.node.title} added to cart`, {
       position: "top-center",
     });
