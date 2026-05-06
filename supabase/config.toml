@@ -11,3 +11,6 @@ verify_jwt = false
 
 [functions.warranty-register]
 verify_jwt = false
+
+[functions.mailchimp-subscribe]
+verify_jwt = false
