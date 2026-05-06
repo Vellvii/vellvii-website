@@ -1,7 +1,8 @@
 import { ScrollReveal } from "@/components/animations/ScrollReveal";
-import kickstarterLogo from "/uploads/kickstarter-logo.webp";
 import prelaunchLogo from "@/assets/logos/prelaunch.svg";
 import stimulateLogo from "@/assets/logos/stimulate.png";
+
+const kickstarterLogo = "/uploads/kickstarter-logo.webp";
 
 const KICKSTARTER_URL = "https://www.kickstarter.com/projects/vellvii/vellvii-dox";
 const SHOP_URL = "/shop";
