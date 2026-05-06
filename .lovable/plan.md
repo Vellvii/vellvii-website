@@ -1,89 +1,93 @@
-## Goal
+# Bulletproof SEO for the Lux Shopify Product Page
 
-The Kickstarter campaign has wrapped, so the homepage at `/` (`DoxVideoLanding`) shouldn't keep urging people to "Back us on Kickstarter" with a live countdown to April 9. The new homepage will:
+Target: drive all 1,500 Lux units before USA arrival. The Lux product page lives at `/products/:handle` (e.g. `/products/vellvii-lux`) and is rendered by `src/pages/ProductDetail.tsx`. Currently its SEO is just `title` + truncated description — we need to make it a ranking and conversion machine.
 
-1. **Thank Kickstarter and prelaunch backers**, and reassure them their orders are in processing.
-2. **Spotlight Lux** as the next live drop (1,500-unit limited pre-order, ships first week of June).
-3. **Showcase the wider Pleasure Collection** (DOX, Pulse, Vibe, G-Vibe, Docking Station, Sex Saddle) so the homepage isn't a one-product page anymore.
-4. **Tell the public**: more units of all products — including Lux — will be released soon, with an email list to be first in line.
-5. Keep the 60-second DOX video as the brand moment in the middle of the page.
+## 1. Upgrade `ProductDetail.tsx` SEO Block
 
-## New homepage structure
+Replace the bare `<SEO>` (lines 219-222) with a fully-loaded version that uses live Shopify data and adds Lux-specific overrides:
+
+- **title**: `${product.title} - Luxury Pleasure Storage | Vellvii Lux` (Lux-specific) or product-generic for others. ~60 chars, keyword-front.
+- **description**: hand-tuned 150-160 char copy for Lux (with "pre-order", "biometric", "limited 1,500-unit run", "ships USA"). Falls back to Shopify description for other products.
+- **canonical**: `/products/${handle}`.
+- **type**: `'product'`.
+- **image**: first Shopify image URL (`product.images.edges[0].node.url`).
+- **productData**: real values from Shopify — `name`, `description`, `price` (from `selectedVariant.price.amount`), `currency`, `availability` (map `availableForSale` → `InStock`/`PreOrder`/`OutOfStock`), `brand: "Vellvii"`, `sku` (variant id tail), `images` (all Shopify image URLs).
+- **breadcrumbs**: Home → Shop → Product.
+- **organizationData**: true.
+- **faqData**: for Lux only, inject a 10-question Lux FAQ (storage, biometric, materials, dimensions, USA shipping, restock, free Nova gift, vs Dox, warranty, returns).
+
+## 2. Extend `SEO.tsx`
+
+Add support for fields the current component lacks:
+
+- `priceValidUntil` on the Offer (`2026-06-01`).
+- `itemCondition: "NewCondition"`, `url`, `seller` on Offer.
+- Optional `videoData` → emits `VideoObject` JSON-LD (for the Lux hero/explainer videos).
+- Allow per-page `og:image` override that points to a 1200×630 social card.
+- Add `<meta name="keywords">` (light boost) for Lux: "luxury pleasure storage, biometric pleasure case, designer intimate storage, vellvii lux, luxury pleasure collection, made in usa".
+- Add `<meta property="product:price:amount">` and `product:price:currency` (Facebook product tags).
+- Add `<link rel="alternate" hreflang="en-us">`.
+
+## 3. Sitemap
+
+Update `public/sitemap.xml`:
+
+- Add `/products/vellvii-lux` (and other live Shopify handles) with `priority: 1.0`, `changefreq: daily`, today's `lastmod`.
+- Add `<image:image>` entries (image sitemap namespace) so Google indexes Lux photography.
+- Demote retired prelaunch/kickstarter URLs (`/Vellvii-Lux`, `/prelaunch-dox`, etc.) to `priority: 0.3` — or remove if you confirm they should 301 to the product page.
+- Drop the script `scripts/build-sitemap.ts` that dynamically pulls Shopify product handles at build time so the sitemap stays fresh automatically.
+
+## 4. Pre-render Critical Routes
+
+Vite SPA serves an empty shell to crawlers. Add `vite-plugin-prerender` (or `react-snap`) to statically pre-render `/`, `/shop`, `/products/vellvii-lux`, and other key product handles at build. Guarantees that Helmet meta + JSON-LD ship in the initial HTML, which is what Bing, Meta, X, LinkedIn, and many AI crawlers actually parse.
+
+## 5. Performance / Core Web Vitals
+
+On the Lux product page specifically:
+
+- Preload the first Shopify image (`<link rel="preload" as="image" imagesrcset=...>`) for LCP.
+- Add `width`/`height` attributes on `<img>` tags inside the gallery to kill CLS.
+- Lazy-load below-the-fold sections (related products, video).
+- Compress hero images served from Shopify with `?width=1600&format=webp` URL params (Shopify CDN supports this).
+- Defer the `Model3DViewer` until the user toggles the 3D tab (already conditional — verify no prefetch).
+
+## 6. Internal Linking
+
+- Homepage `Discover the Collection` grid → use Shopify handle so the Lux card links to `/products/vellvii-lux` with anchor text "Vellvii Lux - Luxury Pleasure Storage".
+- Add Lux call-out in footer of every page: "Reserve the Lux - 1,500-unit USA launch".
+- 301 the legacy `/Vellvii-Lux` route to `/products/vellvii-lux` (or keep as a marketing landing that links to product) — your call, flagged in the questions below.
+
+## 7. Conversion Tracking (Lux-only events)
+
+Add `gtag` events fired from the Lux variant of `ProductDetail.tsx`:
+
+- `lux_pdp_view` (on mount when `isLuxProduct`)
+- `lux_add_to_cart`, `lux_checkout_start`
+- `lux_countdown_view`, `lux_stock_low_view`
+
+Already-installed GA4 (`G-CGKDHGZFBJ`) will pick these up; mark them as conversions in GA4.
+
+## 8. Off-Page (manual, flag for you)
+
+- GSC + Bing Webmaster Tools: re-submit sitemap, request indexing for `/products/vellvii-lux`.
+- IndexNow ping on each deploy (small edge function or post-build script).
+- Backlinks: Robb Report, Hypebeast, Cool Hunting, Dezeen, design-led press; Pinterest pins linking to product page; relevant subreddits where allowed.
+
+## Files Changed
 
 ```text
-[1] Header (logo)
-[2] Backer thank-you + status ribbon       <-- NEW
-[3] Lux pre-order hero (primary CTA)       <-- REPLACES Kickstarter banner
-[4] DOX 60-second video                    <-- KEEP, repositioned
-[5] The Vellvii Collection (product grid)  <-- NEW
-[6] Public waitlist (next batch notify)    <-- NEW
-[7] Footer
+src/pages/ProductDetail.tsx     → expanded SEO with Shopify data, Lux-specific overrides, GA events
+src/components/SEO.tsx          → priceValidUntil, VideoObject, keywords, FB product tags, hreflang
+public/sitemap.xml              → product URLs + image entries, retire prelaunch URLs
+scripts/build-sitemap.ts (new)  → generate sitemap from Shopify handles at build
+vite.config.ts                  → add prerender plugin for / /shop /products/vellvii-lux
+src/pages/Home.tsx (collection) → ensure Lux card links to /products/<handle> with strong anchor
 ```
 
-### [2] Backer thank-you + status ribbon (new)
-Compact, rose-gold-bordered card directly under the logo. Two-line voice:
-- "To our Kickstarter and prelaunch backers - thank you. You made Vellvii real."
-- "Your orders are now in processing. You'll receive shipping confirmation by email as your unit moves through fulfillment."
+## Quick clarifying questions (answer in chat or just approve)
 
-Quiet, elegant, no buttons - just acknowledgment and reassurance.
+1. What is the exact Shopify handle for the Lux product? (so I link/sitemap correctly)
+2. Should `/Vellvii-Lux` (the prelaunch page) 301-redirect to the product page, stay as a marketing landing, or be removed?
+3. Confirm the Lux pre-order price + `priceValidUntil` date for the Offer schema (default I'll use: $599, valid until 2026-06-01).
 
-### [3] Lux pre-order hero
-Replaces the giant "Officially Live On Kickstarter" block (lines 194–285).
-- Headline: "The Vellvii Lux is here." (gradient shimmer, reusing the existing animation).
-- Sub-line: "Limited pre-order - 1,500 units. Ships first week of June. Includes a complimentary Vellvii Nova."
-- Reuses `LuxCountdown` from `src/components/lux/LuxPreOrderPanel.tsx` (already counts down to midnight Pacific Time on June 1, 2026).
-- Primary CTA button: **"Reserve Your Lux"** -> `/products/vellvii-lux` (Shopify cart). Same gold gradient styling as the current Kickstarter button so visual weight is preserved.
-- Drops the `KICKSTARTER_URL` constant and the "Project Ends: 9 April 2026" line.
-
-### [4] DOX 60-second video
-Untouched logic - `videoRef`, `handlePlay`, `handleVideoEnd`, `handleReplay`, fullscreen flow, end-screen "Watch Again" all preserved. Just sits below the Lux hero now with a slightly softer headline: "DOX in 60 Seconds" -> "Meet the DOX" (subline: "The flagship vault. New batches releasing soon.").
-
-### [5] The Vellvii Collection (new product grid)
-Six small cards in a responsive grid (2 cols mobile, 3 cols tablet+):
-- DOX (`/dox`)
-- Lux (`/products/vellvii-lux`)
-- Pulse (`/pulse`)
-- Vibe (`/vibe`)
-- G-Vibe (`/g-vibe`)
-- Sex Saddle / Docking Station (one of these to keep the grid balanced - Sex Saddle for variety)
-
-Each card: edge-to-edge product image (uses existing `/uploads/...` assets already loaded by `Home.tsx`), product name in Baskerville, single rose-gold "Explore" link. Section heading: **"Discover the Collection"** with sub-line: **"More units of every product - including Lux - release soon. Reserve your place below."**
-
-This satisfies your "focus on other products" ask without bloating the page; each card is a doorway, not a sales pitch.
-
-### [6] Public waitlist (next batch notify)
-Reuses the existing `notifyOpen` modal + `usa-launch-notify` Supabase edge function (already wired up in this file).
-- Quiet inline section: "Be first when the next batch drops."
-- Single email field + "Join the Waitlist" button -> opens the existing dialog flow with success state intact.
-- Source field passed to the edge function changed from `dox_video_landing` to `homepage_waitlist` so you can segment signups in the database.
-- Copy makes clear: "We'll notify you when DOX, Lux, and the rest of the Vellvii Collection open for restock." This is the "more available soon to the public" promise you mentioned.
-
-## Imports / cleanup in `DoxVideoLanding.tsx`
-
-- Remove `CountdownTimer` import (no longer used - replaced by `LuxCountdown`).
-- Add `LuxCountdown` from `@/components/lux/LuxPreOrderPanel`.
-- Add `Link` from `react-router-dom` for in-app navigation to `/products/vellvii-lux` and the collection cards.
-- Drop the `KICKSTARTER_URL` constant.
-- Update `<SEO description>` to reflect Lux pre-order + collection focus (small, helps Google).
-
-## Out of scope
-
-- `src/pages/Home.tsx` (lives at `/home`, not the public root) - left as-is.
-- All Kickstarter pages (`/kickstarter`, `/Vellvii-Kickstarter`, etc.) - kept intact for archival / inbound link continuity.
-- The Lux product page itself - already polished.
-- `useCartSync`, cart drawer, footer - untouched.
-- No new edge functions or DB migrations - we reuse `usa-launch-notify` with a new `source` value.
-
-## Brand & UX guardrails
-
-- Rose-gold + champagne-gold tokens, Baskerville headings, Montserrat body, hyphens (no em dashes), copyright 2026 - per project memory.
-- Mobile-first sizing preserved (`text-4xl sm:text-6xl md:text-7xl lg:text-8xl` for the Lux headline; product grid is 2 cols at 375px).
-- No fake reviews / social proof claims.
-- "Pleasure Collection" terminology, never "sex toy."
-
-## After approval
-
-1. Edit `src/pages/DoxVideoLanding.tsx` per above.
-2. Save a memory note: homepage now leads with backer thank-you + Lux pre-order + collection grid (post-Kickstarter), so future me doesn't accidentally re-add a Kickstarter banner.
-
-If you'd like the order swapped (e.g., video before Lux hero, or collection grid above the video), or want a more emotional dedicated `/thanks` page for backers, say the word and I'll revise.
+Approve and I'll implement sections 1-7 in code.
