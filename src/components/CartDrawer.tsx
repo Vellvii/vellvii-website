@@ -33,7 +33,21 @@ export const CartDrawer = () => {
   const handleCheckout = () => {
     const checkoutUrl = getCheckoutUrl();
     if (checkoutUrl) {
-      window.open(checkoutUrl, '_blank');
+      const currency = items[0]?.price.currencyCode || "USD";
+      trackBeginCheckout(
+        items.map((i) => ({
+          item_id: i.variantId,
+          item_name: i.product.node.title,
+          item_brand: "Vellvii",
+          item_variant: i.variantTitle,
+          price: parseFloat(i.price.amount),
+          quantity: i.quantity,
+          currency: i.price.currencyCode,
+        })),
+        totalPrice,
+        currency
+      );
+      window.open(appendCheckoutAttribution(checkoutUrl), "_blank");
       setIsOpen(false);
     }
   };
