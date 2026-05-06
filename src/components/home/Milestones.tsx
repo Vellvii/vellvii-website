@@ -1,8 +1,7 @@
 import { ScrollReveal } from "@/components/animations/ScrollReveal";
 import prelaunchLogo from "@/assets/logos/prelaunch.svg";
 import stimulateLogo from "@/assets/logos/stimulate.png";
-
-const kickstarterLogo = "/uploads/kickstarter-logo.webp";
+import kickstarterLogo from "@/assets/logos/kickstarter.png";
 
 const KICKSTARTER_URL = "https://www.kickstarter.com/projects/vellvii/vellvii-dox";
 const SHOP_URL = "/shop";
@@ -98,10 +97,6 @@ export const Milestones = () => {
                       src={m.logo}
                       alt={`${m.name} logo`}
                       className={`${m.logoHeight} w-auto object-contain transition-all duration-700 group-hover:-translate-y-0.5`}
-                      style={{
-                        filter:
-                          "brightness(0) saturate(100%) invert(82%) sepia(28%) saturate(380%) hue-rotate(358deg) brightness(95%) contrast(88%)",
-                      }}
                       loading="lazy"
                     />
                   </div>
