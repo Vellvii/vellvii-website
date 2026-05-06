@@ -2,6 +2,7 @@ import { ScrollReveal } from "@/components/animations/ScrollReveal";
 import prelaunchLogo from "@/assets/logos/prelaunch.svg";
 import stimulateLogo from "@/assets/logos/stimulate.png";
 import kickstarterLogo from "@/assets/logos/kickstarter.png";
+import gadgetflowLogo from "@/assets/logos/gadgetflow.png";
 
 const KICKSTARTER_URL = "https://www.kickstarter.com/projects/vellvii/vellvii-dox-a-premium-luxury-vault-for-intimacy-and-storage";
 const SHOP_URL = "/shop";
