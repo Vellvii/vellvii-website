@@ -49,6 +49,14 @@ const milestones: Milestone[] = [
     external: true,
     logoHeight: "h-9 md:h-10",
   },
+  {
+    name: "Gadget Flow",
+    logo: gadgetflowLogo,
+    caption: "Editorial review · 2026",
+    href: "https://thegadgetflow.com/blog/vellvii-dox-review-luxury-docking-and-storage-system/",
+    external: true,
+    logoHeight: "h-6 md:h-7",
+  },
 ];
 
 export const Milestones = () => {
