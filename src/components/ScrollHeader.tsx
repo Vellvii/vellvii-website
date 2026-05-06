@@ -42,7 +42,7 @@ export const ScrollHeader = () => {
             <img
               src="/uploads/Vellvii-full-logo-transparent.png"
               alt="Vellvii"
-              className="h-10 sm:h-12 w-auto"
+              className="h-14 sm:h-16 md:h-20 w-auto drop-shadow-[0_0_20px_rgba(212,175,55,0.35)]"
             />
           </Link>
 
