@@ -3,7 +3,7 @@ import prelaunchLogo from "@/assets/logos/prelaunch.svg";
 import stimulateLogo from "@/assets/logos/stimulate.png";
 import kickstarterLogo from "@/assets/logos/kickstarter.png";
 
-const KICKSTARTER_URL = "https://www.kickstarter.com/projects/vellvii/vellvii-dox";
+const KICKSTARTER_URL = "https://www.kickstarter.com/projects/vellvii/vellvii-dox-a-premium-luxury-vault-for-intimacy-and-storage";
 const SHOP_URL = "/shop";
 const STIMULATE_URL =
   "https://stimulatetheshow.com/2026-emerging-brands-experience-mentorship-experience/";

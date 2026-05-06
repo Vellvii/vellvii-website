@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 
-const KICKSTARTER_URL = "https://www.kickstarter.com/projects/vellvii/vellvii-dox"; // TODO: Replace with actual URL
+const KICKSTARTER_URL = "https://www.kickstarter.com/projects/vellvii/vellvii-dox-a-premium-luxury-vault-for-intimacy-and-storage"; // TODO: Replace with actual URL
 
 export const KSPStickyBar = () => {
   const [visible, setVisible] = useState(false);

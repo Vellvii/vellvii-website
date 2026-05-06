@@ -94,7 +94,7 @@ export const KSV2Hero = () => {
             transition={{ duration: 0.7, delay: 1.3 }}
           >
             <a
-              href="https://www.kickstarter.com/projects/vellvii/vellvii-dox"
+              href="https://www.kickstarter.com/projects/vellvii/vellvii-dox-a-premium-luxury-vault-for-intimacy-and-storage"
               target="_blank"
               rel="noopener noreferrer"
               className="group relative px-10 py-5 rounded-xl font-bold text-lg text-black overflow-hidden"
