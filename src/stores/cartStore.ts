@@ -192,8 +192,17 @@ export const useCartStore = create<CartStore>()(
 
         set({ isLoading: true });
         try {
-          const result = await removeLineFromShopifyCart(cartId, item.lineId);
+        const result = await removeLineFromShopifyCart(cartId, item.lineId);
           if (result.success) {
+            trackRemoveFromCart({
+              item_id: item.variantId,
+              item_name: item.product.node.title,
+              item_brand: 'Vellvii',
+              item_variant: item.variantTitle,
+              price: parseFloat(item.price.amount),
+              quantity: item.quantity,
+              currency: item.price.currencyCode,
+            });
             const currentItems = get().items;
             const newItems = currentItems.filter(i => i.variantId !== variantId);
             newItems.length === 0 ? clearCart() : set({ items: newItems });
