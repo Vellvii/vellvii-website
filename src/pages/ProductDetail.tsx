@@ -51,9 +51,21 @@ const ProductDetail = () => {
     }
   }, [product]);
 
-  // GA4 conversion event for Lux PDP views
+  // GA4 view_item + Lux-specific PDP view event
   useEffect(() => {
-    if (isLuxProduct && product && typeof window !== "undefined" && (window as any).gtag) {
+    if (!product) return;
+    const variant = product.node.variants?.edges?.[0]?.node;
+    if (variant) {
+      trackViewItem({
+        item_id: variant.id,
+        item_name: product.node.title,
+        item_brand: "Vellvii",
+        price: parseFloat(variant.price.amount),
+        quantity: 1,
+        currency: variant.price.currencyCode,
+      });
+    }
+    if (isLuxProduct && typeof window !== "undefined" && (window as any).gtag) {
       (window as any).gtag("event", "lux_pdp_view", {
         product_handle: handle,
         product_title: product.node.title,
