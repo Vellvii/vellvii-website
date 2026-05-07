@@ -4,6 +4,7 @@ import { MagneticButton } from "@/components/animations/MagneticButton";
 import { EnvelopeMailingList, MailingListFormData } from "@/components/EnvelopeMailingList";
 import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/hooks/use-toast";
+import { pixelLead, pixelSubscribe } from "@/lib/metaPixel";
 
 const Landing = () => {
   const navigate = useNavigate();
@@ -172,6 +173,9 @@ const Landing = () => {
       });
 
       if (error) throw error;
+
+      pixelLead({ content_name: "landing_mailing_list" });
+      pixelSubscribe();
 
       toast({
         title: "Success!",
