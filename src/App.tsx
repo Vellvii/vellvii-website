@@ -2,7 +2,9 @@ import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
+import { BrowserRouter, Routes, Route, Navigate, useLocation } from "react-router-dom";
+import { useEffect, useRef } from "react";
+import { pixelPageView } from "./lib/metaPixel";
 import { HelmetProvider } from "react-helmet-async";
 import ScrollToTop from "./components/ScrollToTop";
 import { SmoothScroll } from "./components/animations/SmoothScroll";
@@ -52,7 +54,20 @@ const queryClient = new QueryClient();
 
 const InnerApp = () => {
   useCartSync();
-  
+
+  // SPA route-change PageView for Meta Pixel.
+  // The base snippet in index.html already fires PageView on initial load,
+  // so we skip the first render and only fire on subsequent route changes.
+  const location = useLocation();
+  const isFirstRender = useRef(true);
+  useEffect(() => {
+    if (isFirstRender.current) {
+      isFirstRender.current = false;
+      return;
+    }
+    pixelPageView();
+  }, [location.pathname]);
+
   return (
     <ErrorBoundary>
       <ScrollToTop />
