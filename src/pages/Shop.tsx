@@ -349,6 +349,9 @@ const Shop = () => {
             <h1 className="text-2xl sm:text-3xl md:text-4xl font-baskerville font-bold text-light-primary mb-2 sm:mb-3">
               The <span className="gradient-text">Collection</span>
             </h1>
+            <p className="font-baskerville italic text-sm sm:text-base text-primary/70 tracking-wide mb-3">
+              The Art of &lsquo;O&rsquo;
+            </p>
             <p className="text-light-secondary text-sm sm:text-base max-w-xl mx-auto font-montserrat leading-relaxed mb-5 sm:mb-6">
               Refined wellness products designed for privacy, elegance, and modern living.
             </p>
