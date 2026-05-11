@@ -97,7 +97,7 @@ export const LuxStockCounter = ({
   return (
     <div className="space-y-2">
       <p
-        className={`font-montserrat text-sm font-semibold text-center ${
+        className={`font-montserrat text-xs sm:text-sm font-semibold text-center leading-snug break-words ${
           low ? "text-red-500" : "text-light-primary"
         }`}
       >
@@ -120,25 +120,25 @@ export const LuxStockCounter = ({
 
 export const LuxUrgencyBlock = () => (
   <div className="text-center space-y-1">
-    <p className="font-montserrat text-sm font-semibold text-light-primary">
+    <p className="font-montserrat text-sm font-semibold text-light-primary leading-snug">
       Limited production run. No guaranteed restock.
     </p>
-    <p className="font-montserrat text-xs text-light-muted">
+    <p className="font-montserrat text-xs text-light-muted leading-snug">
       Once sold out, next batch may take months.
     </p>
   </div>
 );
 
 export const LuxShippingClarity = () => (
-  <div className="grid grid-cols-3 gap-2 rounded-lg border border-white/10 bg-white/5 p-3">
+  <div className="grid w-full max-w-full grid-cols-1 min-[360px]:grid-cols-3 gap-2 rounded-lg border border-white/10 bg-white/5 p-3">
     {[
       { icon: Truck, label: "Ships from USA" },
       { icon: Globe2, label: "No intl. delays" },
       { icon: ShieldCheck, label: "Secure checkout" },
     ].map(({ icon: Icon, label }) => (
-      <div key={label} className="flex flex-col items-center gap-1 text-center">
+      <div key={label} className="min-w-0 flex flex-col items-center gap-1 text-center">
         <Icon className="w-4 h-4 text-primary" />
-        <span className="font-montserrat text-[10px] sm:text-xs text-light-secondary leading-tight">
+        <span className="font-montserrat text-[10px] sm:text-xs text-light-secondary leading-tight break-words">
           {label}
         </span>
       </div>
