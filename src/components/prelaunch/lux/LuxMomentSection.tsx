@@ -22,7 +22,7 @@ export const LuxMomentSection = () => {
 
             <ScrollReveal delay={0.3}>
               <div className="pt-8">
-                <LuxReserveCTA className="text-xl sm:text-2xl px-16 py-7" />
+                <LuxReserveCTA className="text-base sm:text-xl lg:text-2xl px-8 sm:px-16 py-5 sm:py-7" />
               </div>
             </ScrollReveal>
           </div>
