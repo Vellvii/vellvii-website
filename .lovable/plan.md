@@ -1,99 +1,38 @@
-# Reviews Integration Plan (Judge.me)
+# Show "Be the first to review" on Product Pages
 
 ## Goal
 
-Resolve the Google Rich Results warnings (`review`, `aggregateRating` missing) on product pages by wiring up Judge.me — without ever emitting fake or empty review data. Section and schema appear only once real customer reviews exist.
+Replace the current "hide entirely when zero reviews" behavior with a visible Judge.me review section that invites the first review. No fake structured data — `aggregateRating` JSON-LD still only emits with real reviews.
 
-## Approach
+## Changes
 
-**Source of truth:** Judge.me (free Shopify app, installs in one click from Shopify App Store). It:
-- Hosts review collection, moderation, email requests
-- Exposes ratings via Shopify product metafields (`reviews.rating` and `reviews.rating_count`) and via its own JS widget
-- Auto-generates valid `aggregateRating` JSON-LD that Google accepts
-- Syndicates to Google Shopping seller ratings
+### 1. Always render the reviews section
 
-You will install Judge.me in your Shopify admin separately (one-click, free). This plan covers the **storefront-side wiring** so it shows up on vellvii.com product pages.
+`src/components/products/ProductReviews.tsx`
 
-## What gets built
+- Remove the `if (!reviewData) return null;` early exit.
+- Always inject the Judge.me preloader script (it's cached + tiny).
+- When `reviewData` exists: render the star summary + count above the widget (as today).
+- When `reviewData` is null: render only the section heading + a short invite line ("Be the first to share your experience") above the widget. Judge.me's widget itself renders the "Write a review" button and review form, so no custom form is needed.
 
-### 1. Extend Shopify product query with review metafields
+### 2. Keep JSON-LD honest
 
-Update `src/lib/shopify.ts` `PRODUCT_BY_HANDLE_QUERY` to fetch the two Judge.me metafields:
+`src/pages/ProductDetail.tsx`
 
-```text
-metafields(identifiers: [
-  { namespace: "reviews", key: "rating" },
-  { namespace: "reviews", key: "rating_count" }
-]) { key value type }
-```
+- No change needed — `aggregateRating` is already conditional on `parseReviewMetafields()` returning non-null. Stays out of the schema until a real review exists. Google's two non-critical warnings remain until then.
 
-Add a helper `parseReviewMetafields(product)` returning `{ rating: number, count: number } | null` — returns `null` when count is 0 or metafields missing.
+### 3. Update the memory note
 
-### 2. New `<ProductReviews>` component
-
-Path: `src/components/products/ProductReviews.tsx`
-
-- Takes `productHandle` and `reviewData` props
-- If `reviewData === null` → renders nothing (component returns `null`)
-- If reviews exist → renders a section above the footer on the product detail page with:
-  - Section heading "Reviews" (Baskerville, brand styling)
-  - Aggregate display: star row + numeric rating + "(N reviews)"
-  - Judge.me preview widget embed (their `<div class="jdgm-widget jdgm-review-widget">` with product id) — loads only when reviews exist, so no "be the first to review" CTA ever appears
-
-### 3. Update `<SEO>` to accept aggregate rating
-
-`src/components/SEO.tsx` — extend `productData` interface with optional `aggregateRating?: { ratingValue: number; reviewCount: number }`. Only when present, inject into Product JSON-LD:
-
-```text
-aggregateRating: {
-  "@type": "AggregateRating",
-  ratingValue: ...,
-  reviewCount: ...
-}
-```
-
-No emission when undefined — keeps schema clean and policy-compliant.
-
-### 4. Wire it into `ProductDetail.tsx`
-
-- Parse review metafields from the Shopify product
-- Pass `aggregateRating` to `<SEO productData={...}>` only when real data exists
-- Render `<ProductReviews>` (which self-hides if no data) above `<RelatedProducts>`
-
-### 5. Load Judge.me script conditionally
-
-Add a small loader in `ProductDetail.tsx` that injects Judge.me's widget script (`https://cdn.judge.me/widget_preloader.js` with shop domain) only when at least one product review exists. Avoids extra network weight on empty-state pages.
-
-### 6. Update the security/setup notes
-
-Add a one-time setup note to `mem://integrations/judgeme-reviews` documenting:
-- Install Judge.me from Shopify App Store (free plan is sufficient)
-- Enable the "Product Rating" metafields (Judge.me does this automatically on install)
-- No API keys needed on the storefront — metafields + their public widget script
-
-## What does NOT get built
-
-- No placeholder reviews, no "Be the first to review" CTA, no founder quotes pretending to be reviews
-- No custom review form (Judge.me handles collection via post-purchase emails)
-- No changes to Kickstarter pages, homepage, or LUX prelaunch — reviews live on `/products/:handle` only
+`mem://integrations/judgeme-reviews` — flip the description from "hidden until count > 0" to "always visible; aggregateRating JSON-LD still gated on real reviews." Update the index entry accordingly.
 
 ## Files touched
 
 ```text
-src/lib/shopify.ts                          (extend query + helper)
-src/components/SEO.tsx                      (aggregateRating support)
-src/components/products/ProductReviews.tsx  (NEW)
-src/pages/ProductDetail.tsx                 (wire it in)
-mem://integrations/judgeme-reviews          (NEW memory)
+src/components/products/ProductReviews.tsx   (remove null-return, add empty state)
+mem://integrations/judgeme-reviews.md        (update policy note)
+mem://index.md                               (update one-line description)
 ```
 
-## After implementation
+## Setup reminder
 
-1. You install Judge.me in Shopify admin (one-click)
-2. As real customer reviews come in and are approved in Judge.me, they auto-populate the section + JSON-LD on vellvii.com
-3. Re-run Google Rich Results Test — the two warnings disappear naturally once the first review lands
-4. Bonus: Trustpilot can be layered on later for brand-level trust (separate from Product schema, would live in footer)
-
-## Industry context (FYI)
-
-Judge.me is what Dame, Maude, and most premium DTC wellness brands started with before moving to Yotpo/Okendo at scale. Good fit for Vellvii's stage — free, schema-compliant, no fake-data risk.
+For the "Write a review" button to actually work, Judge.me must be installed in your Shopify admin (free plan). The widget on the storefront is just the front-end — collection + moderation lives in Judge.me. Once installed, the empty-state CTA becomes functional automatically.

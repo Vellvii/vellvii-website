@@ -14,26 +14,16 @@ interface ProductReviewsProps {
 /**
  * Product reviews section, powered by Judge.me.
  *
- * Renders nothing when there are zero approved reviews — keeps the page clean,
- * avoids "Be the first to review" prompts on a luxury PDP, and ensures Product
- * JSON-LD never emits empty/fake aggregateRating data (Google policy).
- *
- * Judge.me must be installed in the Shopify admin (free plan is sufficient).
- * It auto-publishes `reviews.rating` and `reviews.rating_count` metafields,
- * and exposes the public widget script used below.
+ * Always rendered so the PDP doesn't feel empty. When zero approved reviews
+ * exist, shows an honest "Be the first" invitation and Judge.me's own
+ * write-a-review widget. Real `aggregateRating` JSON-LD remains gated on real
+ * review counts (in ProductDetail.tsx) so we never emit fake structured data.
  */
 export const ProductReviews = ({ productId, reviewData }: ProductReviewsProps) => {
-  // Inject Judge.me widget loader only when real reviews exist.
+  // Always inject the Judge.me preloader so the write-a-review widget works.
   useEffect(() => {
-    if (!reviewData) return;
-
     const SCRIPT_ID = "judgeme-widget-preloader";
-    if (document.getElementById(SCRIPT_ID)) {
-      // Already loaded; ask Judge.me to (re)render any new widgets.
-      // @ts-expect-error - jdgm is added by the Judge.me preloader script
-      window.jdgm?.SHOP_DOMAIN || (window as unknown as Record<string, unknown>).jdgm;
-      return;
-    }
+    if (document.getElementById(SCRIPT_ID)) return;
 
     const script = document.createElement("script");
     script.id = SCRIPT_ID;
@@ -41,13 +31,11 @@ export const ProductReviews = ({ productId, reviewData }: ProductReviewsProps) =
     script.src = "https://cdn.judge.me/widget_preloader.js";
     script.setAttribute("data-shop-domain", SHOPIFY_STORE_PERMANENT_DOMAIN);
     document.body.appendChild(script);
-  }, [reviewData]);
+  }, []);
 
-  if (!reviewData) return null;
-
-  const { ratingValue, reviewCount } = reviewData;
   const numericId = productId.split("/").pop() || "";
-  const rounded = Math.round(ratingValue * 10) / 10;
+  const hasReviews = reviewData !== null;
+  const rounded = hasReviews ? Math.round(reviewData.ratingValue * 10) / 10 : 0;
 
   return (
     <section className="px-3 sm:px-4 lg:px-8 py-12 sm:py-16 lg:py-20 border-t border-primary/10">
@@ -57,32 +45,40 @@ export const ProductReviews = ({ productId, reviewData }: ProductReviewsProps) =
             Reviews
           </p>
           <h2 className="font-baskerville text-2xl sm:text-3xl lg:text-4xl text-light-primary mb-4">
-            What guests are saying
+            {hasReviews ? "What guests are saying" : "Be the first to review"}
           </h2>
 
-          <div className="inline-flex items-center gap-3">
-            <div className="flex items-center gap-0.5" aria-label={`${rounded} out of 5 stars`}>
-              {[0, 1, 2, 3, 4].map((i) => (
-                <Star
-                  key={i}
-                  className={`w-4 h-4 sm:w-5 sm:h-5 ${
-                    i < Math.round(ratingValue)
-                      ? "fill-primary text-primary"
-                      : "text-primary/30"
-                  }`}
-                  strokeWidth={1.4}
-                />
-              ))}
+          {hasReviews ? (
+            <div className="inline-flex items-center gap-3">
+              <div className="flex items-center gap-0.5" aria-label={`${rounded} out of 5 stars`}>
+                {[0, 1, 2, 3, 4].map((i) => (
+                  <Star
+                    key={i}
+                    className={`w-4 h-4 sm:w-5 sm:h-5 ${
+                      i < Math.round(reviewData.ratingValue)
+                        ? "fill-primary text-primary"
+                        : "text-primary/30"
+                    }`}
+                    strokeWidth={1.4}
+                  />
+                ))}
+              </div>
+              <span className="font-montserrat text-sm text-light-secondary">
+                <span className="text-light-primary font-medium">{rounded.toFixed(1)}</span>
+                <span className="mx-1.5 text-light-muted">-</span>
+                {reviewData.reviewCount}{" "}
+                {reviewData.reviewCount === 1 ? "review" : "reviews"}
+              </span>
             </div>
-            <span className="font-montserrat text-sm text-light-secondary">
-              <span className="text-light-primary font-medium">{rounded.toFixed(1)}</span>
-              <span className="mx-1.5 text-light-muted">-</span>
-              {reviewCount} {reviewCount === 1 ? "review" : "reviews"}
-            </span>
-          </div>
+          ) : (
+            <p className="font-montserrat text-sm sm:text-base text-light-secondary max-w-md mx-auto leading-relaxed">
+              Share your experience with the Vellvii collection and help others
+              discover the art of intentional pleasure.
+            </p>
+          )}
         </div>
 
-        {/* Judge.me product review widget */}
+        {/* Judge.me product review widget - renders its own "Write a review" CTA */}
         <div
           className="jdgm-widget jdgm-review-widget"
           data-id={numericId}
