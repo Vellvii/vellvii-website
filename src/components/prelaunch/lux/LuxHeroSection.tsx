@@ -72,8 +72,8 @@ export const LuxHeroSection = () => {
       </ScrollReveal>
 
       {/* Bottom content - More dramatic spacing */}
-      <div className="w-full relative z-10 px-4 sm:px-8 lg:px-12 mt-20 lg:mt-32 pb-32 lg:pb-40">
-        <div className="max-w-7xl mx-auto text-center space-y-12 lg:space-y-16">
+      <div className="w-full relative z-10 px-4 sm:px-8 lg:px-12 mt-16 sm:mt-20 lg:mt-32 pb-20 sm:pb-28 lg:pb-40">
+        <div className="max-w-7xl mx-auto text-center space-y-8 sm:space-y-12 lg:space-y-16">
           <ScrollReveal delay={0.4}>
             <h2 className="text-3xl sm:text-4xl lg:text-5xl xl:text-6xl text-white font-baskerville leading-tight" style={{
               textShadow: '0 0 40px rgba(255, 255, 255, 0.1)'
