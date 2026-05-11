@@ -81,11 +81,17 @@ export const ProductReviews = ({ productId, productTitle, reviewData }: ProductR
         </div>
 
         {/* Judge.me product review widget - renders its own "Write a review" CTA */}
+        <div style={{ clear: "both" }} />
         <div
+          id="judgeme_product_reviews"
           className="jdgm-widget jdgm-review-widget"
           data-id={numericId}
-          data-product-title=""
-          data-product-handle=""
+          data-product-id={numericId}
+          data-product-title={productTitle}
+          data-widget="review"
+          data-auto-install="false"
+          data-entry-point="review_widget.js"
+          data-entry-key="review-widget/main.js"
         />
       </div>
     </section>
