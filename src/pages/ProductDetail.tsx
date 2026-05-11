@@ -342,7 +342,7 @@ const ProductDetail = () => {
                 <div className="space-y-3 sm:space-y-4 lg:sticky lg:top-20 lg:flex lg:flex-col lg:justify-end lg:min-h-[calc(100vh-12rem)] lg:pb-24">
                 {/* Main Image */}
                   <div
-                    className="product-image-container aspect-square rounded-lg sm:rounded-2xl overflow-hidden cursor-pointer group relative"
+                    className="relative aspect-square overflow-hidden rounded-lg border border-border/20 bg-card/50 cursor-pointer group sm:rounded-2xl"
                     onClick={() => openLightbox(selectedImageIndex)}
                   >
                     {selectedImage ? (
@@ -350,7 +350,7 @@ const ProductDetail = () => {
                         <img
                           src={selectedImage.url}
                           alt={selectedImage.altText || product.node.title}
-                          className="w-full h-full object-contain bg-card/50"
+                          className="w-full h-full object-contain"
                         />
                         <StatusPill
                           status={getProductStatus(handle, !!variant?.availableForSale)}
