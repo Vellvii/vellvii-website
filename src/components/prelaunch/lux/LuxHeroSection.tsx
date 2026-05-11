@@ -12,7 +12,7 @@ export const LuxHeroSection = () => {
       <div className="absolute inset-0 bg-gradient-to-b from-black/20 via-transparent to-black/40" />
 
       <div className="w-full relative z-10 pt-24 lg:pt-32">
-        <div className="max-w-7xl mx-auto text-center space-y-12 lg:space-y-16">
+        <div className="max-w-7xl mx-auto text-center space-y-8 sm:space-y-12 lg:space-y-16">
           {/* Logo Video */}
           <ScrollReveal>
             <div className="flex justify-center mb-8">
@@ -21,7 +21,7 @@ export const LuxHeroSection = () => {
                 loop
                 muted
                 playsInline
-                className="h-[16rem] sm:h-[22rem] lg:h-[28rem] xl:h-[34rem] w-auto"
+                className="h-[12rem] sm:h-[18rem] lg:h-[28rem] xl:h-[34rem] w-auto"
                 style={{
                   filter: 'drop-shadow(0 0 60px rgba(178, 145, 108, 0.6)) drop-shadow(0 0 100px rgba(178, 145, 108, 0.3))'
                 }}
