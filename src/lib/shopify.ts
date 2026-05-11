@@ -90,7 +90,42 @@ export interface ShopifyProduct {
       name: string;
       values: string[];
     }>;
+    metafields?: Array<{
+      key: string;
+      namespace: string;
+      value: string;
+      type: string;
+    } | null>;
   };
+}
+
+// Parse Judge.me review metafields. Returns null when there are no real reviews
+// so we never emit fake or empty aggregateRating data into Product JSON-LD.
+export function parseReviewMetafields(
+  product: ShopifyProduct | null | undefined
+): { ratingValue: number; reviewCount: number } | null {
+  const mfs = product?.node?.metafields;
+  if (!mfs || !Array.isArray(mfs)) return null;
+
+  const ratingMf = mfs.find((m) => m && m.namespace === 'reviews' && m.key === 'rating');
+  const countMf = mfs.find((m) => m && m.namespace === 'reviews' && m.key === 'rating_count');
+
+  if (!ratingMf || !countMf) return null;
+
+  // Judge.me stores rating as a JSON rating type: {"value":"4.8","scale_min":"1.0","scale_max":"5.0"}
+  let ratingValue = 0;
+  try {
+    const parsed = JSON.parse(ratingMf.value);
+    ratingValue = typeof parsed === 'object' ? parseFloat(parsed.value) : parseFloat(ratingMf.value);
+  } catch {
+    ratingValue = parseFloat(ratingMf.value);
+  }
+
+  const reviewCount = parseInt(countMf.value, 10);
+
+  if (!reviewCount || reviewCount <= 0 || !ratingValue || isNaN(ratingValue)) return null;
+
+  return { ratingValue, reviewCount };
 }
 
 // Storefront API helper function
@@ -196,6 +231,15 @@ const PRODUCT_FIELDS = `
   options {
     name
     values
+  }
+  metafields(identifiers: [
+    { namespace: "reviews", key: "rating" },
+    { namespace: "reviews", key: "rating_count" }
+  ]) {
+    key
+    namespace
+    value
+    type
   }
 `;
 
