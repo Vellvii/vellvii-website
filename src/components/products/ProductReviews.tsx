@@ -5,6 +5,8 @@ import { SHOPIFY_STORE_PERMANENT_DOMAIN } from "@/lib/shopify";
 interface ProductReviewsProps {
   /** Shopify product GID, e.g. gid://shopify/Product/1234567890 */
   productId: string;
+  /** Product title - passed to Judge.me widget for analytics & review form */
+  productTitle: string;
   reviewData: {
     ratingValue: number;
     reviewCount: number;
