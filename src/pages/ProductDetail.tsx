@@ -3,7 +3,7 @@ import { useShopifyProduct } from "@/hooks/useShopifyProducts";
 import { useCartStore } from "@/stores/cartStore";
 import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
-import { ShoppingCart, Loader2, ArrowLeft, Expand, Images, Box } from "lucide-react";
+import { ShoppingCart, Loader2, ArrowLeft, Expand } from "lucide-react";
 import { toast } from "sonner";
 import { SEO } from "@/components/SEO";
 import { useState, useMemo, useEffect } from "react";
@@ -15,7 +15,6 @@ import { StickyProductBar } from "@/components/StickyProductBar";
 import { ImageLightbox } from "@/components/ImageLightbox";
 import { DoxVideoSection } from "@/components/DoxVideoSection";
 import { RelatedProducts } from "@/components/RelatedProducts";
-import { Model3DViewer } from "@/components/Model3DViewer";
 import { ShopifyMediaModel3d } from "@/lib/shopify";
 import {
   LuxPreOrderBanner,
@@ -36,7 +35,6 @@ const ProductDetail = () => {
   const cartLoading = useCartStore((state) => state.isLoading);
   const [selectedImageIndex, setSelectedImageIndex] = useState(0);
   const [lightboxOpen, setLightboxOpen] = useState(false);
-  const [viewMode, setViewMode] = useState<'images' | '3d'>('images');
   const [selectedOptions, setSelectedOptions] = useState<Record<string, string>>({});
 
   // Check if this is the DOX product
@@ -172,8 +170,6 @@ const ProductDetail = () => {
     
     return glbSource?.url || model.sources[0]?.url || null;
   }, [product]);
-
-  const has3DModel = !!model3d;
 
   // Handle option change
   const handleOptionChange = (optionName: string, value: string) => {
