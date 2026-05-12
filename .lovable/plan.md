@@ -1,61 +1,30 @@
-## Context
+## Goal
 
-The snippet you pasted is Judge.me's **Shopify Liquid theme** install code. It's meant to be pasted into `templates/product.liquid` inside a Shopify Online Store theme — the `{{ product.id }}`, `{% if %}`, `{% assign %}` tags are Liquid and only run on Shopify's server.
+Control the link-preview image (WhatsApp, iMessage, Facebook, X) for `vellvii.com` so it consistently shows the Vellvii full logo instead of a stale cached image.
 
-Our store is a **headless React storefront** (Vite + Storefront API), so we can't paste that Liquid verbatim. Instead, we render the equivalent `<div class="jdgm-widget jdgm-review-widget">` ourselves and let Judge.me's `widget_preloader.js` hydrate it client-side — which is what `ProductReviews.tsx` already does.
+## Changes
 
-That said, comparing our current div with the official snippet, we're missing a few data attributes Judge.me's loader expects in 2025. Worth tightening up.
+**1. `index.html`** — add explicit Open Graph and Twitter image meta tags pointing to the Vellvii full logo, plus an absolute `og:url` and upgrade the Twitter card type so the image renders larger.
 
-## What's missing on our widget div
+Tags to add inside `<head>`:
+- `<meta property="og:image" content="https://vellvii.com/uploads/Vellvii-full-logo-transparent.png">`
+- `<meta property="og:image:width" content="1200">`
+- `<meta property="og:image:height" content="630">`
+- `<meta property="og:image:alt" content="Vellvii - The art of O">`
+- `<meta property="og:url" content="https://vellvii.com">`
+- `<meta name="twitter:image" content="https://vellvii.com/uploads/Vellvii-full-logo-transparent.png">`
+- Change `twitter:card` from `summary` to `summary_large_image`.
 
-Current:
-```tsx
-<div
-  className="jdgm-widget jdgm-review-widget"
-  data-id={numericId}
-  data-product-title=""
-  data-product-handle=""
-/>
-```
+**2. No changes to `SEO.tsx`** — its `DEFAULT_IMAGE` already points at the same logo, so per-page React-Helmet meta tags stay consistent. Product/Lux pages keep their own `image` overrides (unchanged).
 
-Official snippet expects (translated to React/JSX):
-- `data-id` - numeric product id (we have it)
-- `data-product-id` - same numeric id (missing)
-- `data-product-title` - real product title, escaped (we send empty string)
-- `data-widget='review'` (missing)
-- `data-auto-install='false'` (missing)
-- `data-entry-point='review_widget.js'` (missing)
-- `data-entry-key='review-widget/main.js'` (missing)
+## Notes for the user
 
-Without these, Judge.me's newer widget loader sometimes silently no-ops or falls back to slower paths.
+- WhatsApp, iMessage, and Facebook **aggressively cache** link previews. After deploying, the old "PLEASURE: REDEFINED" image may keep appearing for a while. To force a refresh:
+  - **Facebook / WhatsApp**: paste `https://vellvii.com` into the [Facebook Sharing Debugger](https://developers.facebook.com/tools/debug/) and click "Scrape Again".
+  - **iMessage**: previews are cached per-device; clearing or re-sending in a new chat usually picks up the new image.
+  - **X / Twitter**: use the [Card Validator](https://cards-dev.twitter.com/validator).
 
-## Plan
+## Out of scope
 
-### 1. `src/components/products/ProductReviews.tsx`
-- Add a `productTitle: string` prop.
-- Update the rendered div to include the full attribute set above. `data-product-title` is rendered via React (which escapes automatically — equivalent to Liquid's `| escape`).
-- Keep the preloader `<script src="https://cdn.judge.me/widget_preloader.js">` injection as-is (this is the headless equivalent of installing the Judge.me Shopify app's theme block).
-- Add a `<div style={{ clear: "both" }} />` before the widget div, matching the snippet (prevents float collapse on legacy review layouts).
-- Leave both states intact: "What guests are saying" (with stars) when `reviewData` exists; "Be the first to review" invitation when `null`. Judge.me's widget renders its own "Write a review" CTA inside the div either way.
-
-### 2. `src/pages/ProductDetail.tsx`
-- Pass `productTitle={product.node.title}` to `<ProductReviews />`. One-line change at the existing call site (around line 555).
-
-### 3. No memory changes
-- The existing `mem://integrations/judgeme-reviews` memory already covers the policy (section always visible, JSON-LD gated on real counts). This is a small attribute tightening, not a policy shift.
-
-## Why we can't just use the Liquid snippet you pasted
-
-| Liquid (Shopify theme) | Our headless React app |
-|---|---|
-| `{{ product.id }}` resolved server-side by Shopify | Resolved client-side via Storefront API |
-| `{% if %}` / `{% assign %}` Liquid tags | JSX conditionals + JS |
-| `product.metafields.judgeme.widget` pre-rendered HTML cached on the Shopify product | Not available — we don't render through Shopify's theme |
-| `shop.metafields.judgeme.shop_reviews_count` | Not exposed to Storefront API (Judge.me-private metafield) |
-
-So the legacy SSR-cached widget content (`has_legacy` branch in your snippet) doesn't apply to us — Judge.me's preloader fetches review data via its own JS API instead. That's the correct headless behavior.
-
-## Files touched
-
-- `src/components/products/ProductReviews.tsx` - add prop, expand data attributes, add clear-both spacer
-- `src/pages/ProductDetail.tsx` - pass `productTitle` prop (1 line)
+- Per-page share images (product, Lux, Kickstarter pages) — they keep their existing behavior.
+- Generating a new dedicated 1200×630 social card. If you later want a richer share image (logo + tagline on dark background), I can generate one and swap the URL.
