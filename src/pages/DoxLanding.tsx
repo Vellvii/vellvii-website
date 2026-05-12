@@ -16,6 +16,7 @@ const DoxLanding = () => {
         title="Vellvii | Luxury Wellness & Intimate Storage"
         description="Discover Vellvii - luxury wellness products and the DOX docking station featuring biometric security, integrated charging, and premium design. The Art of 'O'."
         canonical="/"
+        noindex
         organizationData
         productData={{
           name: "Vellvii DOX",
