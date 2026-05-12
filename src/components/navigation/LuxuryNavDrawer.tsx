@@ -18,7 +18,9 @@ const setOpen = (open: boolean, trigger?: HTMLElement | null) => {
 
 const subscribe = (l: Listener) => {
   listeners.add(l);
-  return () => listeners.delete(l);
+  return () => {
+    listeners.delete(l);
+  };
 };
 
 // ---------- Nav data (live routes only) ----------

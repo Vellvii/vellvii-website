@@ -10,6 +10,7 @@ import ScrollToTop from "./components/ScrollToTop";
 import { SmoothScroll } from "./components/animations/SmoothScroll";
 import { PageTransition } from "./components/animations/PageTransition";
 import CartDrawer from "./components/CartDrawer";
+import { LuxuryNavDrawer } from "./components/navigation/LuxuryNavDrawer";
 import { useCartSync } from "./hooks/useCartSync";
 import { ErrorBoundary } from "./components/ErrorBoundary";
 import AgeGateLanding from "./pages/Landing";
@@ -124,6 +125,7 @@ const InnerApp = () => {
         </PageTransition>
       </SmoothScroll>
       <CartDrawer />
+      <LuxuryNavDrawer />
     </ErrorBoundary>
   );
 };
