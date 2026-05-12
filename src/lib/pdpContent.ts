@@ -38,6 +38,19 @@ export interface FaqItem {
   answer: string;
 }
 
+export interface DockingCard {
+  title: string;
+  subtitle: string;
+  copy: string;
+}
+
+export interface DockingInfo {
+  heading: string;
+  intro: string;
+  vds: DockingCard;
+  dds: DockingCard;
+}
+
 export interface PdpContent {
   /** Short premium one-liner shown above benefits */
   tagline?: string;
@@ -48,7 +61,37 @@ export interface PdpContent {
   careStorage?: string[];
   /** Product-specific FAQs - falls back to FALLBACK_FAQS if undefined */
   faqs?: FaqItem[];
+  /** DOX-only: docking system (VDS / DDS) section content */
+  docking?: DockingInfo;
+  /** Toys that fit the DOX through the VDS insert */
+  doxCompatible?: boolean;
+  /** Lux-only: subtle related-storage note linking to DOX */
+  relatedStorageNote?: { copy: string; href: string; label: string };
 }
+
+/** Shared docking system content - reused by DOX PDP and the collection page. */
+export const DOCKING_INFO: DockingInfo = {
+  heading: "Designed Around the Vellvii Docking System",
+  intro:
+    "The Vellvii DOX is designed as the home of the Vellvii Pleasure Collection, with dedicated docking spaces that keep compatible products organized, discreet, and ready for storage.",
+  vds: {
+    title: "VDS",
+    subtitle: "Vellvii Docking Station",
+    copy: "The VDS is shaped specifically for current Vellvii products, allowing the Vellvii G-Vibe, Evolve, and Pulse to fit securely into the DOX ecosystem.",
+  },
+  dds: {
+    title: "DDS",
+    subtitle: "Dildo Docking Station",
+    copy: "The DDS is a round docking insert designed for compatible suction-base products up to 90mm in diameter.",
+  },
+};
+
+export const DOX_COMPATIBLE_HANDLES: CanonicalHandle[] = [
+  "vellvii-dox",
+  "vellvii-g-vibe",
+  "vellvii-evolve",
+  "vellvii-pulse",
+];
 
 /** Safe, non-promissory fallback FAQs. */
 export const FALLBACK_FAQS: FaqItem[] = [
@@ -98,6 +141,7 @@ export const PDP_CONTENT: Record<CanonicalHandle, PdpContent> = {
       { icon: "Lock", label: "Refined organization", copy: "Designed to keep the collection calm, private, and intentional." },
       { icon: "Sparkles", label: "Premium experience", copy: "A fixed storage piece built around discretion and design." },
     ],
+    docking: DOCKING_INFO,
   },
   "vellvii-lux": {
     tagline:
@@ -113,6 +157,11 @@ export const PDP_CONTENT: Record<CanonicalHandle, PdpContent> = {
       { label: "Format", value: "Portable storage case" },
       { label: "Use Case", value: "Travel-friendly and everyday personal storage" },
     ],
+    relatedStorageNote: {
+      copy: "Looking for a larger bedroom storage system? Explore the Vellvii DOX.",
+      href: "/products/vellvii-dox",
+      label: "Explore Vellvii DOX",
+    },
     faqs: [
       { question: "What is the Vellvii Lux?", answer: "Vellvii Lux is a portable fingerprint-lock storage case - a compact, discreet companion designed with the feel of a refined toiletries-style case for travel and everyday personal storage." },
       { question: "How is the Lux different from the Vellvii DOX?", answer: "Vellvii Lux is the more portable storage companion, designed with the feel of a refined toiletries-style case and secured with fingerprint access. Vellvii DOX is the larger, sturdier storage system, designed as a more substantial piece for the bedroom." },
@@ -129,6 +178,10 @@ export const PDP_CONTENT: Record<CanonicalHandle, PdpContent> = {
       { icon: "Sparkles", label: "Premium experience", copy: "A refined object you will actually want to keep on display." },
       { icon: "ShieldCheck", label: "Body-safe materials", copy: "Selected with comfort and quality at the center." },
     ],
+    doxCompatible: true,
+    productDetails: [
+      { label: "DOX Compatibility", value: "Fits the Vellvii DOX through the VDS insert" },
+    ],
   },
   "vellvii-evolve": {
     tagline: "Discreet design, refined for everyday intimacy.",
@@ -137,6 +190,10 @@ export const PDP_CONTENT: Record<CanonicalHandle, PdpContent> = {
       { icon: "Sparkles", label: "Premium experience", copy: "Quiet luxury in every detail." },
       { icon: "ShieldCheck", label: "Body-safe materials", copy: "Selected with comfort and quality at the center." },
     ],
+    doxCompatible: true,
+    productDetails: [
+      { label: "DOX Compatibility", value: "Fits the Vellvii DOX through the VDS insert" },
+    ],
   },
   "vellvii-pulse": {
     tagline: "Part of the Vellvii Pleasure Collection - designed with intention.",
@@ -144,6 +201,10 @@ export const PDP_CONTENT: Record<CanonicalHandle, PdpContent> = {
       { icon: "Sparkles", label: "Premium experience", copy: "A considered object with a refined silhouette." },
       { icon: "Heart", label: "Designed for modern couples", copy: "Built around intimacy and shared discretion." },
       { icon: "ShieldCheck", label: "Body-safe materials", copy: "Selected with comfort and quality at the center." },
+    ],
+    doxCompatible: true,
+    productDetails: [
+      { label: "DOX Compatibility", value: "Fits the Vellvii DOX through the VDS insert" },
     ],
   },
 };
