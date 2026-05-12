@@ -24,7 +24,11 @@ export const SmoothScroll = ({ children }: SmoothScrollProps) => {
 
     requestAnimationFrame(raf);
 
+    // Expose for route-change scroll-to-top (see ScrollToTop.tsx)
+    (window as unknown as { __lenis?: Lenis }).__lenis = lenis;
+
     return () => {
+      delete (window as unknown as { __lenis?: Lenis }).__lenis;
       lenis.destroy();
     };
   }, []);
