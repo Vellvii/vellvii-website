@@ -284,14 +284,40 @@ const ProductDetail = () => {
           { question: "Is checkout discreet?", answer: "Yes - Vellvii ships in unbranded packaging with discreet billing descriptors. Privacy is core to the product and the experience." },
         ];
 
+        // Per-handle SEO override map for canonical Vellvii products.
+        // Falls back to Shopify product data for any future products.
+        const PDP_SEO_OVERRIDES: Record<string, { title: string; description: string }> = {
+          "vellvii-dox": {
+            title: "Vellvii DOX | Luxury Smart Storage for Intimate Wellness",
+            description: "Meet Vellvii DOX, a premium storage solution designed for modern intimate wellness products with elegance, discretion, and refined design.",
+          },
+          "vellvii-lux": {
+            title: "Vellvii Lux | Luxury Storage Case for Intimate Wellness",
+            description: "Discover Vellvii Lux, a premium blush storage case designed for discreet, elegant intimate wellness storage.",
+          },
+          "vellvii-g-vibe": {
+            title: "Vellvii G-Vibe | Premium Intimate Wellness Product",
+            description: "Explore Vellvii G-Vibe, part of Vellvii's luxury intimate wellness collection designed with discretion, elegance, and modern connection in mind.",
+          },
+          "vellvii-evolve": {
+            title: "Vellvii Evolve | Premium Intimate Wellness Product",
+            description: "Discover Vellvii Evolve, a refined intimate wellness product designed as part of the Vellvii luxury collection.",
+          },
+          "vellvii-pulse": {
+            title: "Vellvii Pulse | Premium Intimate Wellness Product",
+            description: "Meet Vellvii Pulse, part of the Vellvii luxury intimate wellness ecosystem built around elegant design and discretion.",
+          },
+        };
+        const seoOverride = handle ? PDP_SEO_OVERRIDES[handle] : undefined;
+        const seoTitle = seoOverride?.title
+          ?? (isLuxProduct ? luxTitle : `${product.node.title} - Luxury Pleasure Collection`);
+        const seoDescription = seoOverride?.description
+          ?? (isLuxProduct ? luxDescription : product.node.description.slice(0, 160));
+
         return (
           <SEO
-            title={isLuxProduct ? luxTitle : `${product.node.title} - Luxury Pleasure Collection`}
-            description={
-              isLuxProduct
-                ? luxDescription
-                : product.node.description.slice(0, 160)
-            }
+            title={seoTitle}
+            description={seoDescription}
             canonical={`/products/${handle}`}
             type="product"
             image={heroImage}
