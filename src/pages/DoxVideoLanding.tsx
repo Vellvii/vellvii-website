@@ -312,7 +312,7 @@ const DoxVideoLanding = () => {
                 </div>
               </Link>
               <p className="mt-4 text-xs sm:text-sm text-light-muted font-montserrat">
-                Ships from the USA
+                Ships first week of June
               </p>
             </motion.div>
           </div>
