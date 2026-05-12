@@ -617,7 +617,7 @@ const ProductDetail = () => {
         />
 
         {/* FAQ - product-specific or refined fallback */}
-        <ProductFAQ faqs={pdpContent.faqs ?? (isLuxProduct ? undefined as any : FALLBACK_FAQS) ?? FALLBACK_FAQS} />
+        <ProductFAQ faqs={pdpContent.faqs ?? FALLBACK_FAQS} />
 
         {/* Related Products (canonical Vellvii products only) */}
         <RelatedProducts currentHandle={handle || ""} maxProducts={6} />
