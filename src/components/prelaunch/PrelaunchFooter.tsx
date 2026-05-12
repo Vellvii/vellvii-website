@@ -88,20 +88,45 @@ export const PrelaunchFooter = () => {
             <span className="text-xs sm:text-sm font-montserrat">hello@vellvii.com</span>
           </a>
 
-          {/* Links */}
-          <div className="flex flex-wrap justify-center gap-x-4 gap-y-2 sm:gap-x-6 text-xs sm:text-sm text-light-secondary font-montserrat">
-            <a href="/shop" className="hover:text-primary transition-colors">Shop</a>
-            <a href="/collections/pleasure-collection" className="hover:text-primary transition-colors">Pleasure Collection</a>
-            <a href="/collections/dox-compatible-products" className="hover:text-primary transition-colors">DOX-Compatible Products</a>
-            <a href="/collections/discreet-storage" className="hover:text-primary transition-colors">Discreet Storage</a>
-            <a href="/collections/products-for-couples" className="hover:text-primary transition-colors">Products for Couples</a>
-            <a href="/privacy-policy" className="hover:text-primary transition-colors">Privacy Policy</a>
-            <a href="/warranty" className="hover:text-primary transition-colors">Warranty</a>
-            <a href="/terms-of-service" className="hover:text-primary transition-colors">Terms of Service</a>
+          {/* Grouped link columns */}
+          <div className="w-full max-w-3xl mx-auto pt-8 sm:pt-10 border-t border-white/10 grid grid-cols-1 sm:grid-cols-3 gap-10 sm:gap-8 text-center sm:text-left">
+            {/* Explore — slightly wider to accommodate "DOX-Compatible Products" */}
+            <div className="sm:col-span-1 sm:pr-2">
+              <h3 className="font-baskerville italic text-xs uppercase tracking-[0.2em] text-primary/80 mb-4">
+                Explore
+              </h3>
+              <ul className="font-montserrat text-xs sm:text-sm text-light-secondary space-y-3">
+                <li><a href="/shop" className="hover:text-primary transition-colors">Shop</a></li>
+                <li><a href="/collections/pleasure-collection" className="hover:text-primary transition-colors">Pleasure Collection</a></li>
+                <li><a href="/collections/dox-compatible-products" className="hover:text-primary transition-colors whitespace-nowrap">DOX-Compatible Products</a></li>
+                <li><a href="/collections/discreet-storage" className="hover:text-primary transition-colors">Discreet Storage</a></li>
+              </ul>
+            </div>
+
+            <div>
+              <h3 className="font-baskerville italic text-xs uppercase tracking-[0.2em] text-primary/80 mb-4">
+                Support
+              </h3>
+              <ul className="font-montserrat text-xs sm:text-sm text-light-secondary space-y-3">
+                <li><a href="/warranty" className="hover:text-primary transition-colors">Warranty</a></li>
+                <li><a href="/warranty/register" className="hover:text-primary transition-colors">Register Warranty</a></li>
+                <li><a href="mailto:hello@vellvii.com" className="hover:text-primary transition-colors">Contact</a></li>
+              </ul>
+            </div>
+
+            <div>
+              <h3 className="font-baskerville italic text-xs uppercase tracking-[0.2em] text-primary/80 mb-4">
+                Legal
+              </h3>
+              <ul className="font-montserrat text-xs sm:text-sm text-light-secondary space-y-3">
+                <li><a href="/privacy-policy" className="hover:text-primary transition-colors">Privacy Policy</a></li>
+                <li><a href="/terms-of-service" className="hover:text-primary transition-colors">Terms of Service</a></li>
+              </ul>
+            </div>
           </div>
 
           {/* Copyright */}
-          <div className="text-center">
+          <div className="w-full max-w-3xl mx-auto pt-6 mt-2 border-t border-white/10 text-center">
             <p className="text-light-muted text-xs sm:text-sm font-montserrat">
               © 2026 Vellvii. All rights reserved.
             </p>
