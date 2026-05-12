@@ -113,6 +113,15 @@ export const PDP_CONTENT: Record<CanonicalHandle, PdpContent> = {
       { label: "Security", value: "Fingerprint biometric lock" },
       { label: "Origin", value: "Assembled and fulfilled in the USA" },
     ],
+    faqs: [
+      { question: "What is the Vellvii Lux?", answer: "The Vellvii Lux is a biometric, designer-leather luxury storage system - furniture-grade discretion engineered for the modern bedroom and private travel." },
+      { question: "When does the Vellvii Lux ship?", answer: "Pre-orders ship from the USA the first week of June 2026. Reserve now to secure your unit from the limited 1,500-unit run." },
+      { question: "How many Vellvii Lux units are being made?", answer: "This is a strictly limited 1,500-unit numbered launch. Once sold out, the next batch is not guaranteed and may take months to produce." },
+      { question: "Is the Vellvii Lux made in the USA?", answer: "Yes - the Vellvii Lux is assembled and fulfilled from the United States." },
+      { question: "How is the Lux different from the Vellvii Dox?", answer: "The Dox is a portable storage companion for daily use; the Lux is a larger furniture-grade biometric storage system designed for bedroom integration and discreet travel." },
+      { question: "What is the Vellvii Lux warranty?", answer: "All Vellvii products are covered by our authorized retailer warranty when registered within 7 days of receipt. Repair or replacement only - no refunds on final sales." },
+      { question: "Where can I find warranty information?", answer: "Full warranty terms and registration details are available at /warranty." },
+    ],
   },
   "vellvii-g-vibe": {
     tagline: "A refined addition to the Vellvii Pleasure Collection.",
