@@ -5,6 +5,7 @@ import { EnvelopeMailingList, MailingListFormData } from "@/components/EnvelopeM
 import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/hooks/use-toast";
 import { pixelLead, pixelSubscribe } from "@/lib/metaPixel";
+import { SEO } from "@/components/SEO";
 
 const Landing = () => {
   const navigate = useNavigate();
