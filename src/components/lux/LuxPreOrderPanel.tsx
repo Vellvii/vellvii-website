@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Gift, Truck, ShieldCheck, Globe2 } from "lucide-react";
+import { Gift, Truck, ShieldCheck, PackageCheck } from "lucide-react";
 
 interface LuxPreOrderPanelProps {
   quantityAvailable: number | null | undefined;
@@ -29,7 +29,7 @@ export const LuxPreOrderBanner = () => (
       Pre-Order Now
     </p>
     <p className="font-montserrat text-[11px] sm:text-sm text-light-secondary mt-1 leading-snug">
-      Ships from the USA — First Week of June
+      Ships first week of June
     </p>
   </div>
 );
@@ -39,10 +39,10 @@ export const LuxFreeGiftBadge = () => (
     <Gift className="w-4 h-4 text-primary mt-0.5 shrink-0" />
     <div className="min-w-0 text-left">
       <p className="font-montserrat text-xs sm:text-sm font-semibold text-light-primary leading-tight">
-        Includes Complimentary Vellvii Nova
+        First-Run Nova Gift
       </p>
       <p className="font-montserrat text-[10px] sm:text-xs text-light-muted leading-tight">
-        Handheld suction toy - first 1500 orders
+        Includes a complimentary Vellvii Nova handheld suction piece with this first run
       </p>
     </div>
   </div>
@@ -84,47 +84,28 @@ export const LuxCountdown = ({ endDate = "2026-06-01T00:00:00-07:00" }: { endDat
   );
 };
 
-export const LuxStockCounter = ({
-  quantityAvailable,
-  totalUnits = 1500,
-}: {
-  quantityAvailable: number | null | undefined;
+// Soft first-run availability note. No hard unit caps, no "limited forever".
+export const LuxStockCounter = (_props: {
+  quantityAvailable?: number | null;
   totalUnits?: number;
-}) => {
-  const qty = typeof quantityAvailable === "number" ? quantityAvailable : totalUnits;
-  const low = qty < 300;
-  const pct = Math.max(2, Math.min(100, (qty / totalUnits) * 100));
-  return (
-    <div className="space-y-2">
-      <p
-        className={`font-montserrat text-xs sm:text-sm font-semibold text-center leading-snug break-words ${
-          low ? "text-red-500" : "text-light-primary"
-        }`}
-      >
-        Only {qty.toLocaleString()} of {totalUnits.toLocaleString()} units remaining
-      </p>
-      <div className="h-1.5 w-full rounded-full bg-white/10 overflow-hidden">
-        <div
-          className={`h-full ${low ? "bg-red-500" : "bg-primary"} transition-all`}
-          style={{ width: `${pct}%` }}
-        />
-      </div>
-      {low && (
-        <p className="font-montserrat text-xs text-red-500 text-center">
-          Selling fast — almost gone
-        </p>
-      )}
-    </div>
-  );
-};
+}) => (
+  <div className="rounded-lg border border-primary/30 bg-primary/5 px-3 py-3 text-center">
+    <p className="font-montserrat text-xs sm:text-sm font-semibold text-light-primary leading-snug">
+      First-run availability
+    </p>
+    <p className="font-montserrat text-[11px] sm:text-xs text-light-muted leading-snug mt-1">
+      Reserve now to secure your place in the current Lux first run.
+    </p>
+  </div>
+);
 
 export const LuxUrgencyBlock = () => (
   <div className="text-center space-y-1">
     <p className="font-montserrat text-sm font-semibold text-light-primary leading-snug">
-      Limited production run. No guaranteed restock.
+      The Nova gift is the first-run bonus, not Lux itself.
     </p>
     <p className="font-montserrat text-xs text-light-muted leading-snug">
-      Once sold out, next batch may take months.
+      Future Lux runs are planned, but the complimentary Nova will not be included after this first run.
     </p>
   </div>
 );
@@ -132,8 +113,8 @@ export const LuxUrgencyBlock = () => (
 export const LuxShippingClarity = () => (
   <div className="grid w-full max-w-full grid-cols-1 min-[360px]:grid-cols-3 gap-2 rounded-lg border border-white/10 bg-white/5 p-3">
     {[
-      { icon: Truck, label: "Ships from USA" },
-      { icon: Globe2, label: "No intl. delays" },
+      { icon: Truck, label: "Tracked shipping" },
+      { icon: PackageCheck, label: "Discreet packaging" },
       { icon: ShieldCheck, label: "Secure checkout" },
     ].map(({ icon: Icon, label }) => (
       <div key={label} className="min-w-0 flex flex-col items-center gap-1 text-center">
