@@ -258,6 +258,12 @@ const ProductDetail = () => {
     setLightboxOpen(true);
   };
 
+  // Per-PDP enrichment content (key benefits, specs, care, FAQs).
+  // Falls back gracefully for any product without a custom entry.
+  const pdpContent = getPdpContent(handle);
+  const careItems = pdpContent.careStorage ?? FALLBACK_CARE;
+  const isAvailable = !!variant?.availableForSale;
+
   return (
     <>
       {(() => {
