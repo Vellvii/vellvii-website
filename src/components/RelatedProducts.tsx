@@ -3,6 +3,7 @@ import { useShopifyProducts } from "@/hooks/useShopifyProducts";
 import { Skeleton } from "@/components/ui/skeleton";
 import { ShopifyProduct } from "@/lib/shopify";
 import { ChevronRight } from "lucide-react";
+import { CANONICAL_HANDLES } from "@/lib/pdpContent";
 
 interface RelatedProductsProps {
   currentHandle: string;
