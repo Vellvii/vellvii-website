@@ -591,6 +591,24 @@ const ProductDetail = () => {
         {/* DOX Video Section - Only for DOX product */}
         {isDoxProduct && <DoxVideoSection onReserve={handleAddToCart} />}
 
+        {/* Key Benefits */}
+        {pdpContent.keyBenefits && (
+          <KeyBenefits benefits={pdpContent.keyBenefits} tagline={pdpContent.tagline} />
+        )}
+
+        {/* Product Details (only confirmed spec rows) */}
+        {pdpContent.productDetails && (
+          <ProductDetailsList rows={pdpContent.productDetails} />
+        )}
+
+        {/* Care & Storage + Warranty link */}
+        <CareAndStorage items={careItems} />
+
+        {/* Notify-me when sold out (Lux uses its own pre-order flow) */}
+        {!isAvailable && !isLuxProduct && (
+          <NotifyMePanel productTitle={product.node.title} />
+        )}
+
         {/* Reviews - powered by Judge.me; hidden until real reviews exist */}
         <ProductReviews
           productId={product.node.id}
@@ -598,8 +616,14 @@ const ProductDetail = () => {
           reviewData={parseReviewMetafields(product)}
         />
 
-        {/* Related Products */}
+        {/* FAQ - product-specific or refined fallback */}
+        <ProductFAQ faqs={pdpContent.faqs ?? (isLuxProduct ? undefined as any : FALLBACK_FAQS) ?? FALLBACK_FAQS} />
+
+        {/* Related Products (canonical Vellvii products only) */}
         <RelatedProducts currentHandle={handle || ""} maxProducts={6} />
+
+        {/* Back to shop */}
+        <BackToShopCTA />
 
         {/* Sticky Product Bar */}
         <StickyProductBar
