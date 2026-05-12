@@ -307,7 +307,7 @@ const DoxVideoLanding = () => {
                     background: "linear-gradient(135deg, hsl(40 70% 75%), hsl(40 65% 60%))",
                   }}
                 >
-                  Reserve Your Lux
+                  View Vellvii Lux
                 </div>
               </Link>
               <p className="mt-4 text-xs sm:text-sm text-light-muted font-montserrat">
