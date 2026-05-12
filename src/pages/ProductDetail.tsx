@@ -17,6 +17,14 @@ import { StickyProductBar } from "@/components/StickyProductBar";
 import { ImageLightbox } from "@/components/ImageLightbox";
 import { DoxVideoSection } from "@/components/DoxVideoSection";
 import { RelatedProducts } from "@/components/RelatedProducts";
+import { KeyBenefits } from "@/components/products/KeyBenefits";
+import { ProductDetailsList } from "@/components/products/ProductDetailsList";
+import { CareAndStorage } from "@/components/products/CareAndStorage";
+import { ProductFAQ } from "@/components/products/ProductFAQ";
+import { NotifyMePanel } from "@/components/products/NotifyMePanel";
+import { BackToShopCTA } from "@/components/products/BackToShopCTA";
+import { WarrantyLink } from "@/components/products/WarrantyLink";
+import { getPdpContent, FALLBACK_FAQS, FALLBACK_CARE } from "@/lib/pdpContent";
 import {
   LuxPreOrderBanner,
   LuxFreeGiftBadge,
@@ -249,6 +257,12 @@ const ProductDetail = () => {
     setSelectedImageIndex(index);
     setLightboxOpen(true);
   };
+
+  // Per-PDP enrichment content (key benefits, specs, care, FAQs).
+  // Falls back gracefully for any product without a custom entry.
+  const pdpContent = getPdpContent(handle);
+  const careItems = pdpContent.careStorage ?? FALLBACK_CARE;
+  const isAvailable = !!variant?.availableForSale;
 
   return (
     <>
@@ -556,6 +570,10 @@ const ProductDetail = () => {
                 {/* Trust Strip - hairline icons under add-to-cart */}
                 <TrustStrip productHandle={handle} />
 
+                <div className="pt-1">
+                  <WarrantyLink variant="inline" />
+                </div>
+
                 {isLuxProduct && (
                   <>
                     {/* Live inventory requires `unauthenticated_read_product_inventory` Storefront scope; falls back to total units. */}
@@ -577,6 +595,24 @@ const ProductDetail = () => {
         {/* DOX Video Section - Only for DOX product */}
         {isDoxProduct && <DoxVideoSection onReserve={handleAddToCart} />}
 
+        {/* Key Benefits */}
+        {pdpContent.keyBenefits && (
+          <KeyBenefits benefits={pdpContent.keyBenefits} tagline={pdpContent.tagline} />
+        )}
+
+        {/* Product Details (only confirmed spec rows) */}
+        {pdpContent.productDetails && (
+          <ProductDetailsList rows={pdpContent.productDetails} />
+        )}
+
+        {/* Care & Storage + Warranty link */}
+        <CareAndStorage items={careItems} />
+
+        {/* Notify-me when sold out (Lux uses its own pre-order flow) */}
+        {!isAvailable && !isLuxProduct && (
+          <NotifyMePanel productTitle={product.node.title} />
+        )}
+
         {/* Reviews - powered by Judge.me; hidden until real reviews exist */}
         <ProductReviews
           productId={product.node.id}
@@ -584,8 +620,14 @@ const ProductDetail = () => {
           reviewData={parseReviewMetafields(product)}
         />
 
-        {/* Related Products */}
+        {/* FAQ - product-specific or refined fallback */}
+        <ProductFAQ faqs={pdpContent.faqs ?? FALLBACK_FAQS} />
+
+        {/* Related Products (canonical Vellvii products only) */}
         <RelatedProducts currentHandle={handle || ""} maxProducts={6} />
+
+        {/* Back to shop */}
+        <BackToShopCTA />
 
         {/* Sticky Product Bar */}
         <StickyProductBar

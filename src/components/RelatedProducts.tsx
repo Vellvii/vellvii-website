@@ -3,6 +3,7 @@ import { useShopifyProducts } from "@/hooks/useShopifyProducts";
 import { Skeleton } from "@/components/ui/skeleton";
 import { ShopifyProduct } from "@/lib/shopify";
 import { ChevronRight } from "lucide-react";
+import { CANONICAL_HANDLES } from "@/lib/pdpContent";
 
 interface RelatedProductsProps {
   currentHandle: string;
@@ -55,12 +56,13 @@ const ProductSkeleton = () => (
 );
 
 export const RelatedProducts = ({ currentHandle, maxProducts = 8 }: RelatedProductsProps) => {
-  const { data: allProducts, isLoading } = useShopifyProducts(maxProducts + 1);
+  const { data: allProducts, isLoading } = useShopifyProducts(20);
 
-  // Filter out current product
-  const relatedProducts = allProducts?.filter(
-    (product) => product.node.handle !== currentHandle
-  ).slice(0, maxProducts);
+  // Only surface canonical Vellvii products (filters out drafts / legacy items)
+  const relatedProducts = allProducts
+    ?.filter((p) => CANONICAL_HANDLES.includes(p.node.handle as any))
+    .filter((p) => p.node.handle !== currentHandle)
+    .slice(0, maxProducts);
 
   if (isLoading) {
     return (
