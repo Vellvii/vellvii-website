@@ -35,6 +35,8 @@ interface SEOProps {
     uploadDate: string;
   };
   hreflang?: string;
+  /** When true, emits `noindex, follow` so this page is excluded from search indexes but links are still crawled. */
+  noindex?: boolean;
 }
 
 const SITE_URL = 'https://vellvii.com';
@@ -53,6 +55,7 @@ export const SEO = ({
   keywords,
   videoData,
   hreflang = 'en-us',
+  noindex = false,
 }: SEOProps) => {
   const fullTitle = title.includes('Vellvii') ? title : `${title} | Vellvii`;
   const canonicalUrl = canonical ? `${SITE_URL}${canonical}` : undefined;
@@ -193,7 +196,7 @@ export const SEO = ({
       <meta name="twitter:image" content={fullImageUrl} />
 
       {/* Additional SEO */}
-      <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1" />
+      <meta name="robots" content={noindex ? "noindex, follow" : "index, follow, max-image-preview:large, max-snippet:-1"} />
       <meta name="language" content="English" />
       <meta name="author" content="Vellvii" />
 

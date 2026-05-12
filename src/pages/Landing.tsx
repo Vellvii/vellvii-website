@@ -5,6 +5,7 @@ import { EnvelopeMailingList, MailingListFormData } from "@/components/EnvelopeM
 import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/hooks/use-toast";
 import { pixelLead, pixelSubscribe } from "@/lib/metaPixel";
+import { SEO } from "@/components/SEO";
 
 const Landing = () => {
   const navigate = useNavigate();
@@ -206,6 +207,13 @@ const Landing = () => {
   };
 
   return (
+    <>
+      <SEO
+        title="Vellvii | Luxury Intimate Wellness Products"
+        description="Vellvii - luxury intimate wellness, designed for modern couples who value elegance, discretion, and premium design."
+        canonical="/"
+        noindex
+      />
     <div id="landing-lock" className="fixed inset-0 h-full bg-black flex flex-col items-center justify-center gap-8 overflow-hidden">
       {/* Logos - visible initially, fade out */}
       <div className={`flex flex-col items-center gap-4 transition-all duration-700 ${showLogos ? 'opacity-100' : 'opacity-0 pointer-events-none absolute'}`}>
@@ -336,6 +344,7 @@ const Landing = () => {
         isSubmitting={isSubmitting}
       />
     </div>
+    </>
   );
 };
 

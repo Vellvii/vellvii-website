@@ -24,7 +24,8 @@ export default function PrelaunchDOX() {
       <SEO
         title="Pre-Order Luxury Pleasure Collection Storage | Vellvii Dox"
         description="Reserve the Vellvii Dox - premium docking station with fingerprint lock, charging dock, and designer storage. Exclusive prelaunch access."
-        canonical="/prelaunch"
+        canonical="/products/vellvii-dox"
+        noindex
         productData={{
           name: "Vellvii Dox Pre-Order",
           description: "Luxury pleasure collection storage prelaunch with biometric security, USB-C charging, and premium materials.",

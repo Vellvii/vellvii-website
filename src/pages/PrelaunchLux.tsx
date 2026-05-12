@@ -24,7 +24,8 @@ export default function PrelaunchLux() {
       <SEO
         title="Luxury Pleasure Storage System | Vellvii Lux"
         description="Discover the Vellvii Lux - premium adult storage furniture for the discerning collector. Designer intimacy storage with privacy-focused design."
-        canonical="/Vellvii-Lux"
+        canonical="/products/vellvii-lux"
+        noindex
         productData={{
           name: "Vellvii Lux",
           description: "Luxury pleasure storage furniture system for premium adult wellness and discreet bedroom organization.",
