@@ -58,12 +58,28 @@ const GuideLuxVsDox = () => {
       </div>
 
       <h2 className={H2}>What is Vellvii Lux?</h2>
+      <figure className="my-6 overflow-hidden rounded-lg border border-white/10">
+        <img
+          src="/uploads/lux-bag-lifestyle.jpg"
+          alt="Vellvii Lux portable fingerprint-lock storage case in a travel-friendly bag setting"
+          loading="lazy"
+          className="w-full h-auto object-cover"
+        />
+      </figure>
       <p>
         Vellvii Lux is a portable fingerprint-lock storage case. It is designed for the moments when discretion needs to travel with you - in a bag, on a trip, or simply tucked into a drawer. Lux is its own self-contained piece and is not part of the DOX docking system.{" "}
         <Link to="/products/vellvii-lux" className="text-primary hover:underline">Explore Vellvii Lux</Link>.
       </p>
 
       <h2 className={H2}>What is Vellvii DOX?</h2>
+      <figure className="my-6 overflow-hidden rounded-lg border border-white/10">
+        <img
+          src="/uploads/Dox_white_lifestyle1.jpg"
+          alt="Vellvii DOX bedroom storage and docking hub in a refined interior"
+          loading="lazy"
+          className="w-full h-auto object-cover"
+        />
+      </figure>
       <p>
         Vellvii DOX is the larger bedroom storage and docking hub. It is the central piece of the Vellvii ecosystem, with shaped inserts that hold compatible Vellvii products in place. DOX is a bedroom-focused storage piece, not a portable one.{" "}
         <Link to="/products/vellvii-dox" className="text-primary hover:underline">View Vellvii DOX</Link>.
