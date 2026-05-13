@@ -20,6 +20,8 @@ export interface GuideLayoutProps {
   datePublished?: string;
   dateModified?: string;
   faq: GuideFAQItem[];
+  heroImage?: string;
+  heroImageAlt?: string;
   children: ReactNode;
 }
 
@@ -33,6 +35,8 @@ export const GuideLayout = ({
   datePublished = "2026-05-13",
   dateModified = "2026-05-13",
   faq,
+  heroImage,
+  heroImageAlt,
   children,
 }: GuideLayoutProps) => {
   return (
@@ -85,6 +89,19 @@ export const GuideLayout = ({
             </p>
             <span className="block w-16 h-px bg-gradient-to-r from-primary/40 to-transparent mt-8" />
           </header>
+
+          {heroImage && (
+            <figure className="mb-12 -mx-5 sm:mx-0">
+              <div className="aspect-[16/9] overflow-hidden sm:rounded-lg border-y sm:border border-white/10">
+                <img
+                  src={heroImage}
+                  alt={heroImageAlt || title}
+                  loading="eager"
+                  className="h-full w-full object-cover"
+                />
+              </div>
+            </figure>
+          )}
 
           {/* Body */}
           <div className="guide-body font-montserrat text-[0.95rem] text-light-secondary leading-[1.8] space-y-6">
