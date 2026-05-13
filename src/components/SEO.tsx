@@ -24,6 +24,15 @@ interface SEOProps {
     };
   };
   faqData?: Array<{ question: string; answer: string }>;
+  articleData?: {
+    headline: string;
+    description: string;
+    datePublished: string;
+    dateModified?: string;
+    image?: string;
+    url?: string;
+    section?: string;
+  };
   organizationData?: boolean;
   breadcrumbs?: Array<{ name: string; url: string }>;
   keywords?: string;
@@ -50,6 +59,7 @@ export const SEO = ({
   image = DEFAULT_IMAGE,
   productData,
   faqData,
+  articleData,
   organizationData,
   breadcrumbs,
   keywords,
