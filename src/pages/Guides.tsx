@@ -11,6 +11,8 @@ const GUIDES = [
     title: "Lux vs DOX: Which Storage Piece Fits Your Lifestyle?",
     excerpt:
       "Compare portable fingerprint-lock storage with a larger bedroom-focused system to choose the right Vellvii piece.",
+    image: "/uploads/lux-lifestyle-final-v5.jpg",
+    imageAlt: "Vellvii Lux portable fingerprint-lock storage case in a refined lifestyle setting",
   },
   {
     to: "/guides/how-the-vellvii-dox-docking-system-works",
@@ -18,6 +20,8 @@ const GUIDES = [
     title: "How the Vellvii DOX Docking System Works",
     excerpt:
       "Learn how VDS and DDS help organize the Vellvii Pleasure Collection inside the DOX ecosystem.",
+    image: "/uploads/dox-interior-labeled.jpg",
+    imageAlt: "Vellvii DOX interior showing the VDS and DDS docking inserts",
   },
   {
     to: "/guides/discreet-storage-for-intimate-wellness-products",
@@ -25,6 +29,8 @@ const GUIDES = [
     title: "Discreet Storage for Intimate Wellness Products",
     excerpt:
       "Explore why discreet storage matters and how Lux and DOX support privacy, care, and organization.",
+    image: "/uploads/lux-philosophy-lifestyle-v4.png",
+    imageAlt: "Vellvii Lux on a refined surface, illustrating discreet everyday storage",
   },
 ];
 
@@ -32,8 +38,8 @@ const Guides = () => {
   return (
     <div className="min-h-screen bg-background text-foreground overflow-x-hidden">
       <SEO
-        title="Vellvii Guides | Intimate Wellness, Storage & Product Care"
-        description="Explore Vellvii guides on discreet storage, product care, DOX compatibility, and choosing the right refined wellness products for modern couples."
+        title="Vellvii Guides | Discreet Storage, DOX Docking System & Pleasure Collection"
+        description="Vellvii Guides on discreet storage, the DOX docking system, Lux vs DOX, and choosing refined intimate wellness products for modern couples."
         canonical="/guides"
         organizationData
       />
