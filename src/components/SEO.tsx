@@ -262,6 +262,11 @@ export const SEO = ({
           {JSON.stringify(faqSchema)}
         </script>
       )}
+      {articleSchema && (
+        <script type="application/ld+json">
+          {JSON.stringify(articleSchema)}
+        </script>
+      )}
       {breadcrumbSchema && (
         <script type="application/ld+json">
           {JSON.stringify(breadcrumbSchema)}
