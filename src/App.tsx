@@ -118,6 +118,9 @@ const InnerApp = () => {
             <Route path="/guides/portable-vs-bedroom-storage" element={<GuidePortableVsBedroomStorage />} />
             <Route path="/guides/how-to-choose-premium-products-for-couples" element={<GuideProductsForCouples />} />
             <Route path="/guides/how-to-care-for-your-vellvii-products" element={<GuideProductCare />} />
+            <Route path="/guides/how-to-clean-and-store-sex-toys" element={<GuideHowToCleanAndStoreSexToys />} />
+            <Route path="/guides/best-sex-toy-storage-box" element={<GuideBestSexToyStorageBox />} />
+            <Route path="/guides/biometric-lock-box-for-sex-toys" element={<GuideBiometricLockBoxForSexToys />} />
 
             {/* Legacy redirects: pre-Shopify product pages → Shopify PDPs */}
             <Route path="/dox" element={<Navigate to="/products/vellvii-dox" replace />} />
