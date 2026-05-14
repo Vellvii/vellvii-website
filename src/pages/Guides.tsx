@@ -38,8 +38,8 @@ const GUIDES = [
     title: "Portable vs Bedroom Storage: Which Vellvii Option Fits You?",
     excerpt:
       "Compare portable private storage with a larger bedroom-focused system to choose the right Vellvii option for your lifestyle.",
-    image: "/uploads/lux-bag-lifestyle.jpg",
-    imageAlt: "Vellvii Lux portable fingerprint-lock storage case beside a refined bedroom setting",
+    image: "/uploads/lux-travel-suitcase.png",
+    imageAlt: "Vellvii Lux portable fingerprint-lock case packed for travel, illustrating portable storage",
   },
   {
     to: "/guides/how-to-choose-premium-products-for-couples",
@@ -56,8 +56,8 @@ const GUIDES = [
     title: "How to Care for Your Vellvii Products",
     excerpt:
       "Simple care and storage habits to help keep your Vellvii products organized, protected, and supported.",
-    image: "/uploads/lux-philosophy-bag-v5.jpg",
-    imageAlt: "Vellvii Lux styled on a refined surface, illustrating considered product care",
+    image: "/uploads/Dox_black_shelf_close_up.png",
+    imageAlt: "Vellvii DOX shown on a refined shelf, illustrating considered everyday product care",
   },
 ];
 
