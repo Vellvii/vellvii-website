@@ -5,9 +5,10 @@ const CollectionProductsForCouples = () => (
     eyebrow="Designed For Modern Couples"
     h1="Products for Couples"
     intro="Vellvii products are designed for modern couples who value privacy, intention, and refinement. Explore the collection built around discreet storage, shared organization, and a premium experience."
-    seoTitle="Products for Couples | Vellvii Pleasure Collection"
-    seoDescription="Explore refined Vellvii products designed for modern couples who value discretion, connection, and premium private storage."
+    seoTitle="Sex Toy Storage for Couples | Vellvii Pleasure Collection"
+    seoDescription="Refined sex toy storage for couples - the Vellvii Pleasure Collection brings together DOX, Lux, and DOX-compatible products designed for shared discretion."
     canonical="/collections/products-for-couples"
+    seoParagraph="Couples looking for refined sex toy storage often need something that feels shared and discreet. The Vellvii Pleasure Collection is built around quiet design, considered organization, and a premium experience for two."
     productHandles={[
       "vellvii-dox",
       "vellvii-g-vibe",
