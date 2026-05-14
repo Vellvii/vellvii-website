@@ -86,7 +86,7 @@ const GuideLuxVsDox = () => {
         />
       </figure>
       <p>
-        Vellvii DOX is the larger biometric sex toy lock box and storage hub. It is the central piece of the Vellvii ecosystem - velvet-lined inside with a movable velvet-lined tray for smaller pieces, and a biometric fingerprint lock for fast, private access. On top, the VDS and DDS act as suction-base mounting stations, turning the DOX itself into a refined stand. DOX is a bedroom-focused storage piece, not a portable one.{" "}
+        Vellvii DOX is the larger biometric sex toy lock box and storage hub. It is the central piece of the Vellvii ecosystem - faux leather exterior, velvet interior with a movable velvet-lined tray, biometric fingerprint lock for fast, private access, and 3 internal USB-A charging ports powered through an external USB-C input. On top, the VDS and DDS act as suction-base mounting stations, turning the DOX itself into a refined stand. DOX is a bedroom-focused storage piece, not a portable one.{" "}
         <Link to="/products/vellvii-dox" className="text-primary hover:underline">View Vellvii DOX</Link>.
       </p>
 
