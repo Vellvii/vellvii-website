@@ -341,7 +341,7 @@ const ProductDetail = () => {
             canonical={`/products/${handle}`}
             type="product"
             image={heroImage}
-            keywords={isLuxProduct ? luxKeywords : undefined}
+            keywords={seoOverride?.keywords ?? (isLuxProduct ? luxKeywords : undefined)}
             organizationData
             breadcrumbs={[
               { name: "Home", url: "/" },
