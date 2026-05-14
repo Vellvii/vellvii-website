@@ -298,6 +298,17 @@ export const CollectionLayout = ({
         {/* FAQ */}
         <ProductFAQ faqs={faqs} />
 
+        {/* Subtle lower-page SEO paragraph */}
+        {seoParagraph && (
+          <section className="py-8 sm:py-10 px-3 sm:px-4 lg:px-8 border-t border-white/10">
+            <div className="max-w-3xl mx-auto">
+              <p className="font-montserrat text-xs sm:text-sm text-light-muted leading-relaxed text-center">
+                {seoParagraph}
+              </p>
+            </div>
+          </section>
+        )}
+
         {/* Related collections */}
         {relatedLinks.length > 0 && (
           <section className="py-10 sm:py-14 px-3 sm:px-4 lg:px-8 border-t border-white/10">
