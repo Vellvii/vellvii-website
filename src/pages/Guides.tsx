@@ -59,6 +59,33 @@ const GUIDES = [
     image: "/uploads/Dox_black_shelf_close_up.png",
     imageAlt: "Vellvii DOX shown on a refined shelf, illustrating considered everyday product care",
   },
+  {
+    to: "/guides/how-to-clean-and-store-sex-toys",
+    category: "Care & Storage",
+    title: "How to Clean and Store Sex Toys",
+    excerpt:
+      "General care and storage guidance for keeping products organized, protected, and stored with discretion.",
+    image: "/uploads/Dox_black_shelf_close_up.png",
+    imageAlt: "Vellvii DOX shown on a refined shelf, illustrating discreet sex toy storage",
+  },
+  {
+    to: "/guides/best-sex-toy-storage-box",
+    category: "Buyer's Guide",
+    title: "Best Sex Toy Storage Box",
+    excerpt:
+      "A refined buyer's guide to choosing a discreet storage box for privacy, organization, and everyday use.",
+    image: "/uploads/Dox_white_lifestyle1.jpg",
+    imageAlt: "Vellvii DOX styled as a refined sex toy storage box in a modern bedroom",
+  },
+  {
+    to: "/guides/biometric-lock-box-for-sex-toys",
+    category: "Privacy & Storage",
+    title: "Biometric Lock Box for Sex Toys",
+    excerpt:
+      "Learn how biometric access can support private storage without compromising a refined home environment.",
+    image: "/uploads/lux-lifestyle-final-v5.jpg",
+    imageAlt: "Vellvii Lux portable biometric lock box for sex toys in a refined setting",
+  },
 ];
 
 const Guides = () => {

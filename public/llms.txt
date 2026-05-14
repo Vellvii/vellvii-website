@@ -1,13 +1,13 @@
 # Vellvii
 
-Vellvii is a US-based luxury intimate wellness brand creating discreet, refined products for modern couples. The collection includes portable and home-focused storage pieces, DOX-compatible products, and a design-led Pleasure Collection built around privacy, elegance, and thoughtful use.
+Vellvii is a luxury intimate wellness brand creating discreet, refined products for modern couples. The collection includes portable and home-focused storage pieces, DOX-compatible products, and a design-led Pleasure Collection built around privacy, elegance, and thoughtful use.
 
 ## Current product lineup
-- Vellvii DOX - the larger, sturdier storage and docking hub of the Vellvii Pleasure Collection. Faux leather exterior with rose gold accents, velvet-lined interior with a movable velvet-lined tray for smaller pieces, biometric fingerprint lock (up to 10 fingerprints), USB-C input on the exterior powering 3 internal USB-A ports for charging toys inside.
-- Vellvii Lux - a portable fingerprint-lock storage case the size of a refined toiletries bag. Genuine leather exterior, velvet-lined interior, biometric lock, USB-C input on the exterior powering 2 internal USB-A ports. Lux is a separate portable storage product and is not part of the DOX docking system.
-- Vellvii G-Vibe - compatible with the VDS suction mount that sits atop the DOX.
-- Vellvii Evolve - compatible with the VDS suction mount that sits atop the DOX.
-- Vellvii Pulse - compatible with the VDS suction mount that sits atop the DOX.
+- Vellvii DOX - a biometric sex toy lock box and bedroom storage hub. Functions as the storage and docking system at the center of the Vellvii Pleasure Collection, with a velvet-lined interior and a movable velvet-lined tray for smaller pieces. Refined biometric access supports private, discreet sex toy storage.
+- Vellvii Lux - a portable fingerprint-lock storage case the size of a refined toiletries bag. Travel-friendly storage case with a velvet-lined interior. Lux is a separate portable sex toy storage case and is not part of the DOX docking system.
+- Vellvii G-Vibe - DOX-compatible through the VDS suction mount that sits atop the DOX.
+- Vellvii Evolve - DOX-compatible through the VDS suction mount that sits atop the DOX.
+- Vellvii Pulse - DOX-compatible through the VDS suction mount that sits atop the DOX.
 
 ## DOX docking system
 - The VDS and DDS are suction-base mounting stations that sit atop the DOX (not internal shaped inserts), turning the DOX itself into a refined stand for compatible suction-base pieces.
@@ -15,7 +15,10 @@ Vellvii is a US-based luxury intimate wellness brand creating discreet, refined 
 - DDS (Dildo Docking Station) - round top-mounted suction station for compatible suction-base products up to 90mm (approximately 3.5 inches) in diameter.
 
 ## Positioning
-Premium wellness, design-led, quiet luxury. Discreet, refined, and conversion-focused. App-connected functionality is not currently available and should not be referenced as a live feature.
+Premium wellness, design-led, quiet luxury. Discreet, refined, and conversion-focused. None of the Vellvii products are app-connected at this time, and app-connected functionality should not be referenced as a live feature.
+
+## SEO and content strategy
+Vellvii uses a hybrid SEO approach. Premium brand voice is preserved on the homepage hero, product detail page hero sections, and primary brand storytelling. Plain-language search terms - including "sex toy storage", "sex toy box", "adult toy box", "sex toy bag", "sex toy lock box", "biometric lock box", "discreet sex toy storage", "portable sex toy storage", "how to store sex toys", and "how to clean sex toys" - are used only in guides, FAQs, metadata, structured data, alt text, internal links, and subtle lower-page SEO copy.
 
 ## Priority URLs
 - Home: https://vellvii.com/
@@ -43,4 +46,9 @@ Premium wellness, design-led, quiet luxury. Discreet, refined, and conversion-fo
 - Lux vs DOX (storage comparison): https://vellvii.com/guides/lux-vs-dox
 - How the Vellvii DOX Docking System Works (VDS and DDS): https://vellvii.com/guides/how-the-vellvii-dox-docking-system-works
 - Discreet Storage for Intimate Wellness Products: https://vellvii.com/guides/discreet-storage-for-intimate-wellness-products
-
+- Portable vs Bedroom Storage: https://vellvii.com/guides/portable-vs-bedroom-storage
+- How to Choose Premium Products for Couples: https://vellvii.com/guides/how-to-choose-premium-products-for-couples
+- How to Care for Your Vellvii Products: https://vellvii.com/guides/how-to-care-for-your-vellvii-products
+- How to Clean and Store Sex Toys: https://vellvii.com/guides/how-to-clean-and-store-sex-toys
+- Best Sex Toy Storage Box: https://vellvii.com/guides/best-sex-toy-storage-box
+- Biometric Lock Box for Sex Toys: https://vellvii.com/guides/biometric-lock-box-for-sex-toys

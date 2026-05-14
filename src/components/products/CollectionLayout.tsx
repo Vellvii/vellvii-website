@@ -41,6 +41,8 @@ interface CollectionLayoutProps {
   relatedLinks: RelatedLink[];
   /** Optional Lux-style callout below the grid */
   callout?: { copy: string; href: string; label: string };
+  /** Optional subtle SEO paragraph rendered low on the page (after FAQ). */
+  seoParagraph?: string;
 }
 
 const CollectionCard = ({ product }: { product: ShopifyProduct }) => {
@@ -142,6 +144,7 @@ export const CollectionLayout = ({
   faqs,
   relatedLinks,
   callout,
+  seoParagraph,
 }: CollectionLayoutProps) => {
   const { data: products, isLoading } = useShopifyProducts(50);
 
@@ -294,6 +297,17 @@ export const CollectionLayout = ({
 
         {/* FAQ */}
         <ProductFAQ faqs={faqs} />
+
+        {/* Subtle lower-page SEO paragraph */}
+        {seoParagraph && (
+          <section className="py-8 sm:py-10 px-3 sm:px-4 lg:px-8 border-t border-white/10">
+            <div className="max-w-3xl mx-auto">
+              <p className="font-montserrat text-xs sm:text-sm text-light-muted leading-relaxed text-center">
+                {seoParagraph}
+              </p>
+            </div>
+          </section>
+        )}
 
         {/* Related collections */}
         {relatedLinks.length > 0 && (
