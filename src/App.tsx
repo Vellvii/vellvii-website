@@ -47,6 +47,9 @@ import GuideDiscreetStorage from "./pages/guides/GuideDiscreetStorage";
 import GuidePortableVsBedroomStorage from "./pages/guides/GuidePortableVsBedroomStorage";
 import GuideProductsForCouples from "./pages/guides/GuideProductsForCouples";
 import GuideProductCare from "./pages/guides/GuideProductCare";
+import GuideHowToCleanAndStoreSexToys from "./pages/guides/GuideHowToCleanAndStoreSexToys";
+import GuideBestSexToyStorageBox from "./pages/guides/GuideBestSexToyStorageBox";
+import GuideBiometricLockBoxForSexToys from "./pages/guides/GuideBiometricLockBoxForSexToys";
 
 const queryClient = new QueryClient();
 
