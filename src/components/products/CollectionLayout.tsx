@@ -144,6 +144,7 @@ export const CollectionLayout = ({
   faqs,
   relatedLinks,
   callout,
+  seoParagraph,
 }: CollectionLayoutProps) => {
   const { data: products, isLoading } = useShopifyProducts(50);
 
