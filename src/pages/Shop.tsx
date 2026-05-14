@@ -7,7 +7,7 @@ import { SEO } from "@/components/SEO";
 import { ScrollHeader } from "@/components/ScrollHeader";
 import { PrelaunchFooter } from "@/components/prelaunch/PrelaunchFooter";
 import { cn } from "@/lib/utils";
-import { Search, X, ShoppingCart, Loader2 } from "lucide-react";
+import { Search, X, ShoppingCart, Loader2, SlidersHorizontal, ChevronDown } from "lucide-react";
 import { useCartStore } from "@/stores/cartStore";
 import { toast } from "sonner";
 import { StatusPill, getProductStatus } from "@/components/products/StatusPill";
@@ -281,11 +281,18 @@ const CollectionFilterBar = ({
   );
 };
 
+type SortOption = "featured" | "price-asc" | "price-desc" | "title-asc";
+
 const Shop = () => {
   const [selectedCollection, setSelectedCollection] = useState<string | null>(null);
   const [searchQuery, setSearchQuery] = useState("");
   const [showSuggestions, setShowSuggestions] = useState(false);
-  
+  const [filtersOpen, setFiltersOpen] = useState(false);
+  const [sortBy, setSortBy] = useState<SortOption>("featured");
+  const [priceMin, setPriceMin] = useState("");
+  const [priceMax, setPriceMax] = useState("");
+  const [inStockOnly, setInStockOnly] = useState(false);
+
   const { data: allProducts } = useShopifyProducts(50);
   const { data: collections, isLoading: collectionsLoading } = useShopifyCollections(20);
   const { data: products, isLoading: productsLoading, error } = useShopifyProductsByCollection(
@@ -296,7 +303,7 @@ const Shop = () => {
   // Filter products by search query with fuzzy matching
   const filteredProducts = useMemo(() => {
     if (!products || !searchQuery.trim()) return products;
-    
+
     return products
       .map((product) => ({
         product,
@@ -310,7 +317,7 @@ const Shop = () => {
   // Suggestions from all products
   const suggestions = useMemo(() => {
     if (!allProducts || !searchQuery.trim() || searchQuery.length < 2) return [];
-    
+
     return allProducts
       .map((product) => ({
         product,
@@ -326,7 +333,47 @@ const Shop = () => {
     setShowSuggestions(false);
   };
 
-  const displayProducts = searchQuery.trim() ? filteredProducts : products;
+  const baseProducts = searchQuery.trim() ? filteredProducts : products;
+
+  // Apply price / stock filters and sort
+  const displayProducts = useMemo(() => {
+    if (!baseProducts) return baseProducts;
+    const min = priceMin ? parseFloat(priceMin) : null;
+    const max = priceMax ? parseFloat(priceMax) : null;
+
+    let list = baseProducts.filter((p) => {
+      const price = parseFloat(p.node.priceRange.minVariantPrice.amount);
+      if (min !== null && price < min) return false;
+      if (max !== null && price > max) return false;
+      if (inStockOnly) {
+        const available = p.node.variants.edges.some((v) => v.node.availableForSale);
+        if (!available) return false;
+      }
+      return true;
+    });
+
+    if (sortBy !== "featured") {
+      list = [...list].sort((a, b) => {
+        const ap = parseFloat(a.node.priceRange.minVariantPrice.amount);
+        const bp = parseFloat(b.node.priceRange.minVariantPrice.amount);
+        if (sortBy === "price-asc") return ap - bp;
+        if (sortBy === "price-desc") return bp - ap;
+        if (sortBy === "title-asc") return a.node.title.localeCompare(b.node.title);
+        return 0;
+      });
+    }
+    return list;
+  }, [baseProducts, priceMin, priceMax, inStockOnly, sortBy]);
+
+  const activeFilterCount =
+    (priceMin ? 1 : 0) + (priceMax ? 1 : 0) + (inStockOnly ? 1 : 0) + (sortBy !== "featured" ? 1 : 0);
+
+  const clearFilters = () => {
+    setPriceMin("");
+    setPriceMax("");
+    setInStockOnly(false);
+    setSortBy("featured");
+  };
 
   return (
     <>
@@ -381,32 +428,109 @@ const Shop = () => {
           />
         </div>
 
-        {/* Vellvii Collection Strip - quiet text links to collection landing pages */}
-        <div className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 mb-8 sm:mb-10">
-          <nav
-            aria-label="Vellvii collections"
-            className="flex items-center gap-x-5 sm:gap-x-6 gap-y-2 flex-wrap text-light-secondary/70"
-          >
-            <span className="font-baskerville italic text-[0.7rem] sm:text-xs uppercase tracking-[0.22em] text-light-secondary/55 mr-1">
-              Explore
-            </span>
-            {[
-              { label: "Pleasure Collection", href: "/collections/pleasure-collection" },
-              { label: "DOX-Compatible", href: "/collections/dox-compatible-products" },
-              { label: "Discreet Storage", href: "/collections/discreet-storage" },
-              { label: "Portable Storage", href: "/collections/portable-storage" },
-              { label: "Bedroom Storage", href: "/collections/bedroom-storage" },
-              { label: "Products for Couples", href: "/collections/products-for-couples" },
-            ].map((c) => (
-              <Link
-                key={c.href}
-                to={c.href}
-                className="font-montserrat text-[0.72rem] sm:text-xs tracking-wide text-light-secondary/75 hover:text-primary transition-colors whitespace-nowrap"
-              >
-                {c.label}
-              </Link>
-            ))}
-          </nav>
+        {/* Filters: collapsible refinement panel */}
+        <div className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 mb-6 sm:mb-8">
+          <div className="flex items-center justify-between gap-3">
+            <button
+              onClick={() => setFiltersOpen((v) => !v)}
+              aria-expanded={filtersOpen}
+              className="inline-flex items-center gap-2 px-3 sm:px-4 py-2 rounded-full border border-white/10 bg-white/5 text-light-secondary hover:text-light-primary hover:border-white/20 transition-colors font-montserrat text-xs sm:text-sm"
+            >
+              <SlidersHorizontal className="w-3.5 h-3.5" />
+              <span>Filter &amp; sort</span>
+              {activeFilterCount > 0 && (
+                <span className="ml-1 inline-flex items-center justify-center min-w-[1.25rem] h-5 px-1.5 rounded-full bg-primary/20 text-primary text-[0.65rem] font-medium">
+                  {activeFilterCount}
+                </span>
+              )}
+              <ChevronDown
+                className={cn("w-3.5 h-3.5 transition-transform", filtersOpen && "rotate-180")}
+              />
+            </button>
+            {displayProducts && (
+              <span className="font-montserrat text-[0.7rem] sm:text-xs text-light-secondary/60">
+                {displayProducts.length} {displayProducts.length === 1 ? "product" : "products"}
+              </span>
+            )}
+          </div>
+
+          {filtersOpen && (
+            <div className="mt-4 p-5 sm:p-6 rounded-xl border border-white/10 bg-white/[0.03] backdrop-blur-sm">
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-5 sm:gap-6">
+                {/* Sort */}
+                <div>
+                  <label className="block font-montserrat text-[0.65rem] uppercase tracking-[0.2em] text-light-secondary/60 mb-2">
+                    Sort by
+                  </label>
+                  <select
+                    value={sortBy}
+                    onChange={(e) => setSortBy(e.target.value as SortOption)}
+                    className="w-full h-10 px-3 rounded-md bg-background border border-white/10 text-light-primary font-montserrat text-sm focus:outline-none focus:border-primary/50"
+                  >
+                    <option value="featured">Featured</option>
+                    <option value="price-asc">Price: Low to High</option>
+                    <option value="price-desc">Price: High to Low</option>
+                    <option value="title-asc">Name: A to Z</option>
+                  </select>
+                </div>
+
+                {/* Price */}
+                <div>
+                  <label className="block font-montserrat text-[0.65rem] uppercase tracking-[0.2em] text-light-secondary/60 mb-2">
+                    Price (USD)
+                  </label>
+                  <div className="flex items-center gap-2">
+                    <input
+                      type="number"
+                      inputMode="numeric"
+                      min="0"
+                      placeholder="Min"
+                      value={priceMin}
+                      onChange={(e) => setPriceMin(e.target.value)}
+                      className="w-full h-10 px-3 rounded-md bg-background border border-white/10 text-light-primary placeholder:text-light-muted font-montserrat text-sm focus:outline-none focus:border-primary/50"
+                    />
+                    <span className="text-light-muted">-</span>
+                    <input
+                      type="number"
+                      inputMode="numeric"
+                      min="0"
+                      placeholder="Max"
+                      value={priceMax}
+                      onChange={(e) => setPriceMax(e.target.value)}
+                      className="w-full h-10 px-3 rounded-md bg-background border border-white/10 text-light-primary placeholder:text-light-muted font-montserrat text-sm focus:outline-none focus:border-primary/50"
+                    />
+                  </div>
+                </div>
+
+                {/* Availability */}
+                <div>
+                  <label className="block font-montserrat text-[0.65rem] uppercase tracking-[0.2em] text-light-secondary/60 mb-2">
+                    Availability
+                  </label>
+                  <label className="inline-flex items-center gap-2 h-10 cursor-pointer select-none font-montserrat text-sm text-light-secondary hover:text-light-primary transition-colors">
+                    <input
+                      type="checkbox"
+                      checked={inStockOnly}
+                      onChange={(e) => setInStockOnly(e.target.checked)}
+                      className="w-4 h-4 rounded border-white/20 bg-background text-primary focus:ring-primary/40"
+                    />
+                    <span>In stock only</span>
+                  </label>
+                </div>
+              </div>
+
+              {activeFilterCount > 0 && (
+                <div className="mt-5 pt-4 border-t border-white/10 flex justify-end">
+                  <button
+                    onClick={clearFilters}
+                    className="font-montserrat text-xs uppercase tracking-[0.2em] text-light-secondary hover:text-primary transition-colors"
+                  >
+                    Clear filters
+                  </button>
+                </div>
+              )}
+            </div>
+          )}
         </div>
 
         {/* Products Grid */}
@@ -448,6 +572,36 @@ const Shop = () => {
               )}
             </div>
           )}
+        </div>
+
+        {/* Explore by collection - quiet footer-style strip */}
+        <div className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 pb-12 sm:pb-16">
+          <div className="pt-8 sm:pt-10 border-t border-white/10">
+            <p className="font-baskerville italic text-[0.7rem] sm:text-xs uppercase tracking-[0.22em] text-light-secondary/55 mb-4 text-center">
+              Explore by collection
+            </p>
+            <nav
+              aria-label="Vellvii collections"
+              className="flex items-center justify-center gap-x-5 sm:gap-x-7 gap-y-2 flex-wrap"
+            >
+              {[
+                { label: "Pleasure Collection", href: "/collections/pleasure-collection" },
+                { label: "DOX-Compatible", href: "/collections/dox-compatible-products" },
+                { label: "Discreet Storage", href: "/collections/discreet-storage" },
+                { label: "Portable Storage", href: "/collections/portable-storage" },
+                { label: "Bedroom Storage", href: "/collections/bedroom-storage" },
+                { label: "Products for Couples", href: "/collections/products-for-couples" },
+              ].map((c) => (
+                <Link
+                  key={c.href}
+                  to={c.href}
+                  className="font-montserrat text-[0.72rem] sm:text-xs tracking-wide text-light-secondary/70 hover:text-primary transition-colors whitespace-nowrap"
+                >
+                  {c.label}
+                </Link>
+              ))}
+            </nav>
+          </div>
         </div>
 
         <PrelaunchFooter />
