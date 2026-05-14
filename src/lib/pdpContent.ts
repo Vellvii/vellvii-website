@@ -63,7 +63,7 @@ export interface PdpContent {
   faqs?: FaqItem[];
   /** DOX-only: docking system (VDS / DDS) section content */
   docking?: DockingInfo;
-  /** Toys that fit the DOX through the VDS insert */
+  /** Toys that work with the VDS suction mount atop the DOX */
   doxCompatible?: boolean;
   /** Lux-only: subtle related-storage note linking to DOX */
   relatedStorageNote?: { copy: string; href: string; label: string };
@@ -221,7 +221,7 @@ export const PDP_CONTENT: Record<CanonicalHandle, PdpContent> = {
     ],
     doxCompatible: true,
     productDetails: [
-      { label: "DOX Compatibility", value: "Fits the Vellvii DOX through the VDS insert" },
+      { label: "DOX Compatibility", value: "Compatible with the VDS suction mount that sits atop the Vellvii DOX" },
     ],
   },
   "vellvii-evolve": {
@@ -233,7 +233,7 @@ export const PDP_CONTENT: Record<CanonicalHandle, PdpContent> = {
     ],
     doxCompatible: true,
     productDetails: [
-      { label: "DOX Compatibility", value: "Fits the Vellvii DOX through the VDS insert" },
+      { label: "DOX Compatibility", value: "Compatible with the VDS suction mount that sits atop the Vellvii DOX" },
     ],
   },
   "vellvii-pulse": {
@@ -245,7 +245,7 @@ export const PDP_CONTENT: Record<CanonicalHandle, PdpContent> = {
     ],
     doxCompatible: true,
     productDetails: [
-      { label: "DOX Compatibility", value: "Fits the Vellvii DOX through the VDS insert" },
+      { label: "DOX Compatibility", value: "Compatible with the VDS suction mount that sits atop the Vellvii DOX" },
     ],
   },
 };
