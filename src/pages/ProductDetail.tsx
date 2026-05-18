@@ -311,7 +311,7 @@ const ProductDetail = () => {
             keywords: "sex toy storage, sex toy storage box, sex toy box, sex toy lock box, biometric lock box, adult toy storage, discreet sex toy storage, vellvii dox",
           },
           "vellvii-lux": {
-            title: "Vellvii Lux | Portable Sex Toy Storage Case & Fingerprint Lock Bag",
+            title: "Vellvii Lux | Portable Biometric Sex Toy Storage Bag",
             description: "Vellvii Lux is portable sex toy storage with a fingerprint lock, genuine leather exterior, velvet interior, and internal USB-A charging.",
             keywords: "sex toy bag, portable sex toy storage, sex toy storage case, sex toy lock box, biometric lock box, fingerprint lock box, discreet sex toy storage, vellvii lux",
           },
