@@ -283,7 +283,7 @@ const ProductDetail = () => {
           : "OutOfStock";
         const skuTail = variant?.id ? variant.id.split("/").pop() : undefined;
 
-        const luxTitle = `Vellvii Lux | Portable Sex Toy Storage Case & Fingerprint Lock Bag`;
+        const luxTitle = `Vellvii Lux | Portable Biometric Sex Toy Storage Bag`;
         const luxDescription =
           "Vellvii Lux is portable sex toy storage with a fingerprint lock, genuine leather exterior, velvet interior, and internal USB-A charging.";
         const luxKeywords =
