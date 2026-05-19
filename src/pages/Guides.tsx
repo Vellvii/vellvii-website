@@ -47,8 +47,8 @@ const GUIDES = [
     title: "How to Choose Premium Products for Couples",
     excerpt:
       "A refined guide for couples choosing products around privacy, connection, storage, and shared intention.",
-    image: "/uploads/Dox_white_lifestyle1.jpg",
-    imageAlt: "Vellvii DOX bedroom storage and docking hub styled in a refined shared interior",
+    image: "/uploads/dox-white-lifestyle-2.jpg",
+    imageAlt: "Vellvii DOX styled in a refined shared bedroom interior for couples",
   },
   {
     to: "/guides/how-to-care-for-your-vellvii-products",
@@ -65,8 +65,8 @@ const GUIDES = [
     title: "How to Clean and Store Sex Toys",
     excerpt:
       "General care and storage guidance for keeping products organized, protected, and stored with discretion.",
-    image: "/uploads/Dox_black_shelf_close_up.png",
-    imageAlt: "Vellvii DOX shown on a refined shelf, illustrating discreet sex toy storage",
+    image: "/uploads/dox_with_toys_1.jpg",
+    imageAlt: "Vellvii DOX holding the Pleasure Collection, illustrating clean and discreet sex toy storage",
   },
   {
     to: "/guides/best-sex-toy-storage-box",
@@ -83,8 +83,8 @@ const GUIDES = [
     title: "Biometric Lock Box for Sex Toys",
     excerpt:
       "Learn how biometric access can support private storage without compromising a refined home environment.",
-    image: "/uploads/lux-lifestyle-final-v5.jpg",
-    imageAlt: "Vellvii Lux portable biometric lock box for sex toys in a refined setting",
+    image: "/uploads/FP_lock_V_lock_close_ups.png",
+    imageAlt: "Close-up of the Vellvii biometric fingerprint lock used on the DOX and Lux storage pieces",
   },
 ];
 

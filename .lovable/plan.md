@@ -1,27 +1,33 @@
-## Goal
-Make sure all crawler-facing URLs point at the live custom domain `https://vellvii.com` and never at `vellvii-site.lovable.app`.
+# Unique guide card images on /guides
 
-## Changes
+## The problem
 
-1. **`public/robots.txt`** — revert the `Sitemap:` directive back to:
-   ```
-   Sitemap: https://vellvii.com/sitemap.xml
-   ```
+On `/guides`, three images are reused across cards:
 
-2. **`public/sitemap.xml`** — verify all `<loc>` entries use `https://vellvii.com` as the host (they already do after the previous round; confirm none slipped to `lovable.app`).
+- `lux-lifestyle-final-v5.jpg` — used by "Lux vs DOX" and "Biometric Lock Box"
+- `Dox_white_lifestyle1.jpg` — used by "Products for Couples" and "Best Sex Toy Storage Box"
+- `Dox_black_shelf_close_up.png` — used by "Care for Your Vellvii Products" and "How to Clean and Store Sex Toys"
 
-3. **`src/components/SEO.tsx`** — confirm `SITE_URL` stays `https://vellvii.com` (already correct). No change expected.
+Each card needs a unique image that visually fits the guide's topic.
 
-4. **`index.html`** — confirm `og:url` / canonical references stay on `vellvii.com` (already correct). No change expected.
+## Proposed reassignment (Guides.tsx only)
 
-5. **`public/llms.txt`** — confirm all links stay on `vellvii.com` (already correct after the previous rewrite). No change expected.
+| Guide | New image | Why it fits |
+|---|---|---|
+| Lux vs DOX | `lux-lifestyle-final-v5.jpg` (keep) | Lux-led comparison hero |
+| DOX Docking System | `dox-interior-labeled.jpg` (keep) | Shows VDS/DDS directly |
+| Discreet Storage | `lux-philosophy-lifestyle-v4.png` (keep) | Refined lifestyle context |
+| Portable vs Bedroom | `lux-travel-suitcase.png` (keep) | Portable, travel framing |
+| Products for Couples | `dox-white-lifestyle-2.jpg` *(new)* | Bedroom shared-interior feel, different from card 8 |
+| Care for Vellvii Products | `Dox_black_shelf_close_up.png` (keep) | Care-on-shelf imagery |
+| Clean & Store Sex Toys | `dox_with_toys_1.jpg` *(new)* | Literal "storing toys" visual |
+| Best Sex Toy Storage Box | `Dox_white_lifestyle1.jpg` (keep) | Storage box hero |
+| Biometric Lock Box | `FP_lock_V_lock_close_ups.png` *(new)* | Direct biometric-lock close-up — strongest topical fit |
 
-## Out of scope
-- No new routes, no metadata copy changes, no design changes.
-- No disavow file.
-- The previous SEO scanner finding that recommended switching to `vellvii-site.lovable.app` will be ignored — your live canonical domain is `vellvii.com`, which is the correct choice for crawlers.
+After the swap, every card uses a distinct file, and the imagery matches each guide's subject more precisely (biometric guide finally shows the fingerprint lock, clean-and-store guide shows toys being stored, couples guide uses a shared-bedroom shot).
 
-## QA after implementation
-- `rg "lovable.app" public/ src/` returns no hits in canonical/sitemap/robots surfaces.
-- `robots.txt` Sitemap line points to `https://vellvii.com/sitemap.xml`.
-- `sitemap.xml` host is `https://vellvii.com` on every entry.
+## Scope
+
+- File touched: `src/pages/Guides.tsx` only
+- No changes to guide pages' internal hero images, copy, SEO, or routing
+- `imageAlt` strings updated alongside each new `image` to stay descriptive
