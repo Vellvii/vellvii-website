@@ -4,6 +4,12 @@ import { motion } from "framer-motion";
 import { z } from "zod";
 import { CheckCircle2, Loader2, ArrowRight, ExternalLink } from "lucide-react";
 import { Input } from "@/components/ui/input";
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "@/components/ui/accordion";
 import { PrelaunchFooter } from "@/components/prelaunch/PrelaunchFooter";
 import { ScrollHeader } from "@/components/ScrollHeader";
 import { socialChannels, RedditIcon } from "@/data/socials";
@@ -13,6 +19,39 @@ import { pixelLead, pixelSubscribe } from "@/lib/metaPixel";
 
 const REDDIT_URL = "https://www.reddit.com/r/Vellvii/s/ukaPOmsKiP";
 const PAGE_URL = "https://vellvii.com/socials";
+
+const socialsFAQs: { question: string; answer: string }[] = [
+  {
+    question: "Where is Vellvii on social media?",
+    answer:
+      "Vellvii is on Instagram, TikTok, YouTube, X (Twitter), Pinterest, LinkedIn and Reddit. The full list with handles and direct links lives on vellvii.com/socials - the single source of truth for every official Vellvii channel.",
+  },
+  {
+    question: "What is r/Vellvii?",
+    answer:
+      "r/Vellvii is the official Vellvii subreddit - a community for behind-the-design previews, founder AMAs, early-access drops and direct conversation with the team. Join at reddit.com/r/Vellvii.",
+  },
+  {
+    question: "How can I tell if a Vellvii account is real?",
+    answer:
+      "Every official Vellvii account is listed on vellvii.com/socials. If a profile, handle or link is not on that page, it is not an official Vellvii channel. We never DM unsolicited discount codes or payment requests.",
+  },
+  {
+    question: "Where can I read about the Vellvii DOX outside the website?",
+    answer:
+      "The Vellvii DOX is documented on Prelaunch.com, Kickstarter and Gadget Flow. Direct links to each are in the Elsewhere section of vellvii.com/socials.",
+  },
+  {
+    question: "How do I contact Vellvii?",
+    answer:
+      "For press, partnerships and customer questions, use the Contact page at vellvii.com/contact or DM the official Instagram. Community questions are welcomed on r/Vellvii.",
+  },
+  {
+    question: "Does Vellvii have a newsletter?",
+    answer:
+      "Yes. The Vellvii waitlist sends restock and launch alerts for DOX, Lux and the Pleasure Collection. You can join from the form on vellvii.com/socials or any product page.",
+  },
+];
 
 const emailSchema = z
   .string()
@@ -77,24 +116,36 @@ const Socials = () => {
     sameAs,
   };
 
+  const faqJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    mainEntity: socialsFAQs.map((f) => ({
+      "@type": "Question",
+      name: f.question,
+      acceptedAnswer: { "@type": "Answer", text: f.answer },
+    })),
+  };
+
   return (
     <div className="min-h-screen surface-dark text-light-primary">
       <Helmet>
-        <title>Follow Vellvii - Socials & Community</title>
+        <title>Follow Vellvii - Official Socials, Reddit & Community</title>
         <meta
           name="description"
-          content="Follow Vellvii across Instagram, TikTok, YouTube, Reddit and more. Behind the design, launch updates and the r/Vellvii community."
+          content="Official Vellvii social channels - Instagram, TikTok, YouTube, X, Pinterest, LinkedIn and r/Vellvii on Reddit. The verified directory of every Vellvii account."
         />
         <link rel="canonical" href={PAGE_URL} />
-        <meta property="og:title" content="Follow Vellvii - Socials & Community" />
+        <meta property="og:title" content="Follow Vellvii - Official Socials & Community" />
         <meta
           property="og:description"
-          content="Behind the design, launch updates and the r/Vellvii community."
+          content="The verified directory of every official Vellvii channel - Instagram, TikTok, YouTube, Reddit and more."
         />
         <meta property="og:url" content={PAGE_URL} />
         <meta property="og:type" content="website" />
         <script type="application/ld+json">{JSON.stringify(organizationJsonLd)}</script>
+        <script type="application/ld+json">{JSON.stringify(faqJsonLd)}</script>
       </Helmet>
+
 
       <ScrollHeader />
 
@@ -256,7 +307,36 @@ const Socials = () => {
           </div>
         </section>
 
+        {/* FAQ - AI search & SEO surface */}
+        <section className="mt-20 sm:mt-28 max-w-3xl mx-auto">
+          <div className="text-center mb-8 sm:mb-10">
+            <p className="font-montserrat text-[0.65rem] uppercase tracking-[0.22em] text-light-secondary/55">
+              Good to know
+            </p>
+            <h2 className="mt-2 font-baskerville text-2xl sm:text-3xl text-light-primary">
+              Vellvii socials, answered
+            </h2>
+          </div>
+          <Accordion type="single" collapsible className="space-y-3">
+            {socialsFAQs.map((faq, i) => (
+              <AccordionItem
+                key={i}
+                value={`socials-faq-${i}`}
+                className="border border-white/10 rounded-lg bg-white/[0.03] px-5 data-[state=open]:border-primary/30 transition-colors"
+              >
+                <AccordionTrigger className="font-baskerville text-base sm:text-lg text-light-primary text-left hover:no-underline py-5">
+                  {faq.question}
+                </AccordionTrigger>
+                <AccordionContent className="font-montserrat text-sm sm:text-base text-light-secondary/85 leading-relaxed pb-5">
+                  {faq.answer}
+                </AccordionContent>
+              </AccordionItem>
+            ))}
+          </Accordion>
+        </section>
+
         {/* Newsletter capture - same edge function as homepage inline waitlist */}
+
         <section className="mt-20 sm:mt-28 border-t border-white/5 pt-12 sm:pt-16">
           <div className="max-w-2xl mx-auto text-center">
             <p className="text-primary font-montserrat text-xs sm:text-sm uppercase tracking-[0.2em] mb-2">
