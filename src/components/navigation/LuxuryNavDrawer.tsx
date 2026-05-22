@@ -57,6 +57,7 @@ const NAV_ITEMS: NavItem[] = [
   { kind: "link", label: "Guides", href: "/guides" },
   { kind: "link", label: "Warranty", href: "/warranty" },
   { kind: "link", label: "Contact", href: "/contact" },
+  { kind: "link", label: "Socials", href: "/socials" },
   {
     kind: "group",
     label: "More",
