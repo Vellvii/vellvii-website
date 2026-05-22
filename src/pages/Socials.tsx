@@ -1,8 +1,10 @@
 import { useState } from "react";
+import { Link } from "react-router-dom";
 import { Helmet } from "react-helmet-async";
 import { motion } from "framer-motion";
 import { z } from "zod";
 import { CheckCircle2, Loader2, ArrowRight, ExternalLink } from "lucide-react";
+
 import { Input } from "@/components/ui/input";
 import {
   Accordion,
@@ -20,36 +22,73 @@ import { pixelLead, pixelSubscribe } from "@/lib/metaPixel";
 const REDDIT_URL = "https://www.reddit.com/r/Vellvii/s/ukaPOmsKiP";
 const PAGE_URL = "https://vellvii.com/socials";
 
-const socialsFAQs: { question: string; answer: string }[] = [
+const socialsFAQs: { question: string; answer: React.ReactNode }[] = [
   {
     question: "Where is Vellvii on social media?",
-    answer:
-      "Vellvii is on Instagram, TikTok, YouTube, X (Twitter), Pinterest, LinkedIn and Reddit. The full list with handles and direct links lives on vellvii.com/socials - the single source of truth for every official Vellvii channel.",
+    answer: (
+      <>
+        Vellvii is on Instagram, TikTok, YouTube, X (Twitter), Pinterest, LinkedIn and Reddit. The full list with handles and direct links lives on{" "}
+        <Link to="/socials" className="text-primary underline underline-offset-2 hover:text-primary/80 transition-colors">vellvii.com/socials</Link>
+        {" "}- the single source of truth for every official Vellvii channel.
+      </>
+    ),
   },
   {
     question: "What is r/Vellvii?",
-    answer:
-      "r/Vellvii is the official Vellvii subreddit - a community for behind-the-design previews, founder AMAs, early-access drops and direct conversation with the team. Join at reddit.com/r/Vellvii.",
+    answer: (
+      <>
+        r/Vellvii is the official Vellvii subreddit - a community for behind-the-design previews, founder AMAs, early-access drops and direct conversation with the team. Join at{" "}
+        <a href="https://www.reddit.com/r/Vellvii/s/ukaPOmsKiP" target="_blank" rel="noopener noreferrer" className="text-primary underline underline-offset-2 hover:text-primary/80 transition-colors">reddit.com/r/Vellvii</a>.
+      </>
+    ),
   },
   {
     question: "How can I tell if a Vellvii account is real?",
-    answer:
-      "Every official Vellvii account is listed on vellvii.com/socials. If a profile, handle or link is not on that page, it is not an official Vellvii channel. We never DM unsolicited discount codes or payment requests.",
+    answer: (
+      <>
+        Every official Vellvii account is listed on{" "}
+        <Link to="/socials" className="text-primary underline underline-offset-2 hover:text-primary/80 transition-colors">vellvii.com/socials</Link>
+        . If a profile, handle or link is not on that page, it is not an official Vellvii channel. We never DM unsolicited discount codes or payment requests.
+      </>
+    ),
   },
   {
     question: "Where can I read about the Vellvii DOX outside the website?",
-    answer:
-      "The Vellvii DOX is documented on Prelaunch.com, Kickstarter and Gadget Flow. Direct links to each are in the Elsewhere section of vellvii.com/socials.",
+    answer: (
+      <>
+        The Vellvii DOX is documented on{" "}
+        <a href="https://www.prelaunch.com/projects/vellvii" target="_blank" rel="noopener noreferrer" className="text-primary underline underline-offset-2 hover:text-primary/80 transition-colors">Prelaunch.com</a>
+        ,{" "}
+        <a href="https://www.kickstarter.com/projects/vellvii/the-vellvii-collection-dox-and-lux" target="_blank" rel="noopener noreferrer" className="text-primary underline underline-offset-2 hover:text-primary/80 transition-colors">Kickstarter</a>
+        {" "}and{" "}
+        <a href="https://www.gadgetflow.com/project/vellvii-dox" target="_blank" rel="noopener noreferrer" className="text-primary underline underline-offset-2 hover:text-primary/80 transition-colors">Gadget Flow</a>
+        . Direct links to each are in the Elsewhere section of{" "}
+        <Link to="/socials" className="text-primary underline underline-offset-2 hover:text-primary/80 transition-colors">vellvii.com/socials</Link>
+        .
+      </>
+    ),
   },
   {
     question: "How do I contact Vellvii?",
-    answer:
-      "For press, partnerships and customer questions, use the Contact page at vellvii.com/contact or DM the official Instagram. Community questions are welcomed on r/Vellvii.",
+    answer: (
+      <>
+        For press, partnerships and customer questions, use the Contact page at{" "}
+        <Link to="/contact" className="text-primary underline underline-offset-2 hover:text-primary/80 transition-colors">vellvii.com/contact</Link>
+        {" "}or DM the official Instagram. Community questions are welcomed on{" "}
+        <a href="https://www.reddit.com/r/Vellvii/s/ukaPOmsKiP" target="_blank" rel="noopener noreferrer" className="text-primary underline underline-offset-2 hover:text-primary/80 transition-colors">r/Vellvii</a>
+        .
+      </>
+    ),
   },
   {
     question: "Does Vellvii have a newsletter?",
-    answer:
-      "Yes. The Vellvii waitlist sends restock and launch alerts for DOX, Lux and the Pleasure Collection. You can join from the form on vellvii.com/socials or any product page.",
+    answer: (
+      <>
+        Yes. The Vellvii waitlist sends restock and launch alerts for DOX, Lux and the Pleasure Collection. You can join from the form on{" "}
+        <Link to="/socials" className="text-primary underline underline-offset-2 hover:text-primary/80 transition-colors">vellvii.com/socials</Link>
+        {" "}or any product page.
+      </>
+    ),
   },
 ];
 
@@ -116,13 +155,22 @@ const Socials = () => {
     sameAs,
   };
 
+  const faqPlainTexts = [
+    "Vellvii is on Instagram, TikTok, YouTube, X (Twitter), Pinterest, LinkedIn and Reddit. The full list with handles and direct links lives on vellvii.com/socials - the single source of truth for every official Vellvii channel.",
+    "r/Vellvii is the official Vellvii subreddit - a community for behind-the-design previews, founder AMAs, early-access drops and direct conversation with the team. Join at reddit.com/r/Vellvii.",
+    "Every official Vellvii account is listed on vellvii.com/socials. If a profile, handle or link is not on that page, it is not an official Vellvii channel. We never DM unsolicited discount codes or payment requests.",
+    "The Vellvii DOX is documented on Prelaunch.com, Kickstarter and Gadget Flow. Direct links to each are in the Elsewhere section of vellvii.com/socials.",
+    "For press, partnerships and customer questions, use the Contact page at vellvii.com/contact or DM the official Instagram. Community questions are welcomed on r/Vellvii.",
+    "Yes. The Vellvii waitlist sends restock and launch alerts for DOX, Lux and the Pleasure Collection. You can join from the form on vellvii.com/socials or any product page.",
+  ];
+
   const faqJsonLd = {
     "@context": "https://schema.org",
     "@type": "FAQPage",
-    mainEntity: socialsFAQs.map((f) => ({
+    mainEntity: socialsFAQs.map((f, i) => ({
       "@type": "Question",
       name: f.question,
-      acceptedAnswer: { "@type": "Answer", text: f.answer },
+      acceptedAnswer: { "@type": "Answer", text: faqPlainTexts[i] },
     })),
   };
 
