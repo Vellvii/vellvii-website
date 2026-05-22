@@ -252,11 +252,11 @@ const Socials = () => {
                     Community Access
                   </span>
                   <h2 className="font-baskerville text-4xl sm:text-5xl md:text-6xl text-light-primary leading-[1.1]">
-                    r/Vellvii <span className="italic font-light text-accent/60">on</span> <span className="text-light-primary/80">Reddit</span>
+                    r/Vellvii <span className="italic font-light text-accent/80">on</span> <span className="text-light-primary">Reddit</span>
                   </h2>
                 </div>
 
-                <p className="font-montserrat text-sm sm:text-base md:text-lg text-light-secondary/80 leading-relaxed font-light max-w-md mx-auto md:mx-0 transition-colors duration-700 group-hover:text-light-primary/85">
+                <p className="font-montserrat text-sm sm:text-base md:text-lg text-light-secondary leading-relaxed font-light max-w-md mx-auto md:mx-0">
                   Behind-the-design previews, founder AMAs and early-access drops. The most direct line to the team.
                 </p>
 
@@ -264,7 +264,7 @@ const Socials = () => {
                   {["Behind-the-design", "Founder AMAs", "Early-access"].map((tag) => (
                     <span
                       key={tag}
-                      className="px-4 sm:px-5 py-2 rounded-full border border-white/10 bg-white/[0.04] font-montserrat text-[0.6rem] sm:text-[0.65rem] text-accent uppercase tracking-widest backdrop-blur-md transition-all duration-500 hover:bg-primary/20 hover:border-primary/40 hover:text-light-primary"
+                      className="px-4 sm:px-5 py-2 rounded-full border border-white/15 bg-white/[0.06] font-montserrat text-[0.6rem] sm:text-[0.65rem] text-light-primary uppercase tracking-widest backdrop-blur-md transition-all duration-500 hover:bg-primary/20 hover:border-primary/50 hover:text-light-primary"
                     >
                       {tag}
                     </span>
@@ -276,12 +276,13 @@ const Socials = () => {
                     href={REDDIT_URL}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="group/btn inline-flex items-center gap-6 sm:gap-8 px-8 sm:px-12 py-4 sm:py-5 rounded-full bg-light-primary text-background font-montserrat font-bold text-[0.65rem] sm:text-[0.7rem] uppercase tracking-[0.3em] transition-all duration-700 hover:bg-accent hover:shadow-[0_25px_60px_-10px_rgba(247,231,206,0.4)] active:scale-95 shadow-[0_4px_24px_rgba(255,255,255,0.1)]"
+                    className="group/btn inline-flex items-center gap-6 sm:gap-8 px-8 sm:px-12 py-4 sm:py-5 rounded-full bg-white text-black font-montserrat font-bold text-[0.65rem] sm:text-[0.7rem] uppercase tracking-[0.3em] transition-all duration-500 hover:bg-accent hover:shadow-[0_25px_60px_-10px_rgba(247,231,206,0.4)] active:scale-95 shadow-[0_4px_24px_rgba(255,255,255,0.15)]"
                   >
                     Join r/Vellvii
-                    <ArrowRight className="w-4 h-4 sm:w-5 sm:h-5 transition-transform duration-700 group-hover/btn:translate-x-2" />
+                    <ArrowRight className="w-4 h-4 sm:w-5 sm:h-5 transition-transform duration-500 group-hover/btn:translate-x-2" />
                   </a>
                 </div>
+
               </div>
             </div>
 
