@@ -435,29 +435,30 @@ const Shop = () => {
             {[
               {
                 label: "Available Now",
-                tag: "Shop in-stock",
-                href: "/collections/pleasure-collection",
+                tag: "Shop In Stock",
+                href: "/shop?filter=in-stock",
               },
               {
                 label: "Vellvii Lux",
-                tag: "Limited drop",
+                tag: "Limited Drop",
                 href: "/products/vellvii-lux",
               },
               {
                 label: "Storage Solutions",
-                tag: "Discreet by design",
+                tag: "Discreet by Design",
                 href: "/collections/discreet-storage",
               },
               {
                 label: "DOX-Compatible",
-                tag: "Built for the system",
+                tag: "Built for the System",
                 href: "/collections/dox-compatible-products",
               },
             ].map((c) => (
               <Link
                 key={c.href}
                 to={c.href}
-                className="group relative card-dark rounded-xl sm:rounded-2xl overflow-hidden p-4 sm:p-5 min-h-[110px] sm:min-h-[130px] flex flex-col justify-end ring-1 ring-white/5 hover:ring-primary/40 transition-all duration-500"
+                aria-label={`${c.label} — ${c.tag}`}
+                className="group relative card-dark rounded-xl sm:rounded-2xl overflow-hidden p-4 sm:p-5 min-h-[110px] sm:min-h-[130px] flex flex-col justify-end ring-1 ring-white/5 hover:ring-primary/40 focus-visible:ring-primary/60 focus-visible:outline-none transition-all duration-500 active:scale-[0.99]"
               >
                 <span className="font-montserrat text-[0.62rem] sm:text-[0.65rem] uppercase tracking-[0.22em] text-primary/70 mb-1.5">
                   {c.tag}
