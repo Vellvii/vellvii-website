@@ -12,6 +12,7 @@ import { CheckoutTransition } from "@/components/checkout/CheckoutTransition";
 export const CartDrawer = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [isHovering, setIsHovering] = useState(false);
+  const [checkoutTarget, setCheckoutTarget] = useState<string | null>(null);
   const { 
     items, 
     isLoading, 
