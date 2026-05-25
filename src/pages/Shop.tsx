@@ -385,8 +385,12 @@ const Shop = () => {
   const clearFilters = () => {
     setPriceMin("");
     setPriceMax("");
-    setInStockOnly(false);
     setSortBy("featured");
+    setSearchParams((prev) => {
+      const next = new URLSearchParams(prev);
+      next.delete("filter");
+      return next;
+    }, { replace: true });
   };
 
   return (
