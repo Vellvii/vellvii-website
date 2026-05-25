@@ -47,7 +47,15 @@ interface CollectionLayoutProps {
   seoParagraph?: string;
 }
 
-const CollectionCard = ({ product }: { product: ShopifyProduct }) => {
+const CollectionCard = ({
+  product,
+  collectionHref,
+  collectionLabel,
+}: {
+  product: ShopifyProduct;
+  collectionHref: string;
+  collectionLabel: string;
+}) => {
   const node = product.node;
   const image = node.images.edges[0]?.node;
   const variant = node.variants.edges[0]?.node;
