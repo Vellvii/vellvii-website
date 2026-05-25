@@ -82,6 +82,7 @@ const InnerApp = () => {
             <Route path="/showcase" element={<DoxLanding />} />
             <Route path="/landing" element={<AgeGateLanding />} />
             <Route path="/shop" element={<Shop />} />
+            <Route path="/cart" element={<CartPage />} />
             <Route path="/collections/dox-compatible-products" element={<CollectionDoxCompatible />} />
             <Route path="/collections/pleasure-collection" element={<CollectionPleasureCollection />} />
             <Route path="/collections/discreet-storage" element={<CollectionDiscreetStorage />} />
