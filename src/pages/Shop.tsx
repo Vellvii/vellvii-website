@@ -284,14 +284,24 @@ const CollectionFilterBar = ({
 type SortOption = "featured" | "price-asc" | "price-desc" | "title-asc";
 
 const Shop = () => {
+  const [searchParams, setSearchParams] = useSearchParams();
+  const initialInStock = searchParams.get("filter") === "in-stock";
   const [selectedCollection, setSelectedCollection] = useState<string | null>(null);
   const [searchQuery, setSearchQuery] = useState("");
   const [showSuggestions, setShowSuggestions] = useState(false);
-  const [filtersOpen, setFiltersOpen] = useState(false);
+  const [filtersOpen, setFiltersOpen] = useState(initialInStock);
   const [sortBy, setSortBy] = useState<SortOption>("featured");
   const [priceMin, setPriceMin] = useState("");
   const [priceMax, setPriceMax] = useState("");
-  const [inStockOnly, setInStockOnly] = useState(false);
+  const [inStockOnly, setInStockOnly] = useState(initialInStock);
+
+  // Keep state in sync if user navigates with browser back/forward between
+  // /shop and /shop?filter=in-stock.
+  useEffect(() => {
+    const next = searchParams.get("filter") === "in-stock";
+    setInStockOnly(next);
+    if (next) setFiltersOpen(true);
+  }, [searchParams]);
 
   const { data: allProducts } = useShopifyProducts(50);
   const { data: collections, isLoading: collectionsLoading } = useShopifyCollections(20);
