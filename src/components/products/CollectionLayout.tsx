@@ -254,7 +254,12 @@ export const CollectionLayout = ({
                 }
               >
                 {collectionProducts.map((p) => (
-                  <CollectionCard key={p.node.id} product={p} />
+                  <CollectionCard
+                    key={p.node.id}
+                    product={p}
+                    collectionHref={canonical}
+                    collectionLabel={h1}
+                  />
                 ))}
               </div>
             ) : (
