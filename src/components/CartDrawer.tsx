@@ -2,15 +2,17 @@ import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetTitle, SheetDescription } from "@/components/ui/sheet";
 import { ScrollArea } from "@/components/ui/scroll-area";
-import { ShoppingCart, Minus, Plus, Trash2, ExternalLink, Loader2, Heart } from "lucide-react";
+import { ShoppingCart, Minus, Plus, Trash2, Lock, Loader2, Heart } from "lucide-react";
 import { useCartStore } from "@/stores/cartStore";
 import { trackBeginCheckout, appendCheckoutAttribution } from "@/lib/analytics";
 import { pixelInitiateCheckout } from "@/lib/metaPixel";
+import { CheckoutTransition } from "@/components/checkout/CheckoutTransition";
 
 
 export const CartDrawer = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [isHovering, setIsHovering] = useState(false);
+  const [checkoutTarget, setCheckoutTarget] = useState<string | null>(null);
   const { 
     items, 
     isLoading, 
@@ -33,35 +35,35 @@ export const CartDrawer = () => {
 
   const handleCheckout = () => {
     const checkoutUrl = getCheckoutUrl();
-    if (checkoutUrl) {
-      const currency = items[0]?.price.currencyCode || "USD";
-      trackBeginCheckout(
-        items.map((i) => ({
-          item_id: i.variantId,
-          item_name: i.product.node.title,
-          item_brand: "Vellvii",
-          item_variant: i.variantTitle,
-          price: parseFloat(i.price.amount),
-          quantity: i.quantity,
-          currency: i.price.currencyCode,
-        })),
-        totalPrice,
-        currency
-      );
-      pixelInitiateCheckout({
-        content_ids: items.map((i) => i.variantId),
-        contents: items.map((i) => ({
-          id: i.variantId,
-          quantity: i.quantity,
-          item_price: parseFloat(i.price.amount),
-        })),
-        num_items: totalItems,
-        value: totalPrice,
-        currency,
-      });
-      window.open(appendCheckoutAttribution(checkoutUrl), "_blank");
-      setIsOpen(false);
-    }
+    if (!checkoutUrl) return;
+    const currency = items[0]?.price.currencyCode || "USD";
+    trackBeginCheckout(
+      items.map((i) => ({
+        item_id: i.variantId,
+        item_name: i.product.node.title,
+        item_brand: "Vellvii",
+        item_variant: i.variantTitle,
+        price: parseFloat(i.price.amount),
+        quantity: i.quantity,
+        currency: i.price.currencyCode,
+      })),
+      totalPrice,
+      currency
+    );
+    pixelInitiateCheckout({
+      content_ids: items.map((i) => i.variantId),
+      contents: items.map((i) => ({
+        id: i.variantId,
+        quantity: i.quantity,
+        item_price: parseFloat(i.price.amount),
+      })),
+      num_items: totalItems,
+      value: totalPrice,
+      currency,
+    });
+    // Same-tab handoff via branded transition (~600ms)
+    setCheckoutTarget(appendCheckoutAttribution(checkoutUrl));
+    setIsOpen(false);
   };
 
   return (
@@ -224,11 +226,14 @@ export const CartDrawer = () => {
                         <Loader2 className="w-4 h-4 animate-spin" />
                       ) : (
                         <>
-                          <ExternalLink className="w-4 h-4 mr-2" />
+                          <Lock className="w-4 h-4 mr-2" />
                           Checkout
                         </>
                       )}
                     </Button>
+                    <p className="text-center text-[11px] sm:text-xs font-montserrat text-light-muted leading-relaxed">
+                      Secure Shopify checkout. Discreet packaging.
+                    </p>
                     <Button 
                       className="w-full h-9 sm:h-10 text-sm font-montserrat bg-transparent border border-white/20 text-light-secondary hover:bg-white/10 hover:text-light-primary hover:border-white/30" 
                       variant="ghost" 
@@ -244,6 +249,11 @@ export const CartDrawer = () => {
           </div>
         </SheetContent>
       </Sheet>
+      <CheckoutTransition
+        open={checkoutTarget !== null}
+        url={checkoutTarget}
+        onDone={() => setCheckoutTarget(null)}
+      />
     </>
   );
 };
