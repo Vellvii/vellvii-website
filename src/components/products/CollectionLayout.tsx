@@ -11,6 +11,8 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { useShopifyProducts } from "@/hooks/useShopifyProducts";
 import { useCartStore } from "@/stores/cartStore";
 import { toast } from "sonner";
+import { Breadcrumbs } from "@/components/navigation/Breadcrumbs";
+import { setLastCollection } from "@/lib/collectionContext";
 import type { ShopifyProduct } from "@/lib/shopify";
 import type { FaqItem } from "@/lib/pdpContent";
 
