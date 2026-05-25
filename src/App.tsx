@@ -32,6 +32,7 @@ import TermsOfService from "./pages/TermsOfService";
 import Warranty from "./pages/Warranty";
 import WarrantyRegister from "./pages/WarrantyRegister";
 import Shop from "./pages/Shop";
+import CartPage from "./pages/Cart";
 import ProductDetail from "./pages/ProductDetail";
 import CollectionDoxCompatible from "./pages/CollectionDoxCompatible";
 import CollectionPleasureCollection from "./pages/CollectionPleasureCollection";
