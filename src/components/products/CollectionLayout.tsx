@@ -95,6 +95,7 @@ const CollectionCard = ({
   return (
     <Link
       to={`/products/${node.handle}`}
+      onClick={() => setLastCollection({ href: collectionHref, label: collectionLabel })}
       className="group block rounded-xl sm:rounded-2xl overflow-hidden border border-white/10 bg-card/50 hover:border-primary/40 transition-all duration-500 hover:shadow-elegant"
     >
       <div className="relative aspect-[4/5] overflow-hidden bg-black/30">
