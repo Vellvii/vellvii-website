@@ -27,46 +27,56 @@ const subscribe = (l: Listener) => {
 type NavLink = { label: string; href: string; external?: boolean };
 type NavItem =
   | { kind: "link"; label: string; href: string; external?: boolean }
-  | { kind: "group"; label: string; links: NavLink[] };
+  // `href` makes the parent label itself a link; the chevron toggles the submenu.
+  | { kind: "group"; label: string; href?: string; links: NavLink[] };
 
 const NAV_ITEMS: NavItem[] = [
   {
     kind: "group",
     label: "Shop",
+    href: "/shop",
     links: [
-      { label: "All Products", href: "/shop" },
-      { label: "Pleasure Collection", href: "/collections/pleasure-collection" },
-      { label: "DOX-Compatible", href: "/collections/dox-compatible-products" },
-      { label: "Discreet Storage", href: "/collections/discreet-storage" },
-      { label: "Portable Storage", href: "/collections/portable-storage" },
-      { label: "Bedroom Storage", href: "/collections/bedroom-storage" },
-      { label: "For Couples", href: "/collections/products-for-couples" },
-    ],
-  },
-  {
-    kind: "group",
-    label: "Products",
-    links: [
-      { label: "Vellvii DOX", href: "/products/vellvii-dox" },
+      { label: "Available Now", href: "/shop?filter=available" },
       { label: "Vellvii Lux", href: "/products/vellvii-lux" },
-      { label: "Vellvii G-Vibe", href: "/products/vellvii-g-vibe" },
-      { label: "Vellvii Evolve", href: "/products/vellvii-evolve" },
-      { label: "Vellvii Pulse", href: "/products/vellvii-pulse" },
+      { label: "Storage Solutions", href: "/collections/storage-solutions" },
+      { label: "DOX-Compatible", href: "/collections/dox-compatible-products" },
+      { label: "Coming Soon", href: "/shop?filter=coming-soon" },
     ],
   },
-  { kind: "link", label: "Guides", href: "/guides" },
-  { kind: "link", label: "Warranty", href: "/warranty" },
-  { kind: "link", label: "Contact", href: "/contact" },
-  { kind: "link", label: "Socials", href: "/socials" },
   {
     kind: "group",
-    label: "More",
+    label: "Guides",
+    href: "/guides",
     links: [
-      { label: "Register Warranty", href: "/warranty/register" },
-      { label: "Privacy Policy", href: "/privacy-policy" },
-      { label: "Terms of Service", href: "/terms-of-service" },
+      { label: "Care Guide", href: "/guides/how-to-care-for-your-vellvii-products" },
+      { label: "Warranty", href: "/warranty" },
+      { label: "Discreet Shipping", href: "/guides/discreet-storage-for-intimate-wellness-products" },
+      { label: "Product Compatibility", href: "/guides/how-the-vellvii-dox-docking-system-works" },
+      { label: "FAQs", href: "/guides" },
     ],
   },
+  {
+    kind: "group",
+    label: "About",
+    links: [
+      { label: "Our Story", href: "/socials" },
+      { label: "Contact", href: "/contact" },
+    ],
+  },
+  {
+    kind: "group",
+    label: "Support",
+    links: [
+      { label: "Cart", href: "/cart" },
+      { label: "Warranty", href: "/warranty" },
+      { label: "Register Warranty", href: "/warranty/register" },
+      { label: "Discreet Shipping", href: "/guides/discreet-storage-for-intimate-wellness-products" },
+      { label: "Care Guide", href: "/guides/how-to-care-for-your-vellvii-products" },
+      { label: "FAQs", href: "/guides" },
+      { label: "Contact", href: "/contact" },
+    ],
+  },
+  { kind: "link", label: "Socials", href: "/socials" },
 ];
 
 // ---------- Trigger button ----------
@@ -280,23 +290,39 @@ export const LuxuryNavDrawer = () => {
                     }
 
                     const isOpen = !!q || !!expanded[item.label];
+                    const parentClass =
+                      "flex-1 text-left py-3 font-baskerville italic text-sm uppercase tracking-[0.18em] text-light-primary hover:text-primary transition-colors";
                     return (
                       <li key={item.label} className="border-b border-white/5 last:border-b-0">
-                        <button
-                          type="button"
-                          onClick={() => toggle(item.label)}
-                          aria-expanded={isOpen}
-                          className="w-full flex items-center justify-between py-3 font-baskerville italic text-sm uppercase tracking-[0.18em] text-light-primary hover:text-primary transition-colors"
-                        >
-                          <span>{item.label}</span>
-                          <motion.span
-                            animate={{ rotate: isOpen ? 180 : 0 }}
-                            transition={{ duration: 0.2 }}
-                            className="text-primary/70"
+                        <div className="flex items-center gap-1">
+                          {item.href ? (
+                            <Link to={item.href} onClick={close} className={parentClass}>
+                              {item.label}
+                            </Link>
+                          ) : (
+                            <button
+                              type="button"
+                              onClick={() => toggle(item.label)}
+                              className={parentClass}
+                            >
+                              {item.label}
+                            </button>
+                          )}
+                          <button
+                            type="button"
+                            onClick={() => toggle(item.label)}
+                            aria-expanded={isOpen}
+                            aria-label={`${isOpen ? "Collapse" : "Expand"} ${item.label}`}
+                            className="h-9 w-9 inline-flex items-center justify-center rounded-md text-primary/70 hover:text-primary hover:bg-white/5 transition-colors"
                           >
-                            <ChevronDown className="h-4 w-4" strokeWidth={1.5} />
-                          </motion.span>
-                        </button>
+                            <motion.span
+                              animate={{ rotate: isOpen ? 180 : 0 }}
+                              transition={{ duration: 0.2 }}
+                            >
+                              <ChevronDown className="h-4 w-4" strokeWidth={1.5} />
+                            </motion.span>
+                          </button>
+                        </div>
                         <AnimatePresence initial={false}>
                           {isOpen && (
                             <motion.div

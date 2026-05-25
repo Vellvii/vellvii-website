@@ -38,6 +38,7 @@ import {
   LuxShippingClarity,
 } from "@/components/lux/LuxPreOrderPanel";
 import { ScrollHeader } from "@/components/ScrollHeader";
+import { Breadcrumbs } from "@/components/navigation/Breadcrumbs";
 import { trackViewItem, trackAddToCart } from "@/lib/analytics";
 import { pixelViewContent, pixelAddToCart } from "@/lib/metaPixel";
 
@@ -370,9 +371,9 @@ const ProductDetail = () => {
         {/* Scroll-aware Navigation Header */}
         <ScrollHeader />
 
-        {/* Back Navigation */}
+        {/* Back Navigation + Breadcrumbs */}
         <div className="pt-20 sm:pt-24 px-3 sm:px-4 lg:px-8">
-          <div className="max-w-7xl mx-auto">
+          <div className="max-w-7xl mx-auto flex flex-wrap items-center gap-x-4 gap-y-2">
             <Link
               to="/shop"
               className="inline-flex items-center text-light-secondary hover:text-primary transition-colors font-montserrat text-xs sm:text-sm"
@@ -380,6 +381,14 @@ const ProductDetail = () => {
               <ArrowLeft className="w-3 h-3 sm:w-4 sm:h-4 mr-1 sm:mr-2" />
               Back to Collection
             </Link>
+            <Breadcrumbs
+              items={[
+                { name: "Home", url: "/" },
+                { name: "Shop", url: "/shop" },
+                { name: product.node.title },
+              ]}
+              className="hidden sm:block"
+            />
           </div>
         </div>
 

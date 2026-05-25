@@ -11,6 +11,7 @@ import { useCartStore } from "@/stores/cartStore";
 import { Skeleton } from "@/components/ui/skeleton";
 import { toast } from "sonner";
 import { useState, useMemo } from "react";
+import { Breadcrumbs } from "@/components/navigation/Breadcrumbs";
 import { DOCKING_INFO, DOX_COMPATIBLE_HANDLES, type FaqItem } from "@/lib/pdpContent";
 import type { ShopifyProduct } from "@/lib/shopify";
 
@@ -165,6 +166,14 @@ const CollectionDoxCompatible = () => {
         {/* Hero */}
         <section className="pt-20 sm:pt-24 pb-8 sm:pb-12 px-4 sm:px-6">
           <div className="max-w-4xl mx-auto text-center">
+            <Breadcrumbs
+              items={[
+                { name: "Home", url: "/" },
+                { name: "Shop", url: "/shop" },
+                { name: "DOX-Compatible" },
+              ]}
+              className="mb-4 justify-center inline-flex"
+            />
             <p className="text-primary font-montserrat text-[10px] sm:text-xs uppercase tracking-[0.3em] mb-2">
               The Vellvii Ecosystem
             </p>
