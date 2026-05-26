@@ -1,5 +1,4 @@
-import { Link } from "react-router-dom";
-import { ArrowRight } from "lucide-react";
+import { CrossLinkCard } from "@/components/products/CrossLinkCard";
 
 interface RelatedStorageNoteProps {
   copy: string;
@@ -7,23 +6,14 @@ interface RelatedStorageNoteProps {
   label: string;
 }
 
+/**
+ * Backwards-compatible wrapper. Existing call sites pass copy/href/label;
+ * we derive the target product handle from the href and delegate to the
+ * inventory-aware CrossLinkCard so cross-links are never dead-ends.
+ */
 export const RelatedStorageNote = ({ copy, href, label }: RelatedStorageNoteProps) => {
-  return (
-    <section className="py-10 sm:py-12 px-3 sm:px-4 lg:px-8 border-t border-white/10">
-      <div className="max-w-3xl mx-auto text-center">
-        <p className="font-baskerville italic text-base sm:text-lg text-light-secondary mb-3">
-          {copy}
-        </p>
-        <Link
-          to={href}
-          className="inline-flex items-center gap-2 font-montserrat text-sm text-primary hover:text-primary/80 transition-colors group"
-        >
-          {label}
-          <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
-        </Link>
-      </div>
-    </section>
-  );
+  const handle = href.replace(/^\/products\//, "").split(/[/?#]/)[0];
+  return <CrossLinkCard handle={handle} copy={copy} label={label} />;
 };
 
 export default RelatedStorageNote;
