@@ -12,6 +12,7 @@ import { useCartStore } from "@/stores/cartStore";
 import { toast } from "sonner";
 import { StatusPill, getProductStatus } from "@/components/products/StatusPill";
 import { QuickViewDialog } from "@/components/products/QuickViewDialog";
+import { expandQuery } from "@/lib/searchSynonyms";
 
 // Simple fuzzy match - checks if query letters appear in order within the target
 const fuzzyMatch = (query: string, target: string): { match: boolean; score: number } => {
