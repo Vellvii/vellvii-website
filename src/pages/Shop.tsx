@@ -12,6 +12,7 @@ import { useCartStore } from "@/stores/cartStore";
 import { toast } from "sonner";
 import { StatusPill, getProductStatus } from "@/components/products/StatusPill";
 import { QuickViewDialog } from "@/components/products/QuickViewDialog";
+import { expandQuery } from "@/lib/searchSynonyms";
 
 // Simple fuzzy match - checks if query letters appear in order within the target
 const fuzzyMatch = (query: string, target: string): { match: boolean; score: number } => {
@@ -86,7 +87,7 @@ const ProductCard = ({ product }: { product: ShopifyProduct }) => {
 
   return (
     <>
-      <article className="group relative">
+      <article className={cn("group relative", !isAvailable && "opacity-60 hover:opacity-100 transition-opacity")}>
         <div className="card-dark rounded-xl sm:rounded-2xl overflow-hidden relative ring-1 ring-primary/0 group-hover:ring-primary/30 transition-all duration-500">
           <div className="product-image-container aspect-[3/4] sm:aspect-[4/5] relative">
             {image ? (
@@ -128,7 +129,7 @@ const ProductCard = ({ product }: { product: ShopifyProduct }) => {
               </p>
               {!isAvailable ? (
                 <span className="font-montserrat text-[10px] sm:text-xs text-light-muted uppercase tracking-[0.2em]">
-                  —
+                  Sold out
                 </span>
               ) : hasOptions ? (
                 <span className="font-montserrat text-xs text-light-secondary group-hover:text-primary transition-colors">
@@ -221,32 +222,38 @@ const SearchBar = ({
         )}
       </div>
       
-      {/* Suggestions dropdown */}
       {showSuggestions && suggestions.length > 0 && (
         <div className="absolute top-full left-0 right-0 mt-2 bg-card/95 backdrop-blur-xl border border-white/10 rounded-xl overflow-hidden shadow-2xl z-50">
-          {suggestions.slice(0, 5).map((product) => (
-            <button
-              key={product.node.id}
-              onMouseDown={() => onSuggestionClick(product)}
-              className="w-full flex items-center gap-3 p-3 hover:bg-white/5 transition-colors text-left"
-            >
-              {product.node.images.edges[0]?.node && (
-                <img
-                  src={product.node.images.edges[0].node.url}
-                  alt=""
-                  className="w-10 h-10 rounded-lg object-cover"
+          {suggestions.slice(0, 5).map((product) => {
+            const available = product.node.variants.edges.some((v) => v.node.availableForSale);
+            return (
+              <button
+                key={product.node.id}
+                onMouseDown={() => onSuggestionClick(product)}
+                className="w-full flex items-center gap-3 p-3 hover:bg-white/5 transition-colors text-left"
+              >
+                {product.node.images.edges[0]?.node && (
+                  <img
+                    src={product.node.images.edges[0].node.url}
+                    alt=""
+                    className="w-10 h-10 rounded-lg object-cover"
+                  />
+                )}
+                <div className="flex-1 min-w-0">
+                  <p className="text-light-primary font-montserrat text-sm truncate">
+                    {product.node.title}
+                  </p>
+                  <p className="text-primary text-xs font-medium">
+                    ${parseFloat(product.node.priceRange.minVariantPrice.amount).toFixed(0)}
+                  </p>
+                </div>
+                <StatusPill
+                  status={getProductStatus(product.node.handle, available)}
+                  className="flex-shrink-0"
                 />
-              )}
-              <div className="flex-1 min-w-0">
-                <p className="text-light-primary font-montserrat text-sm truncate">
-                  {product.node.title}
-                </p>
-                <p className="text-primary text-xs font-medium">
-                  ${parseFloat(product.node.priceRange.minVariantPrice.amount).toFixed(0)}
-                </p>
-              </div>
-            </button>
-          ))}
+              </button>
+            );
+          })}
         </div>
       )}
     </div>
@@ -306,26 +313,25 @@ const CollectionFilterBar = ({
   );
 };
 
-type SortOption = "featured" | "price-asc" | "price-desc" | "title-asc";
+type SortOption = "featured" | "price-asc" | "price-desc" | "title-asc" | "availability";
 
 const Shop = () => {
   const [searchParams, setSearchParams] = useSearchParams();
-  const initialInStock = searchParams.get("filter") === "in-stock";
+  // Default to in-stock-only unless user explicitly opted in to seeing everything via ?show=all
+  const showAll = searchParams.get("show") === "all";
+  const initialInStock = !showAll;
   const [selectedCollection, setSelectedCollection] = useState<string | null>(null);
   const [searchQuery, setSearchQuery] = useState("");
   const [showSuggestions, setShowSuggestions] = useState(false);
-  const [filtersOpen, setFiltersOpen] = useState(initialInStock);
-  const [sortBy, setSortBy] = useState<SortOption>("featured");
+  const [filtersOpen, setFiltersOpen] = useState(false);
+  const [sortBy, setSortBy] = useState<SortOption>("availability");
   const [priceMin, setPriceMin] = useState("");
   const [priceMax, setPriceMax] = useState("");
   const [inStockOnly, setInStockOnly] = useState(initialInStock);
 
-  // Keep state in sync if user navigates with browser back/forward between
-  // /shop and /shop?filter=in-stock.
+  // Keep in-stock toggle in sync with ?show URL param (back/forward nav).
   useEffect(() => {
-    const next = searchParams.get("filter") === "in-stock";
-    setInStockOnly(next);
-    if (next) setFiltersOpen(true);
+    setInStockOnly(searchParams.get("show") !== "all");
   }, [searchParams]);
 
   const { data: allProducts } = useShopifyProducts(50);
@@ -335,15 +341,24 @@ const Shop = () => {
     20
   );
 
-  // Filter products by search query with fuzzy matching
+  // Multi-token fuzzy match with synonym expansion.
+  const synonymMatch = (raw: string, title: string) => {
+    const tokens = expandQuery(raw);
+    if (tokens.length === 0) return { match: false, score: 0 };
+    let best = { match: false, score: 0 };
+    for (const t of tokens) {
+      const r = fuzzyMatch(t, title);
+      if (r.match && r.score > best.score) best = r;
+    }
+    return best;
+  };
+
+  // Filter products by search query with fuzzy matching + synonyms
   const filteredProducts = useMemo(() => {
     if (!products || !searchQuery.trim()) return products;
 
     return products
-      .map((product) => ({
-        product,
-        ...fuzzyMatch(searchQuery, product.node.title),
-      }))
+      .map((product) => ({ product, ...synonymMatch(searchQuery, product.node.title) }))
       .filter((item) => item.match)
       .sort((a, b) => b.score - a.score)
       .map((item) => item.product);
@@ -354,12 +369,15 @@ const Shop = () => {
     if (!allProducts || !searchQuery.trim() || searchQuery.length < 2) return [];
 
     return allProducts
-      .map((product) => ({
-        product,
-        ...fuzzyMatch(searchQuery, product.node.title),
-      }))
+      .map((product) => ({ product, ...synonymMatch(searchQuery, product.node.title) }))
       .filter((item) => item.match)
-      .sort((a, b) => b.score - a.score)
+      // In-stock first within suggestions
+      .sort((a, b) => {
+        const aAvail = a.product.node.variants.edges.some((v) => v.node.availableForSale) ? 1 : 0;
+        const bAvail = b.product.node.variants.edges.some((v) => v.node.availableForSale) ? 1 : 0;
+        if (aAvail !== bAvail) return bAvail - aAvail;
+        return b.score - a.score;
+      })
       .map((item) => item.product);
   }, [allProducts, searchQuery]);
 
@@ -387,8 +405,15 @@ const Shop = () => {
       return true;
     });
 
+    // Always sort sold-out items to the end (even under non-availability sorts)
+    const availabilityRank = (p: ShopifyProduct) =>
+      p.node.variants.edges.some((v) => v.node.availableForSale) ? 0 : 1;
+
     if (sortBy !== "featured") {
       list = [...list].sort((a, b) => {
+        const availDiff = availabilityRank(a) - availabilityRank(b);
+        if (sortBy === "availability") return availDiff;
+        if (availDiff !== 0) return availDiff;
         const ap = parseFloat(a.node.priceRange.minVariantPrice.amount);
         const bp = parseFloat(b.node.priceRange.minVariantPrice.amount);
         if (sortBy === "price-asc") return ap - bp;
@@ -400,19 +425,36 @@ const Shop = () => {
         }
         return 0;
       });
+    } else {
+      list = [...list].sort((a, b) => availabilityRank(a) - availabilityRank(b));
     }
     return list;
   }, [baseProducts, priceMin, priceMax, inStockOnly, sortBy]);
 
+  // Counts for clarity (in-stock vs sold-out within the current filter scope)
+  const stockCounts = useMemo(() => {
+    if (!displayProducts) return { inStock: 0, soldOut: 0 };
+    let inS = 0;
+    let so = 0;
+    for (const p of displayProducts) {
+      if (p.node.variants.edges.some((v) => v.node.availableForSale)) inS++;
+      else so++;
+    }
+    return { inStock: inS, soldOut: so };
+  }, [displayProducts]);
+
+  // inStockOnly is the default; only flag it as an "active" filter when overridden
   const activeFilterCount =
-    (priceMin ? 1 : 0) + (priceMax ? 1 : 0) + (inStockOnly ? 1 : 0) + (sortBy !== "featured" ? 1 : 0);
+    (priceMin ? 1 : 0) + (priceMax ? 1 : 0) + (!inStockOnly ? 1 : 0) + (sortBy !== "availability" ? 1 : 0);
 
   const clearFilters = () => {
     setPriceMin("");
     setPriceMax("");
-    setSortBy("featured");
+    setSortBy("availability");
+    setInStockOnly(true);
     setSearchParams((prev) => {
       const next = new URLSearchParams(prev);
+      next.delete("show");
       next.delete("filter");
       return next;
     }, { replace: true });
@@ -464,8 +506,8 @@ const Shop = () => {
             {[
               {
                 label: "Available Now",
-                tag: "Shop In Stock",
-                href: "/shop?filter=in-stock",
+                tag: "Ships Today",
+                href: "/available-now",
               },
               {
                 label: "Vellvii Lux",
@@ -534,8 +576,13 @@ const Shop = () => {
               />
             </button>
             {displayProducts && (
-              <span className="font-montserrat text-[0.7rem] sm:text-xs text-light-secondary/60">
+              <span className="font-montserrat text-[0.7rem] sm:text-xs text-light-secondary/60 text-right">
                 {displayProducts.length} {displayProducts.length === 1 ? "product" : "products"}
+                {!inStockOnly && stockCounts.soldOut > 0 && (
+                  <span className="block text-[0.65rem] sm:text-[0.7rem] text-light-secondary/45">
+                    {stockCounts.inStock} in stock - {stockCounts.soldOut} sold out
+                  </span>
+                )}
               </span>
             )}
           </div>
@@ -550,6 +597,7 @@ const Shop = () => {
                   </p>
                   <div className="flex flex-col gap-1.5">
                     {[
+                      { value: "availability", label: "Available first" },
                       { value: "featured", label: "Featured" },
                       { value: "price-asc", label: "Price - low to high" },
                       { value: "price-desc", label: "Price - high to low" },
@@ -624,13 +672,15 @@ const Shop = () => {
                     role="switch"
                     aria-checked={inStockOnly}
                     onClick={() => {
+                      // Toggle inverts: when in-stock-only is OFF, URL gets ?show=all
                       setSearchParams((prev) => {
                         const next = new URLSearchParams(prev);
-                        if (next.get("filter") === "in-stock") {
-                          next.delete("filter");
+                        if (inStockOnly) {
+                          next.set("show", "all");
                         } else {
-                          next.set("filter", "in-stock");
+                          next.delete("show");
                         }
+                        next.delete("filter");
                         return next;
                       }, { replace: true });
                     }}
@@ -693,22 +743,44 @@ const Shop = () => {
               ))}
             </div>
           ) : (
-            <div className="text-center py-12 sm:py-20 px-4">
-              <p className="text-light-secondary text-base sm:text-lg font-montserrat">
-                {searchQuery 
-                  ? `No products found for "${searchQuery}"`
-                  : selectedCollection 
+            <div className="text-center py-12 sm:py-20 px-4 max-w-2xl mx-auto">
+              <p className="text-light-secondary text-base sm:text-lg font-montserrat mb-2">
+                {searchQuery
+                  ? `No matches for "${searchQuery}".`
+                  : selectedCollection
                     ? "No products found in this collection."
                     : "No products found."}
               </p>
-              {searchQuery && (
-                <button
-                  onClick={() => setSearchQuery("")}
-                  className="mt-4 text-primary hover:underline font-montserrat text-sm"
-                >
-                  Clear search
-                </button>
-              )}
+              <p className="font-baskerville italic text-sm text-light-secondary/70 mb-6">
+                Popular in-stock pieces:
+              </p>
+              <div className="flex flex-wrap justify-center gap-2 sm:gap-3 mb-6">
+                {(allProducts ?? [])
+                  .filter((p) => p.node.variants.edges.some((v) => v.node.availableForSale))
+                  .slice(0, 3)
+                  .map((p) => (
+                    <Link
+                      key={p.node.id}
+                      to={`/products/${p.node.handle}`}
+                      className="font-montserrat text-xs sm:text-sm text-light-primary px-4 py-2 rounded-full border border-white/15 hover:border-primary/40 hover:bg-primary/5 transition-all"
+                    >
+                      {p.node.title}
+                    </Link>
+                  ))}
+              </div>
+              <div className="flex flex-wrap justify-center gap-3">
+                {searchQuery && (
+                  <button
+                    onClick={() => setSearchQuery("")}
+                    className="text-primary hover:underline font-montserrat text-sm"
+                  >
+                    Clear search
+                  </button>
+                )}
+                <Link to="/available-now" className="text-primary hover:underline font-montserrat text-sm">
+                  See everything available now →
+                </Link>
+              </div>
             </div>
           )}
         </div>

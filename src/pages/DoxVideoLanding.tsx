@@ -10,6 +10,7 @@ import { Milestones } from "@/components/home/Milestones";
 import { HomeFAQ, homeFAQs } from "@/components/home/HomeFAQ";
 import { FounderNote } from "@/components/home/FounderNote";
 import { StatusPill, getProductStatus } from "@/components/products/StatusPill";
+import { isProductAvailableNow } from "@/lib/productAvailability";
 import { useShopifyProducts } from "@/hooks/useShopifyProducts";
 import { Skeleton } from "@/components/ui/skeleton";
 import {
@@ -560,6 +561,9 @@ const DoxVideoLanding = () => {
         {/* Founder Note */}
         <FounderNote />
 
+        {/* Available Now strip */}
+        <AvailableNowStrip />
+
         {/* Milestones strip */}
         <Milestones />
 
@@ -659,6 +663,66 @@ const DoxVideoLanding = () => {
         </Dialog>
       </div>
     </>
+  );
+};
+
+const AvailableNowStrip = () => {
+  const { data: products } = useShopifyProducts(50);
+  const inStock = (products ?? []).filter(isProductAvailableNow).slice(0, 4);
+  if (inStock.length === 0) return null;
+  return (
+    <section className="px-4 mb-12 sm:mb-16 border-t border-white/5 pt-12 sm:pt-16">
+      <div className="max-w-5xl mx-auto">
+        <div className="flex items-end justify-between mb-6 gap-3 flex-wrap">
+          <div>
+            <p className="font-baskerville italic text-[0.78rem] sm:text-sm tracking-[0.32em] uppercase text-primary/70 mb-1">
+              Available Now
+            </p>
+            <h2 className="text-2xl sm:text-3xl font-baskerville font-bold text-light-primary">
+              Ships from our atelier
+            </h2>
+          </div>
+          <Link
+            to="/available-now"
+            className="font-montserrat text-xs sm:text-sm text-primary hover:text-primary/80 transition-colors"
+          >
+            See all →
+          </Link>
+        </div>
+        <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 sm:gap-4">
+          {inStock.map((p) => {
+            const img = p.node.images.edges[0]?.node;
+            return (
+              <Link
+                key={p.node.id}
+                to={`/products/${p.node.handle}`}
+                className="group relative rounded-xl overflow-hidden border border-white/10 bg-card/50 hover:border-primary/40 transition-all"
+              >
+                <div className="aspect-square bg-black/30">
+                  {img && (
+                    <img
+                      src={img.url}
+                      alt={img.altText || p.node.title}
+                      loading="lazy"
+                      className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                    />
+                  )}
+                </div>
+                <StatusPill status={getProductStatus(p.node.handle, true)} className="absolute top-2 left-2" />
+                <div className="p-3">
+                  <p className="font-baskerville text-sm text-light-primary group-hover:text-primary transition-colors line-clamp-1">
+                    {p.node.title}
+                  </p>
+                  <p className="font-montserrat text-xs text-primary font-medium">
+                    ${parseFloat(p.node.priceRange.minVariantPrice.amount).toFixed(0)}
+                  </p>
+                </div>
+              </Link>
+            );
+          })}
+        </div>
+      </div>
+    </section>
   );
 };
 

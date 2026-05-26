@@ -37,7 +37,7 @@ const NAV_ITEMS: NavItem[] = [
     label: "Shop",
     href: "/shop",
     links: [
-      { label: "Available Now", href: "/shop?filter=available" },
+      { label: "Available Now", href: "/available-now" },
       { label: "Vellvii Lux", href: "/products/vellvii-lux" },
       { label: "Storage Solutions", href: "/collections/storage-solutions" },
       { label: "DOX-Compatible", href: "/collections/dox-compatible-products" },

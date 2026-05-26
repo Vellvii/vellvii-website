@@ -33,6 +33,7 @@ import TermsOfService from "./pages/TermsOfService";
 import Warranty from "./pages/Warranty";
 import WarrantyRegister from "./pages/WarrantyRegister";
 import Shop from "./pages/Shop";
+import AvailableNow from "./pages/AvailableNow";
 import CartPage from "./pages/Cart";
 import ProductDetail from "./pages/ProductDetail";
 import CollectionDoxCompatible from "./pages/CollectionDoxCompatible";
@@ -85,6 +86,7 @@ const InnerApp = () => {
             <Route path="/showcase" element={<DoxLanding />} />
             <Route path="/landing" element={<AgeGateLanding />} />
             <Route path="/shop" element={<Shop />} />
+            <Route path="/available-now" element={<AvailableNow />} />
             <Route path="/cart" element={<CartPage />} />
             <Route path="/collections/dox-compatible-products" element={<CollectionDoxCompatible />} />
             <Route path="/collections/pleasure-collection" element={<CollectionPleasureCollection />} />

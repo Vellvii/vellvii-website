@@ -4,6 +4,8 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { ShopifyProduct } from "@/lib/shopify";
 import { ChevronRight } from "lucide-react";
 import { CANONICAL_HANDLES } from "@/lib/pdpContent";
+import { StatusPill, getProductStatus } from "@/components/products/StatusPill";
+import { cn } from "@/lib/utils";
 
 interface RelatedProductsProps {
   currentHandle: string;
@@ -13,28 +15,39 @@ interface RelatedProductsProps {
 const ProductCard = ({ product }: { product: ShopifyProduct }) => {
   const image = product.node.images.edges[0]?.node;
   const price = product.node.priceRange.minVariantPrice;
+  const isAvailable = product.node.variants.edges.some((v) => v.node.availableForSale);
 
   return (
-    <Link to={`/products/${product.node.handle}`} className="group block flex-shrink-0 w-[150px] sm:w-[200px] lg:w-[240px]">
+    <Link
+      to={`/products/${product.node.handle}`}
+      className={cn(
+        "group block flex-shrink-0 w-[150px] sm:w-[200px] lg:w-[240px] transition-opacity",
+        !isAvailable && "opacity-65 hover:opacity-100"
+      )}
+    >
       <div className="card-dark rounded-xl overflow-hidden h-full">
-        <div className="product-image-container aspect-square">
+        <div className="product-image-container aspect-square relative">
           {image ? (
             <img
               src={image.url}
               alt={image.altText || product.node.title}
-              className="w-full h-full object-cover"
+              className={cn("w-full h-full object-cover", !isAvailable && "grayscale-[35%]")}
             />
           ) : (
             <div className="w-full h-full flex items-center justify-center text-light-muted text-xs">
               No Image
             </div>
           )}
+          <StatusPill
+            status={getProductStatus(product.node.handle, isAvailable)}
+            className="absolute top-2 left-2"
+          />
         </div>
         <div className="p-3 sm:p-4">
           <h4 className="text-light-primary font-baskerville font-semibold text-sm sm:text-base mb-1 group-hover:text-primary transition-colors line-clamp-2">
             {product.node.title}
           </h4>
-          <p className="text-primary font-montserrat font-bold text-base sm:text-lg">
+          <p className={cn("font-montserrat font-bold text-base sm:text-lg", isAvailable ? "text-primary" : "text-light-muted")}>
             ${parseFloat(price.amount).toFixed(0)}
           </p>
         </div>
@@ -62,6 +75,12 @@ export const RelatedProducts = ({ currentHandle, maxProducts = 8 }: RelatedProdu
   const relatedProducts = allProducts
     ?.filter((p) => CANONICAL_HANDLES.includes(p.node.handle as any))
     .filter((p) => p.node.handle !== currentHandle)
+    // In-stock first so cross-links don't dead-end
+    .sort((a, b) => {
+      const aAvail = a.node.variants.edges.some((v) => v.node.availableForSale) ? 0 : 1;
+      const bAvail = b.node.variants.edges.some((v) => v.node.availableForSale) ? 0 : 1;
+      return aAvail - bAvail;
+    })
     .slice(0, maxProducts);
 
   if (isLoading) {
