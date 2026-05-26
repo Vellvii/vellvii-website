@@ -307,26 +307,25 @@ const CollectionFilterBar = ({
   );
 };
 
-type SortOption = "featured" | "price-asc" | "price-desc" | "title-asc";
+type SortOption = "featured" | "price-asc" | "price-desc" | "title-asc" | "availability";
 
 const Shop = () => {
   const [searchParams, setSearchParams] = useSearchParams();
-  const initialInStock = searchParams.get("filter") === "in-stock";
+  // Default to in-stock-only unless user explicitly opted in to seeing everything via ?show=all
+  const showAll = searchParams.get("show") === "all";
+  const initialInStock = !showAll;
   const [selectedCollection, setSelectedCollection] = useState<string | null>(null);
   const [searchQuery, setSearchQuery] = useState("");
   const [showSuggestions, setShowSuggestions] = useState(false);
-  const [filtersOpen, setFiltersOpen] = useState(initialInStock);
-  const [sortBy, setSortBy] = useState<SortOption>("featured");
+  const [filtersOpen, setFiltersOpen] = useState(false);
+  const [sortBy, setSortBy] = useState<SortOption>("availability");
   const [priceMin, setPriceMin] = useState("");
   const [priceMax, setPriceMax] = useState("");
   const [inStockOnly, setInStockOnly] = useState(initialInStock);
 
-  // Keep state in sync if user navigates with browser back/forward between
-  // /shop and /shop?filter=in-stock.
+  // Keep in-stock toggle in sync with ?show URL param (back/forward nav).
   useEffect(() => {
-    const next = searchParams.get("filter") === "in-stock";
-    setInStockOnly(next);
-    if (next) setFiltersOpen(true);
+    setInStockOnly(searchParams.get("show") !== "all");
   }, [searchParams]);
 
   const { data: allProducts } = useShopifyProducts(50);
