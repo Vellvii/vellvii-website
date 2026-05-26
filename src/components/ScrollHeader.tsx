@@ -2,7 +2,6 @@ import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import { NavMenuButton } from "@/components/navigation/LuxuryNavDrawer";
-import { ShippingBar } from "@/components/marketing/ShippingBar";
 
 export const ScrollHeader = () => {
   const [isVisible, setIsVisible] = useState(true);
