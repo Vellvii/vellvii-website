@@ -1,86 +1,68 @@
 
-# Socials & Presence hub + Reddit growth plan
+# Unblock Vellvii SEO indexing
 
-A dedicated `/socials` page is a good idea — one canonical link to share (packaging QR, email sigs, influencer briefs), it strengthens brand authority signals for Google/AI crawlers via `sameAs` JSON-LD, and gives r/Vellvii a permanent on-site entry point.
+Two blockers are stopping Google from indexing the site:
 
-## Part 1 — Build a `/socials` page
+1. `/` returns `noindex` (the EntryGate) — so the root URL, which carries the strongest ranking signals, is invisible to Google.
+2. Even though `vellvii.com` is the only host you use, the homepage Google would try to index there is the noindex gate.
 
-Quiet-luxury "link in bio" style page, on-brand (dark, rose gold, Baskerville + Montserrat).
+This plan fixes both without weakening the 18+ confirmation.
 
-### Structure
+## 1. Make `/` the real homepage; age gate becomes a modal overlay
 
-1. **Header** — small Vellvii wordmark, one line of copy: "Follow the Art of 'O' — behind the design, launch updates, and the r/Vellvii community."
+- Move `DoxVideoLanding` back to `/`.
+- Delete the dedicated `/home` route; redirect `/home` → `/` (301) so any external link already pointing to `/home` still works.
+- Build a new `<AgeGateModal />` component mounted once at app root:
+  - On first visit, blocks the page with the same visual treatment as today's EntryGate (Vellvii wordmark, italic slogan, Enter button, Leave site button, 18+ disclaimer).
+  - Stores confirmation in `localStorage` (`vellvii_age_confirmed`, 30-day TTL). Confirmed visitors never see it again until the flag expires.
+  - "Leave site" → `window.history.back()` with `https://www.google.com` fallback (same as today).
+  - Modal is rendered *after* the page content in the DOM and shown via CSS overlay — crawlers (which do not run localStorage logic) still see the full indexable homepage HTML.
+- Remove `noindex` from `/`. The page becomes `index, follow` with canonical `https://vellvii.com/`.
 
-2. **Featured: r/Vellvii** — larger card above the grid for the launch period: short pitch, 2-3 reasons to join ("Behind-the-design previews", "Founder AMAs", "Early-access drops"), primary "Join r/Vellvii" button. No subscriber count.
+Industry precedent: Lelo, Maude, Dame, Hims, and every major wine brand use exactly this modal pattern. It is the accepted standard for age-restricted commerce.
 
-3. **Social channels grid** — one card each, with icon, handle, one-sentence "what it's for", CTA:
-   - **Instagram** — visual journal: product, materials, behind-the-scenes
-   - **TikTok** — short films, design process, launch moments
-   - **YouTube** — long-form: campaign film, founder story, product walk-throughs
-   - **Reddit (r/Vellvii)** — community discussion, AMAs, early-access
-   - **LinkedIn** — company, investor and press updates
-   - **Pinterest** (if active) — mood, interiors, design references
+## 2. Lock canonical host to vellvii.com
 
-4. **Where to find Vellvii** — second grid for external campaign / press / discovery surfaces (no counts, just logos + one-line context + link):
-   - **Kickstarter** — original campaign page (kept live for provenance / press references)
-   - **Prelaunch.com** — official Vellvii prelaunch listing
-   - **GadgetFlow** — Vellvii product page
-   - Room to add more later: Indiegogo InDemand (if used), Product Hunt, Yanko Design, Wallpaper*, Dezeen, any retailer / press page worth surfacing.
-   - Data-driven from a single array so you can add / remove entries without code changes beyond editing one file.
+- Update every internal link from `/home` back to `/`:
+  `ScrollHeader`, `LuxuryNavDrawer`, `PrelaunchFooter`, `NotFound`, `PrivacyPolicy`, `TermsOfService`, `DoxVideoLanding` SEO canonical, EntryGate post-confirm CTA.
+- `public/sitemap.xml`: change `https://vellvii.com/home` → `https://vellvii.com/`.
+- `index.html`: `og:url` → `https://vellvii.com/` (already correct, verify).
+- Confirm in Lovable Project Settings → Domains that `vellvii.com` is set as **Primary** so `vellvii.lovable.app` 301-redirects to it. No code change needed for that — it is a settings toggle.
 
-5. **Newsletter capture** — reuse the working signup block from the landing + product pages (the same component, not the prelaunch one). Render it at the bottom of the page with consistent spacing.
+## 3. Resubmit and accelerate indexing (after deploy)
 
-6. **SEO** — title "Follow Vellvii - Socials & Community", meta description, canonical `https://vellvii.com/socials`, JSON-LD `Organization` block with `sameAs` array listing every URL on the page (the key signal for Google / AI surfaces to associate accounts with the brand).
+- In Google Search Console: resubmit `https://vellvii.com/sitemap.xml`, then "Request indexing" for `/`, `/shop`, `/products/vellvii-dox`, `/products/vellvii-lux`, `/guides/best-sex-toy-storage-box`, `/guides/biometric-lock-box-for-sex-toys`.
+- Same in Bing Webmaster Tools (IndexNow is much faster than Google).
 
-### Wiring
+## 4. Push the page that already ranks
 
-- Route: `/socials` added to the router, linked from both footers and from the main header nav (subtle text link).
-- Add `/socials` to `public/sitemap.xml` and the URL list in `scripts/prerender-seo.ts`.
-- Single shared data source: `src/data/socials.ts` (channels) and `src/data/presence.ts` (external campaign / press surfaces). Both footers and the new page read from these — no duplication.
+`/guides/best-sex-toy-storage-box` is at position 48 for "sex toy box" (1,300/mo). The realistic target is "sex toy storage box" (260/mo, KDI 21 — easy). Once indexing is unblocked:
 
-## Part 2 — Reddit growth playbook for r/Vellvii
+- Update H1, `<title>`, and intro paragraph to lead with the exact phrase "sex toy storage box".
+- Add internal links to this guide from `/` and `/shop`.
+- Fastest path from #48 to page 1 in 30 to 60 days.
 
-Reddit rewards being a member of the community, not a brand broadcasting at it. Quick primer:
+## Files to change
 
-### Set the subreddit up (one-time)
-- Banner + icon in brand style, short description, clear rules, post flair for: Announcements, AMA, Behind the Design, Owner Q&A, Feedback, Press.
-- Pin two posts: (1) "Welcome - what r/Vellvii is" (2) current launch milestone / early-access info.
-- Restrict self-promo from non-team accounts initially, enable wiki for FAQ.
+- `src/App.tsx` — `/` → DoxVideoLanding; `/home` → `<Navigate to="/" replace />`.
+- `src/pages/EntryGate.tsx` — delete.
+- `src/components/AgeGateModal.tsx` — new.
+- `src/App.tsx` or `src/main.tsx` — mount `<AgeGateModal />` once at app root.
+- `src/pages/DoxVideoLanding.tsx` — `SEO canonical="/"`.
+- `src/components/ScrollHeader.tsx`, `LuxuryNavDrawer.tsx`, `PrelaunchFooter.tsx`, `pages/NotFound.tsx`, `pages/PrivacyPolicy.tsx`, `pages/TermsOfService.tsx` — internal `/home` links → `/`.
+- `public/sitemap.xml` — `/home` → `/`.
+- `mem://routing/homepage-and-parked-routes` — update.
 
-### Posting cadence (sustainable: 2-3 posts/week)
-- **Behind the Design** — close-ups of materials, hardware iterations, packaging mock-ups. Reddit loves process.
-- **Founder updates** — short text posts: what shipped this week, what's next. Builds trust.
-- **Polls** — colorways, accessory ideas, naming. Cheap engagement, gives users ownership.
-- **AMAs** — one per launch milestone (Prelaunch, Stimulate Expo, USA launch). Cross-post to r/IAmA once the sub is established.
-- **Press & milestones** — share Vellvii-owned wins (factual, no exaggerated claims).
+## What this plan does NOT do
 
-### Seeding traffic (the hard part)
-- Add r/Vellvii to: footer (done), `/socials` page, packaging QR landing, post-signup confirmation email, post-purchase thank-you.
-- Influencer / affiliate briefs: ask them to mention the subreddit, not just Instagram.
-- Do NOT spam other subreddits with links — Reddit auto-bans new brand domains fast. Participate as `u/Vellvii` genuinely in adjacent communities (r/DesignPorn, r/somethingimade, r/EDC for the DOX case angle, design / luxury subs), with the subreddit listed in the user profile.
-- One "early supporter" perk: discount code or early-access slot for anyone subscribed before launch day. Announce on Instagram / TikTok / Prelaunch.com page.
+- Does not change product copy, branding, legal pages, or backlinks.
+- Does not weaken the 18+ gate — every real visitor still confirms before seeing the content.
+- Does not touch `vellvii.lovable.app` — it stays inactive as a redirect target only.
 
-### What NOT to do
-- No bought upvotes, no alt accounts — Reddit detects and shadowbans.
-- No reposting Instagram captions verbatim — Reddit downvotes on tone alone.
-- No links in every comment — 9:1 value-to-promo ratio.
+## Expected outcome
 
-## Technical details
+- Within 1–2 weeks: Google begins indexing `/`, `/shop`, product pages, and guides.
+- Within 30–60 days: the storage-box guide moves from #48 toward page 1.
+- Authority Score (currently 2/100) will grow only with real backlink outreach — flag separately.
 
-- New file: `src/pages/Socials.tsx` — React, uses existing UI primitives + framer-motion for entry animations consistent with the site.
-- New file: `src/data/socials.ts` — exports `{ id, label, handle, href, blurb, Icon }[]` for owned social channels.
-- New file: `src/data/presence.ts` — exports `{ id, label, href, blurb, logo }[]` for external surfaces (Kickstarter, Prelaunch.com, GadgetFlow, future press).
-- Refactor: `PrelaunchFooter.tsx` and `LuxFooter.tsx` import from `src/data/socials.ts` instead of duplicating arrays + inline `RedditIcon`.
-- Move duplicated inline social SVGs (incl. `RedditIcon`) into `src/components/icons/social/`.
-- Newsletter block: identify the signup component currently rendered on the landing and product pages (the working one) and reuse it on `/socials`. Do not use the prelaunch signup variant.
-- Router: add `<Route path="/socials" element={<Socials />} />` in the main router.
-- SEO: page-level `<SEO>` with title / description / canonical + JSON-LD `Organization` including `sameAs` array of every URL on the page.
-- Sitemap + prerender: add `/socials` to `public/sitemap.xml` and `scripts/prerender-seo.ts`.
-- Nav: small "Socials" link in the header secondary nav / menu drawer.
-- No member / subscriber / follower counts anywhere on this page.
-- No backend, no Shopify, no schema changes.
-
-## Out of scope
-
-- Running the Reddit account, writing AMA copy, scheduling posts — operational, not code. Happy to draft post templates separately.
-- A Discord / forum / community platform. Reddit is the chosen community surface.
+Ready to build on approval.
