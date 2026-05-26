@@ -9,6 +9,7 @@ import { CheckoutTransition } from "@/components/checkout/CheckoutTransition";
 import { SEO } from "@/components/SEO";
 import { ScrollHeader } from "@/components/ScrollHeader";
 import { Breadcrumbs } from "@/components/navigation/Breadcrumbs";
+import { CartTrustSignals } from "@/components/trust/CartTrustSignals";
 
 const CartPage = () => {
   const {
@@ -235,16 +236,7 @@ const CartPage = () => {
                   </p>
                 </div>
 
-                <div className="card-dark rounded-xl p-5 space-y-3">
-                  <div className="flex items-start gap-3 text-light-secondary font-montserrat text-xs">
-                    <Package className="w-4 h-4 text-primary flex-shrink-0 mt-0.5" />
-                    <span>Discreet, unbranded packaging on every order.</span>
-                  </div>
-                  <div className="flex items-start gap-3 text-light-secondary font-montserrat text-xs">
-                    <ShieldCheck className="w-4 h-4 text-primary flex-shrink-0 mt-0.5" />
-                    <span>Secure payments handled by Shopify.</span>
-                  </div>
-                </div>
+                <CartTrustSignals />
               </aside>
             </div>
           )}

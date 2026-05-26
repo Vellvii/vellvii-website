@@ -8,6 +8,7 @@ import { useCartStore } from "@/stores/cartStore";
 import { trackBeginCheckout, appendCheckoutAttribution } from "@/lib/analytics";
 import { pixelInitiateCheckout } from "@/lib/metaPixel";
 import { CheckoutTransition } from "@/components/checkout/CheckoutTransition";
+import { CartTrustSignals } from "@/components/trust/CartTrustSignals";
 
 
 export const CartDrawer = () => {
@@ -220,6 +221,8 @@ export const CartDrawer = () => {
                       </div>
                     </div>
                   </div>
+
+                  <CartTrustSignals />
 
                   <div className="space-y-2 sm:space-y-3">
                     <Button 
