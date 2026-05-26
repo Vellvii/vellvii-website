@@ -666,13 +666,15 @@ const Shop = () => {
                     role="switch"
                     aria-checked={inStockOnly}
                     onClick={() => {
+                      // Toggle inverts: when in-stock-only is OFF, URL gets ?show=all
                       setSearchParams((prev) => {
                         const next = new URLSearchParams(prev);
-                        if (next.get("filter") === "in-stock") {
-                          next.delete("filter");
+                        if (inStockOnly) {
+                          next.set("show", "all");
                         } else {
-                          next.set("filter", "in-stock");
+                          next.delete("show");
                         }
+                        next.delete("filter");
                         return next;
                       }, { replace: true });
                     }}
