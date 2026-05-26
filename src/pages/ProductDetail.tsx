@@ -264,8 +264,17 @@ const ProductDetail = () => {
       });
     }
 
-    toast.success(`${product.node.title} added to cart`, {
+    openDrawer();
+    toast.success(`${product.node.title} added to your collection`, {
       position: "top-center",
+      action: {
+        label: "View cart",
+        onClick: () => navigate("/cart"),
+      },
+      cancel: {
+        label: "Dismiss",
+        onClick: () => {},
+      },
     });
     setJustAdded(true);
   };
