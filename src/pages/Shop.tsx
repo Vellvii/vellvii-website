@@ -317,9 +317,9 @@ type SortOption = "featured" | "price-asc" | "price-desc" | "title-asc" | "avail
 
 const Shop = () => {
   const [searchParams, setSearchParams] = useSearchParams();
-  // Default to in-stock-only unless user explicitly opted in to seeing everything via ?show=all
-  const showAll = searchParams.get("show") === "all";
-  const initialInStock = !showAll;
+  // Show full catalog by default. Sold-out items remain visible but grayed
+  // and pushed to the end of the grid. Users can opt in to in-stock-only.
+  const initialInStock = searchParams.get("stock") === "in";
   const [selectedCollection, setSelectedCollection] = useState<string | null>(null);
   const [searchQuery, setSearchQuery] = useState("");
   const [showSuggestions, setShowSuggestions] = useState(false);
@@ -329,9 +329,9 @@ const Shop = () => {
   const [priceMax, setPriceMax] = useState("");
   const [inStockOnly, setInStockOnly] = useState(initialInStock);
 
-  // Keep in-stock toggle in sync with ?show URL param (back/forward nav).
+  // Keep in-stock toggle in sync with ?stock URL param (back/forward nav).
   useEffect(() => {
-    setInStockOnly(searchParams.get("show") !== "all");
+    setInStockOnly(searchParams.get("stock") === "in");
   }, [searchParams]);
 
   const { data: allProducts } = useShopifyProducts(50);
@@ -443,18 +443,19 @@ const Shop = () => {
     return { inStock: inS, soldOut: so };
   }, [displayProducts]);
 
-  // inStockOnly is the default; only flag it as an "active" filter when overridden
+  // Default is show-all; in-stock-only counts as an active filter when on
   const activeFilterCount =
-    (priceMin ? 1 : 0) + (priceMax ? 1 : 0) + (!inStockOnly ? 1 : 0) + (sortBy !== "availability" ? 1 : 0);
+    (priceMin ? 1 : 0) + (priceMax ? 1 : 0) + (inStockOnly ? 1 : 0) + (sortBy !== "availability" ? 1 : 0);
 
   const clearFilters = () => {
     setPriceMin("");
     setPriceMax("");
     setSortBy("availability");
-    setInStockOnly(true);
+    setInStockOnly(false);
     setSearchParams((prev) => {
       const next = new URLSearchParams(prev);
       next.delete("show");
+      next.delete("stock");
       next.delete("filter");
       return next;
     }, { replace: true });
@@ -672,14 +673,15 @@ const Shop = () => {
                     role="switch"
                     aria-checked={inStockOnly}
                     onClick={() => {
-                      // Toggle inverts: when in-stock-only is OFF, URL gets ?show=all
+                      // Default is show-all. Toggle ON adds ?stock=in.
                       setSearchParams((prev) => {
                         const next = new URLSearchParams(prev);
                         if (inStockOnly) {
-                          next.set("show", "all");
+                          next.delete("stock");
                         } else {
-                          next.delete("show");
+                          next.set("stock", "in");
                         }
+                        next.delete("show");
                         next.delete("filter");
                         return next;
                       }, { replace: true });
