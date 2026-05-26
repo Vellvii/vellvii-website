@@ -61,7 +61,68 @@
     fbq('track', 'PageView');
     </script>
     <!-- End Meta Pixel Code -->
+
+    <!-- Sitewide structured data: Organization + WebSite -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "Organization",
+          "@id": "https://vellvii.com/#organization",
+          "name": "Vellvii",
+          "legalName": "Vellvii",
+          "url": "https://vellvii.com",
+          "logo": {
+            "@type": "ImageObject",
+            "url": "https://vellvii.com/uploads/Vellvii-full-logo-transparent.png",
+            "width": 1200,
+            "height": 630
+          },
+          "image": "https://vellvii.com/uploads/Vellvii-full-logo-transparent.png",
+          "description": "Vellvii is an American premium wellness house designing the world's first biometric storage and docking system for intimate wellness, alongside a curated Pleasure Collection of design-led devices. Quiet luxury, by intent.",
+          "slogan": "The art of \"O\"",
+          "brand": ["Vellvii DOX", "Vellvii Lux", "Vellvii G-Vibe", "Vellvii Evolve", "Vellvii Pulse"],
+          "email": "info@vellvii.com",
+          "contactPoint": [{
+            "@type": "ContactPoint",
+            "email": "info@vellvii.com",
+            "contactType": "customer service",
+            "areaServed": "US",
+            "availableLanguage": ["English"]
+          }],
+          "sameAs": [
+            "https://instagram.com/vellvii.official",
+            "https://tiktok.com/@vellvii.official",
+            "https://www.youtube.com/@vellvii",
+            "https://www.reddit.com/r/Vellvii",
+            "https://x.com/OfficialVellvii",
+            "https://www.facebook.com/profile.php?id=61580639793053",
+            "https://www.linkedin.com/company/vellvii"
+          ]
+        },
+        {
+          "@type": "WebSite",
+          "@id": "https://vellvii.com/#website",
+          "url": "https://vellvii.com",
+          "name": "Vellvii",
+          "description": "Luxury intimate wellness products and biometric storage.",
+          "publisher": { "@id": "https://vellvii.com/#organization" },
+          "inLanguage": "en-US",
+          "potentialAction": {
+            "@type": "SearchAction",
+            "target": {
+              "@type": "EntryPoint",
+              "urlTemplate": "https://vellvii.com/shop?q={search_term_string}"
+            },
+            "query-input": "required name=search_term_string"
+          }
+        }
+      ]
+    }
+    </script>
 </head>
+
 
   <body>
     <!-- Meta Pixel (noscript) -->
