@@ -110,7 +110,9 @@ export const SEO = ({
             availability: `https://schema.org/${productData.availability || 'PreOrder'}`,
             itemCondition: `https://schema.org/${productData.itemCondition || 'NewCondition'}`,
             ...(productData.priceValidUntil && { priceValidUntil: productData.priceValidUntil }),
-            ...(productData.url && { url: productData.url.startsWith('http') ? productData.url : `${SITE_URL}${productData.url}` }),
+            url: productData.url
+              ? (productData.url.startsWith('http') ? productData.url : `${SITE_URL}${productData.url}`)
+              : (canonical ? `${SITE_URL}${canonical}` : SITE_URL),
             seller: { '@type': 'Organization', name: 'Vellvii' },
           },
         }),
@@ -118,6 +120,8 @@ export const SEO = ({
           image: productData.images.map((img) => (img.startsWith('http') ? img : `${SITE_URL}${img}`)),
         }),
         ...(productData.sku && { sku: productData.sku }),
+        ...(productData.gtin && { gtin: productData.gtin }),
+        ...(productData.mpn && { mpn: productData.mpn }),
         ...(productData.aggregateRating && {
           aggregateRating: {
             '@type': 'AggregateRating',
