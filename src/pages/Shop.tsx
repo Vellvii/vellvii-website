@@ -222,32 +222,38 @@ const SearchBar = ({
         )}
       </div>
       
-      {/* Suggestions dropdown */}
       {showSuggestions && suggestions.length > 0 && (
         <div className="absolute top-full left-0 right-0 mt-2 bg-card/95 backdrop-blur-xl border border-white/10 rounded-xl overflow-hidden shadow-2xl z-50">
-          {suggestions.slice(0, 5).map((product) => (
-            <button
-              key={product.node.id}
-              onMouseDown={() => onSuggestionClick(product)}
-              className="w-full flex items-center gap-3 p-3 hover:bg-white/5 transition-colors text-left"
-            >
-              {product.node.images.edges[0]?.node && (
-                <img
-                  src={product.node.images.edges[0].node.url}
-                  alt=""
-                  className="w-10 h-10 rounded-lg object-cover"
+          {suggestions.slice(0, 5).map((product) => {
+            const available = product.node.variants.edges.some((v) => v.node.availableForSale);
+            return (
+              <button
+                key={product.node.id}
+                onMouseDown={() => onSuggestionClick(product)}
+                className="w-full flex items-center gap-3 p-3 hover:bg-white/5 transition-colors text-left"
+              >
+                {product.node.images.edges[0]?.node && (
+                  <img
+                    src={product.node.images.edges[0].node.url}
+                    alt=""
+                    className="w-10 h-10 rounded-lg object-cover"
+                  />
+                )}
+                <div className="flex-1 min-w-0">
+                  <p className="text-light-primary font-montserrat text-sm truncate">
+                    {product.node.title}
+                  </p>
+                  <p className="text-primary text-xs font-medium">
+                    ${parseFloat(product.node.priceRange.minVariantPrice.amount).toFixed(0)}
+                  </p>
+                </div>
+                <StatusPill
+                  status={getProductStatus(product.node.handle, available)}
+                  className="flex-shrink-0"
                 />
-              )}
-              <div className="flex-1 min-w-0">
-                <p className="text-light-primary font-montserrat text-sm truncate">
-                  {product.node.title}
-                </p>
-                <p className="text-primary text-xs font-medium">
-                  ${parseFloat(product.node.priceRange.minVariantPrice.amount).toFixed(0)}
-                </p>
-              </div>
-            </button>
-          ))}
+              </button>
+            );
+          })}
         </div>
       )}
     </div>
