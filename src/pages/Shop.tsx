@@ -87,7 +87,7 @@ const ProductCard = ({ product }: { product: ShopifyProduct }) => {
 
   return (
     <>
-      <article className="group relative">
+      <article className={cn("group relative", !isAvailable && "opacity-60 hover:opacity-100 transition-opacity")}>
         <div className="card-dark rounded-xl sm:rounded-2xl overflow-hidden relative ring-1 ring-primary/0 group-hover:ring-primary/30 transition-all duration-500">
           <div className="product-image-container aspect-[3/4] sm:aspect-[4/5] relative">
             {image ? (
@@ -129,7 +129,7 @@ const ProductCard = ({ product }: { product: ShopifyProduct }) => {
               </p>
               {!isAvailable ? (
                 <span className="font-montserrat text-[10px] sm:text-xs text-light-muted uppercase tracking-[0.2em]">
-                  —
+                  Sold out
                 </span>
               ) : hasOptions ? (
                 <span className="font-montserrat text-xs text-light-secondary group-hover:text-primary transition-colors">
