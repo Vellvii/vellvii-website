@@ -743,22 +743,44 @@ const Shop = () => {
               ))}
             </div>
           ) : (
-            <div className="text-center py-12 sm:py-20 px-4">
-              <p className="text-light-secondary text-base sm:text-lg font-montserrat">
-                {searchQuery 
-                  ? `No products found for "${searchQuery}"`
-                  : selectedCollection 
+            <div className="text-center py-12 sm:py-20 px-4 max-w-2xl mx-auto">
+              <p className="text-light-secondary text-base sm:text-lg font-montserrat mb-2">
+                {searchQuery
+                  ? `No matches for "${searchQuery}".`
+                  : selectedCollection
                     ? "No products found in this collection."
                     : "No products found."}
               </p>
-              {searchQuery && (
-                <button
-                  onClick={() => setSearchQuery("")}
-                  className="mt-4 text-primary hover:underline font-montserrat text-sm"
-                >
-                  Clear search
-                </button>
-              )}
+              <p className="font-baskerville italic text-sm text-light-secondary/70 mb-6">
+                Popular in-stock pieces:
+              </p>
+              <div className="flex flex-wrap justify-center gap-2 sm:gap-3 mb-6">
+                {(allProducts ?? [])
+                  .filter((p) => p.node.variants.edges.some((v) => v.node.availableForSale))
+                  .slice(0, 3)
+                  .map((p) => (
+                    <Link
+                      key={p.node.id}
+                      to={`/products/${p.node.handle}`}
+                      className="font-montserrat text-xs sm:text-sm text-light-primary px-4 py-2 rounded-full border border-white/15 hover:border-primary/40 hover:bg-primary/5 transition-all"
+                    >
+                      {p.node.title}
+                    </Link>
+                  ))}
+              </div>
+              <div className="flex flex-wrap justify-center gap-3">
+                {searchQuery && (
+                  <button
+                    onClick={() => setSearchQuery("")}
+                    className="text-primary hover:underline font-montserrat text-sm"
+                  >
+                    Clear search
+                  </button>
+                )}
+                <Link to="/available-now" className="text-primary hover:underline font-montserrat text-sm">
+                  See everything available now →
+                </Link>
+              </div>
             </div>
           )}
         </div>
