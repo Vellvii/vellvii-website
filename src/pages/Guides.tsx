@@ -11,7 +11,7 @@ const GUIDES = [
     title: "What Is a Rose Toy? A Premium Guide to Design, Storage, and Discretion",
     excerpt:
       "Learn what a rose toy is, why design and discretion matter, and how Vellvii is developing a rose-inspired product designed for the DOX ecosystem.",
-    image: "/uploads/Dox_white_lifestyle1.jpg",
+    image: "/uploads/vellvii-rose-toy-lux-case.png",
     imageAlt: "Refined Vellvii storage piece styled in a modern bedroom, illustrating premium intimate wellness storage",
   },
   {
