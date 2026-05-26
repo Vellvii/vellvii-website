@@ -10,6 +10,7 @@ import { Milestones } from "@/components/home/Milestones";
 import { HomeFAQ, homeFAQs } from "@/components/home/HomeFAQ";
 import { FounderNote } from "@/components/home/FounderNote";
 import { StatusPill, getProductStatus } from "@/components/products/StatusPill";
+import { isProductAvailableNow } from "@/lib/productAvailability";
 import { useShopifyProducts } from "@/hooks/useShopifyProducts";
 import { Skeleton } from "@/components/ui/skeleton";
 import {
@@ -559,6 +560,9 @@ const DoxVideoLanding = () => {
 
         {/* Founder Note */}
         <FounderNote />
+
+        {/* Available Now strip */}
+        <AvailableNowStrip />
 
         {/* Milestones strip */}
         <Milestones />
