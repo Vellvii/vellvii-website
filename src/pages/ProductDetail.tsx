@@ -48,6 +48,7 @@ const ProductDetail = () => {
   const navigate = useNavigate();
   const { data: product, isLoading, error } = useShopifyProduct(handle || "");
   const addItem = useCartStore((state) => state.addItem);
+  const openDrawer = useCartStore((state) => state.openDrawer);
   const totalItems = useCartStore((state) => state.getTotalItems());
   const [justAdded, setJustAdded] = useState(false);
   const cartLoading = useCartStore((state) => state.isLoading);
