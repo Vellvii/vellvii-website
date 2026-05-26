@@ -437,15 +437,18 @@ const Shop = () => {
     return { inStock: inS, soldOut: so };
   }, [displayProducts]);
 
+  // inStockOnly is the default; only flag it as an "active" filter when overridden
   const activeFilterCount =
-    (priceMin ? 1 : 0) + (priceMax ? 1 : 0) + (inStockOnly ? 1 : 0) + (sortBy !== "featured" ? 1 : 0);
+    (priceMin ? 1 : 0) + (priceMax ? 1 : 0) + (!inStockOnly ? 1 : 0) + (sortBy !== "availability" ? 1 : 0);
 
   const clearFilters = () => {
     setPriceMin("");
     setPriceMax("");
-    setSortBy("featured");
+    setSortBy("availability");
+    setInStockOnly(true);
     setSearchParams((prev) => {
       const next = new URLSearchParams(prev);
+      next.delete("show");
       next.delete("filter");
       return next;
     }, { replace: true });
