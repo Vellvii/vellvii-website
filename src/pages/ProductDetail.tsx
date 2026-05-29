@@ -418,8 +418,8 @@ const ProductDetail = () => {
               { name: product.node.title, url: `/products/${handle}` },
             ]}
             productData={{
-              name: product.node.title,
-              description: product.node.description.slice(0, 500),
+              name: h1Title,
+              description: bodyDescription.slice(0, 500),
               price: priceAmount,
               currency,
               availability,
@@ -490,7 +490,7 @@ const ProductDetail = () => {
                       <>
                         <img
                           src={selectedImage.url}
-                          alt={selectedImage.altText || product.node.title}
+                          alt={altFor(selectedImageIndex, selectedImage.altText)}
                           className="h-auto max-h-[70vh] w-full max-w-full object-contain sm:h-full sm:max-h-none"
                         />
                         <StatusPill
@@ -527,10 +527,7 @@ const ProductDetail = () => {
                       >
                         <img
                           src={img.node.url}
-                          alt={
-                            img.node.altText ||
-                            `${product.node.title} ${index + 1}`
-                          }
+                          alt={altFor(index, img.node.altText)}
                           className="w-full h-full object-cover"
                         />
                       </button>
@@ -547,7 +544,7 @@ const ProductDetail = () => {
                     Vellvii <span className="font-baskerville italic normal-case tracking-normal text-primary/60">- The Art of &lsquo;O&rsquo;</span>
                   </p>
                   <h1 className={`font-baskerville font-bold text-light-primary leading-tight break-words ${isLuxProduct ? "text-xl sm:text-3xl md:text-4xl lg:text-5xl mb-2 sm:mb-4" : "text-2xl sm:text-3xl md:text-4xl lg:text-5xl mb-3 sm:mb-4"}`}>
-                    {product.node.title}
+                    {h1Title}
                   </h1>
                   {isLuxProduct && (
                     <div className="mb-3 sm:mb-4">
@@ -569,7 +566,7 @@ const ProductDetail = () => {
                 {!isLuxProduct && (
                     <div className="prose max-w-none min-w-0 overflow-hidden">
                     <p className="text-light-secondary leading-relaxed whitespace-pre-line break-words font-montserrat text-sm sm:text-base lg:text-lg">
-                      {product.node.description}
+                      {bodyDescription}
                     </p>
                   </div>
                 )}
@@ -639,7 +636,7 @@ const ProductDetail = () => {
                   </div>
                 )}
 
-                {/* Add to Cart Button */}
+                {/* Add to Cart / Waitlist Button */}
                 <Button
                   size="lg"
                     className={`w-full max-w-full btn-premium whitespace-normal text-center leading-tight ${
@@ -647,13 +644,21 @@ const ProductDetail = () => {
                       ? "h-12 sm:h-16 text-base sm:text-xl font-bold tracking-wide"
                       : "h-12 sm:h-14 text-base sm:text-lg"
                   }`}
-                  onClick={handleAddToCart}
-                  disabled={cartLoading || !variant?.availableForSale}
+                  onClick={() => {
+                    if (!variant?.availableForSale && !isLuxProduct) {
+                      // Scroll to the Join the Waitlist (NotifyMe) panel below.
+                      const el = document.getElementById("join-waitlist");
+                      if (el) el.scrollIntoView({ behavior: "smooth", block: "center" });
+                      return;
+                    }
+                    handleAddToCart();
+                  }}
+                  disabled={cartLoading || (isLuxProduct ? false : false)}
                 >
                   {cartLoading ? (
                     <Loader2 className="w-5 h-5 animate-spin" />
-                  ) : !variant?.availableForSale ? (
-                    "Sold Out"
+                  ) : !variant?.availableForSale && !isLuxProduct ? (
+                    "Join the Waitlist"
                   ) : isLuxProduct ? (
                     "Secure My Pre-Order"
                   ) : (
@@ -707,7 +712,7 @@ const ProductDetail = () => {
                     <LuxShippingClarity />
                     <div className="prose max-w-none min-w-0 overflow-hidden pt-2">
                       <p className="text-light-secondary leading-relaxed whitespace-pre-line break-words font-montserrat text-sm sm:text-base lg:text-lg">
-                        {product.node.description}
+                        {bodyDescription}
                       </p>
                     </div>
                   </>
