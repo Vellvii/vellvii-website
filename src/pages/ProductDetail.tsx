@@ -290,6 +290,55 @@ const ProductDetail = () => {
   const careItems = pdpContent.careStorage ?? FALLBACK_CARE;
   const isAvailable = !!variant?.availableForSale;
 
+  // Per-handle H1 override map.
+  const PDP_H1_OVERRIDES: Record<string, string> = {
+    "vellvii-lux": "Vellvii Lux - Portable Biometric Sex Toy Storage Bag",
+    "vellvii-dox": "Vellvii DOX - Biometric Sex Toy Storage Vault with Docking Stations",
+    "vellvii-g-vibe": "Vellvii G-Vibe - Luxury G-Spot Vibrator",
+    "vellvii-evolve": "Vellvii Evolve - Luxury Wearable Vibrator",
+    "vellvii-pulse": "Vellvii Pulse - Luxury Couples Vibrator",
+  };
+  const h1Title = (handle && PDP_H1_OVERRIDES[handle]) || product.node.title;
+
+  // Per-handle body description override (Lux receives refined launch copy).
+  const PDP_DESCRIPTION_OVERRIDES: Record<string, string> = {
+    "vellvii-lux":
+      "The Vellvii Lux is a luxury biometric sex toy storage bag for those who value refinement in every detail. A genuine leather exterior with velvet-lined interior, fingerprint-lock security, and two integrated USB-A charging ports - this is intimate storage elevated to an art form. Compact enough to travel with, considered enough to leave on the nightstand. Designed to integrate seamlessly into the Vellvii DOX ecosystem, and elegant enough to stand alone.",
+  };
+  const bodyDescription =
+    (handle && PDP_DESCRIPTION_OVERRIDES[handle]) || product.node.description;
+
+  // Per-handle image alt text overrides (indexed).
+  const PDP_ALT_OVERRIDES: Record<string, string[]> = {
+    "vellvii-lux": [
+      "Vellvii Lux biometric sex toy storage bag in blush leather, front view",
+      "Vellvii Lux portable intimate storage case held in hands, side angle",
+      "Vellvii Lux fingerprint lock detail on leather sex toy bag",
+      "Vellvii Lux interior velvet lining and USB charging ports",
+      "Vellvii Lux discreet travel sex toy storage bag on bedside table",
+      "Vellvii Lux luxury leather intimate storage case, open view",
+      "Vellvii Lux portable biometric storage bag lifestyle shot",
+    ],
+    "vellvii-dox": [
+      "Vellvii DOX biometric sex toy storage vault, front view",
+      "Vellvii DOX biometric sex toy storage vault, side angle",
+      "Vellvii DOX biometric sex toy storage vault, fingerprint lock detail",
+      "Vellvii DOX biometric sex toy storage vault, velvet interior with movable tray",
+      "Vellvii DOX biometric sex toy storage vault with VDS docking station in use",
+      "Vellvii DOX biometric sex toy storage vault with DDS docking station",
+      "Vellvii DOX biometric sex toy storage vault, lifestyle on the nightstand",
+    ],
+  };
+  const altFor = (idx: number, fallback?: string | null) => {
+    const list = handle ? PDP_ALT_OVERRIDES[handle] : undefined;
+    if (list && list[idx]) return list[idx];
+    if (list && handle === "vellvii-lux")
+      return `Vellvii Lux luxury leather biometric storage bag detail ${idx + 1}`;
+    if (list && handle === "vellvii-dox")
+      return `Vellvii DOX biometric sex toy storage vault detail ${idx + 1}`;
+    return fallback || h1Title;
+  };
+
   return (
     <>
       {(() => {
