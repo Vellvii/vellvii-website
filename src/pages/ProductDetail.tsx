@@ -400,6 +400,7 @@ const ProductDetail = () => {
           },
         };
 
+        const seoOverride = handle ? PDP_SEO_OVERRIDES[handle] : undefined;
         const seoTitle = seoOverride?.title
           ?? (isLuxProduct ? luxTitle : `${product.node.title} - Luxury Pleasure Collection`);
         const seoDescription = seoOverride?.description
