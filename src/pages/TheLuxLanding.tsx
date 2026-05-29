@@ -41,6 +41,43 @@ const TheLuxLanding = () => {
     { icon: Sparkles, label: "Premium Materials" },
   ];
 
+  const faqs = [
+    {
+      q: "When does the Vellvii Lux ship?",
+      a: "Pre-orders ship at the end of June. Reserve yours now to secure a place in the first production run.",
+    },
+    {
+      q: "How does the biometric lock work?",
+      a: "The Lux uses a fingerprint sensor that stores up to ten unique prints. Only registered fingerprints can open the case, keeping its contents private.",
+    },
+    {
+      q: "What materials is the Lux made from?",
+      a: "Genuine full-grain leather on the outside, with a soft velvet-lined interior. Hardware is finished in rose gold.",
+    },
+    {
+      q: "Does the Lux charge what is inside?",
+      a: "Yes. The case has a USB-C input and two internal USB-A ports, so devices stay powered while stored.",
+    },
+    {
+      q: "Is shipping discreet?",
+      a: "Always. The Lux ships in plain, unbranded packaging with no reference to Vellvii or its contents on the outside.",
+    },
+    {
+      q: "What is the warranty?",
+      a: "Every Lux comes with a lifetime warranty, redeemable after registering your unique warranty ID within seven days of delivery.",
+    },
+  ];
+
+  const faqSchema = {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    mainEntity: faqs.map((f) => ({
+      "@type": "Question",
+      name: f.q,
+      acceptedAnswer: { "@type": "Answer", text: f.a },
+    })),
+  };
+
   return (
     <>
       <SEO
