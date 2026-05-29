@@ -86,17 +86,12 @@ const TheLuxLanding = () => {
         canonical="/pages/the-lux"
         type="website"
         image={images[0]?.url}
+        faqData={faqs.map((f) => ({ question: f.q, answer: f.a }))}
       />
 
       <div className="min-h-screen surface-dark-rich overflow-x-clip">
-        {/* Minimal header: logo only, no nav */}
-        <header className="w-full px-4 sm:px-8 py-5 sm:py-7 flex items-center justify-center">
-          <img
-            src="/uploads/Vellvii-full-logo-transparent.png"
-            alt="Vellvii"
-            className="h-8 sm:h-10"
-          />
-        </header>
+        <ScrollHeader />
+
 
         {/* Hero */}
         <section className="px-4 sm:px-6 lg:px-8 pt-6 sm:pt-10 pb-10 sm:pb-14">
