@@ -3,6 +3,14 @@ import { Button } from "@/components/ui/button";
 import { SEO } from "@/components/SEO";
 import { useShopifyProduct } from "@/hooks/useShopifyProducts";
 import { Truck, Package, Shield, Sparkles } from "lucide-react";
+import { ScrollHeader } from "@/components/ScrollHeader";
+import { PrelaunchFooter } from "@/components/prelaunch/PrelaunchFooter";
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "@/components/ui/accordion";
 
 /**
  * Standalone Google Ads landing page for the Vellvii Lux.
