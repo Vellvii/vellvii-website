@@ -54,11 +54,11 @@ const routes: RouteSeo[] = [
   { path: "/terms-of-service", title: "Terms of Service | Vellvii", description: "Read Vellvii's terms of service governing the use of our website and products." },
   { path: "/warranty", title: "Lifetime Warranty | Vellvii", description: "Vellvii offers a lifetime warranty on DOX and LUX luxury storage products. All sales are final with no refunds. Coverage includes manufacturing defects." },
   { path: "/warranty/register", title: "Register Your Warranty | Vellvii", description: "Register your Vellvii DOX or LUX product warranty. Required for warranty service." },
-  { path: "/contact", title: "Contact Vellvii | Support & Retail Enquiries", description: "Contact Vellvii for customer support, warranty questions, general enquiries, or retail partnership opportunities." },
+  { path: "/contact", title: "Contact Vellvii | Luxury Intimate Wellness", description: "Get in touch with the Vellvii team. Questions about orders, pre-orders, or the Vellvii DOX waitlist - we are here." },
   { path: "/socials", title: "Follow Vellvii - Socials & Community", description: "Follow Vellvii across Instagram, TikTok, YouTube, Reddit and more. Behind the design, launch updates and the r/Vellvii community." },
 
   // Guides
-  { path: "/guides", title: "Vellvii Guides | Discreet Storage, DOX Docking System & Pleasure Collection", description: "Vellvii Guides on discreet storage, the DOX docking system, Lux vs DOX, and choosing refined intimate wellness products for modern couples." },
+  { path: "/guides", title: "Intimate Wellness Guides | Vellvii", description: "Guides on discreet storage, sex toy care, travel with personal items, and luxury intimate wellness - from the team at Vellvii." },
   { path: "/guides/lux-vs-dox", title: "Vellvii Lux vs DOX | Sex Toy Bag vs Biometric Lock Box", description: "Compare Vellvii Lux portable sex toy storage with the Vellvii DOX biometric sex toy lock box. See which refined storage piece fits your lifestyle." },
   { path: "/guides/how-the-vellvii-dox-docking-system-works", title: "How the Vellvii DOX Docking System Works | Sex Toy Storage with VDS & DDS", description: "How the Vellvii DOX storage and docking system works, including VDS for Vellvii G-Vibe, Evolve and Pulse, and DDS for compatible suction-base products up to 90mm." },
   { path: "/guides/discreet-storage-for-intimate-wellness-products", title: "Sex Toy Storage Guide | Discreet Storage by Vellvii", description: "A guide to discreet sex toy storage at home and on the move. Compare a portable sex toy bag with a refined biometric lock box for the bedroom." },
