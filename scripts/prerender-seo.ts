@@ -72,12 +72,12 @@ const routes: RouteSeo[] = [
   { path: "/available-now", title: "Available Now | Vellvii", description: "Vellvii products available to order today. Refined intimate wellness pieces ready for dispatch." },
 
   // Static product pages (mirrors Helmet titles so non-JS crawlers see them)
-  { path: "/products/vellvii-dox", title: "Vellvii DOX | Biometric Sex Toy Storage Vault with Docking Stations", description: "The Vellvii DOX is a luxury biometric sex toy storage vault with integrated docking stations, fingerprint-lock security, and velvet-lined compartments. Join the waitlist for the next release." },
+  { path: "/products/vellvii-dox", title: "Vellvii DOX | Biometric Sex Toy Storage Vault with Docking Stations", description: "The Vellvii DOX is a luxury biometric sex toy vault with integrated docking stations, fingerprint-lock security, and velvet-lined compartments. Join the waitlist." },
   { path: "/products/vellvii-lux", title: "Vellvii Lux | Biometric Sex Toy Storage Bag - Leather, Fingerprint Lock", description: "A genuine leather biometric sex toy storage bag with fingerprint lock and USB charging. Portable, discreet, and designed for those who refuse to compromise. Ships end of June." },
   { path: "/products/vellvii-g-vibe", title: "Vellvii G-Vibe | Luxury G-Spot Vibrator", description: "Vellvii G-Vibe - a luxury G-spot vibrator designed for the Vellvii ecosystem. Pairs with the Vellvii DOX biometric storage vault. Join the waitlist for availability." },
   { path: "/products/vellvii-evolve", title: "Vellvii Evolve | Luxury Wearable Vibrator", description: "Vellvii Evolve - a luxury wearable vibrator designed for the Vellvii ecosystem. Pairs with the Vellvii DOX biometric storage vault. Join the waitlist for availability." },
   { path: "/products/vellvii-pulse", title: "Vellvii Pulse | Luxury Couples Vibrator", description: "Vellvii Pulse - a luxury couples vibrator designed for the Vellvii ecosystem. Pairs with the Vellvii DOX biometric storage vault. Join the waitlist for availability." },
-  { path: "/pages/the-lux", title: "Vellvii Lux | Biometric Leather Travel Case - Fingerprint Locked", description: "A genuine leather biometric travel case with fingerprint-lock security and USB charging. Discreet. Considered. Designed for those who value what they protect." },
+  { path: "/pages/the-lux", title: "Vellvii Lux | Biometric Leather Travel Case - Fingerprint Locked", description: "A genuine leather biometric travel case with fingerprint-lock security and USB charging. Discreet. Designed for those who value what they protect." },
 ];
 
 function esc(s: string): string {
