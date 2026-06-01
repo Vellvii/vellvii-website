@@ -100,6 +100,9 @@ function rewriteHead(template: string, r: RouteSeo): string {
   html = html.replace(/<meta\s+name="twitter:title"[^>]*>/, `<meta name="twitter:title" content="${title}">`);
   html = html.replace(/<meta\s+name="twitter:description"[^>]*>/, `<meta name="twitter:description" content="${desc}">`);
   html = html.replace(/<meta\s+name="twitter:image"[^>]*>/, `<meta name="twitter:image" content="${og}">`);
+  // Strip any existing canonical/hreflang from the template, then inject the per-route ones.
+  html = html.replace(/\s*<link\s+rel="canonical"[^>]*>/gi, "");
+  html = html.replace(/\s*<link\s+rel="alternate"\s+hreflang="[^"]*"[^>]*>/gi, "");
   const linkTags = `    <link rel="canonical" href="${url}">\n    <link rel="alternate" hreflang="en" href="${url}">\n    <link rel="alternate" hreflang="x-default" href="${url}">\n`;
   html = html.replace(/<\/head>/, `${linkTags}</head>`);
   return html;
