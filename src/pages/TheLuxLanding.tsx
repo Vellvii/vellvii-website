@@ -98,9 +98,15 @@ const TheLuxLanding = () => {
             <p className="font-baskerville italic text-primary/90 text-lg sm:text-2xl">
               Fingerprint-locked. Velvet-lined. Quietly extraordinary.
             </p>
-            <p className="font-montserrat text-primary/80 text-sm sm:text-base tracking-wide">
-              $199 · Free shipping · Ships end of June
-            </p>
+            <div className="flex flex-col items-center gap-1 pt-1">
+              <div className="h-px w-12 bg-primary/30" />
+              <p className="font-baskerville text-primary text-3xl sm:text-4xl tracking-wide">
+                $199
+              </p>
+              <p className="font-montserrat text-light-secondary/80 text-xs sm:text-sm tracking-[0.15em] uppercase">
+                + $14.20 shipping · Ships end of June
+              </p>
+            </div>
           </div>
         </section>
 
@@ -140,9 +146,12 @@ const TheLuxLanding = () => {
                 size="lg"
                 className="btn-premium w-full h-14 sm:h-16 text-base sm:text-lg font-bold tracking-wide whitespace-normal text-center leading-tight"
               >
-                Pre-Order Now - Ships End of June
+                Pre-Order Now - $199 - Ships End of June
               </Button>
             </a>
+            <p className="font-montserrat text-light-secondary/70 text-xs sm:text-sm text-center mt-3 tracking-wide">
+              $199 + $14.20 shipping · Ships end of June
+            </p>
           </div>
         </section>
 
@@ -194,9 +203,12 @@ const TheLuxLanding = () => {
                 variant="outline"
                 className="w-full h-12 sm:h-14 border-primary/40 text-primary hover:bg-primary/10 font-montserrat tracking-wide"
               >
-                Reserve Your Lux
+                Reserve Your Lux - $199
               </Button>
             </a>
+            <p className="font-montserrat text-light-secondary/70 text-xs sm:text-sm mt-3 tracking-wide">
+              $199 + $14.20 shipping · Ships end of June
+            </p>
           </div>
         </section>
 
