@@ -146,9 +146,12 @@ const TheLuxLanding = () => {
                 size="lg"
                 className="btn-premium w-full h-14 sm:h-16 text-base sm:text-lg font-bold tracking-wide whitespace-normal text-center leading-tight"
               >
-                Pre-Order Now - Ships End of June
+                Pre-Order Now - $199 - Ships End of June
               </Button>
             </a>
+            <p className="font-montserrat text-light-secondary/70 text-xs sm:text-sm text-center mt-3 tracking-wide">
+              $199 + $14.20 shipping · Ships end of June
+            </p>
           </div>
         </section>
 
