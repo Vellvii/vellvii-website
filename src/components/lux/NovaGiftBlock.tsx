@@ -1,15 +1,13 @@
 import { useEffect, useState } from "react";
 import { Gift } from "lucide-react";
-import novaAsset from "@/assets/nova.avif.asset.json";
-import nova2Asset from "@/assets/nova-2.jpg.asset.json";
 
 const NOVA_IMAGES = [
   {
-    src: novaAsset.url,
+    src: "/nova/nova.avif",
     alt: "Vellvii Nova - complimentary handheld pleasure piece included free with every Lux",
   },
   {
-    src: nova2Asset.url,
+    src: "/nova/nova-2.jpg",
     alt: "Vellvii Nova - rose gold and matte black sculpted handheld piece, included free with every Lux",
   },
 ];
