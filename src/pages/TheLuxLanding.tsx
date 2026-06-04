@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { SEO } from "@/components/SEO";
 import { useShopifyProduct } from "@/hooks/useShopifyProducts";
-import { Truck, Package, Shield, Sparkles } from "lucide-react";
+import { Truck, Package, Shield, Sparkles, Gift } from "lucide-react";
 import { ScrollHeader } from "@/components/ScrollHeader";
 import { PrelaunchFooter } from "@/components/prelaunch/PrelaunchFooter";
 import {
