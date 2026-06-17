@@ -5,7 +5,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { SEO } from "@/components/SEO";
 import { NavMenuButton } from "@/components/navigation/LuxuryNavDrawer";
 import { PrelaunchFooter } from "@/components/prelaunch/PrelaunchFooter";
-import { LuxCountdown } from "@/components/lux/LuxPreOrderPanel";
+
 import { Milestones } from "@/components/home/Milestones";
 import { HomeFAQ, homeFAQs } from "@/components/home/HomeFAQ";
 import { FounderNote } from "@/components/home/FounderNote";
