@@ -5,6 +5,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { SEO } from "@/components/SEO";
 import { NavMenuButton } from "@/components/navigation/LuxuryNavDrawer";
 import { PrelaunchFooter } from "@/components/prelaunch/PrelaunchFooter";
+import { DoxScrollStory } from "@/components/DoxScrollStory";
 
 import { Milestones } from "@/components/home/Milestones";
 import { HomeFAQ, homeFAQs } from "@/components/home/HomeFAQ";
