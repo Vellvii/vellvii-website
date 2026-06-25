@@ -6,7 +6,7 @@ import { useShopifyProduct } from "@/hooks/useShopifyProducts";
 const HERO_VIDEO = "/uploads/HEROPAGE.webm";
 
 const modelHandles = [
-  { name: "DOX", handle: "vellvii-dox", fallbackImage: "/uploads/Dox1.jpg" },
+  { name: "DOX", handle: "vellvii-dox", fallbackImage: "/uploads/Dox_white_lifestyle1.jpg" },
   { name: "LUX", handle: "vellvii-lux", fallbackImage: "/uploads/lux-bag-final-v4.jpg" },
 ];
 

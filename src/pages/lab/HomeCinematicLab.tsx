@@ -29,15 +29,15 @@ const HomeCinematicLab = () => {
         <DesignFeature
           headline="Quiet by Design"
           body="Vellvii shapes aren't accidents, they're decisions. Faux leather, velvet-lined, and built for the bedside table — discretion in service of pleasure."
-          mainImage="/uploads/Dox3.jpg"
-          sideImages={["/uploads/Dox4.jpg", "/uploads/dox_with_toys_1.jpg"]}
+          mainImage="/uploads/Dox_white_lifestyle1.jpg"
+          sideImages={["/uploads/BlackOpen2.png", "/uploads/White_charge_outside.png"]}
         />
 
         <DesignFeature
           headline="Discreet by Nature"
           body="Biometric locking, fully lined storage, and a docking system built for two types of intimacy: the one you share, and the one you keep to yourself."
-          mainImage="/uploads/Dox_white_open_plugged_in_content2.png"
-          sideImages={["/uploads/dox_with_toys_2.jpg", "/uploads/Dox4.jpg"]}
+          mainImage="/uploads/RedLockClose.png"
+          sideImages={["/uploads/Dox_white_open_plugged_in_content2.png", "/uploads/Dox_black_shelf_close_up.png"]}
           reverse
         />
 
