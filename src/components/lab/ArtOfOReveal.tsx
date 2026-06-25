@@ -28,8 +28,24 @@ export const ArtOfOReveal = () => {
   useEffect(() => {
     const video = videoRef.current;
     if (!video) return;
-    video.pause();
-  }, []);
+    // Seeking a <video> that has never played silently fails to paint a
+    // frame in some browsers — priming the decoder with a play/pause
+    // makes subsequent scroll-driven currentTime seeks actually render.
+    const prime = () => {
+      video
+        .play()
+        .then(() => {
+          video.pause();
+          video.currentTime = scrollYProgress.get() * video.duration;
+        })
+        .catch(() => {
+          video.currentTime = scrollYProgress.get() * video.duration;
+        });
+    };
+    if (video.readyState >= 1) prime();
+    else video.addEventListener("loadedmetadata", prime, { once: true });
+    return () => video.removeEventListener("loadedmetadata", prime);
+  }, [scrollYProgress]);
 
   useMotionValueEvent(scrollYProgress, "change", (progress) => {
     const video = videoRef.current;
@@ -83,7 +99,7 @@ export const ArtOfOReveal = () => {
 
         <motion.div
           style={{ x: productX }}
-          className="pointer-events-none absolute left-[6%] top-[18%] h-[64%] w-[34%] overflow-hidden rounded-sm shadow-2xl sm:w-[30%]"
+          className="pointer-events-none absolute left-[6%] top-[18%] h-[64%] w-[34%] overflow-hidden rounded-sm bg-neutral-200 shadow-2xl sm:w-[30%]"
         >
           <video
             ref={videoRef}
