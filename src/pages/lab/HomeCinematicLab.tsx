@@ -1,5 +1,6 @@
 import { SEO } from "@/components/SEO";
 import { CinematicHero } from "@/components/lab/CinematicHero";
+import { ArtOfOReveal } from "@/components/lab/ArtOfOReveal";
 import { ModelPicks } from "@/components/lab/ModelPicks";
 import { SplitBanner } from "@/components/lab/SplitBanner";
 import { DesignFeature } from "@/components/lab/DesignFeature";
@@ -23,6 +24,7 @@ const HomeCinematicLab = () => {
         </div>
 
         <CinematicHero />
+        <ArtOfOReveal />
         <ModelPicks />
         <SplitBanner />
 
