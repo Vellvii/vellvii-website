@@ -11,6 +11,11 @@ const FRAMES = Array.from(
   (_, i) => `/uploads/dox-open-frames/frame-${String(i).padStart(2, "0")}.jpg`,
 );
 
+// Feathers the flat gray studio backdrop in the frames into the white
+// section background, so the product reads as floating rather than a
+// hard rectangular card.
+const FEATHER_MASK = "radial-gradient(ellipse 62% 62% at 50% 50%, black 50%, transparent 100%)";
+
 // Filmstrip of varied Dox imagery showing through the cutout letters —
 // mirrors the iCaur "BORN TO PLAY" treatment where each letter carries a
 // different photo crop rather than one uniform video.
@@ -79,8 +84,8 @@ export const ArtOfOReveal = () => {
         </svg>
 
         <motion.div
-          style={{ x: productX }}
-          className="pointer-events-none absolute left-[6%] top-[18%] h-[64%] w-[34%] overflow-hidden rounded-sm bg-neutral-200 shadow-2xl sm:w-[30%]"
+          style={{ x: productX, maskImage: FEATHER_MASK, WebkitMaskImage: FEATHER_MASK }}
+          className="pointer-events-none absolute left-[6%] top-[18%] h-[64%] w-[34%] overflow-hidden sm:w-[30%]"
         >
           {FRAMES.map((src, i) => (
             <img
