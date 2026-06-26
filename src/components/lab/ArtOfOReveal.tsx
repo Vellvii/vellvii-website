@@ -1,32 +1,20 @@
 import { useRef, useState } from "react";
 import { motion, useMotionValueEvent, useScroll, useTransform } from "framer-motion";
 
-// Pre-extracted frames from the DOX closed->open CGI render (same plain
-// studio background throughout), swapped by scroll position instead of
-// scrubbing a <video> — avoids autoplay/seek restrictions in sandboxed
-// preview environments while still reading as a single continuous motion.
+// Pre-extracted, color-keyed frames from the DOX closed->open CGI render —
+// the flat gray studio backdrop is keyed to real alpha transparency, swapped
+// by scroll position instead of scrubbing a <video> (avoids autoplay/seek
+// restrictions in sandboxed preview environments).
 const FRAME_COUNT = 20;
 const FRAMES = Array.from(
   { length: FRAME_COUNT },
-  (_, i) => `/uploads/dox-open-frames/frame-${String(i).padStart(2, "0")}.jpg`,
+  (_, i) => `/uploads/dox-open-frames-alpha/frame-${String(i).padStart(2, "0")}.png`,
 );
 
-// Feathers the flat gray studio backdrop in the frames into the white
-// section background, so the product reads as floating rather than a
-// hard rectangular card.
-const FEATHER_MASK = "radial-gradient(ellipse 62% 62% at 50% 50%, black 50%, transparent 100%)";
-
-// Filmstrip of varied Dox imagery showing through the cutout letters —
-// mirrors the iCaur "BORN TO PLAY" treatment where each letter carries a
-// different photo crop rather than one uniform video.
-const TEXTURE_IMAGES = [
-  "/uploads/Dox_white_lifestyle1.jpg",
-  "/uploads/White_charge_outside.png",
-  "/uploads/dox-black-bookshelf.png",
-  "/uploads/RedDoxEvolveFrontRightClose.png",
-  "/uploads/Dox_white_open_plugged_in_content2.png",
-  "/uploads/BeigeDoxGVibeFrontRightClose.png",
-];
+// Looping motion texture showing through the cutout letters — mirrors the
+// iCaur "BORN TO PLAY" treatment where the letters carry moving footage
+// rather than a static image.
+const TEXTURE_VIDEO = "/uploads/dox-open-animation.mp4";
 
 export const ArtOfOReveal = () => {
   const ref = useRef<HTMLDivElement>(null);
@@ -75,24 +63,29 @@ export const ArtOfOReveal = () => {
             </mask>
           </defs>
           <foreignObject width="100%" height="100%" mask="url(#art-of-o-mask)">
-            <div className="flex h-full w-full">
-              {TEXTURE_IMAGES.map((src) => (
-                <img key={src} src={src} alt="" className="h-full flex-1 object-cover" style={{ filter: "saturate(1.15) contrast(1.05)" }} />
-              ))}
-            </div>
+            <video
+              autoPlay
+              muted
+              loop
+              playsInline
+              className="h-full w-full object-cover"
+              style={{ filter: "saturate(1.15) contrast(1.05)" }}
+            >
+              <source src={TEXTURE_VIDEO} type="video/mp4" />
+            </video>
           </foreignObject>
         </svg>
 
         <motion.div
-          style={{ x: productX, maskImage: FEATHER_MASK, WebkitMaskImage: FEATHER_MASK }}
-          className="pointer-events-none absolute left-[6%] top-[18%] h-[64%] w-[34%] overflow-hidden sm:w-[30%]"
+          style={{ x: productX }}
+          className="pointer-events-none absolute left-[6%] top-[18%] h-[64%] w-[34%] sm:w-[30%]"
         >
           {FRAMES.map((src, i) => (
             <img
               key={src}
               src={src}
               alt={i === FRAME_COUNT - 1 ? "Vellvii DOX, branded" : "Vellvii DOX opening"}
-              className="absolute inset-0 h-full w-full object-cover"
+              className="absolute inset-0 h-full w-full object-contain"
               style={{ opacity: i === frameIndex ? 1 : 0 }}
               loading="eager"
             />
